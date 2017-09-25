@@ -9,6 +9,6 @@
         style="@style/basetoolbarStyle"
         app:rightButtonIcon="@drawable/ic_launcher"
         app:rightButtonIcon1="@drawable/ic_launcher"
-        android:background="@color/colorAccent"
+        android:background="@color/common_color"
         app:title="@string/shppcart"/>
 </LinearLayout>

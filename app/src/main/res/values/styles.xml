@@ -15,39 +15,39 @@
         <item name="android:layout_centerInParent">true</item>
         <item name="android:gravity">center</item>
     </style>
-    <style name="TS.Theme" parent="AppTheme"/>
+    <style name="MY.Theme" parent="AppTheme"/>
     <!-- Widget -->
 
-    <style name="TS.Theme.Widget"/>
+    <style name="MY.Theme.Widget"/>
     <!-- Widget - Divider 直线 -->
-    <style name="TS.Theme.Widget.Divider">
+    <style name="MY.Theme.Widget.Divider">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:background">@color/common_divider_narrow</item>
     </style>
 
-    <style name="TS.Theme.Widget.Divider.Line">
+    <style name="MY.Theme.Widget.Divider.Line">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
     </style>
-    <style name="TS.Theme.Widget.Divider.Line.Vertical">
+    <style name="MY.Theme.Widget.Divider.Line.Vertical">
         <item name="android:layout_height">@dimen/divider_size</item>
     </style>
 
-    <style name="TS.Theme.Widget.Divider.Line.Horizontal">
+    <style name="MY.Theme.Widget.Divider.Line.Horizontal">
         <item name="android:layout_width">@dimen/divider_size</item>
     </style>
     <!--TextView样式-->
-    <style name="TS.Theme.Widget.Text">
+    <style name="MY.Theme.Widget.Text">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/font_normal2</item>
-        <item name="android:textColor">@color/common_h</item>
+        <item name="android:textColor">@color/common_h2</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_gravity">center</item>
     </style>
     <!--EditText样式-->
-    <style name="TS.Theme.Widget.EditText">
+    <style name="MY.Theme.Widget.EditText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dp_40</item>
         <item name="android:background">@color/white</item>
@@ -61,7 +61,7 @@
         <item name="android:paddingLeft">@dimen/dp_10</item>
     </style>
     <!--RecyclerView样式-->
-    <style name="TS.Theme.Widget.RecyclerView">
+    <style name="MY.Theme.Widget.RecyclerView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:scrollbars">none</item>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/common_bg"
+        android:padding="@dimen/dp_5">
+
+        <ImageView
+            android:id="@+id/tradehead_myorder_iv"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="@dimen/dp_80"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tradename_myorder_tv"
+            style="@style/MY.Theme.Widget.Text"
+            android:layout_toRightOf="@+id/tradehead_myorder_iv"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:textColor="@color/common_h"
+            tools:text="商品详情"/>
+
+        <TextView
+            android:id="@+id/tradecolor_tv"
+            style="@style/MY.Theme.Widget.Text"
+            android:layout_below="@+id/tradename_myorder_tv"
+            android:layout_toRightOf="@+id/tradehead_myorder_iv"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:textSize="@dimen/font_small"
+            android:textColor="@color/common_h2"
+            android:text="颜色分类:" />
+
+        <TextView
+            android:id="@+id/tradecolor_myorder_tv"
+            style="@style/MY.Theme.Widget.Text"
+            android:layout_below="@+id/tradename_myorder_tv"
+            android:layout_toRightOf="@+id/tradecolor_tv"
+            />
+
+        <TextView
+            android:id="@+id/tradeprice_myorder_tv"
+            style="@style/MY.Theme.Widget.Text"
+            android:layout_alignBottom="@+id/tradehead_myorder_iv"
+            android:layout_toRightOf="@+id/tradehead_myorder_iv"
+            android:text="￥33.50"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:textColor="@color/common_color" />
+    </RelativeLayout>
+    <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"
+        android:layout_height="@dimen/dp_10"
+        android:background="@color/white"/>
+
+</LinearLayout>

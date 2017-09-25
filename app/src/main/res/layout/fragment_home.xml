@@ -9,7 +9,7 @@
         style="@style/basetoolbarStyle"
         app:leftButtonIcon="@drawable/ic_launcher"
         app:rightButtonIcon="@drawable/ic_launcher"
-        android:background="@color/colorAccent"
+        android:background="@color/common_color"
         app:title="@string/home"/>
 
 </LinearLayout>

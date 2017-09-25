@@ -17,6 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.me.activity.MyOrderActivity" />
+        <activity android:name=".ui.me.activity.MyOrderDetailsActivity" />
+        <activity android:name=".ui.me.activity.OrderTrackingActivity"></activity>
     </application>
 
 </manifest>
