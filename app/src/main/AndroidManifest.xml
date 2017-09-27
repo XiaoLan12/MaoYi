@@ -72,7 +72,8 @@
         </provider>
 
         <activity android:name=".ui.me.activity.GoodsInfoActivity" />
-        <activity android:name=".ui.me.activity.NewActivity"></activity>
+        <activity android:name=".ui.me.activity.NewActivity" />
+        <activity android:name=".ui.me.activity.ProblemDetailsActivity"></activity>
     </application>
 
 </manifest>
