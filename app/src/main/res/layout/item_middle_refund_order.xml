@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/common_bg"
+        android:padding="@dimen/dp_5">
+
+        <ImageView
+            android:id="@+id/tradehead_iv"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="@dimen/dp_80"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tradename_tv"
+            style="@style/MY.Theme.Widget.Text"
+            android:layout_toRightOf="@+id/tradehead_iv"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:textColor="@color/common_h"
+            tools:text="商品详情"/>
+
+        <TextView
+            android:id="@+id/tradecolorTv"
+            style="@style/MY.Theme.Widget.Text"
+            android:textSize="@dimen/font_small"
+            android:textColor="@color/common_h2"
+            android:text="颜色分类:"
+            android:layout_below="@+id/tradename_tv"
+            android:layout_alignLeft="@+id/tradename_tv"
+            android:layout_alignStart="@+id/tradename_tv" />
+
+        <TextView
+            android:id="@+id/tradecolor_tv"
+            style="@style/MY.Theme.Widget.Text"
+            android:layout_below="@+id/tradename_tv"
+            android:textSize="@dimen/font_small"
+            android:layout_toRightOf="@+id/tradecolorTv"
+            />
+
+        <TextView
+            android:id="@+id/tradepriceTv"
+            style="@style/MY.Theme.Widget.Text"
+            android:layout_alignBottom="@+id/tradehead_iv"
+            android:layout_toRightOf="@+id/tradehead_iv"
+            android:text="退款金额:"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:textSize="@dimen/font_small"
+            android:textColor="@color/common_color" />
+        <TextView
+            android:id="@+id/tradeprice_tv"
+            style="@style/MY.Theme.Widget.Text"
+            android:layout_alignBottom="@+id/tradehead_iv"
+            android:layout_toRightOf="@+id/tradepriceTv"
+            android:text="33.50"
+            android:textSize="@dimen/font_small"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:textColor="@color/common_color" />
+    </RelativeLayout>
+    <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"
+        android:layout_height="@dimen/dp_10"
+        android:background="@color/white"/>
+</LinearLayout>

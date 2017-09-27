@@ -53,7 +53,12 @@ public class BaseToolbar extends Toolbar {
 
             final TintTypedArray a = TintTypedArray.obtainStyledAttributes(getContext(), attrs,
                     R.styleable.LetToolBar, defStyleAttr, 0);
-
+            final String title=a.getString(R.styleable.LetToolBar_title);
+            if(title!=null){
+                setTitle(title);
+            }
+            final int color=a.getColor(R.styleable.LetToolBar_titleColors,RescourseUtil.getColor(R.color.white));
+            setTitleColor(color);
             final Drawable leftIcon = a.getDrawable(R.styleable.LetToolBar_leftButtonIcon);
             if (leftIcon != null) {
                 setLeftButtonIcon(leftIcon);
@@ -126,6 +131,11 @@ public class BaseToolbar extends Toolbar {
     public void showTitleView() {
         if (mTextTitle != null)
             mTextTitle.setVisibility(VISIBLE);
+    }
+    //设置标题颜色
+    public void setTitleColor(int color){
+        if (mTextTitle != null)
+            mTextTitle.setTextColor(color);
     }
     //显示右边按钮
     public void showRightButton(){

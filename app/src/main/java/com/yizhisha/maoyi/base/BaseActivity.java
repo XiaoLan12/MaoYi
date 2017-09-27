@@ -39,8 +39,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         doBeforeSetcontentView();
-        this.setContentView(getLayoutId());
         StatusBarCompat.setStatusBarColor(this, RescourseUtil.getColor(R.color.colorAccent));
+        this.setContentView(getLayoutId());
+
         mContext=this;
         //添加注解
         ButterKnife.bind(this);

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="@dimen/dp_8">
+                <TextView
+                    android:id="@+id/refundType_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/blue"
+                    android:layout_centerVertical="true"
+                    tools:text="仅退款,退款成功"/>
+                <TextView
+                    android:id="@+id/contact_the_merchant_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_10"
+                    android:background="@drawable/shape_blue_selector"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/dp_8"
+                    android:textColor="@color/blue"
+                    android:text="查看详情"/>
+        </RelativeLayout>
+
+        <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"
+            android:layout_height="@dimen/dp_8"
+            android:layout_below="@+id/contact_the_merchant_tv"
+            />
+
+</LinearLayout>

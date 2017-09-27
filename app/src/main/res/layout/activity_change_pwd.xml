@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <com.yizhisha.maoyi.base.BaseToolbar
+        android:id="@+id/toolbar"
+        style="@style/basetoolbarStyle"
+        android:background="@color/common_divider_narrow"
+        app:leftButtonIcon="@drawable/ic_back"
+        app:rightButtonIcon="@drawable/ic_launcher"
+        app:title="修改密码"
+        app:titleColors="@color/common_h"/>
+    <com.yizhisha.maoyi.widget.ClearEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入登录密码"
+        android:textSize="@dimen/font_normal"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_5"
+        android:paddingTop="@dimen/dp_14"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@null"/>
+    <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"
+        android:background="@color/common_color"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"/>
+    <LinearLayout
+        android:id="@+id/login_ll2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_5"
+        android:paddingTop="@dimen/dp_14"
+        >
+        <com.yizhisha.maoyi.widget.ClearEditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="请设置6-12新的登录密码"
+            android:textSize="@dimen/font_normal"
+
+            android:background="@null"/>
+        <ImageView
+            android:id="@+id/isShow_pwd_iv"
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
+            android:src="@drawable/ic_launcher" />
+        </LinearLayout>
+
+    <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"
+        android:background="@color/common_color"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="@drawable/shape_redbtn_selector"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_normal2"
+        android:layout_marginTop="@dimen/dp_40"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
+        android:text="确定"/>
+    </LinearLayout>
