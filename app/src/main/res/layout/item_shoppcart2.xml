@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="1dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:id="@+id/childshopp_rl"
+            android:layout_width="wrap_content"
+            android:layout_height="90dp"
+            android:padding="@dimen/dp_5">
+
+            <CheckBox
+                android:id="@+id/childshopp_cb"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@drawable/shape_checxbox_selector1"
+                android:button="@null" />
+
+            <ImageView
+                android:id="@+id/tradehead_shoppcar2_iv"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_80"
+                android:layout_toRightOf="@+id/childshopp_cb"
+                android:src="@drawable/ic_launcher" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/shop_normal_rl"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_toRightOf="@+id/childshopp_rl"
+            android:background="@color/white"
+            android:padding="@dimen/dp_5"
+            >
+            <TextView
+                android:id="@+id/tradename_shoppcar2_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/common_h"
+                android:textSize="@dimen/font_normal2"
+                tools:text="商品名"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tradecolor_shoppcar2_tv"
+                android:layout_below="@+id/tradename_shoppcar2_tv"
+                android:layout_toRightOf="@+id/tradecolor_tv"
+                tools:text="说明"
+                android:layout_marginTop="@dimen/dp_5"
+                android:singleLine="true"
+                />
+
+            <TextView
+                android:id="@+id/tradepriceTv"
+                style="@style/MY.Theme.Widget.Text"
+                android:layout_alignParentBottom="true"
+                android:text="￥ "
+                android:textColor="@color/common_color" />
+            <TextView
+                android:id="@+id/tradeprice_tv"
+                style="@style/MY.Theme.Widget.Text"
+                android:layout_alignParentBottom="true"
+                tools:text="198.00"
+                android:layout_toRightOf="@+id/tradepriceTv"
+                android:textSize="@dimen/font_normal3"
+                android:textColor="@color/common_color" />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</LinearLayout>
