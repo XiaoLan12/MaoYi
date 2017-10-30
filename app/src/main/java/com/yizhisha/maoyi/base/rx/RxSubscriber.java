@@ -65,7 +65,7 @@ public abstract class RxSubscriber<T> extends Subscriber<T> {
         }
         //服务器
         else{
-            onFailure("访问失败");
+            onFailure(e.getMessage());
         }
 
     }

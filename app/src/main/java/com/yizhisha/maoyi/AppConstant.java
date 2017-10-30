@@ -6,4 +6,5 @@ package com.yizhisha.maoyi;
 
 public class AppConstant {
     public static final String HOME_CURRENT_TAB_POSITION="HOME_CURRENT_TAB_POSITION";
+    public static final int UID=3;
 }

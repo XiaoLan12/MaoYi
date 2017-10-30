@@ -4,6 +4,7 @@ import android.content.Context;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
@@ -39,6 +40,7 @@ public abstract class BasePresenter<V> {
         subscription.add(observable
         .subscribeOn(Schedulers.io())
         .unsubscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
         .subscribe(subscriber));
     }
     public void onDestroy(){
