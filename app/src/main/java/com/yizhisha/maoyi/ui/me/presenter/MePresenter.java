@@ -18,7 +18,6 @@ public class MePresenter extends MeContract.Presenter{
 
             @Override
             protected void onSuccess(MeInfoBean meInfoBean) {
-                Log.d("TTT","没有uofaof");
                 if(meInfoBean.getStatus().equals("y")){
                     mView.loadHeadSuccess(meInfoBean);
                 }else{

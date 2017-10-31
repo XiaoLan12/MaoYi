@@ -1,8 +1,11 @@
 package com.yizhisha.maoyi.api;
 
+import com.yizhisha.maoyi.bean.json.GoodsListBean;
 import com.yizhisha.maoyi.bean.json.LoginBean;
 import com.yizhisha.maoyi.bean.json.MeInfoBean;
+import com.yizhisha.maoyi.bean.json.RequestStatusBean;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -47,9 +50,17 @@ public class Api {
             instance = new Api();
         return instance;
     }
-
+    //用户中心首页头像名称显示
     public Observable<MeInfoBean> loadHeadInfo(int uid){
         return service.loadHeadInfo(uid);
+    }
+    //修改用户信息
+    public Observable<RequestStatusBean> changeUserInfo(Map<String, String> map){
+        return service.changeUserInfo(map);
+    }
+    //收货地址列表
+    public Observable<GoodsListBean> loadGoodsAddress(int uid){
+        return service.loadGoodsAddress(uid);
     }
     public Observable<LoginBean> login(){
         return service.login();
