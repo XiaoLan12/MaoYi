@@ -116,7 +116,7 @@ public class MyOrderFragment extends BaseFragment implements SwipeRefreshLayout.
             //大订单支付的金额核定单状态
             MyOrderHeadBean orderHeadBean = new MyOrderHeadBean();
             orderHeadBean.setStatus(1);
-            orderHeadBean.setCompany("天知道");
+            orderHeadBean.setCompany("天知道，你个2");
             orderHeadBean.setPayment(1);
             dataList.add(orderHeadBean);
 
