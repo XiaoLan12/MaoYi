@@ -9,6 +9,8 @@ import com.yizhisha.maoyi.bean.json.OrderListBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
 import com.yizhisha.maoyi.bean.json.ShopcartListBean;
 import com.yizhisha.maoyi.bean.json.SingleShopCartBean;
+import com.yizhisha.maoyi.bean.json.WechatBean;
+import com.yizhisha.maoyi.bean.json.WechatInfoBean;
 
 import java.util.Map;
 
@@ -18,6 +20,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
+import retrofit2.http.Url;
 import rx.Observable;
 
 /**
@@ -98,6 +101,70 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("app/order/orderDelete")
     Observable<RequestStatusBean> cancelOrder(@FieldMap Map<String,String> map);
+
+    //确认收货
+    @FormUrlEncoded
+    @POST("app/order/order_receive/")
+    Observable<RequestStatusBean> sureGoods(@FieldMap Map<String,String> map);
+
+    //登录
+    @FormUrlEncoded
+    @POST("app/user/dologin/")
+    Observable<RequestStatusBean> Login(@FieldMap Map<String,String> map);
+
+    //注册
+    @FormUrlEncoded
+    @POST("app/user/doreg/")
+    Observable<RequestStatusBean> Register(@FieldMap Map<String,String> map);
+
+    // 找回密码
+    @POST("ios/user/getpassword/")
+    Observable<RequestStatusBean> FindPwd(@QueryMap Map<String,String> map);
+
+    // 获取验证码
+    @GET("app/ajax/checkpost/")
+    Observable<RequestStatusBean> getCode(@QueryMap Map<String,String> map);
+
+    // 手机快捷登录获取验证码
+    @GET("app/ajax/logincheck/")
+    Observable<RequestStatusBean> getPhoneLoginCode(@QueryMap Map<String,String> map);
+
+    //手机快捷登录
+    @FormUrlEncoded
+    @POST("app/user/quicklogin/")
+    Observable<RequestStatusBean> phoneLogin(@FieldMap Map<String,String> map);
+
+    //修改密码
+    @FormUrlEncoded
+    @POST("app/ucenter/password_save/")
+    Observable<RequestStatusBean> changePwd(@FieldMap Map<String,String> map);
+
+    //获得微信登录的数据
+    @GET()
+    Observable<WechatBean> getWeChatLoginData(@Url String url);
+
+    //微信登录
+    @FormUrlEncoded
+    @POST("app/user/wxlogin/")
+    Observable<RequestStatusBean> weChatLogin(@FieldMap Map<String,String> map);
+
+    //绑定微信号
+    @GET("app/user/wxreg/")
+    Observable<RequestStatusBean> bindWeChat(@QueryMap Map<String, String> param);
+
+    //微信解除绑定
+    @GET("app/user/wxunbind/")
+    Observable<RequestStatusBean> unBindWeChat(@Query("uid") int uid);
+
+    //微信绑定显示
+    @GET("app/user/wxshow/")
+    Observable<RequestStatusBean> showBindWeChart(@Query("uid") int uid);
+
+    //加载微信用户信息
+    @GET()
+    Observable<WechatInfoBean> getWeChatInfo(@Url String url);
+
+
 
     @GET("app/user/dologin/mobile/15626036029/password/123456")
     Observable<LoginBean> login();

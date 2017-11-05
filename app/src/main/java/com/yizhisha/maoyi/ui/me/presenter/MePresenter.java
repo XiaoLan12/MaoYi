@@ -2,8 +2,10 @@ package com.yizhisha.maoyi.ui.me.presenter;
 
 import android.util.Log;
 
+import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.api.Api;
 import com.yizhisha.maoyi.base.rx.RxSubscriber;
+import com.yizhisha.maoyi.bean.json.LoginBean;
 import com.yizhisha.maoyi.bean.json.MeInfoBean;
 import com.yizhisha.maoyi.ui.me.contract.MeContract;
 
@@ -23,6 +25,19 @@ public class MePresenter extends MeContract.Presenter{
                 }else{
                     mView.loadFail(meInfoBean.getInfo());
                 }
+            }
+            @Override
+            protected void onFailure(String message) {
+                mView.loadFail(message);
+            }
+        });
+    }
+    public void load(){
+        addSubscrebe(Api.getInstance().login(),new RxSubscriber<LoginBean>(mContext,true){
+
+            @Override
+            protected void onSuccess(LoginBean meInfoBean) {
+               loadHeadInfo(AppConstant.UID);
             }
             @Override
             protected void onFailure(String message) {
