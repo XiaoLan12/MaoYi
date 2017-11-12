@@ -25,7 +25,7 @@ public class HomeFragment extends BaseFragment {
     @Bind(R.id.viewpager)
 
     ViewPager viewPager;
-    private String[] mTitles = {"今日专场", "七日爆款","往期转场"};
+    private String[] mTitles = {"今日专场", "七日爆款","往期专场"};
     private int[] mType = {1, 2,3};
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     @Override
@@ -35,8 +35,8 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initView() {
         mFragments.add(new TodaySpecialFragment());
-            mFragments.add(MyRatingFragment.getInstance(1));
-        mFragments.add(new TodaySpecialFragment());
+            mFragments.add(new SDayExplosionFragment());
+        mFragments.add(new PastSpecialFragment());
         slidingTabLayout.setViewPager(viewPager, mTitles, getActivity(), mFragments);
     }
 }

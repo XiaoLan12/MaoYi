@@ -2,13 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingTop="@dimen/dp_12">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        app:srcCompat="@drawable/ic_launcher" />
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/aaa" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,6 +21,7 @@
         android:textSize="@dimen/dp_16"
         android:layout_marginLeft="14dp"
         android:layout_marginRight="14dp"
+        android:layout_marginTop="4dp"
         android:text="畅销少女专场"/>
     <TextView
         android:layout_width="match_parent"
@@ -44,5 +50,9 @@
             android:gravity="center_vertical"
             android:text="10:20:10"/>
     </LinearLayout>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="14dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/common_divider_narrow"></LinearLayout>
 </LinearLayout>
