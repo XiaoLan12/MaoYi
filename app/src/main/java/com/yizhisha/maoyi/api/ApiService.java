@@ -51,7 +51,7 @@ public interface ApiService {
     Observable<RequestStatusBean> setDefaulsAddress(@QueryMap Map<String, String> param);
 
     //获得收藏列表
-    @GET("ios/ucenter/favorite/")
+    @GET("app/ucenter/favoriteList/")
     Observable<CollectListBean> getCollectList(@QueryMap Map<String, String> param);
 
     //添加收藏
@@ -72,7 +72,7 @@ public interface ApiService {
     Observable<RequestStatusBean> clearFootPrint(@FieldMap Map<String,String> map);
 
     //购物车
-    @GET("ios/ucenter/shopcart/")
+    @GET("app/ucenter/shopcartList/")
     Observable<ShopcartListBean> getShoppCartList(@Query("uid") int id);
 
     //加载单个购物车

@@ -19,14 +19,14 @@ public class SettingActivity extends BaseActivity {
         return R.layout.activity_setting;
     }
     @Override
-    protected void initToolBar() {
+    protected void initToolBar(){
 
     }
     @Override
-    protected void initView() {
+    protected void initView(){
 
     }
-    @OnClick({R.id.personalInfo_rl,R.id.changePwd_rl})
+    @OnClick({R.id.personalInfo_rl,R.id.changePwd_rl,R.id.goodaddress_rl})
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -35,6 +35,9 @@ public class SettingActivity extends BaseActivity {
                 break;
             case R.id.changePwd_rl:
                 startActivity(ChangePwdActivity.class);
+                break;
+            case R.id.goodaddress_rl:
+                startActivity(MyAddressActivity.class);
                 break;
         }
     }

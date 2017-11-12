@@ -14,6 +14,7 @@
         app:title="修改昵称"
         app:titleColors="@color/common_h"/>
     <com.yizhisha.maoyi.widget.ClearEditText
+        android:id="@+id/nickname_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="请输入昵称"
@@ -30,6 +31,7 @@
         android:layout_marginRight="@dimen/dp_10"/>
 
     <Button
+        android:id="@+id/sure_btn"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
         android:background="@drawable/shape_redbtn_selector"

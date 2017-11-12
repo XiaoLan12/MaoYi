@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10">
+        <TextView
+            android:id="@+id/name_myaddress_tv"
+            style="@style/MY.Theme.Widget.Text"
+            />
+        <TextView
+            android:id="@+id/phone_myaddress_tv"
+            style="@style/MY.Theme.Widget.Text"
+            android:layout_toRightOf="@+id/name_myaddress_tv"
+            android:layout_marginLeft="@dimen/dp_10"
+            />
+        <TextView
+            android:id="@+id/address_myaddress_tv"
+            style="@style/MY.Theme.Widget.Text"
+            android:layout_below="@+id/phone_myaddress_tv"
+            />
+    </RelativeLayout>
+    <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10">
+        <CheckBox
+            android:id="@+id/seletaddress_myaddress_cb"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_10"
+            android:background="@drawable/shape_checxbox_selector2"
+            android:button="@null" />
+        <TextView
+            android:id="@+id/isnormal_address_tv"
+            style="@style/MY.Theme.Widget.Text"
+            android:layout_toRightOf="@+id/seletaddress_myaddress_cb"
+            android:layout_centerVertical="true"
+            android:text="设为默认地址"/>
+
+        <TextView
+            android:id="@+id/delete_myaddress_tv"
+            style="@style/MY.Theme.Widget.Text"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_alignParentRight="true"
+            android:text="删除"/>
+        <TextView
+            android:id="@+id/edit_myaddress_tv"
+            style="@style/MY.Theme.Widget.Text"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_toLeftOf="@+id/delete_myaddress_tv"
+            android:text="编辑"/>
+    </RelativeLayout>
+    <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"
+        android:layout_height="@dimen/dp_8"/>
+</LinearLayout>

@@ -54,6 +54,7 @@
     <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"/>
 
     <RelativeLayout
+        android:id="@+id/goodaddress_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp_14">

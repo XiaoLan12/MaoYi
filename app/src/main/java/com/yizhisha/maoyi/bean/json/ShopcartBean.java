@@ -40,38 +40,38 @@ public class ShopcartBean {
 
     public class Goods {
 
-        private String sid;
-        private Date detail;
-        private String amount;
-        private String gid;
+        private int sid;
+        private String detail;
+        private int amount;
+        private int gid;
         private String title;
         private String litpic;
-        private String price;
-        public void setSid(String sid) {
+        private float price;
+        public void setSid(int sid) {
             this.sid = sid;
         }
-        public String getSid() {
+        public int getSid() {
             return sid;
         }
 
-        public void setDetail(Date detail) {
+        public void setDetail(String detail) {
             this.detail = detail;
         }
-        public Date getDetail() {
+        public String getDetail() {
             return detail;
         }
 
-        public void setAmount(String amount) {
+        public void setAmount(int amount) {
             this.amount = amount;
         }
-        public String getAmount() {
+        public int getAmount() {
             return amount;
         }
 
-        public void setGid(String gid) {
+        public void setGid(int gid) {
             this.gid = gid;
         }
-        public String getGid() {
+        public int getGid() {
             return gid;
         }
 
@@ -89,10 +89,10 @@ public class ShopcartBean {
             return litpic;
         }
 
-        public void setPrice(String price) {
+        public void setPrice(float price) {
             this.price = price;
         }
-        public String getPrice() {
+        public float getPrice() {
             return price;
         }
 

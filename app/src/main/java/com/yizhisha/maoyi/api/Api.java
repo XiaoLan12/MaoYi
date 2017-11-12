@@ -1,9 +1,13 @@
 package com.yizhisha.maoyi.api;
 
+import com.yizhisha.maoyi.bean.json.CollectListBean;
+import com.yizhisha.maoyi.bean.json.FootpringBean;
 import com.yizhisha.maoyi.bean.json.GoodsListBean;
 import com.yizhisha.maoyi.bean.json.LoginBean;
 import com.yizhisha.maoyi.bean.json.MeInfoBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
+import com.yizhisha.maoyi.bean.json.ShopcartListBean;
+import com.yizhisha.maoyi.bean.json.SingleShopCartBean;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -61,6 +65,46 @@ public class Api {
     //收货地址列表
     public Observable<GoodsListBean> loadGoodsAddress(int uid){
         return service.loadGoodsAddress(uid);
+    }
+    //修改默认地址
+    public Observable<RequestStatusBean> setDefaulsAddress(Map<String,String> map){
+        return service.setDefaulsAddress(map);
+    }
+    //保存收货地址
+    public Observable<RequestStatusBean> savaGoodsAddress(Map<String,String> map){
+        return service.savaGoodsAddress(map);
+    }
+    //获得收藏k列表
+    public Observable<CollectListBean> loadCollectList(Map<String, String> param){
+        return service.getCollectList(param);
+    }
+    //取消收藏
+    public Observable<RequestStatusBean> cacheCollect(Map<String, String> param){
+        return service.cacheCollect(param);
+    }
+    //我的足迹
+    public Observable<FootpringBean> loadFootprint(Map<String,String> map){
+        return service.loadFootprint(map);
+    }
+    //删除我的足迹
+    public Observable<RequestStatusBean> clearFootPrint(Map<String,String> map){
+        return service.clearFootPrint(map);
+    }
+    // 购物车
+    public Observable<ShopcartListBean> getShoppCart(int uid){
+        return service.getShoppCartList(uid);
+    }
+    //加载单个购物车
+    public Observable<SingleShopCartBean> loadSingleShpCart(Map<String,String> map){
+        return service.loadSingleShpCart(map);
+    }
+    //修改购物车
+    public Observable<RequestStatusBean> changeShopCart(Map<String,String> map){
+        return service.changeShopCart(map);
+    }
+    //删除购物车
+    public Observable<RequestStatusBean> deleteShoppCart(Map<String,String> map){
+        return service.deleteShoppCart(map);
     }
     public Observable<LoginBean> login(){
         return service.login();

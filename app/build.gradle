@@ -29,6 +29,7 @@ dependencies {
     compile project(':library')
     compile project(':pickerview')
     compile project(':pictureselector')
+    //轮播框架
     compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
     compile 'com.android.support:support-v4:26.0.0-alpha1'
     compile 'com.android.support:design:26.0.0-alpha1'
@@ -44,7 +45,6 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.8@aar'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
-    //轮播框架
     compile 'com.youth.banner:banner:1.4.2'
+    testCompile 'junit:junit:4.12'
 }

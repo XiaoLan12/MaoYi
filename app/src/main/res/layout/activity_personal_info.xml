@@ -49,6 +49,7 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/dp_14">
         <TextView
+            android:id="@+id/nickname_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -69,6 +70,7 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/dp_14">
         <TextView
+            android:id="@+id/sex_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

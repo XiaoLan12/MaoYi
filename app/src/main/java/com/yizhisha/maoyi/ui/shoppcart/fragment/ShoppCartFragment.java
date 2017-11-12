@@ -1,5 +1,6 @@
 package com.yizhisha.maoyi.ui.shoppcart.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
@@ -11,12 +12,18 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.adapter.ShoppCartAdapter;
 import com.yizhisha.maoyi.base.BaseFragment;
 import com.yizhisha.maoyi.base.BaseToolbar;
 import com.yizhisha.maoyi.bean.json.GoodsBean;
+import com.yizhisha.maoyi.bean.json.ShopcartBean;
 import com.yizhisha.maoyi.bean.json.StoreBean;
+import com.yizhisha.maoyi.common.dialog.DialogInterface;
+import com.yizhisha.maoyi.common.dialog.NormalAlertDialog;
+import com.yizhisha.maoyi.ui.shoppcart.contract.ShoppCartContract;
+import com.yizhisha.maoyi.ui.shoppcart.presenter.ShoppCartPresenter;
 import com.yizhisha.maoyi.utils.RescourseUtil;
 import com.yizhisha.maoyi.utils.ToastUtil;
 import com.yizhisha.maoyi.widget.CommonLoadingView;
@@ -27,12 +34,13 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
+import qiu.niorgai.StatusBarCompat;
 
 /**
  * Created by lan on 2017/9/22.
  */
 
-public class ShoppCartFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
+public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implements ShoppCartContract.View, SwipeRefreshLayout.OnRefreshListener{
     @Bind(R.id.toolbar)
     BaseToolbar mToobar;
     @Bind(R.id.swiperefreshlayout)
@@ -62,12 +70,18 @@ public class ShoppCartFragment extends BaseFragment implements SwipeRefreshLayou
     protected int getLayoutId() {
         return R.layout.fragment_shoppcart;
     }
-
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            StatusBarCompat.setStatusBarColor(activity, Color.WHITE,125);
+        }
+    }
     @Override
     protected void initView() {
         mLoadingView.loadSuccess();
-        data();
         initAdapter();
+        mPresenter.loadShoppCart(AppConstant.UID,true);
     }
     private void initAdapter(){
         mSwipeRefreshLayout.setColorSchemeColors(RescourseUtil.getColor(R.color.red),
@@ -121,15 +135,19 @@ public class ShoppCartFragment extends BaseFragment implements SwipeRefreshLayou
                     ToastUtil.showShortToast("请选择要购买的商品");
                     return;
                 }
+              /*  Bundle bundle=new Bundle();
+                bundle.putInt("ORDERTYPE",2);
+                bundle.putString("gid",sid);
+                startActivity(SureOrderActivity.class,bundle);*/
             }
         });
-        /*adapter.setOnGoodsCheckedChangeListener(new ShoppCartAdapter.OnGoodsCheckedChangeListener() {
+        adapter.setOnGoodsCheckedChangeListener(new ShoppCartAdapter.OnGoodsCheckedChangeListener() {
             @Override
             public void onGoodsCheckedChange(int totalCount, double totalPrice) {
                 tvCountMoney.setText(String.format(getString(R.string.total)+totalPrice));
                 //id_tv_totalCount_jiesuan.setText(String.format(getString(R.string.jiesuan), totalCount+""));
             }
-        });*/
+        });
 
         adapter.setOnAllCheckedBoxNeedChangeListener(new ShoppCartAdapter.OnAllCheckedBoxNeedChangeListener() {
             @Override
@@ -144,20 +162,58 @@ public class ShoppCartFragment extends BaseFragment implements SwipeRefreshLayou
                 if(isHasGoods){
                     mLoadingView.loadSuccess();
                     mToobar.showRightButton();
+                    changeFootShowDeleteView(false);
                     mRlBottomBar.setVisibility(View.VISIBLE);
                 }else{
                     mToobar.hideRightButton();
+                    changeFootShowDeleteView(true);
                     mLoadingView.loadSuccess(true, R.drawable.ic_launcher,"您的购物车中还没有商品，请您先逛逛!");
                     mRlBottomBar.setVisibility(View.GONE);
                 }
                 //setupViewsShow(isHasGoods);
             }
         });
+        //删除单项商品
+        adapter.setOnDeleteShopListener(new ShoppCartAdapter.OnDeleteShopListener() {
+            @Override
+            public void onDeleteShop(final int groupPosition, final int childPosition) {
+                new NormalAlertDialog.Builder(activity)
+                        .setBoolTitle(false)
+                        .setContentText("确定删除该商品吗?")
+                        .setContentTextColor(R.color.blue)
+                        .setLeftText("取消")
+                        .setLeftTextColor(R.color.blue)
+                        .setRightText("确认")
+                        .setRightTextColor(R.color.blue)
+                        .setWidth(0.75f)
+                        .setHeight(0.33f)
+                        .setOnclickListener(new DialogInterface.OnLeftAndRightClickListener<NormalAlertDialog>() {
+                            @Override
+                            public void clickLeftButton(NormalAlertDialog dialog, View view) {
+                                dialog.dismiss();
+                            }
+                            @Override
+                            public void clickRightButton(NormalAlertDialog dialog, View view) {
+                                final GoodsBean goodsBean = (GoodsBean) childMapList_list.get(groupPosition).get(childPosition).get("childName");
+                                Map<String,String> map=new HashMap<>();
+                                map.put("uid",String.valueOf(AppConstant.UID));
+                                map.put("sid", String.valueOf(goodsBean.getSid()));
+                                mPresenter.deleteOneShoppCart(map,groupPosition,childPosition);
+                                adapter.removeOneGood(groupPosition,childPosition);
+                                dialog.dismiss();
 
+                            }
+                        }).build().show();
+
+            }
+        });
         adapter.setOnGoodsEditChangeListenr(new ShoppCartAdapter.OnGoodsEditChangeListenr() {
             @Override
             public void onEditChange(GoodsBean goodsBean) {
-
+               /* Bundle bundle=new Bundle();
+                bundle.putInt("gid",goodsBean.getGid());
+                bundle.putInt("sid",goodsBean.getSid());
+                startActivityForResult(SingleShopCartActivity.class,bundle,100);*/
             }
         });
         expandableListView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -177,22 +233,51 @@ public class ShoppCartFragment extends BaseFragment implements SwipeRefreshLayou
                 mSwipeRefreshLayout.setEnabled(enable);
             }
         });
+    }
+    public void changeFootShowDeleteView(boolean showDeleteView) {
+
+        if (showDeleteView) {
+            mToobar.setRightButtonText("完成");
+            mLlNormalBottom.setVisibility(View.GONE);
+            //mLlDeleteAllBottom.setVisibility(View.VISIBLE);
+        } else {
+            mToobar.setRightButtonText("编辑");
+            mLlNormalBottom.setVisibility(View.VISIBLE);
+            //mLlDeleteAllBottom.setVisibility(View.GONE);
+        }
+    }
+    @Override
+    public void onRefresh() {
 
     }
-    private void data(){
-        for (int i = 0; i < 3; i++) {
+    @Override
+    public void loadSuccess(List<ShopcartBean> data) {
+        mSwipeRefreshLayout.setRefreshing(false);
+        parentMapList.clear();
+        childMapList_list.clear();
+        for (int i = 0; i < data.size(); i++) {
             //提供父列表的数据
             Map<String, Object> parentMap = new HashMap<String, Object>();
             StoreBean store=new StoreBean();
+            store.setMzw_uid(data.get(i).getMzw_uid());
+            store.setCompany(data.get(i).getCompany());
             store.setChecked(false);
             store.setEditing(0);
             parentMap.put("parentName",store);
             parentMapList.add(parentMap);
             //提供当前父列的子列数据
             List<Map<String, Object>> childMapList = new ArrayList<Map<String, Object>>();
-            for (int j = 0; j < 2; j++) {
+            List<ShopcartBean.Goods> goods=data.get(i).getGoods();
+            for (int j = 0; j < goods.size(); j++) {
                 Map<String, Object> childMap = new HashMap<String, Object>();
+
                 GoodsBean goodsBean=new GoodsBean();
+                goodsBean.setGid(goods.get(j).getGid());
+                goodsBean.setTitle(goods.get(j).getTitle());
+                goodsBean.setPrice(goods.get(j).getPrice());
+                goodsBean.setLitpic(goods.get(j).getLitpic());
+                goodsBean.setAmount(goods.get(j).getAmount());
+                goodsBean.setDetail(goods.get(j).getDetail());
                 goodsBean.setChecked(false);
                 goodsBean.setEditing(0);
                 childMap.put("childName", goodsBean);
@@ -200,7 +285,7 @@ public class ShoppCartFragment extends BaseFragment implements SwipeRefreshLayou
             }
             childMapList_list.add(childMapList);
         }
-       /* //需要展开分组，才会刷新childView
+        //需要展开分组，才会刷新childView
         for (int i = 0; i < parentMapList.size(); i++) {
             expandableListView.expandGroup(i);
         }
@@ -212,10 +297,55 @@ public class ShoppCartFragment extends BaseFragment implements SwipeRefreshLayou
             mToobar.hideRightButton();
             mRlBottomBar.setVisibility(View.GONE);
 
-        }*/
+        }
+        adapter.notifyDataSetChanged();
     }
     @Override
-    public void onRefresh() {
+    public void deleteShoppCart(String msg) {
+        adapter.removeGoods();
+        mToobar.setRightButtonText("编辑");
+    }
+    @Override
+    public void deleteOneShoppCart(String msg, int groupPosition, int childPosition) {
+        mPresenter.loadShoppCart(AppConstant.UID,false);
+    }
+    @Override
+    public void showLoading() {
+        mLoadingView.load();
+    }
+    @Override
+    public void hideLoading() {
+        mLoadingView.loadSuccess();
+    }
+    @Override
+    public void showEmpty() {
+        mSwipeRefreshLayout.setRefreshing(false);
+        parentMapList.clear();
+        childMapList_list.clear();
+        mToobar.hideRightButton();
+        mRlBottomBar.setVisibility(View.GONE);
+        adapter.notifyDataSetChanged();
+        mLoadingView.loadSuccess(true, R.drawable.ic_launcher,"您的购物车中还没有商品，请您先逛逛!");
+    }
 
+    @Override
+    public void loadFail(int code, String msg) {
+        if(code==0){
+            ToastUtil.showShortToast(msg);
+            return;
+        }
+        mSwipeRefreshLayout.setRefreshing(false);
+        parentMapList.clear();
+        childMapList_list.clear();
+        mToobar.hideRightButton();
+        mRlBottomBar.setVisibility(View.GONE);
+        adapter.notifyDataSetChanged();
+        mLoadingView.loadError();
+        mLoadingView.setLoadingHandler(new CommonLoadingView.LoadingHandler() {
+            @Override
+            public void doRequestData() {
+                mPresenter.loadShoppCart(AppConstant.UID,true);
+            }
+        });
     }
 }

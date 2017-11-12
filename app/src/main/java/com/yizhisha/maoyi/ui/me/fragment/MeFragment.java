@@ -56,7 +56,7 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
     @Override
     protected void initView() {
         mPresenter.loadHeadInfo(AppConstant.UID);
-        mPresenter.load();
+        //mPresenter.load();
 
     }
     @OnClick({R.id.myorder_rl, R.id.unpayment_ll, R.id.unshipping_ll, R.id.unreceive_goods_ll,

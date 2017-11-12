@@ -73,7 +73,9 @@
 
         <activity android:name=".ui.me.activity.GoodsInfoActivity" />
         <activity android:name=".ui.me.activity.NewActivity" />
-        <activity android:name=".ui.me.activity.ProblemDetailsActivity"></activity>
+        <activity android:name=".ui.me.activity.ProblemDetailsActivity" />
+        <activity android:name=".ui.me.activity.MyAddressActivity" />
+        <activity android:name=".ui.me.activity.AddAddressActivity"></activity>
     </application>
 
 </manifest>

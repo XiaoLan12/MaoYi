@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.yizhisha.maoyi.R;
+import com.yizhisha.maoyi.bean.json.FootpringBean;
 
 import java.util.List;
 
@@ -12,14 +13,14 @@ import java.util.List;
  * Created by lan on 2017/9/26.
  */
 
-public class MyFootprintAdapter extends BaseQuickAdapter<String,BaseViewHolder> {
-    public MyFootprintAdapter(@Nullable List<String> data) {
+public class MyFootprintAdapter extends BaseQuickAdapter<FootpringBean.History,BaseViewHolder> {
+    public MyFootprintAdapter(@Nullable List<FootpringBean.History> data) {
         super(R.layout.mycollect_item,data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, String item) {
-        helper.setText(R.id.titel_tv,"甜美甜美甜美少女风系列连衣裙");
-        helper.setText(R.id.price_tv,"168.00");
+    protected void convert(BaseViewHolder helper, FootpringBean.History item) {
+        helper.setText(R.id.titel_tv,item.getTitle());
+        helper.setText(R.id.price_tv,item.getPrice()+"");
     }
 }
