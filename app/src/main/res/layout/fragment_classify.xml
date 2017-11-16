@@ -66,7 +66,7 @@
     tl:tl_underline_color="@color/white"
         tl:tl_divider_width="1dp"
         tl:tl_divider_color="@color/gray1"
-        tl:tl_divider_padding="2dp"
+        tl:tl_divider_padding="8dp"
     tl:tl_underline_height="1dp"/>
     <View
         style="@style/MY.Theme.Widget.Divider.Line.Vertical"/>

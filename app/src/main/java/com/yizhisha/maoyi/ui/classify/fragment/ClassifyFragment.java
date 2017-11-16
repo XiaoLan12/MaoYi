@@ -7,8 +7,6 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.base.BaseFragment;
 
-import com.yizhisha.maoyi.ui.me.fragment.MyRatingFragment;
-
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -33,7 +31,7 @@ public class ClassifyFragment extends BaseFragment {
     @Override
     protected void initView() {
         for (int type : mType) {
-            mFragments.add(MyRatingFragment.getInstance(type));
+            mFragments.add(new ClassificationColourFragment());
         }
         slidingTabLayout1.setViewPager(viewPager1, mTitles, getActivity(), mFragments);
     }
