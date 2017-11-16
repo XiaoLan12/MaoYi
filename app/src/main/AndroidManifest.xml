@@ -31,11 +31,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--我的订单-->
         <activity android:name=".ui.me.activity.MyOrderActivity" />
+        <!--我的订单详情-->
         <activity android:name=".ui.me.activity.MyOrderDetailsActivity" />
         <activity android:name=".ui.me.activity.OrderTrackingActivity" />
+        <!--设置-->
         <activity android:name=".ui.me.activity.SettingActivity" />
         <activity android:name=".ui.me.activity.PersonalInfoActivity" />
+        <!--修改密码-->
         <activity android:name=".ui.me.activity.ChangePwdActivity" />
         <activity android:name=".ui.me.activity.ChangeNickNameActivity" />
         <activity android:name=".ui.me.activity.CouponsActivity" />
@@ -73,7 +77,10 @@
 
         <activity android:name=".ui.me.activity.GoodsInfoActivity" />
         <activity android:name=".ui.me.activity.NewActivity" />
+        <!--请标明，谁知道你写的什么鬼-->
         <activity android:name=".ui.me.activity.ProblemDetailsActivity"></activity>
+        <!--产品详情-->
+        <activity android:name=".ui.home.activity.ProductDetailActivity"></activity>
     </application>
 
 </manifest>

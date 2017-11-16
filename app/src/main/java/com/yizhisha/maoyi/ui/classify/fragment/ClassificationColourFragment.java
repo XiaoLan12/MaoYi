@@ -2,10 +2,13 @@ package com.yizhisha.maoyi.ui.classify.fragment;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.adapter.ClassificationColourAdapter;
 import com.yizhisha.maoyi.base.BaseFragment;
+import com.yizhisha.maoyi.ui.home.activity.ProductDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +38,7 @@ public class ClassificationColourFragment extends BaseFragment {
         }
         mAdapter = new ClassificationColourAdapter(dataLists);
         mRecyclerView.setAdapter(mAdapter);
+
 
     }
 }

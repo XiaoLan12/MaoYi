@@ -9,10 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.adapter.MyRatingAdapter;
 import com.yizhisha.maoyi.adapter.TodaySpecilAdapter;
 import com.yizhisha.maoyi.base.BaseFragment;
+import com.yizhisha.maoyi.ui.home.activity.ProductDetailActivity;
 import com.yizhisha.maoyi.utils.RescourseUtil;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -54,6 +56,13 @@ public class TodaySpecialFragment extends BaseFragment {
 
 //        mAdapter.setNewData(dataLists);
         addHeadView();
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                startActivity(ProductDetailActivity.class);
+            }
+        });
+
 
     }
 
