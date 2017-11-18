@@ -4,7 +4,9 @@ import com.yizhisha.maoyi.bean.json.GoodsListBean;
 import com.yizhisha.maoyi.bean.json.LoginBean;
 import com.yizhisha.maoyi.bean.json.MeInfoBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
+import com.yizhisha.maoyi.bean.json.WeekTopBean;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -64,5 +66,10 @@ public class Api {
     }
     public Observable<LoginBean> login(){
         return service.login();
+    }
+
+    //首页轮播图
+    public Observable<List<WeekTopBean>> getWeekTop(){
+        return service.getWeekTop();
     }
 }

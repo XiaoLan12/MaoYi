@@ -11,7 +11,9 @@ import com.yizhisha.maoyi.bean.json.ShopcartListBean;
 import com.yizhisha.maoyi.bean.json.SingleShopCartBean;
 import com.yizhisha.maoyi.bean.json.WechatBean;
 import com.yizhisha.maoyi.bean.json.WechatInfoBean;
+import com.yizhisha.maoyi.bean.json.WeekTopBean;
 
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.http.FieldMap;
@@ -168,4 +170,9 @@ public interface ApiService {
 
     @GET("app/user/dologin/mobile/15626036029/password/123456")
     Observable<LoginBean> login();
+
+
+    //首页轮播图
+    @GET("app/weekTop/")
+    Observable<List<WeekTopBean>> getWeekTop();
 }

@@ -1,7 +1,9 @@
-package com.yizhisha.maoyi.ui.classify.fragment;
+package com.yizhisha.maoyi.gangedrecyclerview;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,40 +12,34 @@ import android.view.View;
 
 import com.google.gson.Gson;
 import com.yizhisha.maoyi.R;
-import com.yizhisha.maoyi.base.BaseFragment;
-import com.yizhisha.maoyi.gangedrecyclerview.CheckListener;
-import com.yizhisha.maoyi.gangedrecyclerview.ItemHeaderDecoration;
-import com.yizhisha.maoyi.gangedrecyclerview.RvListener;
-import com.yizhisha.maoyi.gangedrecyclerview.SortAdapter;
-import com.yizhisha.maoyi.gangedrecyclerview.SortBean;
-import com.yizhisha.maoyi.gangedrecyclerview.SortDetailFragment;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by lan on 2017/9/22.
- */
-
-public class ClassifyFragment extends BaseFragment implements CheckListener{
+public class MainActivity extends AppCompatActivity implements CheckListener {
     private RecyclerView rvSort;
     private SortAdapter mSortAdapter;
     private SortDetailFragment mSortDetailFragment;
+    private Context mContext;
     private LinearLayoutManager mLinearLayoutManager;
     private int targetPosition;//点击左边某一个具体的item的位置
     private boolean isMoved;
     private SortBean mSortBean;
 
+
     @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_classify;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_classify);
+        mContext = this;
     }
 
     @Override
-    protected void initView() {
-        initView1();
+    protected void onResume() {
+        super.onResume();
+        initView();
         initData();
     }
 
@@ -77,7 +73,7 @@ public class ClassifyFragment extends BaseFragment implements CheckListener{
         String result = "";
         try {
             //获取输入流
-            InputStream mAssets = getActivity().getAssets().open(path);
+            InputStream mAssets = getAssets().open(path);
             //获取文件的字节数
             int lenght = mAssets.available();
             //创建byte数组
@@ -96,7 +92,7 @@ public class ClassifyFragment extends BaseFragment implements CheckListener{
 
 
     public void createFragment() {
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         mSortDetailFragment = new SortDetailFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("right", mSortBean.getCategoryOneArray());
@@ -142,9 +138,10 @@ public class ClassifyFragment extends BaseFragment implements CheckListener{
     }
 
 
-    private void initView1() {
-        rvSort = (RecyclerView) getActivity().findViewById(R.id.rv_sort);
-        mLinearLayoutManager = new LinearLayoutManager(getActivity());
+    private void initView() {
+        rvSort = (RecyclerView) findViewById(R.id.rv_sort);
+        mLinearLayoutManager = new LinearLayoutManager(mContext);
+        mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvSort.setLayoutManager(mLinearLayoutManager);
         DividerItemDecoration decoration = new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL);
         rvSort.addItemDecoration(decoration);
