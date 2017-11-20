@@ -172,7 +172,12 @@ public interface ApiService {
     Observable<LoginBean> login();
 
 
-    //首页轮播图
-    @GET("app/weekTop/")
+    //首页今日专场轮播图
+    @GET("app/dailyTopSlider/")
+    Observable<List<WeekTopBean>> getDailyTopSlider();
+
+
+    //首页今日专场列表
+    @GET("app/dailyList/")
     Observable<List<WeekTopBean>> getWeekTop();
 }

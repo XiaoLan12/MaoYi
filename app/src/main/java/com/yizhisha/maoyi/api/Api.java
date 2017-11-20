@@ -68,8 +68,8 @@ public class Api {
         return service.login();
     }
 
-    //首页轮播图
-    public Observable<List<WeekTopBean>> getWeekTop(){
-        return service.getWeekTop();
+    //首页今日专场轮播图
+    public Observable<List<WeekTopBean>> getDailyTopSlider(){
+        return service.getDailyTopSlider();
     }
 }
