@@ -138,16 +138,13 @@ public class ClassifyFragment extends BaseFragment implements CheckListener{
 
     }
 
-
     private void initView1() {
         rvSort = (RecyclerView) getActivity().findViewById(R.id.rv_sort);
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         rvSort.setLayoutManager(mLinearLayoutManager);
         DividerItemDecoration decoration = new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL);
         rvSort.addItemDecoration(decoration);
-
     }
-
 
     @Override
     public void check(int position, boolean isScroll) {

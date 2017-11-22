@@ -11,6 +11,7 @@ import com.yizhisha.maoyi.bean.json.OrderListBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
 import com.yizhisha.maoyi.bean.json.ShopcartListBean;
 import com.yizhisha.maoyi.bean.json.SingleShopCartBean;
+import com.yizhisha.maoyi.bean.json.SortedListBean;
 import com.yizhisha.maoyi.bean.json.WechatBean;
 import com.yizhisha.maoyi.bean.json.WechatInfoBean;
 import com.yizhisha.maoyi.bean.json.WeekListBean;
@@ -179,7 +180,6 @@ public interface ApiService {
     @GET("app/dailyTopSlider/")
     Observable<List<WeekTopBean>> getDailyTopSlider();
 
-
     //首页今日专场列表
     @GET("app/dailyList/")
     Observable<ListBean<DailyBean>> getDailyList();
@@ -194,6 +194,10 @@ public interface ApiService {
     //首页往期专场
     @GET("app/pastList/")
     Observable<ListBean<DailyBean>> getPastList();
+
+    //产品分类
+    @GET("app/sorted/")
+    Observable<SortedListBean> getSorted();
 
 
 
