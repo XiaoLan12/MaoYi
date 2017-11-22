@@ -2,6 +2,8 @@ package com.yizhisha.maoyi.ui.home.presenter;
 
 import com.yizhisha.maoyi.api.Api;
 import com.yizhisha.maoyi.base.rx.RxSubscriber;
+import com.yizhisha.maoyi.bean.json.DailyBean;
+import com.yizhisha.maoyi.bean.json.ListBean;
 import com.yizhisha.maoyi.bean.json.WeekTopBean;
 import com.yizhisha.maoyi.ui.home.contract.TodaySpecialContract;
 
@@ -19,6 +21,22 @@ public class TodaySpecialPresenter extends TodaySpecialContract.Presenter{
             @Override
             protected void onSuccess(List<WeekTopBean> model) {
                 mView.getDailyTopSliderSuccess(model);
+
+            }
+            @Override
+            protected void onFailure(String message) {
+                mView.loadFail(message);
+            }
+        });
+    }
+
+    @Override
+    public void getDailyList() {
+        addSubscrebe(Api.getInstance().getDailyList(),new RxSubscriber<ListBean<DailyBean>>(mContext,true){
+
+            @Override
+            protected void onSuccess(ListBean<DailyBean> model) {
+                mView.getDailyListSuccess(model);
 
             }
             @Override

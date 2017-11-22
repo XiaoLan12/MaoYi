@@ -1,8 +1,10 @@
 package com.yizhisha.maoyi.api;
 
 import com.yizhisha.maoyi.bean.json.CollectListBean;
+import com.yizhisha.maoyi.bean.json.DailyBean;
 import com.yizhisha.maoyi.bean.json.FootpringBean;
 import com.yizhisha.maoyi.bean.json.GoodsListBean;
+import com.yizhisha.maoyi.bean.json.ListBean;
 import com.yizhisha.maoyi.bean.json.LoginBean;
 import com.yizhisha.maoyi.bean.json.MeInfoBean;
 import com.yizhisha.maoyi.bean.json.OrderListBean;
@@ -11,6 +13,7 @@ import com.yizhisha.maoyi.bean.json.ShopcartListBean;
 import com.yizhisha.maoyi.bean.json.SingleShopCartBean;
 import com.yizhisha.maoyi.bean.json.WechatBean;
 import com.yizhisha.maoyi.bean.json.WechatInfoBean;
+import com.yizhisha.maoyi.bean.json.WeekListBean;
 import com.yizhisha.maoyi.bean.json.WeekTopBean;
 
 import java.util.List;
@@ -179,5 +182,19 @@ public interface ApiService {
 
     //首页今日专场列表
     @GET("app/dailyList/")
+    Observable<ListBean<DailyBean>> getDailyList();
+
+    //首页7日轮播图
+    @GET("app/weekTop/")
     Observable<List<WeekTopBean>> getWeekTop();
+    //首页7日爆款列表
+    @GET("app/weekList/")
+    Observable<List<WeekListBean>> getWeekList();
+
+    //首页往期专场
+    @GET("app/pastList/")
+    Observable<ListBean<DailyBean>> getPastList();
+
+
+
 }

@@ -46,7 +46,6 @@ public class ClassifyFragment extends BaseFragment implements CheckListener{
         initView1();
         initData();
     }
-
     private void initData() {
         //获取asset目录下的资源文件
         String assetsData = getAssetsData("sort.json");
@@ -94,7 +93,6 @@ public class ClassifyFragment extends BaseFragment implements CheckListener{
         }
     }
 
-
     public void createFragment() {
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         mSortDetailFragment = new SortDetailFragment();
@@ -105,7 +103,6 @@ public class ClassifyFragment extends BaseFragment implements CheckListener{
         fragmentTransaction.add(R.id.lin_fragment, mSortDetailFragment);
         fragmentTransaction.commit();
     }
-
     private void setChecked(int position, boolean isLeft) {
         Log.d("p-------->", String.valueOf(position));
         if (isLeft) {

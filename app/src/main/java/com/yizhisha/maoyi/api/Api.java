@@ -1,15 +1,16 @@
 package com.yizhisha.maoyi.api;
 
+import com.yizhisha.maoyi.bean.json.DailyBean;
 import com.yizhisha.maoyi.bean.json.GoodsListBean;
+import com.yizhisha.maoyi.bean.json.ListBean;
 import com.yizhisha.maoyi.bean.json.LoginBean;
 import com.yizhisha.maoyi.bean.json.MeInfoBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
+import com.yizhisha.maoyi.bean.json.WeekListBean;
 import com.yizhisha.maoyi.bean.json.WeekTopBean;
-
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -72,4 +73,24 @@ public class Api {
     public Observable<List<WeekTopBean>> getDailyTopSlider(){
         return service.getDailyTopSlider();
     }
+    //首页今日专场列表
+    public Observable<ListBean<DailyBean>> getDailyList(){
+        return service.getDailyList();
+    }
+    //首页7日爆款列表
+    public Observable<List<WeekTopBean>> getWeekTop(){
+        return service.getWeekTop();
+    }
+
+    //首页7日爆款列表
+    public Observable<List<WeekListBean>> getWeekList(){
+        return service.getWeekList();
+    }
+
+    //首页往期专场列表
+    public Observable<ListBean<DailyBean>> getPastList(){
+        return service.getPastList();
+    }
+
+
 }

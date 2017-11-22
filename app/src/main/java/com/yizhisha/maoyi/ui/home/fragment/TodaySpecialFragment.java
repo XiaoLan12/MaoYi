@@ -14,6 +14,8 @@ import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.adapter.TodaySpecilAdapter;
 import com.yizhisha.maoyi.base.BaseFragment;
+import com.yizhisha.maoyi.bean.json.DailyBean;
+import com.yizhisha.maoyi.bean.json.ListBean;
 import com.yizhisha.maoyi.bean.json.WeekTopBean;
 import com.yizhisha.maoyi.ui.home.activity.ProductDetailActivity;
 import com.yizhisha.maoyi.ui.home.contract.TodaySpecialContract;
@@ -40,7 +42,7 @@ public class TodaySpecialFragment extends BaseFragment<TodaySpecialPresenter>  i
     private List<String> imageUrl;
 
     private TodaySpecilAdapter mAdapter;
-    private List<String> dataLists = new ArrayList<>();
+    private List<DailyBean> dataLists = new ArrayList<>();
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_today_special;
@@ -50,9 +52,7 @@ public class TodaySpecialFragment extends BaseFragment<TodaySpecialPresenter>  i
     protected void initView() {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        for(int i=0;i<10;i++){
-            dataLists.add("ll");
-        }
+
         mAdapter = new TodaySpecilAdapter(dataLists);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -65,14 +65,13 @@ public class TodaySpecialFragment extends BaseFragment<TodaySpecialPresenter>  i
             }
         });
 
-
     }
 
     private void addHeadView() {
         View view=getActivity().getLayoutInflater().inflate(R.layout.headview_today_specil, (ViewGroup) mRecyclerView.getParent(), false);
         banner=view.findViewById(R.id.banner);
         mPresenter.getDailyTopSlider();
-
+        mPresenter.getDailyList();
         mAdapter.addHeaderView(view);
     }
 
@@ -93,6 +92,12 @@ public class TodaySpecialFragment extends BaseFragment<TodaySpecialPresenter>  i
 //        banner.setBannerTitles(bannerTitle);
         banner.setDelayTime(3000);
         banner.start();
+    }
+
+    @Override
+    public void getDailyListSuccess(ListBean<DailyBean> model) {
+        dataLists=model.getList();
+        mAdapter.setNewData(dataLists);
     }
 
     @Override
