@@ -8,7 +8,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
+import com.yizhisha.maoyi.bean.json.SortedBean;
+import com.yizhisha.maoyi.bean.json.SortedListBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +55,7 @@ public class SortDetailFragment extends BaseFragment<SortDetailPresenter, String
             }
         });
         mRv.setLayoutManager(mManager);
+
         mAdapter = new ClassifyDetailAdapter(mContext, mDatas, new RvListener() {
             @Override
             public void onItemClick(int id, int position) {
@@ -63,7 +67,6 @@ public class SortDetailFragment extends BaseFragment<SortDetailPresenter, String
                     case R.id.content:
                         content = "content";
                         break;
-
                 }
                 Snackbar snackbar = Snackbar.make(mRv, "当前点击的是" + content + ":" + mDatas.get(position).getName(), Snackbar.LENGTH_SHORT);
                 View mView = snackbar.getView();
@@ -83,9 +86,30 @@ public class SortDetailFragment extends BaseFragment<SortDetailPresenter, String
         return new SortDetailPresenter();
     }
 
-
     private void initData() {
-        ArrayList<SortBean.CategoryOneArrayBean> rightList = getArguments().getParcelableArrayList("right");
+        List<SortedListBean> sortedListBeen= AppConstant.sortedBeanList;
+
+        for (int i = 0; i < sortedListBeen.size(); i++) {
+            RightBean head = new RightBean(sortedListBeen.get(i).getName());
+            //头部设置为true
+            head.setTitle(true);
+            head.setTitleName(sortedListBeen.get(i).getName());
+            head.setTag(String.valueOf(i));
+            mDatas.add(head);
+            Log.e("TTT",head.toString());
+            List<SortedBean> sortedLists=sortedListBeen.get(i).getCat();
+//            List<SortBean.CategoryOneArrayBean.CategoryTwoArrayBean> categoryTwoArray = rightList.get(i).getCategoryTwoArray();
+            for (int j = 0; j < sortedLists.size(); j++) {
+                RightBean body = new RightBean(sortedLists.get(j).getCat_name());
+                body.setTag(String.valueOf(i));
+                String name = sortedListBeen.get(i).getName();
+                body.setTitleName(name);
+                mDatas.add(body);
+                Log.e("TTT",body.toString());
+            }
+        }
+
+       /* ArrayList<SortBean.CategoryOneArrayBean> rightList = getArguments().getParcelableArrayList("right");
         for (int i = 0; i < rightList.size(); i++) {
             RightBean head = new RightBean(rightList.get(i).getName());
             //头部设置为true
@@ -93,6 +117,7 @@ public class SortDetailFragment extends BaseFragment<SortDetailPresenter, String
             head.setTitleName(rightList.get(i).getName());
             head.setTag(String.valueOf(i));
             mDatas.add(head);
+            Log.e("TTT",head.toString());
             List<SortBean.CategoryOneArrayBean.CategoryTwoArrayBean> categoryTwoArray = rightList.get(i).getCategoryTwoArray();
             for (int j = 0; j < categoryTwoArray.size(); j++) {
                 RightBean body = new RightBean(categoryTwoArray.get(j).getName());
@@ -100,10 +125,11 @@ public class SortDetailFragment extends BaseFragment<SortDetailPresenter, String
                 String name = rightList.get(i).getName();
                 body.setTitleName(name);
                 mDatas.add(body);
+                Log.e("TTT",body.toString());
             }
 
         }
-
+*/
         mAdapter.notifyDataSetChanged();
         mDecoration.setData(mDatas);
     }

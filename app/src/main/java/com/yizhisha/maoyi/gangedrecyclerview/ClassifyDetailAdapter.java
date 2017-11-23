@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.yizhisha.maoyi.R;
 
 import java.util.List;
@@ -46,6 +47,7 @@ public class ClassifyDetailAdapter extends RvAdapter<RightBean> {
                 case 1:
                     tvCity = (TextView) itemView.findViewById(R.id.tvCity);
                     avatar = (ImageView) itemView.findViewById(R.id.ivAvatar);
+
                     break;
             }
 
@@ -60,6 +62,7 @@ public class ClassifyDetailAdapter extends RvAdapter<RightBean> {
                     break;
                 case 1:
                     tvCity.setText(sortBean.getName());
+                    Glide.with(mContext).load("https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2051413839,2877490521&fm=58").into(avatar);
                     break;
             }
 

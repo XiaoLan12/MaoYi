@@ -6,6 +6,7 @@ import com.yizhisha.maoyi.bean.json.ListBean;
 import com.yizhisha.maoyi.bean.json.LoginBean;
 import com.yizhisha.maoyi.bean.json.MeInfoBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
+import com.yizhisha.maoyi.bean.json.SortedListBean;
 import com.yizhisha.maoyi.bean.json.WeekListBean;
 import com.yizhisha.maoyi.bean.json.WeekTopBean;
 import java.util.List;
@@ -93,5 +94,8 @@ public class Api {
     }
 
     //产品分类
-//    getSorted
+    public Observable<List<SortedListBean>> getSorted(){
+        return service.getSorted();
+    }
+
 }

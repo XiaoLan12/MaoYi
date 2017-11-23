@@ -16,6 +16,8 @@ public class SortBean implements Parcelable  {
     private String titleName;
 
 
+
+
     public static final Creator<SortBean> CREATOR = new Creator<SortBean>() {
         @Override
         public SortBean createFromParcel(Parcel in) {

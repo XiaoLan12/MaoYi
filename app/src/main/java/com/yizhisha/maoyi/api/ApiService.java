@@ -197,7 +197,7 @@ public interface ApiService {
 
     //产品分类
     @GET("app/sorted/")
-    Observable<SortedListBean> getSorted();
+    Observable<List<SortedListBean>> getSorted();
 
 
 

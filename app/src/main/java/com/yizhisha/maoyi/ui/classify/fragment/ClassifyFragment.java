@@ -9,14 +9,17 @@ import android.util.Log;
 import android.view.View;
 
 import com.google.gson.Gson;
+import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.base.BaseFragment;
+import com.yizhisha.maoyi.bean.json.SortedListBean;
 import com.yizhisha.maoyi.gangedrecyclerview.CheckListener;
 import com.yizhisha.maoyi.gangedrecyclerview.ItemHeaderDecoration;
 import com.yizhisha.maoyi.gangedrecyclerview.RvListener;
 import com.yizhisha.maoyi.gangedrecyclerview.SortAdapter;
 import com.yizhisha.maoyi.gangedrecyclerview.SortBean;
 import com.yizhisha.maoyi.gangedrecyclerview.SortDetailFragment;
+import com.yizhisha.maoyi.ui.classify.contract.ClassifyContract;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +30,7 @@ import java.util.List;
  * Created by lan on 2017/9/22.
  */
 
-public class ClassifyFragment extends BaseFragment implements CheckListener{
+public class ClassifyFragment extends BaseFragment<com.yizhisha.maoyi.ui.classify.presenter.ClassifyPresenter> implements CheckListener,ClassifyContract.View{
     private RecyclerView rvSort;
     private SortAdapter mSortAdapter;
     private SortDetailFragment mSortDetailFragment;
@@ -45,30 +48,10 @@ public class ClassifyFragment extends BaseFragment implements CheckListener{
     protected void initView() {
         initView1();
         initData();
+        mPresenter.getSortedList();
     }
     private void initData() {
-        //获取asset目录下的资源文件
-        String assetsData = getAssetsData("sort.json");
-        Gson gson = new Gson();
-        mSortBean = gson.fromJson(assetsData, SortBean.class);
-        List<SortBean.CategoryOneArrayBean> categoryOneArray = mSortBean.getCategoryOneArray();
-        List<String> list = new ArrayList<>();
-        //初始化左侧列表数据
-        for (int i = 0; i < categoryOneArray.size(); i++) {
-            list.add(categoryOneArray.get(i).getName());
-        }
-        mSortAdapter = new SortAdapter(mContext, list, new RvListener() {
-            @Override
-            public void onItemClick(int id, int position) {
-                if (mSortDetailFragment != null) {
-                    isMoved = true;
-                    targetPosition = position;
-                    setChecked(position, true);
-                }
-            }
-        });
-        rvSort.setAdapter(mSortAdapter);
-        createFragment();
+
     }
 
     //从资源文件中获取分类json
@@ -149,6 +132,44 @@ public class ClassifyFragment extends BaseFragment implements CheckListener{
     @Override
     public void check(int position, boolean isScroll) {
         setChecked(position, isScroll);
+
+    }
+
+    @Override
+    public void getSortedListSuccess(List<SortedListBean> model) {
+
+        //获取asset目录下的资源文件
+        String assetsData = getAssetsData("sort.json");
+        Gson gson = new Gson();
+        mSortBean = gson.fromJson(assetsData, SortBean.class);
+        List<SortBean.CategoryOneArrayBean> categoryOneArray = mSortBean.getCategoryOneArray();
+        List<String> list = new ArrayList<>();
+
+        //初始化左侧列表数据
+        for (int i = 0; i < model.size(); i++) {
+            list.add(model.get(i).getName());
+        }
+        AppConstant.sortedBeanList=model;
+      /*  for (int i = 0; i < categoryOneArray.size(); i++) {
+            list.add(categoryOneArray.get(i).getName());
+        }*/
+        Log.e("TTT",list.toString()+"   string"+model.toString());
+        mSortAdapter = new SortAdapter(mContext, list, new RvListener() {
+            @Override
+            public void onItemClick(int id, int position) {
+                if (mSortDetailFragment != null) {
+                    isMoved = true;
+                    targetPosition = position;
+                    setChecked(position, true);
+                }
+            }
+        });
+        rvSort.setAdapter(mSortAdapter);
+        createFragment();
+    }
+
+    @Override
+    public void loadFail(String msg) {
 
     }
 }
