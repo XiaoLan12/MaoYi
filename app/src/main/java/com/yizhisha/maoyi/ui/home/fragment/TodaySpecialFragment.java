@@ -17,7 +17,7 @@ import com.yizhisha.maoyi.base.BaseFragment;
 import com.yizhisha.maoyi.bean.json.DailyBean;
 import com.yizhisha.maoyi.bean.json.ListBean;
 import com.yizhisha.maoyi.bean.json.WeekTopBean;
-import com.yizhisha.maoyi.ui.home.activity.ProductDetailActivity;
+import com.yizhisha.maoyi.ui.home.activity.SpecialDetailActivity;
 import com.yizhisha.maoyi.ui.home.contract.TodaySpecialContract;
 import com.yizhisha.maoyi.ui.home.presenter.TodaySpecialPresenter;
 import com.youth.banner.Banner;
@@ -35,10 +35,10 @@ import butterknife.Bind;
 
 public class TodaySpecialFragment extends BaseFragment<TodaySpecialPresenter>  implements TodaySpecialContract.View {
 
-   private  Banner banner;
+
     @Bind(R.id.recyclerview)
     RecyclerView mRecyclerView;
-
+    private  Banner banner;
     private List<String> imageUrl;
 
     private TodaySpecilAdapter mAdapter;
@@ -61,7 +61,7 @@ public class TodaySpecialFragment extends BaseFragment<TodaySpecialPresenter>  i
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(ProductDetailActivity.class);
+                startActivity(SpecialDetailActivity.class);
             }
         });
 

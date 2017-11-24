@@ -12,6 +12,7 @@ import com.yizhisha.maoyi.bean.json.RequestStatusBean;
 import com.yizhisha.maoyi.bean.json.ShopcartListBean;
 import com.yizhisha.maoyi.bean.json.SingleShopCartBean;
 import com.yizhisha.maoyi.bean.json.SortedListBean;
+import com.yizhisha.maoyi.bean.json.SpecialDetailBean;
 import com.yizhisha.maoyi.bean.json.WechatBean;
 import com.yizhisha.maoyi.bean.json.WechatInfoBean;
 import com.yizhisha.maoyi.bean.json.WeekListBean;
@@ -199,6 +200,9 @@ public interface ApiService {
     @GET("app/sorted/")
     Observable<List<SortedListBean>> getSorted();
 
+    //专题详情列表
+    @GET("app/goods/specialGoodsList/")
+    Observable<SpecialDetailBean> getSpecialGoodsList(@QueryMap Map<String, String> param);
 
 
 }
