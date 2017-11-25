@@ -1,18 +1,22 @@
 package com.yizhisha.maoyi.api;
 
 import com.yizhisha.maoyi.bean.json.DailyBean;
+import com.yizhisha.maoyi.bean.json.GoodsDetailBean;
 import com.yizhisha.maoyi.bean.json.GoodsListBean;
 import com.yizhisha.maoyi.bean.json.ListBean;
 import com.yizhisha.maoyi.bean.json.LoginBean;
 import com.yizhisha.maoyi.bean.json.MeInfoBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
+import com.yizhisha.maoyi.bean.json.SimilarRecommenBean;
 import com.yizhisha.maoyi.bean.json.SortedListBean;
 import com.yizhisha.maoyi.bean.json.SpecialDetailBean;
 import com.yizhisha.maoyi.bean.json.WeekListBean;
 import com.yizhisha.maoyi.bean.json.WeekTopBean;
+
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -101,6 +105,14 @@ public class Api {
     //专题详情列表
     public Observable<SpecialDetailBean> getSpecialGoodsList(Map<String, String> map){
         return service.getSpecialGoodsList(map);
+    }
+    //商品详情
+    public Observable<GoodsDetailBean> getGoodsDetail(Map<String, String> map){
+        return service.getGoodsDetail(map);
+    }
+    //商品详情的同类推荐
+    public Observable<SimilarRecommenBean> getSimilarRecommen(){
+        return service.getSimilarRecommen();
     }
 
 }

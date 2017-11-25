@@ -3,6 +3,7 @@ package com.yizhisha.maoyi.api;
 import com.yizhisha.maoyi.bean.json.CollectListBean;
 import com.yizhisha.maoyi.bean.json.DailyBean;
 import com.yizhisha.maoyi.bean.json.FootpringBean;
+import com.yizhisha.maoyi.bean.json.GoodsDetailBean;
 import com.yizhisha.maoyi.bean.json.GoodsListBean;
 import com.yizhisha.maoyi.bean.json.ListBean;
 import com.yizhisha.maoyi.bean.json.LoginBean;
@@ -10,6 +11,7 @@ import com.yizhisha.maoyi.bean.json.MeInfoBean;
 import com.yizhisha.maoyi.bean.json.OrderListBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
 import com.yizhisha.maoyi.bean.json.ShopcartListBean;
+import com.yizhisha.maoyi.bean.json.SimilarRecommenBean;
 import com.yizhisha.maoyi.bean.json.SingleShopCartBean;
 import com.yizhisha.maoyi.bean.json.SortedListBean;
 import com.yizhisha.maoyi.bean.json.SpecialDetailBean;
@@ -203,6 +205,14 @@ public interface ApiService {
     //专题详情列表
     @GET("app/goods/specialGoodsList/")
     Observable<SpecialDetailBean> getSpecialGoodsList(@QueryMap Map<String, String> param);
+
+
+    //商品详情
+    @GET("app/goods/goodsDetail/")
+    Observable<GoodsDetailBean> getGoodsDetail(@QueryMap Map<String, String> param);
+    //商品详情的同类推荐
+    @GET("app/recommend/tid/")
+    Observable<SimilarRecommenBean> getSimilarRecommen();
 
 
 }
