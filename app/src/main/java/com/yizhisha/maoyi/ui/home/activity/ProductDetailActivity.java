@@ -2,22 +2,29 @@ package com.yizhisha.maoyi.ui.home.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
+import com.yizhisha.maoyi.adapter.SDayExplosionAdapter;
 import com.yizhisha.maoyi.base.BaseActivity;
 import com.yizhisha.maoyi.base.BaseToolbar;
 import com.yizhisha.maoyi.bean.json.GoodsDetailBean;
 import com.yizhisha.maoyi.bean.json.GoodsProductBean;
 import com.yizhisha.maoyi.bean.json.SimilarRecommenBean;
+import com.yizhisha.maoyi.bean.json.WeekListBean;
 import com.yizhisha.maoyi.ui.home.contract.ProductDetailContract;
 import com.yizhisha.maoyi.ui.home.presenter.ProductDetailPresenter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -80,6 +87,9 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
     @Bind(R.id.bottom_ll)
     LinearLayout bottomLl;
 
+
+    private SDayExplosionAdapter mAdapter;
+    private List<WeekListBean> dataLists = new ArrayList<>();
     @Override
     protected int getLayoutId() {
         return R.layout.activity_product_detail;
@@ -93,9 +103,22 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
 
     @Override
     protected void initView() {
+        rlTuijian.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+
+        mAdapter = new SDayExplosionAdapter(dataLists);
+        rlTuijian.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                startActivity(ProductDetailActivity.class);
+            }
+        });
+
         Map<String,String> map=new HashMap<>();
         map.put("gid","2");
         mPresenter.getGoodsDetail(map);
+
+        mPresenter.getSimilarRecommen();
     }
 
     @Override
@@ -142,7 +165,8 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
 
     @Override
     public void getSimilarRecommenSuccess(SimilarRecommenBean model) {
-
+        dataLists=model.getGoods();
+        mAdapter.setNewData(dataLists);
     }
 
     @Override
