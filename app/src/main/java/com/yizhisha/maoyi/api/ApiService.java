@@ -1,17 +1,26 @@
 package com.yizhisha.maoyi.api;
 
 import com.yizhisha.maoyi.bean.json.CollectListBean;
+import com.yizhisha.maoyi.bean.json.DailyBean;
 import com.yizhisha.maoyi.bean.json.FootpringBean;
+import com.yizhisha.maoyi.bean.json.GoodsDetailBean;
 import com.yizhisha.maoyi.bean.json.GoodsListBean;
+import com.yizhisha.maoyi.bean.json.ListBean;
 import com.yizhisha.maoyi.bean.json.LoginBean;
 import com.yizhisha.maoyi.bean.json.MeInfoBean;
 import com.yizhisha.maoyi.bean.json.OrderListBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
 import com.yizhisha.maoyi.bean.json.ShopcartListBean;
+import com.yizhisha.maoyi.bean.json.SimilarRecommenBean;
 import com.yizhisha.maoyi.bean.json.SingleShopCartBean;
+import com.yizhisha.maoyi.bean.json.SortedListBean;
+import com.yizhisha.maoyi.bean.json.SpecialDetailBean;
 import com.yizhisha.maoyi.bean.json.WechatBean;
 import com.yizhisha.maoyi.bean.json.WechatInfoBean;
+import com.yizhisha.maoyi.bean.json.WeekListBean;
+import com.yizhisha.maoyi.bean.json.WeekTopBean;
 
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.http.FieldMap;
@@ -168,4 +177,42 @@ public interface ApiService {
 
     @GET("app/user/dologin/mobile/15626036029/password/123456")
     Observable<LoginBean> login();
+
+
+    //首页今日专场轮播图
+    @GET("app/dailyTopSlider/")
+    Observable<List<WeekTopBean>> getDailyTopSlider();
+
+    //首页今日专场列表
+    @GET("app/dailyList/")
+    Observable<ListBean<DailyBean>> getDailyList();
+
+    //首页7日轮播图
+    @GET("app/weekTop/")
+    Observable<List<WeekTopBean>> getWeekTop();
+    //首页7日爆款列表
+    @GET("app/weekList/")
+    Observable<List<WeekListBean>> getWeekList();
+
+    //首页往期专场
+    @GET("app/pastList/")
+    Observable<ListBean<DailyBean>> getPastList();
+
+    //产品分类
+    @GET("app/sorted/")
+    Observable<List<SortedListBean>> getSorted();
+
+    //专题详情列表
+    @GET("app/goods/specialGoodsList/")
+    Observable<SpecialDetailBean> getSpecialGoodsList(@QueryMap Map<String, String> param);
+
+
+    //商品详情
+    @GET("app/goods/goodsDetail/")
+    Observable<GoodsDetailBean> getGoodsDetail(@QueryMap Map<String, String> param);
+    //商品详情的同类推荐
+    @GET("app/recommend/tid/")
+    Observable<SimilarRecommenBean> getSimilarRecommen();
+
+
 }

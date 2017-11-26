@@ -1,12 +1,13 @@
-package com.yizhisha.maoyi.bean.json;
+package com.yizhisha.taosha.bean.json;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by lan on 2017/7/6.
  */
 
-public class MyOrderFootBean implements Serializable{
+public class OrderFootBean implements Serializable{
     private float totalprice;
     private String orderno;
     private int status;
@@ -92,7 +93,7 @@ public class MyOrderFootBean implements Serializable{
 
     @Override
     public String toString() {
-        return "MyOrderFootBean{" +
+        return "OrderFootBean{" +
                 "totalprice=" + totalprice +
                 ", status=" + status +
                 ", amount=" + amount +

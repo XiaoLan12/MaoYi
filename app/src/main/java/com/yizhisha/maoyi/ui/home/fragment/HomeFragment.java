@@ -2,12 +2,10 @@ package com.yizhisha.maoyi.ui.home.fragment;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.widget.Toolbar;
 
 import com.flyco.tablayout.SlidingTabLayout;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.base.BaseFragment;
-import com.yizhisha.maoyi.ui.me.fragment.MyRatingFragment;
 
 import java.util.ArrayList;
 

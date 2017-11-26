@@ -1,12 +1,13 @@
-package com.yizhisha.maoyi.bean.json;
+package com.yizhisha.taosha.bean.json;
 
 /**
  * Created by lan on 2017/7/6.
  */
 
-public class MyOrderHeadBean {
+public class OrderHeadBean{
     private int status;
     private String company;
+
     private String orderno;
     private int payment;
 

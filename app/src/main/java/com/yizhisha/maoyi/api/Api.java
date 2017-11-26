@@ -1,14 +1,19 @@
 package com.yizhisha.maoyi.api;
 
-import com.yizhisha.maoyi.bean.json.CollectListBean;
-import com.yizhisha.maoyi.bean.json.FootpringBean;
+import com.yizhisha.maoyi.bean.json.DailyBean;
+import com.yizhisha.maoyi.bean.json.GoodsDetailBean;
 import com.yizhisha.maoyi.bean.json.GoodsListBean;
+import com.yizhisha.maoyi.bean.json.ListBean;
 import com.yizhisha.maoyi.bean.json.LoginBean;
 import com.yizhisha.maoyi.bean.json.MeInfoBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
-import com.yizhisha.maoyi.bean.json.ShopcartListBean;
-import com.yizhisha.maoyi.bean.json.SingleShopCartBean;
+import com.yizhisha.maoyi.bean.json.SimilarRecommenBean;
+import com.yizhisha.maoyi.bean.json.SortedListBean;
+import com.yizhisha.maoyi.bean.json.SpecialDetailBean;
+import com.yizhisha.maoyi.bean.json.WeekListBean;
+import com.yizhisha.maoyi.bean.json.WeekTopBean;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -109,4 +114,45 @@ public class Api {
     public Observable<LoginBean> login(){
         return service.login();
     }
+
+    //首页今日专场轮播图
+    public Observable<List<WeekTopBean>> getDailyTopSlider(){
+        return service.getDailyTopSlider();
+    }
+    //首页今日专场列表
+    public Observable<ListBean<DailyBean>> getDailyList(){
+        return service.getDailyList();
+    }
+    //首页7日爆款列表
+    public Observable<List<WeekTopBean>> getWeekTop(){
+        return service.getWeekTop();
+    }
+
+    //首页7日爆款列表
+    public Observable<List<WeekListBean>> getWeekList(){
+        return service.getWeekList();
+    }
+
+    //首页往期专场列表
+    public Observable<ListBean<DailyBean>> getPastList(){
+        return service.getPastList();
+    }
+
+    //产品分类
+    public Observable<List<SortedListBean>> getSorted(){
+        return service.getSorted();
+    }
+    //专题详情列表
+    public Observable<SpecialDetailBean> getSpecialGoodsList(Map<String, String> map){
+        return service.getSpecialGoodsList(map);
+    }
+    //商品详情
+    public Observable<GoodsDetailBean> getGoodsDetail(Map<String, String> map){
+        return service.getGoodsDetail(map);
+    }
+    //商品详情的同类推荐
+    public Observable<SimilarRecommenBean> getSimilarRecommen(){
+        return service.getSimilarRecommen();
+    }
+
 }

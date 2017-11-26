@@ -1,9 +1,7 @@
 package com.yizhisha.maoyi.ui;
 
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
+import android.support.v4.app.FragmentTransaction;
 
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
@@ -18,7 +16,6 @@ import com.yizhisha.maoyi.ui.me.fragment.MeFragment;
 import com.yizhisha.maoyi.ui.shoppcart.fragment.ShoppCartFragment;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 
@@ -27,12 +24,12 @@ public class MainActivity extends BaseActivity {
     CommonTabLayout tabLayout;
 
     private String[] mTitles = {"首页","分类","购物车","个人中心"};
+    private int[]  mIconSelectIds = {
+            R.drawable.index_home,R.drawable.index_catalog,R.drawable.index_trolley
+            ,R.drawable.index_user};
     private int[] mIconUnselectIds = {
-            R.drawable.ic_launcher,R.drawable.ic_launcher,R.drawable.ic_launcher
-            ,R.drawable.ic_launcher};
-    private int[] mIconSelectIds = {
-            R.drawable.ic_launcher,R.drawable.ic_launcher, R.drawable.ic_launcher
-            ,R.drawable.ic_launcher};
+            R.drawable.index_home_gray,R.drawable.index_catalog_gray,R.drawable.index_trolley_gray
+            ,R.drawable.index_user_gray};
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
 
     private HomeFragment homeFragment;
