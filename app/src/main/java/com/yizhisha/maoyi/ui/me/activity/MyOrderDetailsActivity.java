@@ -26,8 +26,9 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
-public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> implements OrderDetailsContract.View{
+public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> implements OrderDetailsContract.View {
     @Bind(R.id.toolbar)
     BaseToolbar toolbar;
 
@@ -66,11 +67,16 @@ public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> 
     RecyclerView mRecyclerView;
     @Bind(R.id.loadingView)
     CommonLoadingView mLoadingView;
+    @Bind(R.id.distributionway_orderdetail_tv)
+    TextView distributionwayOrderdetailTv;
+    @Bind(R.id.distributiontime_orderdetail)
+    TextView distributiontimeOrderdetail;
 
     private MyOrderDetailsAdapter mAdapter;
-    private String orderNo="";
+    private String orderNo = "";
     private MyOrderListBean orderList;
-    private List<MyOrderListBean.Goods> dataList=new ArrayList<>();
+    private List<MyOrderListBean.Goods> dataList = new ArrayList<>();
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_my_order_details;
@@ -88,43 +94,47 @@ public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> 
 
     @Override
     protected void initView() {
-        Bundle bundle=getIntent().getExtras();
-        if(bundle!=null){
-            orderNo=bundle.getString("ORDERNO");
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            orderNo = bundle.getString("ORDERNO");
         }
         initAdapter();
-        load(orderNo,true);
+        load(orderNo, true);
     }
-    private void load(String orderNo,boolean isShowLoad){
-        Map<String,String> map=new HashMap<>();
-        map.put("uid",String.valueOf(AppConstant.UID));
-        map.put("orderno",orderNo);
-        mPresenter.loadOrderDetails(map,false);
+
+    private void load(String orderNo, boolean isShowLoad) {
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", String.valueOf(AppConstant.UID));
+        map.put("orderno", orderNo);
+        mPresenter.loadOrderDetails(map, false);
     }
 
 
-    private void initAdapter(){
+    private void initAdapter() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mRecyclerView.setNestedScrollingEnabled(false);
-        mAdapter=new MyOrderDetailsAdapter(this,dataList);
+        mAdapter = new MyOrderDetailsAdapter(this, dataList);
         mRecyclerView.setAdapter(mAdapter);
 
     }
-    private void init(){
-        if(orderList==null){
+
+    private void init() {
+        if (orderList == null) {
             return;
         }
-        String state[]=new String[]{"您还未支付该订单","买家已付款,待发货","商家已发货","交易成功","已评价"};
+        String state[] = new String[]{"您还未支付该订单", "买家已付款,待发货", "商家已发货", "交易成功", "已评价"};
         mTvOrderInfo.setText(state[orderList.getStatus()]);
 
         mTvOrderNo.setText(orderList.getOrderno());
-        MyOrderListBean.Address adress=orderList.getAddress();
-        if(adress!=null){
+        MyOrderListBean.Address adress = orderList.getAddress();
+        if (adress != null) {
             mTvConsignee.setText(adress.getLinkman());
             mTvConsigneePhone.setText(adress.getMobile());
             mTvShipAddress.setText(adress.getAddress());
         }
-        mTvOrderTime.setText(DateUtil.getDateToString1(orderList.getAddtime()*1000));
+        mTvOrderTime.setText(DateUtil.getDateToString1(orderList.getAddtime() * 1000));
+        mTvPayTime.setText(DateUtil.getDateToString1(orderList.getPaytime() * 1000));
+        distributiontimeOrderdetail.setText(DateUtil.getDateToString1(orderList.getShiptime() * 1000));
        /* int payment=orderList.getPayment();
         if(payment==2){
             mTvPayWay.setText("支付宝");
@@ -133,15 +143,15 @@ public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> 
         }else if(payment==5){
             mTvPayWay.setText("微信支付");
         }*/
-        int express_type=orderList.getExpress_id();
-        if(express_type==1){
+        int express_type = orderList.getExpress_id();
+        if (express_type == 1) {
             mTvTradelPaymentPay.setText("物流发货");
-        }else if(express_type==2){
+        } else if (express_type == 2) {
             mTvTradelPaymentPay.setText("快递发货");
-        }else if(express_type==3){
+        } else if (express_type == 3) {
             mTvTradelPaymentPay.setText(" 朗通快递");
         }
-        mTvTradelTotal.setText(orderList.getTotalprice()+"");
+        mTvTradelTotal.setText(orderList.getTotalprice() + "");
        /* if(payment==3){
             mTvPayTime.setText("货到付款");
         } else if(order.getPaytime()==0){
@@ -157,12 +167,13 @@ public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> 
 
         switchState(order.getStatus(),order.getPayment());*/
     }
+
     @Override
     public void loadoSuccess(List<MyOrderListBean> data) {
         dataList.clear();
-        orderList=data.get(0);
+        orderList = data.get(0);
         init();
-        dataList=orderList.getGoods();
+        dataList = orderList.getGoods();
         mAdapter.setNewData(dataList);
     }
 
@@ -214,5 +225,12 @@ public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> 
     @Override
     public void loadWeChatPayStateFail(String msg) {
 
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

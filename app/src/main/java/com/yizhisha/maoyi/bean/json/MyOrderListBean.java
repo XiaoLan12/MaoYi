@@ -19,7 +19,11 @@ public class MyOrderListBean implements Serializable{
     private String payorderno;
     private String express_no;
     private int express_id;
-    private String refundstatus;
+    private int refundstatus;
+    private int paytime;
+    private int shiptime;
+    private int receivetime;
+    private int donetime;
     private List<Goods> goods;
     //private Refund refund;
 
@@ -67,8 +71,24 @@ public class MyOrderListBean implements Serializable{
         return express_id;
     }
 
-    public String getRefundstatus() {
+    public int getRefundstatus() {
         return refundstatus;
+    }
+
+    public int getPaytime() {
+        return paytime;
+    }
+
+    public int getShiptime() {
+        return shiptime;
+    }
+
+    public int getReceivetime() {
+        return receivetime;
+    }
+
+    public int getDonetime() {
+        return donetime;
     }
 
     public List<Goods> getGoods() {

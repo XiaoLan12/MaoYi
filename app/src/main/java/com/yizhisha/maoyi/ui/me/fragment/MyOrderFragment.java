@@ -80,7 +80,10 @@ public class MyOrderFragment extends BaseFragment<MyOrderPresenter> implements M
     private void load(int type,boolean isShowLoad){
         Map<String,String> map=new HashMap<>();
         map.put("uid",String.valueOf(AppConstant.UID));
-        map.put("status", String.valueOf(type));
+        if(type!=-1){
+            map.put("status", String.valueOf(type));
+        }
+
         mPresenter.loadOrder(map,isShowLoad);
     }
     private void initAdapter(){

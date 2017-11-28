@@ -48,16 +48,16 @@ public class MyOrderAdapter extends BaseQuickAdapter<Object,BaseViewHolder> {
                 final OrderHeadBean order= (OrderHeadBean) item;
                 helper.setText(R.id.orderNumber_tv,order.getOrderno());
                 if(order.getStatus()==0){
-                        helper.setText(R.id.paystate_tv, "未付款");
+                        helper.setText(R.id.paystate_tv, "等待付款");
                 }else if(order.getStatus()==1){
-                    helper.setText(R.id.paystate_tv,"待发货");
+                    helper.setText(R.id.paystate_tv,"买家已经付款");
                 }else if(order.getStatus()==2){
-                    helper.setText(R.id.paystate_tv,"待收货");
+                    helper.setText(R.id.paystate_tv,"等待收货");
                 }else if(order.getStatus()==3){
-                    helper.setText(R.id.paystate_tv,"交易完成");
+                    helper.setText(R.id.paystate_tv,"交易成功");
                 }
                 else if(order.getStatus()==4){
-                    helper.setText(R.id.paystate_tv,"交易完成");
+                    helper.setText(R.id.paystate_tv,"交易关闭");
                 }
                 break;
             case ITEM_CONTENT:
@@ -71,7 +71,6 @@ public class MyOrderAdapter extends BaseQuickAdapter<Object,BaseViewHolder> {
                 helper.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.d("TTT","神额么么");
                         mOnItemClickListener.onItemClick(v,ITEM_CONTENT,helper.getLayoutPosition());
                     }
                 });
@@ -87,45 +86,49 @@ public class MyOrderAdapter extends BaseQuickAdapter<Object,BaseViewHolder> {
     private void switchState(int paystate, BaseViewHolder helper){
         switch (paystate){
             case 0:
+                helper.setVisible(R.id.refunds_tv,false);
                 helper.setVisible(R.id.cancel_the_order_tv,true);
                 helper.setVisible(R.id.confirm_goods_tv,false);
-                helper.setVisible(R.id.immediate_evaluation_tv,false);
-                helper.setVisible(R.id.additional_comments_tv,false);
+                helper.setVisible(R.id.order_track_tv,false);
                 helper.setVisible(R.id.againbuy_tv,false);
-
-                    helper.setVisible(R.id.immediate_payment_tv,true);
+                helper.setVisible(R.id.delete_order_tv,false);
+                helper.setVisible(R.id.immediate_payment_tv,true);
                 break;
             case 1:
-                helper.setVisible(R.id.cancel_the_order_tv,true);
+                helper.setVisible(R.id.refunds_tv,true);
+                helper.setVisible(R.id.cancel_the_order_tv,false);
                 helper.setVisible(R.id.immediate_payment_tv,false);
                 helper.setVisible(R.id.confirm_goods_tv,false);
-                helper.setVisible(R.id.immediate_evaluation_tv,false);
-                helper.setVisible(R.id.additional_comments_tv,false);
+                helper.setVisible(R.id.order_track_tv,false);
+                helper.setVisible(R.id.delete_order_tv,false);
                 helper.setVisible(R.id.againbuy_tv,false);
                 break;
             case 2:
+                helper.setVisible(R.id.refunds_tv,true);
                 helper.setVisible(R.id.cancel_the_order_tv,false);
                 helper.setVisible(R.id.immediate_payment_tv,false);
                 helper.setVisible(R.id.confirm_goods_tv,true);
-                helper.setVisible(R.id.immediate_evaluation_tv,false);
-                helper.setVisible(R.id.additional_comments_tv,false);
+                helper.setVisible(R.id.order_track_tv,true);
+                helper.setVisible(R.id.delete_order_tv,false);
                 helper.setVisible(R.id.againbuy_tv,false);
                 break;
             case 3:
+                helper.setVisible(R.id.refunds_tv,true);
                 helper.setVisible(R.id.cancel_the_order_tv,false);
                 helper.setVisible(R.id.immediate_payment_tv,false);
                 helper.setVisible(R.id.confirm_goods_tv,false);
-                helper.setVisible(R.id.immediate_evaluation_tv,true);
-                helper.setVisible(R.id.additional_comments_tv,false);
-                helper.setVisible(R.id.againbuy_tv,false);
+                helper.setVisible(R.id.order_track_tv,true);
+                helper.setVisible(R.id.delete_order_tv,false);
+                helper.setVisible(R.id.againbuy_tv,true);
                 break;
             case 4:
+                helper.setVisible(R.id.refunds_tv,false);
                 helper.setVisible(R.id.cancel_the_order_tv,false);
                 helper.setVisible(R.id.immediate_payment_tv,false);
                 helper.setVisible(R.id.confirm_goods_tv,false);
-                helper.setVisible(R.id.immediate_evaluation_tv,false);
-                helper.setVisible(R.id.additional_comments_tv,true);
-                helper.setVisible(R.id.againbuy_tv,false);
+                helper.setVisible(R.id.order_track_tv,false);
+                helper.setVisible(R.id.delete_order_tv,true);
+                helper.setVisible(R.id.againbuy_tv,true);
                 break;
         }
     }
