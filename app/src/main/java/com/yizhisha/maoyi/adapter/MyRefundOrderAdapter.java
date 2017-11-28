@@ -6,9 +6,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.util.MultiTypeDelegate;
 import com.yizhisha.maoyi.R;
-import com.yizhisha.maoyi.bean.json.MyOrderFootBean;
-import com.yizhisha.maoyi.bean.json.MyOrderGoodsBean;
-import com.yizhisha.maoyi.bean.json.MyOrderHeadBean;
+import com.yizhisha.maoyi.bean.json.MyOrderListBean;
+import com.yizhisha.maoyi.bean.json.OrderFootBean;
+import com.yizhisha.maoyi.bean.json.OrderHeadBean;
 
 /**
  * Created by Administrator on 2017/6/25 0025.
@@ -23,11 +23,11 @@ public class MyRefundOrderAdapter extends BaseQuickAdapter<Object,BaseViewHolder
         setMultiTypeDelegate(new MultiTypeDelegate<Object>() {
             @Override
             protected int getItemType(Object order) {
-                if(order instanceof MyOrderHeadBean) {
+                if(order instanceof OrderHeadBean) {
                     return ITEM_HEADER;
-                }else if(order instanceof MyOrderGoodsBean){
+                }else if(order instanceof MyOrderListBean.Goods){
                     return ITEM_CONTENT;
-                }else if(order instanceof MyOrderFootBean){
+                }else if(order instanceof OrderFootBean){
                     return ITEM_FOOTER;
                 }
                 return ITEM_CONTENT;
@@ -43,7 +43,7 @@ public class MyRefundOrderAdapter extends BaseQuickAdapter<Object,BaseViewHolder
     protected void convert(final BaseViewHolder helper, Object item) {
         switch (helper.getItemViewType()){
             case ITEM_HEADER:
-                final MyOrderHeadBean order= (MyOrderHeadBean) item;
+                final OrderHeadBean order= (OrderHeadBean) item;
                 helper.setText(R.id.orderNumber_tv,"213412443445545");
                 helper.setText(R.id.refundNumber_tv,"21341244344");
                 break;

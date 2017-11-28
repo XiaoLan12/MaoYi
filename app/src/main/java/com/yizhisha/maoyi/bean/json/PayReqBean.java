@@ -1,4 +1,4 @@
-package com.yizhisha.taosha.bean.json;
+package com.yizhisha.maoyi.bean.json;
 
 /**
  * Created by lan on 2017/8/21.

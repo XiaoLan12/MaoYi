@@ -1,7 +1,6 @@
-package com.yizhisha.taosha.bean.json;
+package com.yizhisha.maoyi.bean.json;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created by lan on 2017/7/6.
@@ -12,19 +11,10 @@ public class OrderFootBean implements Serializable{
     private String orderno;
     private int status;
     private int amount;
-    private String mobile_company;
     private String clinkman;
-    private String ccompany;
     private int commentstatus;
-    private int payment;
 
-    public int getPayment() {
-        return payment;
-    }
 
-    public void setPayment(int payment) {
-        this.payment = payment;
-    }
 
     public int getCommentstatus() {
         return commentstatus;
@@ -34,13 +24,6 @@ public class OrderFootBean implements Serializable{
         this.commentstatus = commentstatus;
     }
 
-    public String getMobile_company() {
-        return mobile_company;
-    }
-
-    public void setMobile_company(String mobile_company) {
-        this.mobile_company = mobile_company;
-    }
 
     public float getTotalprice() {
         return totalprice;
@@ -83,13 +66,6 @@ public class OrderFootBean implements Serializable{
         this.clinkman = clinkman;
     }
 
-    public String getCcompany() {
-        return ccompany;
-    }
-
-    public void setCcompany(String ccompany) {
-        this.ccompany = ccompany;
-    }
 
     @Override
     public String toString() {

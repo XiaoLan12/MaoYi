@@ -8,6 +8,7 @@ import com.yizhisha.maoyi.bean.json.GoodsListBean;
 import com.yizhisha.maoyi.bean.json.ListBean;
 import com.yizhisha.maoyi.bean.json.LoginBean;
 import com.yizhisha.maoyi.bean.json.MeInfoBean;
+import com.yizhisha.maoyi.bean.json.MyOrderBean;
 import com.yizhisha.maoyi.bean.json.OrderListBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
 import com.yizhisha.maoyi.bean.json.ShopcartListBean;
@@ -43,7 +44,7 @@ public interface ApiService {
 
     //个人资料修改
     @FormUrlEncoded
-    @POST("ios/ucenter/profile_save/")
+    @POST("app/ucenter/profile_save/")
     Observable<RequestStatusBean> changeUserInfo(@FieldMap Map<String, String> map);
 
     //收货地址列表
@@ -97,14 +98,18 @@ public interface ApiService {
     @GET("app/ucenter/shopcartDelete")
     Observable<RequestStatusBean> deleteShoppCart(@QueryMap  Map<String, String> param);
 
-    //获得订单
+    //获得订单列表
+    @GET("app/order/orderList")
+    Observable<MyOrderBean> getOrderList(@QueryMap  Map<String, String> param);
+
+    //查询订单
     @FormUrlEncoded
     @POST("app/order/orderSelect")
-    Observable<OrderListBean> getOrderList(@FieldMap Map<String,String> map);
+    Observable<OrderListBean> queryOrderList(@FieldMap Map<String,String> map);
 
     //获得订单详情
-    @GET("ios/order/detail")
-    Observable<OrderListBean> getOrderDetails(@QueryMap Map<String,String> map);
+    @GET("app/order/orderDetail")
+    Observable<MyOrderBean> getOrderDetails(@QueryMap Map<String,String> map);
 
     //取消订单
     @FormUrlEncoded

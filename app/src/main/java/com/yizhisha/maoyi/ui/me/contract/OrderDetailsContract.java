@@ -1,13 +1,9 @@
-package com.yizhisha.taosha.ui.me.contract;
-
-import com.yizhisha.taosha.base.BasePresenter;
-import com.yizhisha.taosha.base.BaseView;
-import com.yizhisha.taosha.bean.json.CollectListBean;
-import com.yizhisha.taosha.bean.json.Order;
-import com.yizhisha.taosha.bean.json.OrderSureBean;
-import com.yizhisha.taosha.bean.json.PayReqBean;
-import com.yizhisha.taosha.bean.json.RequestStatusBean;
-import com.yizhisha.taosha.bean.json.WeChatPayStateBean;
+package com.yizhisha.maoyi.ui.me.contract;
+import com.yizhisha.maoyi.base.BasePresenter;
+import com.yizhisha.maoyi.base.BaseView;
+import com.yizhisha.maoyi.bean.json.MyOrderListBean;
+import com.yizhisha.maoyi.bean.json.PayReqBean;
+import com.yizhisha.maoyi.bean.json.WeChatPayStateBean;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +14,7 @@ import java.util.Map;
 
 public interface OrderDetailsContract {
     interface View extends BaseView {
-        void loadoSuccess(List<Order>  data);
+        void loadoSuccess(List<MyOrderListBean> data);
         void changePayWaySuccess(String info);
         void sureGoodsSuuccess(String msg);
         void cancleOrder(String msg);
@@ -32,8 +28,7 @@ public interface OrderDetailsContract {
 
         void showEmpty();
 
-        void loadFail(String msg);
-        void cancelFail(String msg);
+        void loadFail(int code,String msg);
         void loadWeChatPayStateFail(String msg);
     }
 
@@ -45,9 +40,6 @@ public interface OrderDetailsContract {
         public abstract void cancleOrder(Map<String, String> param);
         public abstract void weChatPay(Map<String, String> param);
         public abstract void loadWeChatPayState(Map<String, String> param);
-        @Override
-        public void onStart() {
 
-        }
     }
 }

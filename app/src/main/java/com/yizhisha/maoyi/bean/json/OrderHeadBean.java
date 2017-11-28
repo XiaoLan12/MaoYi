@@ -1,23 +1,15 @@
-package com.yizhisha.taosha.bean.json;
+package com.yizhisha.maoyi.bean.json;
 
 /**
  * Created by lan on 2017/7/6.
  */
 
-public class OrderHeadBean{
+public class OrderHeadBean {
     private int status;
-    private String company;
 
     private String orderno;
-    private int payment;
 
-    public int getPayment() {
-        return payment;
-    }
 
-    public void setPayment(int payment) {
-        this.payment = payment;
-    }
 
     public String getOrderno() {
         return orderno;
@@ -35,11 +27,5 @@ public class OrderHeadBean{
         this.status = status;
     }
 
-    public String getCompany() {
-        return company;
-    }
 
-    public void setCompany(String company) {
-        this.company = company;
-    }
 }

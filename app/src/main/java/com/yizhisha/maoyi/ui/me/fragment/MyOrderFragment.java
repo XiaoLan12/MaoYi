@@ -1,26 +1,28 @@
 package com.yizhisha.maoyi.ui.me.fragment;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.adapter.MyOrderAdapter;
 import com.yizhisha.maoyi.base.BaseFragment;
-import com.yizhisha.maoyi.bean.json.MyOrderFootBean;
-import com.yizhisha.maoyi.bean.json.MyOrderGoodsBean;
-import com.yizhisha.maoyi.bean.json.MyOrderHeadBean;
+import com.yizhisha.maoyi.bean.DataHelper;
+import com.yizhisha.maoyi.bean.json.MyOrderListBean;
 import com.yizhisha.maoyi.ui.me.activity.ApplyRefundActivity;
 import com.yizhisha.maoyi.ui.me.activity.MyOrderDetailsActivity;
-import com.yizhisha.maoyi.ui.me.activity.OrderTrackingActivity;
+import com.yizhisha.maoyi.ui.me.contract.MyOrderContract;
+import com.yizhisha.maoyi.ui.me.presenter.MyOrderPresenter;
 import com.yizhisha.maoyi.utils.RescourseUtil;
 import com.yizhisha.maoyi.widget.CommonLoadingView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +34,7 @@ import butterknife.Bind;
  * Created by lan on 2017/9/25.
  */
 
-public class MyOrderFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
+public class MyOrderFragment extends BaseFragment<MyOrderPresenter> implements MyOrderContract.View,SwipeRefreshLayout.OnRefreshListener{
     @Bind(R.id.loadingView)
     CommonLoadingView mLoadingView;
     @Bind(R.id.recyclerview)
@@ -43,11 +45,24 @@ public class MyOrderFragment extends BaseFragment implements SwipeRefreshLayout.
     private MyOrderAdapter mAdapter;
     private int mType=0;
     private ArrayList<Object> dataList=new ArrayList<>();
+    // 标志位，标志已经初始化完成。
+    private boolean isPrepared;
 
+    private final static int RESULT_CODE=102;
     public static MyOrderFragment getInstance(int type) {
         MyOrderFragment sf = new MyOrderFragment();
         sf.mType = type;
         return sf;
+    }
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            if(isPrepared){
+                onRefresh();
+            }
+
+        }
     }
     @Override
     protected int getLayoutId() {
@@ -55,10 +70,18 @@ public class MyOrderFragment extends BaseFragment implements SwipeRefreshLayout.
     }
     @Override
     protected void initView() {
-        dataList.addAll(getDataAfterHandle());
-        mLoadingView.loadSuccess();
+        isPrepared=true;
         initAdapter();
-        mAdapter.setNewData(dataList);
+        if(mAdapter.getData().size()<=0){
+            load(mType,true);
+        }
+
+    }
+    private void load(int type,boolean isShowLoad){
+        Map<String,String> map=new HashMap<>();
+        map.put("uid",String.valueOf(AppConstant.UID));
+        map.put("status", String.valueOf(type));
+        mPresenter.loadOrder(map,isShowLoad);
     }
     private void initAdapter(){
         mSwipeRefreshLayout.setColorSchemeColors(RescourseUtil.getColor(R.color.red),
@@ -69,17 +92,18 @@ public class MyOrderFragment extends BaseFragment implements SwipeRefreshLayout.
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mAdapter=new MyOrderAdapter();
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
-            }
-        });
         mAdapter.setOnItemTypeClickListener(new MyOrderAdapter.OnItemTypeClickListener() {
             @Override
             public void onItemClick(View view, int type, int position) {
-                if(type==2) {
-                    startActivity(MyOrderDetailsActivity.class);
+                if(type==2){
+                    String  orderno;
+                    if(dataList.get(position) instanceof MyOrderListBean.Goods) {
+                        MyOrderListBean.Goods goods= (MyOrderListBean.Goods) dataList.get(position);
+                        orderno=goods.getOrderno();
+                        Bundle bundle=new Bundle();
+                        bundle.putString("ORDERNO",orderno);
+                        startActivityForResult(MyOrderDetailsActivity.class,bundle,RESULT_CODE);
+                    }
                 }
             }
         });
@@ -98,38 +122,65 @@ public class MyOrderFragment extends BaseFragment implements SwipeRefreshLayout.
 
     @Override
     public void onRefresh() {
+        load(mType,false);
+    }
+
+    @Override
+    public void loadOrderSuccess(List<MyOrderListBean> data) {
+        dataList.clear();
+        mSwipeRefreshLayout.setRefreshing(false);
+        dataList= DataHelper.getDataAfterHandle(data);
+        mAdapter.setNewData(dataList);
+    }
+
+    @Override
+    public void sureGoodsSuuccess(String msg) {
 
     }
 
-    /**
-     * List<Object>有三种数据类型：
-     * 1、GoodsOrderInfo 表示每个小订单的头部信息（订单号、订单状态、店铺名称）
-     * 2、OrderGoodsItem 表示小订单中的商品
-     * 3、OrderPayInfo 表示大订单的支付信息（金额、订单状态）
-     * @return
-     */
-    public static ArrayList<Object> getDataAfterHandle() {
+    @Override
+    public void cancleOrder(String msg) {
 
-        ArrayList<Object> dataList = new ArrayList<Object>();
+    }
 
-        //遍历每一张大订单
-            //大订单支付的金额核定单状态
-            MyOrderHeadBean orderHeadBean = new MyOrderHeadBean();
-            orderHeadBean.setStatus(1);
-            orderHeadBean.setCompany("天知道，你个2");
-            orderHeadBean.setPayment(1);
-            dataList.add(orderHeadBean);
+    @Override
+    public void showLoading() {
+        mLoadingView.load();
+    }
 
+    @Override
+    public void hideLoading() {
+        mLoadingView.loadSuccess();
+    }
 
-            List<MyOrderGoodsBean> goodses=new ArrayList<>();
-            //遍历每个大订单里面的小订单
-            for (int i=0;i<2;i++) {
-                MyOrderGoodsBean goodsBean=new MyOrderGoodsBean();
-                dataList.add(goodsBean);
-            }
-            MyOrderFootBean orderFootBean=new MyOrderFootBean();
-            orderFootBean.setStatus(1);
-            dataList.add(orderFootBean);
-        return dataList;
+    @Override
+    public void showEmpty() {
+        dataList.clear();
+        mSwipeRefreshLayout.setRefreshing(false);
+        mAdapter.setNewData(dataList);
+        mLoadingView.loadSuccess(true);
+    }
+
+    @Override
+    public void loadFail(int code, String msg) {
+        if(code==0){
+
+        }else{
+            dataList.clear();
+            mSwipeRefreshLayout.setRefreshing(false);
+            mAdapter.setNewData(dataList);
+            mLoadingView.loadError();
+            mLoadingView.setLoadingHandler(new CommonLoadingView.LoadingHandler() {
+                @Override
+                public void doRequestData() {
+                    load(mType,true);
+                }
+            });
+        }
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        onRefresh();
     }
 }

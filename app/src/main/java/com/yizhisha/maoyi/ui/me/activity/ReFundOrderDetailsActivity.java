@@ -1,18 +1,15 @@
 package com.yizhisha.maoyi.ui.me.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.yizhisha.maoyi.R;
-import com.yizhisha.maoyi.adapter.MyOrderDetailsAdapter;
 import com.yizhisha.maoyi.adapter.OrderInfoAdapter;
 import com.yizhisha.maoyi.adapter.RefundOrderDetailsAdapter;
 import com.yizhisha.maoyi.base.BaseActivity;
 import com.yizhisha.maoyi.base.BaseToolbar;
-import com.yizhisha.maoyi.bean.json.MyOrderGoodsBean;
+import com.yizhisha.maoyi.bean.json.MyOrderListBean;
 import com.yizhisha.maoyi.bean.json.OrderInfoBean;
 import com.yizhisha.maoyi.widget.CommonLoadingView;
 
@@ -32,7 +29,7 @@ public class ReFundOrderDetailsActivity extends BaseActivity {
     CommonLoadingView mLoadingView;
 
     private RefundOrderDetailsAdapter mAdapter;
-    private List<MyOrderGoodsBean> dataList=new ArrayList<>();
+    private List<MyOrderListBean.Goods> dataList=new ArrayList<>();
 
     private OrderInfoAdapter mAdapter1;
     private List<OrderInfoBean> dataList1=new ArrayList<>();
@@ -69,7 +66,7 @@ public class ReFundOrderDetailsActivity extends BaseActivity {
 
     }
     private void data(){
-            MyOrderGoodsBean goodsBean=new MyOrderGoodsBean();
+        MyOrderListBean.Goods goodsBean=new MyOrderListBean().new Goods();
             dataList.add(goodsBean);
     }
     private void data1(){

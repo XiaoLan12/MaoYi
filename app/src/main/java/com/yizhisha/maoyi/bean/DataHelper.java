@@ -1,14 +1,8 @@
-package com.yizhisha.taosha.bean;
+package com.yizhisha.maoyi.bean;
+import com.yizhisha.maoyi.bean.json.MyOrderListBean;
+import com.yizhisha.maoyi.bean.json.OrderFootBean;
+import com.yizhisha.maoyi.bean.json.OrderHeadBean;
 
-import com.yizhisha.taosha.bean.json.CommentListBean;
-import com.yizhisha.taosha.bean.json.Goods;
-import com.yizhisha.taosha.bean.json.MyCommentHeadBean;
-import com.yizhisha.taosha.bean.json.MyCommentListBean;
-import com.yizhisha.taosha.bean.json.Order;
-import com.yizhisha.taosha.bean.json.OrderFootBean;
-import com.yizhisha.taosha.bean.json.OrderHeadBean;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,23 +20,22 @@ public class DataHelper {
      * @param resultList
      * @return
      */
-    public static ArrayList<Object> getDataAfterHandle(List<Order> resultList) {
+    public static ArrayList<Object> getDataAfterHandle(List<MyOrderListBean> resultList) {
 
         ArrayList<Object> dataList = new ArrayList<Object>();
 
         //遍历每一张大订单
-        for (Order order : resultList) {
+        for (MyOrderListBean order : resultList) {
             //大订单支付的金额核定单状态
             OrderHeadBean orderHeadBean = new OrderHeadBean();
             orderHeadBean.setStatus(order.getStatus());
-            orderHeadBean.setCompany(order.getCcompany());
-            orderHeadBean.setPayment(order.getPayment());
+            orderHeadBean.setOrderno(order.getOrderno());
             dataList.add(orderHeadBean);
 
 
-            List<Goods> goodses=order.getGoods();
+            List<MyOrderListBean.Goods> goodses=order.getGoods();
             //遍历每个大订单里面的小订单
-            for (Goods orderGoodsItem : goodses) {
+            for (MyOrderListBean.Goods orderGoodsItem : goodses) {
                 orderGoodsItem.setOrderno(order.getOrderno());
                 dataList.add(orderGoodsItem);
             }
@@ -51,11 +44,6 @@ public class DataHelper {
             orderFootBean.setStatus(order.getStatus());
             orderFootBean.setAmount(goodses.size());
             orderFootBean.setOrderno(order.getOrderno());
-            orderFootBean.setPayment(order.getPayment());
-            orderFootBean.setMobile_company(order.getMobile_company());
-            orderFootBean.setClinkman(order.getClinkman());
-            orderFootBean.setCcompany(order.getCcompany());
-
             dataList.add(orderFootBean);
         }
         return dataList;
@@ -68,7 +56,7 @@ public class DataHelper {
      * @param resultList
      * @return
      */
-    public static ArrayList<Object> getCommentDataAfterHandle(List<MyCommentListBean> resultList) {
+   /* public static ArrayList<Object> getCommentDataAfterHandle(List<MyCommentListBean> resultList) {
         String orderno="";
         ArrayList<Object> dataList = new ArrayList<Object>();
 
@@ -102,5 +90,5 @@ public class DataHelper {
 
         }
         return dataList;
-    }
+    }*/
 }

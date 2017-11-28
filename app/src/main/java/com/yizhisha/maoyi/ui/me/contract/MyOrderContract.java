@@ -1,10 +1,8 @@
-package com.yizhisha.taosha.ui.me.contract;
+package com.yizhisha.maoyi.ui.me.contract;
 
-import com.yizhisha.taosha.base.BasePresenter;
-import com.yizhisha.taosha.base.BaseView;
-import com.yizhisha.taosha.bean.json.FreeSampleBean;
-import com.yizhisha.taosha.bean.json.MyOrderListBean;
-import com.yizhisha.taosha.bean.json.Order;
+import com.yizhisha.maoyi.base.BasePresenter;
+import com.yizhisha.maoyi.base.BaseView;
+import com.yizhisha.maoyi.bean.json.MyOrderListBean;
 
 import java.util.List;
 import java.util.Map;
@@ -15,19 +13,15 @@ import java.util.Map;
 
 public interface MyOrderContract {
     interface View extends BaseView {
-        void loadOrderSuccess(List<Order> data);
-
+        void loadOrderSuccess(List<MyOrderListBean> data);
         void sureGoodsSuuccess(String msg);
-
         void cancleOrder(String msg);
-
         void showLoading();
-
         void hideLoading();
 
         void showEmpty();
-        void loadFail(String msg);
-        void cancelFail(String msg);
+        void loadFail(int code,String msg);
+
     }
 
     abstract class Presenter extends BasePresenter<View> {
@@ -36,10 +30,5 @@ public interface MyOrderContract {
         public abstract void cancleOrder(Map<String, String> param);
         public abstract void sureGoods(Map<String, String> param);
 
-
-        @Override
-        public void onStart() {
-
-        }
     }
 }

@@ -1,13 +1,18 @@
 package com.yizhisha.maoyi.api;
 
+import com.yizhisha.maoyi.bean.json.CollectListBean;
 import com.yizhisha.maoyi.bean.json.DailyBean;
+import com.yizhisha.maoyi.bean.json.FootpringBean;
 import com.yizhisha.maoyi.bean.json.GoodsDetailBean;
 import com.yizhisha.maoyi.bean.json.GoodsListBean;
 import com.yizhisha.maoyi.bean.json.ListBean;
 import com.yizhisha.maoyi.bean.json.LoginBean;
 import com.yizhisha.maoyi.bean.json.MeInfoBean;
+import com.yizhisha.maoyi.bean.json.MyOrderBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
+import com.yizhisha.maoyi.bean.json.ShopcartListBean;
 import com.yizhisha.maoyi.bean.json.SimilarRecommenBean;
+import com.yizhisha.maoyi.bean.json.SingleShopCartBean;
 import com.yizhisha.maoyi.bean.json.SortedListBean;
 import com.yizhisha.maoyi.bean.json.SpecialDetailBean;
 import com.yizhisha.maoyi.bean.json.WeekListBean;
@@ -110,6 +115,14 @@ public class Api {
     //删除购物车
     public Observable<RequestStatusBean> deleteShoppCart(Map<String,String> map){
         return service.deleteShoppCart(map);
+    }
+    //订单列表
+    public Observable<MyOrderBean> loadOrderList(Map<String,String> map){
+        return service.getOrderList(map);
+    }
+    //订单详情
+    public Observable<MyOrderBean> loadOrderDetail(Map<String,String> map){
+        return service.getOrderDetails(map);
     }
     public Observable<LoginBean> login(){
         return service.login();

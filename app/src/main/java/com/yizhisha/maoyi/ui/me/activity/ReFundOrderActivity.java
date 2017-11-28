@@ -1,20 +1,15 @@
 package com.yizhisha.maoyi.ui.me.activity;
 
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yizhisha.maoyi.R;
-import com.yizhisha.maoyi.adapter.MyOrderAdapter;
 import com.yizhisha.maoyi.adapter.MyRefundOrderAdapter;
 import com.yizhisha.maoyi.base.BaseActivity;
-import com.yizhisha.maoyi.bean.json.MyOrderFootBean;
-import com.yizhisha.maoyi.bean.json.MyOrderGoodsBean;
-import com.yizhisha.maoyi.bean.json.MyOrderHeadBean;
+import com.yizhisha.maoyi.bean.json.MyOrderListBean;
+import com.yizhisha.maoyi.bean.json.OrderFootBean;
 import com.yizhisha.maoyi.utils.RescourseUtil;
 import com.yizhisha.maoyi.widget.CommonLoadingView;
 
@@ -84,15 +79,15 @@ public class ReFundOrderActivity extends BaseActivity implements SwipeRefreshLay
         for(int i=0;i<4;i++) {
             //遍历每一张大订单
             //大订单支付的金额核定单状态
-            MyOrderHeadBean orderHeadBean = new MyOrderHeadBean();
+            MyOrderListBean.Goods orderHeadBean = new MyOrderListBean().new Goods();
             dataList.add(orderHeadBean);
 
 
-            List<MyOrderGoodsBean> goodses = new ArrayList<>();
+            List<MyOrderListBean> goodses = new ArrayList<>();
             //遍历每个大订单里面的小订单
-            MyOrderGoodsBean goodsBean = new MyOrderGoodsBean();
+            MyOrderListBean.Goods goodsBean = new MyOrderListBean().new Goods();
             dataList.add(goodsBean);
-            MyOrderFootBean orderFootBean = new MyOrderFootBean();
+            OrderFootBean orderFootBean = new OrderFootBean();
             dataList.add(orderFootBean);
         }
             return dataList;

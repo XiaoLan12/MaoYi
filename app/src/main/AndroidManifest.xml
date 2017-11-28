@@ -49,6 +49,7 @@
         <activity android:name=".ui.me.activity.AboutUsActivity" />
         <activity android:name=".ui.me.activity.ReFundOrderActivity" />
         <activity android:name=".ui.me.activity.ReFundOrderDetailsActivity" />
+        <activity android:name=".ui.me.activity.MyAddressActivity"/>
         <activity
             android:name=".ui.me.activity.ApplyRefundActivity"
             android:screenOrientation="portrait"
