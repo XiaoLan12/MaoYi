@@ -2,7 +2,6 @@ package com.yizhisha.maoyi.ui.me.activity;
 
 import android.Manifest;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -85,7 +84,7 @@ public class AddCommentActivity extends BaseActivity<AddCommentPresenter>
     private int serveNum;
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_add_comment;
+        return R.layout.activity_add_comment1;
     }
     @Override
     protected void initToolBar() {
