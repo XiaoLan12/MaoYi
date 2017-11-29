@@ -26,6 +26,8 @@ import com.yizhisha.maoyi.bean.json.SimilarRecommenBean;
 import com.yizhisha.maoyi.bean.json.WeekListBean;
 import com.yizhisha.maoyi.ui.home.contract.ProductDetailContract;
 import com.yizhisha.maoyi.ui.home.presenter.ProductDetailPresenter;
+import com.yizhisha.maoyi.utils.GlideRoundTransform;
+import com.yizhisha.maoyi.utils.GlideUtil;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -192,6 +194,10 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
                 if(goodsProductBean.getStyle()==null){
                     return;
                 }
+                if(popupWindow!=null){
+                    popupWindow.showAtLocation(ProductDetailActivity.this.findViewById(R.id.ll_select_color_size), Gravity.BOTTOM,0,0);
+                    return;
+                }
                 List<GoodsStyleBean> style=new ArrayList<>();
                 style=goodsProductBean.getStyle();
                 List<String> color=new ArrayList<>();
@@ -200,6 +206,8 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
                     color.add(goodsProductBean.getStyle().get(i).getColor());
                 }
                 View contentView= LayoutInflater.from(this).inflate(R.layout.popuwindow_product_detail_select, null);
+                ImageView imageView3=contentView.findViewById(R.id.imageView3);
+                GlideUtil.getInstance().LoadContextRoundBitmap(ProductDetailActivity.this,AppConstant.PRUDUCT_IMG_URL + goodsProductBean.getLitpic(),imageView3,6);
                 final LayoutInflater mInflater = LayoutInflater.from(this);
               final  TagFlowLayout tf_size=(TagFlowLayout)contentView.findViewById(R.id.tf_size);
                 final  TagFlowLayout tf_color=(TagFlowLayout)contentView.findViewById(R.id.tf_color);
