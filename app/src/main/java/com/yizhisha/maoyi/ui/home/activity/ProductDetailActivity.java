@@ -204,6 +204,12 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
               final  TagFlowLayout tf_size=(TagFlowLayout)contentView.findViewById(R.id.tf_size);
                 final  TagFlowLayout tf_color=(TagFlowLayout)contentView.findViewById(R.id.tf_color);
 
+                String a=goodsProductBean.getStyle().get(0).getSize();
+                String[] b=a.split(",");
+                size.clear();
+                for(int j=0;j<b.length;j++) {
+                    size.add(b[j]);
+                }
                 //尺码
             final    TagAdapter tagAdapter_size=new TagAdapter<String>(size){
                     @Override
@@ -257,10 +263,8 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
                         size.clear();
                         for(int j=0;j<b.length;j++){
                         size.add(b[j]);
-                            tagAdapter_size.notifyDataChanged();
-//                            tv_si
-
                     }
+                        tagAdapter_size.notifyDataChanged();
 //                        Toast.makeText(ProductDetailActivity.this, mVals[position]+"", Toast.LENGTH_SHORT).show();
                         //view.setVisibility(View.GONE);
                         return true;
