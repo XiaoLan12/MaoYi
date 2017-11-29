@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:textColor="@color/common_h"
+            android:textSize="@dimen/font_small"
             android:text="订单号:" />
         <TextView
             android:id="@+id/orderNumber_tv"
@@ -25,17 +26,20 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:textColor="@color/common_h"
+            android:textSize="@dimen/font_small"
             tools:text="234513512" />
         </LinearLayout>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/refundNumberTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/common_h"
+                android:textSize="@dimen/font_small"
                 android:text="退款单号:" />
             <TextView
                 android:id="@+id/refundNumber_tv"
@@ -43,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:textColor="@color/common_h"
+                android:textSize="@dimen/font_small"
                 tools:text="234513512545253" />
         </LinearLayout>
 </LinearLayout>

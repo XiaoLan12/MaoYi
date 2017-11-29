@@ -1,5 +1,6 @@
 package com.yizhisha.maoyi.ui.me.activity;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -33,6 +34,7 @@ public class ReFundOrderDetailsActivity extends BaseActivity {
 
     private OrderInfoAdapter mAdapter1;
     private List<OrderInfoBean> dataList1=new ArrayList<>();
+    private String orderNo="";
     @Override
     protected int getLayoutId() {
         return R.layout.activity_re_fund_order_details;
@@ -48,6 +50,10 @@ public class ReFundOrderDetailsActivity extends BaseActivity {
     }
     @Override
     protected void initView() {
+        Bundle bundle=getIntent().getExtras();
+        if(bundle!=null){
+            orderNo=bundle.getString("ORDERID","");
+        }
         mLoadingView.loadSuccess();
         data();
         data1();

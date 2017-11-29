@@ -12,7 +12,7 @@ public class MyOrderListBean implements Serializable{
     private String orderno;
     private int status;
     private int amount;
-    private float totalprice;
+    private double totalprice;
     private int addtime;
     private Address address;
     private String address_id;
@@ -43,7 +43,7 @@ public class MyOrderListBean implements Serializable{
         return amount;
     }
 
-    public float getTotalprice() {
+    public double getTotalprice() {
         return totalprice;
     }
 
@@ -164,7 +164,7 @@ public class MyOrderListBean implements Serializable{
         private String title;
         private String price;
         private String amount;
-        private String totalprice;
+        private double totalprice;
         private String litpic;
         private String detail;
         private String remark;
@@ -197,10 +197,10 @@ public class MyOrderListBean implements Serializable{
             return amount;
         }
 
-        public void setTotalprice(String totalprice) {
+        public void setTotalprice(double totalprice) {
             this.totalprice = totalprice;
         }
-        public String getTotalprice() {
+        public double getTotalprice() {
             return totalprice;
         }
 

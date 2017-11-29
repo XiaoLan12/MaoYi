@@ -12,7 +12,8 @@ import com.yizhisha.maoyi.base.ActivityManager;
 import com.yizhisha.maoyi.base.BaseActivity;
 import com.yizhisha.maoyi.base.BaseToolbar;
 import com.yizhisha.maoyi.ui.me.fragment.CouponsFragment;
-import com.yizhisha.maoyi.ui.me.fragment.MyRatingFragment;
+import com.yizhisha.maoyi.ui.me.fragment.HaveEvaluationFragment;
+import com.yizhisha.maoyi.ui.me.fragment.ToEvaluationFragment;
 
 import java.util.ArrayList;
 
@@ -44,9 +45,9 @@ public class MyRatingActivity extends BaseActivity {
     }
     @Override
     protected void initView() {
-        for (int type : mType) {
-            mFragments.add(MyRatingFragment.getInstance(type));
-        }
+
+            mFragments.add(ToEvaluationFragment.getInstance());
+            mFragments.add(HaveEvaluationFragment.getInstance());
         slidingTabLayout.setViewPager(viewPager, mTitles, this, mFragments);
     }
 }

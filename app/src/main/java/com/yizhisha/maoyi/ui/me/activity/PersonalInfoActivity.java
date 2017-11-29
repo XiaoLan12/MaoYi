@@ -1,5 +1,6 @@
 package com.yizhisha.maoyi.ui.me.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,11 +17,16 @@ import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.base.BaseActivity;
 import com.yizhisha.maoyi.base.BaseToolbar;
+import com.yizhisha.maoyi.base.rx.RxBus;
+import com.yizhisha.maoyi.bean.json.MeInfoBean;
+import com.yizhisha.maoyi.bean.json.UserHeadBean;
 import com.yizhisha.maoyi.common.dialog.DialogInterface;
 import com.yizhisha.maoyi.common.dialog.NormalSelectionDialog;
+import com.yizhisha.maoyi.event.UserHeadEvent;
 import com.yizhisha.maoyi.ui.ClipHeaderActivity;
 import com.yizhisha.maoyi.ui.me.contract.PersonalInfoContract;
 import com.yizhisha.maoyi.ui.me.presenter.PersonalInfoPresenter;
+import com.yizhisha.maoyi.utils.GlideUtil;
 import com.yizhisha.maoyi.utils.ImageUtils;
 import com.yizhisha.maoyi.utils.RescourseUtil;
 import com.yizhisha.maoyi.utils.ToastUtil;
@@ -43,7 +49,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter> im
 
     @Bind(R.id.toolbar)
     BaseToolbar toolbar;
-    @Bind(R.id.headIv)
+    @Bind(R.id.head_iv)
     ImageView headIv;
     @Bind(R.id.nickname_tv)
     TextView nicknameTv;
@@ -111,12 +117,22 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter> im
 
     @Override
     protected void initView() {
+        MeInfoBean meInfoBean=AppConstant.meInfoBean;
+        if(meInfoBean!=null){
+            nicknameTv.setText(meInfoBean.getNickname());
+            sexTv.setText(meInfoBean.getSex());
+            GlideUtil.getInstance().LoadContextCircleBitmap(this,AppConstant.HEAD_IMG_URL+meInfoBean.getAvatar(),headIv,
+                    R.drawable.icon_head_normal,R.drawable.icon_head_normal);
 
+        }
     }
-    private void load(Map<String,String> map){
+//    private void load(Map<String,String> map){
+//        mPresenter.changePersonalInfo(map);
+//    }
+    private void changeInfo(Map<String,String> map){
         mPresenter.changePersonalInfo(map);
     }
-    @OnClick({R.id.nickname_rl, R.id.sex_rl})
+    @OnClick({R.id.nickname_rl, R.id.sex_rl,R.id.userHead_rl})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -140,13 +156,60 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter> im
                                 Map<String,String> map=new HashMap<>();
                                 map.put("uid", String.valueOf(AppConstant.UID));
                                 map.put("sex", sexTv.getText().toString());
-                                load(map);
+                                changeInfo(map);
                                 dialog.dismiss();
                             }
                         }).setTouchOutside(true)
                         .build();
                 dialog.setData(sexDatas);
                 dialog.show();
+                break;
+            case R.id.userHead_rl:
+                List<String> headData=new ArrayList<>();
+                headData.add("相机");
+                headData.add("相册");
+                NormalSelectionDialog chaHeaddialog=new NormalSelectionDialog.Builder(this)
+                        .setItemHeight(45)
+                        .setItemTextColor(R.color.blue)
+                        .setItemTextSize(14)
+                        .setItemWidth(0.7f)
+                        .setCancleButtonText("取消")
+                        .setOnItemListener(new DialogInterface.OnItemClickListener<NormalSelectionDialog>() {
+                            @Override
+                            public void onItemClick(NormalSelectionDialog dialog, View button, int position) {
+                                switch (position){
+                                    case 0:
+                                        performCodeWithPermission("软件更新需要您提供浏览存储的权限", new BaseActivity.PermissionCallback() {
+                                            @Override
+                                            public void hasPermission() {
+                                                startCamera();
+                                            }
+                                            @Override
+                                            public void noPermission() {
+                                            }
+                                        }, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
+                                        dialog.dismiss();
+                                        break;
+                                    case 1:
+                                        performCodeWithPermission("软件更新需要您提供浏览存储的权限", new BaseActivity.PermissionCallback() {
+                                            @Override
+                                            public void hasPermission() {
+                                                startAlbum();
+                                            }
+                                            @Override
+                                            public void noPermission() {
+                                            }
+                                        }, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                                        dialog.dismiss();
+                                        break;
+                                }
+
+                            }
+                        }).setTouchOutside(true)
+                        .build();
+
+                chaHeaddialog.setData(headData);
+                chaHeaddialog.show();
                 break;
         }
     }
@@ -190,18 +253,15 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter> im
 
     private void setPicToView(Intent picdata) {
         Uri uri = picdata.getData();
-
         if (uri == null) {
             return;
         }
         String path = ImageUtils.getRealFilePathFromUri(getApplicationContext(), uri);
-
         uploadPic(path);
     }
-
     //上传头像
     private void uploadPic(String path) {
-       /* if (path != null) {
+        if (path != null) {
             File file = new File(path);
             RequestBody requestFile =
                     RequestBody.create(MediaType.parse("multipart/form-data"), file);
@@ -209,15 +269,35 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter> im
                     MultipartBody.Part.createFormData("Filedata", file.getName(), requestFile);
             Map<String, RequestBody> map = new HashMap<>();
             RequestBody uidBody = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(AppConstant.UID));
-         *//*   RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            map.put("Filedata", fileBody);*//*
+            RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            map.put("Filedata", fileBody);
             mPresenter.changeHeadSuccess(uidBody,body);
-        }*/
+        }
     }
     @Override
     public void changeSuccess(String result) {
         ToastUtil.showShortToast(result);
     }
+
+    @Override
+    public void changeHeadSuccess(UserHeadBean msg) {
+        if(AppConstant.meInfoBean!=null) {
+            AppConstant.meInfoBean.setAvatar(msg.getAvatar());
+        }
+        GlideUtil.getInstance().LoadContextCircleBitmap(this,AppConstant.HEAD_IMG_URL+msg.getAvatar(),headIv,
+                R.drawable.icon_head_normal,R.drawable.icon_head_normal);
+        RxBus.$().postEvent(new UserHeadEvent());
+        ToastUtil.showbottomShortToast(msg.getInfo());
+    }
+
+    @Override
+    public void loadHeadSuccess(MeInfoBean info) {
+        AppConstant.meInfoBean=info;
+        sexTv.setText(info.getSex());
+        nicknameTv.setText(info.getNickname());
+        RxBus.$().postEvent(new UserHeadEvent());
+    }
+
     @Override
     public void loadFail(String msg) {
         ToastUtil.showShortToast(msg);
@@ -228,12 +308,35 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter> im
         switch (requestCode){
             case NICKNAME_REQUEST:
                 if(resultCode==NICKNAME_RESULT){
-                    nicknameTv.setText(data.getExtras().getString("NICKNAME",""));
                     Map<String,String> map=new HashMap<>();
                     map.put("uid", String.valueOf(AppConstant.UID));
-                    map.put("nickname", nicknameTv.getText().toString());
-                    load(map);
+                    map.put("nickname", data.getExtras().getString("NICKNAME",""));
+                    changeInfo(map);
                 }
+                break;
+            case RESULT_CAPTURE:
+                if (resultCode == RESULT_OK) {
+                    starCropPhoto(Uri.fromFile(tempFile));
+                }
+                break;
+            case RESULT_PICK:
+                if (resultCode == RESULT_OK) {
+                    Uri uri = data.getData();
+                    starCropPhoto(uri);
+                }
+
+                break;
+            case CROP_PHOTO:
+                if (resultCode == RESULT_OK) {
+
+                    if (data != null) {
+                        setPicToView(data);
+                    }
+                }
+                break;
+
+            default:
+                break;
         }
     }
 

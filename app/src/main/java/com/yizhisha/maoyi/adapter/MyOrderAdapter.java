@@ -77,6 +77,8 @@ public class MyOrderAdapter extends BaseQuickAdapter<Object,BaseViewHolder> {
                 break;
             case ITEM_FOOTER:
                 final OrderFootBean orderFootBean= (OrderFootBean) item;
+                helper.setText(R.id.tradeltotal_tv,orderFootBean.getTotalprice()+"");
+                helper.setText(R.id.tradelnumber_total_tv,"共"+orderFootBean.getAmount()+"件商品");
                 helper.addOnClickListener(R.id.contact_the_merchant_tv);
                 switchState(orderFootBean.getStatus(),helper);
                 break;

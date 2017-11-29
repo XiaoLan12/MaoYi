@@ -1,6 +1,7 @@
 package com.yizhisha.maoyi.api;
 
 import com.yizhisha.maoyi.bean.json.CollectListBean;
+import com.yizhisha.maoyi.bean.json.CommentPicBean;
 import com.yizhisha.maoyi.bean.json.DailyBean;
 import com.yizhisha.maoyi.bean.json.FootpringBean;
 import com.yizhisha.maoyi.bean.json.GoodsDetailBean;
@@ -8,14 +9,19 @@ import com.yizhisha.maoyi.bean.json.GoodsListBean;
 import com.yizhisha.maoyi.bean.json.ListBean;
 import com.yizhisha.maoyi.bean.json.LoginBean;
 import com.yizhisha.maoyi.bean.json.MeInfoBean;
+import com.yizhisha.maoyi.bean.json.MyCommentBean;
 import com.yizhisha.maoyi.bean.json.MyOrderBean;
 import com.yizhisha.maoyi.bean.json.OrderListBean;
+import com.yizhisha.maoyi.bean.json.RefundBean;
+import com.yizhisha.maoyi.bean.json.RefundDetailBean;
+import com.yizhisha.maoyi.bean.json.RefundExpressBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
 import com.yizhisha.maoyi.bean.json.ShopcartListBean;
 import com.yizhisha.maoyi.bean.json.SimilarRecommenBean;
 import com.yizhisha.maoyi.bean.json.SingleShopCartBean;
 import com.yizhisha.maoyi.bean.json.SortedListBean;
 import com.yizhisha.maoyi.bean.json.SpecialDetailBean;
+import com.yizhisha.maoyi.bean.json.UserHeadBean;
 import com.yizhisha.maoyi.bean.json.WechatBean;
 import com.yizhisha.maoyi.bean.json.WechatInfoBean;
 import com.yizhisha.maoyi.bean.json.WeekListBean;
@@ -24,10 +30,14 @@ import com.yizhisha.maoyi.bean.json.WeekTopBean;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
@@ -44,8 +54,13 @@ public interface ApiService {
 
     //个人资料修改
     @FormUrlEncoded
-    @POST("app/ucenter/profile_save/")
+    @POST("app/ucenter/profileSave/")
     Observable<RequestStatusBean> changeUserInfo(@FieldMap Map<String, String> map);
+
+    //修改用户头像
+    @Multipart
+    @POST("app/ajax/uploadAvatarPic/")
+    Observable<UserHeadBean> changeUserHead(@Part("uid") RequestBody uid, @Part MultipartBody.Part file);
 
     //收货地址列表
     @GET("/app/ucenter/address")
@@ -178,7 +193,35 @@ public interface ApiService {
     @GET()
     Observable<WechatInfoBean> getWeChatInfo(@Url String url);
 
+    //我的评论
+    @GET("app/ucenter/commentList/")
+    Observable<MyCommentBean> loadMyComment(@Query("uid") int uid);
+    //发布评论
+    @FormUrlEncoded
+    @POST("app/ucenter/commentSave/")
+    Observable<RequestStatusBean> addComment(@FieldMap Map<String, String> param);
 
+    //发布追评
+    @FormUrlEncoded
+    @POST("app/ucenter/commentAddSave/")
+    Observable<RequestStatusBean> addAddComment(@FieldMap Map<String, String> param);
+
+    //上传评论图片
+    @Multipart
+    @POST("app/ajax/uploadCommentPic/")
+    Observable<CommentPicBean> addCommentPic(@Part MultipartBody.Part file);
+
+    //退款列表
+    @GET("app/order/refundList/")
+    Observable<RefundBean> loadRefundList(@Query("uid") int uid);
+
+    //退款详情
+    @GET("app/order/refundOrder/")
+    Observable<RefundDetailBean> loadRefund(@QueryMap Map<String, String> param);
+
+    //退款物流信息
+    @GET("app/order/expressviewrefund/")
+    Observable<RefundExpressBean> loadRefundExpress(@QueryMap Map<String, String> param);
 
     @GET("app/user/dologin/mobile/15626036029/password/123456")
     Observable<LoginBean> login();

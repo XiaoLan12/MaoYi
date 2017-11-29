@@ -79,7 +79,6 @@ public class NormalAlertDialog {
         mTitle.setText(builder.getTitleText());
         mTitle.setTextColor(builder.getTitleTextColor());
         mTitle.setTextSize(builder.getTitleTextSize());
-        Log.d("TTT","TTTT11"+builder.getSubtitleTitleText());
         mSubtitleTitle.setText(builder.getSubtitleTitleText());
         mSubtitleTitle.setTextColor(builder.getSubtitleTitleTextColor());
         mSubtitleTitle.setTextSize(builder.getSubtitleTitleTextSize());

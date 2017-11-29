@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 import qiu.niorgai.StatusBarCompat;
 
 /**
@@ -57,6 +58,8 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
     RelativeLayout mRlBottomBar;
     @Bind(R.id.normal_shopbotton_ll)
     LinearLayout mLlNormalBottom;
+    @Bind(R.id.deleteall_ll)
+    LinearLayout mLlDeleteAllBottom;
 
     @Bind(R.id.loadingView)
     CommonLoadingView mLoadingView;
@@ -79,6 +82,19 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
     }
     @Override
     protected void initView() {
+        mToobar.setRightButton1TextColor(R.color.white);
+        mToobar.setRightButton1OnClickLinster(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mToobar.getRightButton1Text().equals("完成")){
+                    changeFootShowDeleteView(false);
+
+                }else{
+                    changeFootShowDeleteView(true);
+
+                }
+            }
+        });
         mLoadingView.loadSuccess();
         initAdapter();
         mPresenter.loadShoppCart(AppConstant.UID,true);
@@ -97,8 +113,6 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
                 //Toast.makeText(MainActivity.this, "click：" + position, Toast.LENGTH_SHORT).show();
             }
         });
-
-
         for (int i = 0; i < parentMapList.size(); i++) {
             expandableListView.expandGroup(i);
         }
@@ -237,18 +251,20 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
     public void changeFootShowDeleteView(boolean showDeleteView) {
 
         if (showDeleteView) {
-            mToobar.setRightButtonText("完成");
+            mToobar.setRightButton1Text("完成");
+            mToobar.setRightButton1Icon(null);
             mLlNormalBottom.setVisibility(View.GONE);
-            //mLlDeleteAllBottom.setVisibility(View.VISIBLE);
+            mLlDeleteAllBottom.setVisibility(View.VISIBLE);
         } else {
-            mToobar.setRightButtonText("编辑");
+            mToobar.setRightButton1Text("");
+            mToobar.setRightButton1Icon(RescourseUtil.getDrawable(R.drawable.icon_ratingbar));
             mLlNormalBottom.setVisibility(View.VISIBLE);
-            //mLlDeleteAllBottom.setVisibility(View.GONE);
+            mLlDeleteAllBottom.setVisibility(View.GONE);
         }
     }
     @Override
     public void onRefresh() {
-
+        mPresenter.loadShoppCart(AppConstant.UID,false);
     }
     @Override
     public void loadSuccess(List<ShopcartBean> data) {
@@ -347,5 +363,57 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
                 mPresenter.loadShoppCart(AppConstant.UID,true);
             }
         });
+    }
+    @OnClick({R.id.deleteall_btn})
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.deleteall_btn:
+                StringBuilder str=new StringBuilder();
+                for (int i = 0; i < parentMapList.size(); i++) {
+                    List<Map<String, Object>> childMapList = childMapList_list.get(i);
+                    for (int j = 0; j < childMapList.size(); j++) {
+                        GoodsBean goodsBean = (GoodsBean) childMapList.get(j).get("childName");
+                        if(goodsBean.isChecked()){
+                            str.append(goodsBean.getSid());
+                            str.append(",");
+                        }
+                    }
+                }
+                if(str.length()==0){
+                    ToastUtil.showShortToast("请选择要购买的商品");
+                    return;
+                }
+                final String sid = str.substring(0, str.length() - 1);
+                new NormalAlertDialog.Builder(activity)
+                        .setBoolTitle(false)
+                        .setContentText("确定删除选中的商品吗?")
+                        .setContentTextColor(R.color.blue)
+                        .setLeftText("取消")
+                        .setLeftTextColor(R.color.blue)
+                        .setRightText("确认")
+                        .setRightTextColor(R.color.blue)
+                        .setWidth(0.75f)
+                        .setHeight(0.33f)
+                        .setOnclickListener(new DialogInterface.OnLeftAndRightClickListener<NormalAlertDialog>() {
+                            @Override
+                            public void clickLeftButton(NormalAlertDialog dialog, View view) {
+                                dialog.dismiss();
+                            }
+                            @Override
+                            public void clickRightButton(NormalAlertDialog dialog, View view) {
+
+                                Map<String,String> map=new HashMap<>();
+                                map.put("uid",String.valueOf(AppConstant.UID));
+                                map.put("sid", sid);
+                                mPresenter.deleteShoppCart(map);
+                                dialog.dismiss();
+
+                            }
+                        }).build().show();
+
+                break;
+
+        }
     }
 }

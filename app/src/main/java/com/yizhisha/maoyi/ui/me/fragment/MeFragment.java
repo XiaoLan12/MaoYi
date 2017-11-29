@@ -15,9 +15,11 @@ import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.base.BaseFragment;
 import com.yizhisha.maoyi.base.BaseToolbar;
+import com.yizhisha.maoyi.base.rx.RxBus;
 import com.yizhisha.maoyi.bean.json.MeInfoBean;
 import com.yizhisha.maoyi.common.dialog.DialogInterface;
 import com.yizhisha.maoyi.common.dialog.NormalAlertDialog;
+import com.yizhisha.maoyi.event.UserHeadEvent;
 import com.yizhisha.maoyi.ui.me.activity.AboutUsActivity;
 import com.yizhisha.maoyi.ui.me.activity.CouponsActivity;
 import com.yizhisha.maoyi.ui.me.activity.MyCollectActivity;
@@ -28,11 +30,15 @@ import com.yizhisha.maoyi.ui.me.activity.ReFundOrderActivity;
 import com.yizhisha.maoyi.ui.me.activity.SettingActivity;
 import com.yizhisha.maoyi.ui.me.contract.MeContract;
 import com.yizhisha.maoyi.ui.me.presenter.MePresenter;
+import com.yizhisha.maoyi.utils.GlideUtil;
 import com.yizhisha.maoyi.utils.ToastUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * Created by lan on 2017/9/22.
@@ -47,7 +53,7 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
     ImageView userPhotoIv;
     @Bind(R.id.userName_tv)
     TextView userNameTv;
-
+    private Subscription subscription;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_me;
@@ -56,7 +62,7 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
     @Override
     protected void initView() {
         mPresenter.loadHeadInfo(AppConstant.UID);
-        //mPresenter.load();
+        event();
 
     }
     @OnClick({R.id.myorder_rl, R.id.unpayment_ll, R.id.unshipping_ll, R.id.unreceive_goods_ll,
@@ -144,17 +150,36 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
 
     @Override
     public void loadHeadSuccess(MeInfoBean info) {
+        AppConstant.meInfoBean=info;
         userNameTv.setText(info.getNickname());
+        GlideUtil.getInstance().LoadContextCircleBitmap(activity, AppConstant.HEAD_IMG_URL+info.getAvatar(),userPhotoIv ,
+                R.drawable.icon_head_normal, R.drawable.icon_head_normal);
     }
 
     @Override
     public void loadFail(String msg) {
         ToastUtil.showShortToast(msg);
     }
-
+    private void event(){
+        subscription= RxBus.$().toObservable(Object.class)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Object>() {
+                    @Override
+                    public void call(Object event) {
+                        if (event instanceof UserHeadEvent) {
+                            mPresenter.loadHeadInfo(AppConstant.UID);
+                        }
+//                        else if(event instanceof LoginEvent){
+//                            load();
+//                        }
+                    }
+                });
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        if (subscription != null&&!subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
+        }
     }
 }

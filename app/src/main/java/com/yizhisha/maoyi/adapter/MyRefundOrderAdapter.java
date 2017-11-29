@@ -9,6 +9,9 @@ import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.bean.json.MyOrderListBean;
 import com.yizhisha.maoyi.bean.json.OrderFootBean;
 import com.yizhisha.maoyi.bean.json.OrderHeadBean;
+import com.yizhisha.maoyi.bean.json.RefundFootBean;
+import com.yizhisha.maoyi.bean.json.RefundHeadBean;
+import com.yizhisha.maoyi.bean.json.RefundListBean;
 
 /**
  * Created by Administrator on 2017/6/25 0025.
@@ -23,11 +26,11 @@ public class MyRefundOrderAdapter extends BaseQuickAdapter<Object,BaseViewHolder
         setMultiTypeDelegate(new MultiTypeDelegate<Object>() {
             @Override
             protected int getItemType(Object order) {
-                if(order instanceof OrderHeadBean) {
+                if(order instanceof RefundHeadBean) {
                     return ITEM_HEADER;
-                }else if(order instanceof MyOrderListBean.Goods){
+                }else if(order instanceof RefundListBean.Goods){
                     return ITEM_CONTENT;
-                }else if(order instanceof OrderFootBean){
+                }else if(order instanceof RefundFootBean){
                     return ITEM_FOOTER;
                 }
                 return ITEM_CONTENT;
@@ -43,32 +46,46 @@ public class MyRefundOrderAdapter extends BaseQuickAdapter<Object,BaseViewHolder
     protected void convert(final BaseViewHolder helper, Object item) {
         switch (helper.getItemViewType()){
             case ITEM_HEADER:
-                final OrderHeadBean order= (OrderHeadBean) item;
-                helper.setText(R.id.orderNumber_tv,"213412443445545");
-                helper.setText(R.id.refundNumber_tv,"21341244344");
+                final RefundHeadBean refundHeadBean= (RefundHeadBean)item;
+                helper.setText(R.id.orderNumber_tv,refundHeadBean.getOrderno());
+                helper.setText(R.id.refundNumber_tv,refundHeadBean.getRefundno());
                 break;
             case ITEM_CONTENT:
-                helper.setText(R.id.tradename_tv,"商品详情");
-                helper.setText(R.id.tradecolor_tv,"米白色；尺码:5");
-                helper.setText(R.id.tradeprice_tv,"￥169.90");
-                helper.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mOnItemClickListener.onItemClick(v,ITEM_CONTENT,helper.getLayoutPosition());
-                    }
-                });
+                final RefundListBean.Goods goods= (RefundListBean.Goods) item;
+                helper.setText(R.id.tradename_tv,goods.getTitle());
+                helper.setText(R.id.tradecolor_tv,goods.getDetail());
+                helper.setText(R.id.tradeprice_tv,"￥:"+goods.getPrice());
                 break;
             case ITEM_FOOTER:
-                helper.setText(R.id.refundType_tv,"仅退款,退款成功");
+                final RefundFootBean footBean= (RefundFootBean) item;
+                if(footBean.getType()==1){
+                    switch (footBean.getRefundstatus()){
+                        case 1:
+                            helper.setText(R.id.refundType_tv,"待处理");
+                            break;
+                        case 2:
+                            helper.setText(R.id.refundType_tv,"退款成功");
+                            break;
+                    }
+                }else if(footBean.getType()==2){
+                    switch (footBean.getRefundstatus()){
+                        case 1:
+                            helper.setText(R.id.refundType_tv,"待处理");
+                            break;
+                        case 2:
+                            helper.setText(R.id.refundType_tv,"待买家退款");
+                            break;
+                        case 3:
+                            helper.setText(R.id.refundType_tv,"待卖家收货");
+                            break;
+                        case 4:
+                            helper.setText(R.id.refundType_tv,"退款成功");
+                            break;
+                    }
+                }
+                helper.addOnClickListener(R.id.contact_the_merchant_tv);
                 break;
         }
 
-    }
-    private OnItemTypeClickListener mOnItemClickListener;
-    public interface OnItemTypeClickListener{
-        void onItemClick(View view, int type, int position);
-    }
-    public void setOnItemTypeClickListener(OnItemTypeClickListener mOnItemClickListener){
-        this.mOnItemClickListener = mOnItemClickListener;
     }
 }

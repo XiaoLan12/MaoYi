@@ -44,15 +44,15 @@ public class ChangeNickNameActivity extends BaseActivity {
     @Override
     protected void initView() {
         final String nickName=nicknameEt.getText().toString().trim();
-        if(nickName.equals("")){
-            ToastUtil.showShortToast("请输入新的昵称");
-            return;
-        }
+
         sureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(nickName==null||nickName.equals(" ")){
+                    ToastUtil.showShortToast("请输入新的昵称");
+                    return;
+                }
                 Intent intent=new Intent();
-
                 Bundle bundle=new Bundle();
                 bundle.putString("NICKNAME",nickName);
                 intent.putExtras(bundle);

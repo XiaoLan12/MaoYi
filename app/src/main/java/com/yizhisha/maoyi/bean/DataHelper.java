@@ -1,7 +1,13 @@
 package com.yizhisha.maoyi.bean;
+import com.yizhisha.maoyi.bean.json.MyCommentHeadBean;
+import com.yizhisha.maoyi.bean.json.MyCommentListBean;
 import com.yizhisha.maoyi.bean.json.MyOrderListBean;
 import com.yizhisha.maoyi.bean.json.OrderFootBean;
 import com.yizhisha.maoyi.bean.json.OrderHeadBean;
+import com.yizhisha.maoyi.bean.json.RefundFootBean;
+import com.yizhisha.maoyi.bean.json.RefundHeadBean;
+import com.yizhisha.maoyi.bean.json.RefundListBean;
+import com.yizhisha.maoyi.bean.json.ToEvalutionFootBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +62,37 @@ public class DataHelper {
      * @param resultList
      * @return
      */
-   /* public static ArrayList<Object> getCommentDataAfterHandle(List<MyCommentListBean> resultList) {
+    public static ArrayList<Object> getDataEvalution(List<MyOrderListBean> resultList) {
+        StringBuffer str=new StringBuffer();
+        ArrayList<Object> dataList = new ArrayList<Object>();
+        //遍历每一张大订单
+        for (MyOrderListBean order : resultList) {
+            str.setLength(0);
+            List<MyOrderListBean.Goods> goodses=order.getGoods();
+            //遍历每个大订单里面的小订单
+            for (MyOrderListBean.Goods orderGoodsItem : goodses) {
+                orderGoodsItem.setOrderno(order.getOrderno());
+                str.append(orderGoodsItem.getDetail()).append(";");
+                dataList.add(orderGoodsItem);
+            }
+            ToEvalutionFootBean footBean=new ToEvalutionFootBean();
+            footBean.setDetail(str.toString());
+            footBean.setAddtime(order.getAddtime());
+            footBean.setOrderno(order.getOrderno());
+            footBean.setOrderId(order.getId());
+            dataList.add(footBean);
+        }
+        return dataList;
+    }
+    /**
+     * List<Object>有三种数据类型：
+     * 1、GoodsOrderInfo 表示每个小订单的头部信息（订单号、订单状态、店铺名称）
+     * 2、OrderGoodsItem 表示小订单中的商品
+     * 3、OrderPayInfo 表示大订单的支付信息（金额、订单状态）
+     * @param resultList
+     * @return
+     */
+    public static ArrayList<Object> getCommentDataAfterHandle(List<MyCommentListBean> resultList) {
         String orderno="";
         ArrayList<Object> dataList = new ArrayList<Object>();
 
@@ -90,5 +126,41 @@ public class DataHelper {
 
         }
         return dataList;
-    }*/
+    }
+
+    /**
+     * List<Object>有三种数据类型：
+     * 1、GoodsOrderInfo 表示每个小订单的头部信息（订单号、订单状态、店铺名称）
+     * 2、OrderGoodsItem 表示小订单中的商品
+     * 3、OrderPayInfo 表示大订单的支付信息（金额、订单状态）
+     * @param resultList
+     * @return
+     */
+    public static ArrayList<Object> getDataRefund(List<RefundListBean> resultList) {
+
+        ArrayList<Object> dataList = new ArrayList<Object>();
+
+        //遍历每一张大订单
+        for (RefundListBean order : resultList) {
+            RefundListBean.Refund refund=order.getRefund();
+            //大订单支付的金额核定单状态
+            RefundHeadBean orderHeadBean = new RefundHeadBean();
+            orderHeadBean.setOrderno(refund.getOrderno());
+            orderHeadBean.setRefundno(refund.getRefundno());
+            dataList.add(orderHeadBean);
+            List<RefundListBean.Goods> goodses=order.getGoods();
+            //遍历每个大订单里面的小订单
+            for (RefundListBean.Goods orderGoodsItem : goodses) {
+                //orderGoodsItem.setOrderno(order.getOrderno());
+                dataList.add(orderGoodsItem);
+            }
+
+            RefundFootBean orderFootBean=new RefundFootBean();
+            orderFootBean.setOrderno(refund.getOrderno());
+            orderFootBean.setRefundstatus(refund.getRefundstatus());
+            orderFootBean.setType(refund.getType());
+            dataList.add(orderFootBean);
+        }
+        return dataList;
+    }
 }

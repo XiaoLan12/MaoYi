@@ -166,9 +166,11 @@ public class BaseToolbar extends Toolbar {
     // 如：app:leftButtonIcon="@drawable/icon_back_32px"
     public void setRightButtonIcon(Drawable icon) {
         showRightButton();
-        if (mRightButton != null) {
+        if (mRightButton != null&&icon!=null) {
             icon.setBounds(0, 0, DensityUtil.dip2px(25) , DensityUtil.dip2px(25));
             mRightButton.setCompoundDrawables(null,null,icon,null);
+        }else{
+            mRightButton.setCompoundDrawables(null,null,null,null);
         }
     }
     //给右侧按钮设置文字，也可以在布局文件中直接引入
@@ -196,9 +198,11 @@ public class BaseToolbar extends Toolbar {
     // 如：app:rightButtonIcon="@drawable/icon_back_32px"
     public void setRightButton1Icon(Drawable icon) {
         showRightButton1();
-        if (mRightButton1 != null) {
+        if (mRightButton1 != null&&icon!=null) {
             icon.setBounds(0, 0, DensityUtil.dip2px(25) , DensityUtil.dip2px(25));
             mRightButton1.setCompoundDrawables(null,null,icon,null);
+        }else{
+            mRightButton1.setCompoundDrawables(null,null,null,null);
         }
     }
     //给右侧按钮1设置文字，也可以在布局文件中直接引入
@@ -246,6 +250,10 @@ public class BaseToolbar extends Toolbar {
     //设置右侧按钮变色
     public void setRightButtonTextColor(int resource) {
         mRightButton.setTextColor(RescourseUtil.getColor(resource));
+    }
+    //设置右侧1按钮变色
+    public void setRightButton1TextColor(int resource) {
+        mRightButton1.setTextColor(RescourseUtil.getColor(resource));
     }
 
     //设置左侧按钮监听事件

@@ -31,6 +31,26 @@ public class MeInfoBean {
         return info;
     }
 
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
     @Override
     public String toString() {
         return "MeInfoBean{" +

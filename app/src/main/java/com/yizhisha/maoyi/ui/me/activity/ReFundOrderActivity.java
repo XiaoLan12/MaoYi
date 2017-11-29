@@ -1,15 +1,24 @@
 package com.yizhisha.maoyi.ui.me.activity;
 
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.adapter.MyRefundOrderAdapter;
 import com.yizhisha.maoyi.base.BaseActivity;
+import com.yizhisha.maoyi.bean.DataHelper;
 import com.yizhisha.maoyi.bean.json.MyOrderListBean;
 import com.yizhisha.maoyi.bean.json.OrderFootBean;
+import com.yizhisha.maoyi.bean.json.RefundFootBean;
+import com.yizhisha.maoyi.bean.json.RefundListBean;
+import com.yizhisha.maoyi.bean.json.ToEvalutionFootBean;
+import com.yizhisha.maoyi.ui.me.contract.ReFundOrderContract;
+import com.yizhisha.maoyi.ui.me.presenter.ReFundOrderPresenter;
 import com.yizhisha.maoyi.utils.RescourseUtil;
 import com.yizhisha.maoyi.widget.CommonLoadingView;
 
@@ -18,7 +27,8 @@ import java.util.List;
 
 import butterknife.Bind;
 
-public class ReFundOrderActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener{
+public class ReFundOrderActivity extends BaseActivity<ReFundOrderPresenter> implements SwipeRefreshLayout.OnRefreshListener,
+        ReFundOrderContract.View{
     @Bind(R.id.loadingView)
     CommonLoadingView mLoadingView;
     @Bind(R.id.recyclerview)
@@ -38,10 +48,12 @@ public class ReFundOrderActivity extends BaseActivity implements SwipeRefreshLay
     }
     @Override
     protected void initView() {
-        dataList.addAll(getDataAfterHandle());
-        mLoadingView.loadSuccess();
         initAdapter();
-        mAdapter.setNewData(dataList);
+        load(true);
+
+    }
+    private void load(boolean isShowLoad){
+        mPresenter.loadRefund(AppConstant.UID,isShowLoad);
     }
     private void initAdapter(){
         mSwipeRefreshLayout.setColorSchemeColors(RescourseUtil.getColor(R.color.red),
@@ -52,11 +64,18 @@ public class ReFundOrderActivity extends BaseActivity implements SwipeRefreshLay
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mAdapter=new MyRefundOrderAdapter();
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemTypeClickListener(new MyRefundOrderAdapter.OnItemTypeClickListener() {
+        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public void onItemClick(View view, int type, int position) {
-                if(type==2) {
-                    startActivity(ReFundOrderDetailsActivity.class);
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()){
+                    case R.id.contact_the_merchant_tv:
+                        if(dataList.get(position) instanceof RefundFootBean) {
+                            RefundFootBean footBean = (RefundFootBean) dataList.get(position);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("ORDERID", footBean.getOrderno());
+                            startActivity(ReFundOrderDetailsActivity.class,bundle);
+                        }
+                        break;
                 }
             }
         });
@@ -65,31 +84,43 @@ public class ReFundOrderActivity extends BaseActivity implements SwipeRefreshLay
 
     @Override
     public void onRefresh() {
-
+        load(false);
     }
-    /**
-     * List<Object>有三种数据类型：
-     * 1、GoodsOrderInfo 表示每个小订单的头部信息（订单号、订单状态、店铺名称）
-     * 2、OrderGoodsItem 表示小订单中的商品
-     * 3、OrderPayInfo 表示大订单的支付信息（金额、订单状态）
-     * @return
-     */
-    public static ArrayList<Object> getDataAfterHandle() {
-        ArrayList<Object> dataList = new ArrayList<Object>();
-        for(int i=0;i<4;i++) {
-            //遍历每一张大订单
-            //大订单支付的金额核定单状态
-            MyOrderListBean.Goods orderHeadBean = new MyOrderListBean().new Goods();
-            dataList.add(orderHeadBean);
 
+    @Override
+    public void loadRefundSuccess(List<RefundListBean> data) {
+        dataList.clear();
+        mSwipeRefreshLayout.setRefreshing(false);
+        dataList= DataHelper.getDataRefund(data);
+        mAdapter.setNewData(dataList);
+    }
 
-            List<MyOrderListBean> goodses = new ArrayList<>();
-            //遍历每个大订单里面的小订单
-            MyOrderListBean.Goods goodsBean = new MyOrderListBean().new Goods();
-            dataList.add(goodsBean);
-            OrderFootBean orderFootBean = new OrderFootBean();
-            dataList.add(orderFootBean);
-        }
-            return dataList;
+    @Override
+    public void showLoading() {
+        mLoadingView.load();
+    }
+    @Override
+    public void hideLoading() {
+        mLoadingView.loadSuccess();
+    }
+    @Override
+    public void showEmpty() {
+        dataList.clear();
+        mSwipeRefreshLayout.setRefreshing(false);
+        mAdapter.setNewData(dataList);
+        mLoadingView.loadSuccess(true);
+    }
+    @Override
+    public void loadFail(String msg) {
+        dataList.clear();
+        mSwipeRefreshLayout.setRefreshing(false);
+        mAdapter.setNewData(dataList);
+        mLoadingView.loadError();
+        mLoadingView.setLoadingHandler(new CommonLoadingView.LoadingHandler() {
+            @Override
+            public void doRequestData() {
+                load(true);
+            }
+        });
     }
 }

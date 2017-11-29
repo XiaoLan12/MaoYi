@@ -192,7 +192,12 @@ public class ShoppCartAdapter extends BaseExpandableListAdapter {
                 context.startActivity(intent);
             }
         });*/
+        if (goodsBean.isEditing()==1) {
+            childViewHolder.mRlNormal.setVisibility(View.GONE);
 
+        }else{
+            childViewHolder.mRlNormal.setVisibility(View.VISIBLE);
+        }
         //childViewHolder.id_tv_price.setText(String.format(context.getString(R.string.price), goodsBean.getPrice()+""));
         childViewHolder.id_cb_select_child.setChecked(goodsBean.isChecked());
         childViewHolder.tv_items_child_desc.setText(goodsBean.getTitle());

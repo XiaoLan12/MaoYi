@@ -1,6 +1,7 @@
 package com.yizhisha.maoyi.api;
 
 import com.yizhisha.maoyi.bean.json.CollectListBean;
+import com.yizhisha.maoyi.bean.json.CommentPicBean;
 import com.yizhisha.maoyi.bean.json.DailyBean;
 import com.yizhisha.maoyi.bean.json.FootpringBean;
 import com.yizhisha.maoyi.bean.json.GoodsDetailBean;
@@ -8,13 +9,16 @@ import com.yizhisha.maoyi.bean.json.GoodsListBean;
 import com.yizhisha.maoyi.bean.json.ListBean;
 import com.yizhisha.maoyi.bean.json.LoginBean;
 import com.yizhisha.maoyi.bean.json.MeInfoBean;
+import com.yizhisha.maoyi.bean.json.MyCommentBean;
 import com.yizhisha.maoyi.bean.json.MyOrderBean;
+import com.yizhisha.maoyi.bean.json.RefundBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
 import com.yizhisha.maoyi.bean.json.ShopcartListBean;
 import com.yizhisha.maoyi.bean.json.SimilarRecommenBean;
 import com.yizhisha.maoyi.bean.json.SingleShopCartBean;
 import com.yizhisha.maoyi.bean.json.SortedListBean;
 import com.yizhisha.maoyi.bean.json.SpecialDetailBean;
+import com.yizhisha.maoyi.bean.json.UserHeadBean;
 import com.yizhisha.maoyi.bean.json.WeekListBean;
 import com.yizhisha.maoyi.bean.json.WeekTopBean;
 
@@ -22,7 +26,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -71,6 +77,10 @@ public class Api {
     //修改用户信息
     public Observable<RequestStatusBean> changeUserInfo(Map<String, String> map){
         return service.changeUserInfo(map);
+    }
+    //修改用户头像
+    public Observable<UserHeadBean> changeUserHead(RequestBody uid, MultipartBody.Part body){
+        return service.changeUserHead(uid,body);
     }
     //收货地址列表
     public Observable<GoodsListBean> loadGoodsAddress(int uid){
@@ -123,6 +133,26 @@ public class Api {
     //订单详情
     public Observable<MyOrderBean> loadOrderDetail(Map<String,String> map){
         return service.getOrderDetails(map);
+    }
+    //我的评论
+    public Observable<MyCommentBean> loadMyComment(int uid){
+        return service.loadMyComment(uid);
+    }
+    //发布评论
+    public Observable<RequestStatusBean> addComment(Map<String,String> map){
+        return service.addComment(map);
+    }
+    //发布追评
+    public Observable<RequestStatusBean> addAddComment(Map<String,String> map){
+        return service.addAddComment(map);
+    }
+    //添加评论图片
+    public Observable<CommentPicBean> addCommentPic(MultipartBody.Part body){
+        return service.addCommentPic(body);
+    }
+    //退款列表
+    public Observable<RefundBean> loadRefundList(int uid){
+        return service.loadRefundList(uid);
     }
     public Observable<LoginBean> login(){
         return service.login();

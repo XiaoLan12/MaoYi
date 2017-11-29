@@ -31,15 +31,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--我的订单-->
+        <!-- 我的订单 -->
         <activity android:name=".ui.me.activity.MyOrderActivity" />
-        <!--我的订单详情-->
+        <!-- 我的订单详情 -->
         <activity android:name=".ui.me.activity.MyOrderDetailsActivity" />
         <activity android:name=".ui.me.activity.OrderTrackingActivity" />
-        <!--设置-->
+        <!-- 设置 -->
         <activity android:name=".ui.me.activity.SettingActivity" />
         <activity android:name=".ui.me.activity.PersonalInfoActivity" />
-        <!--修改密码-->
+        <!-- 修改密码 -->
         <activity android:name=".ui.me.activity.ChangePwdActivity" />
         <activity android:name=".ui.me.activity.ChangeNickNameActivity" />
         <activity android:name=".ui.me.activity.CouponsActivity" />
@@ -49,7 +49,8 @@
         <activity android:name=".ui.me.activity.AboutUsActivity" />
         <activity android:name=".ui.me.activity.ReFundOrderActivity" />
         <activity android:name=".ui.me.activity.ReFundOrderDetailsActivity" />
-        <activity android:name=".ui.me.activity.MyAddressActivity"/>
+        <activity android:name=".ui.me.activity.MyAddressActivity" />
+        <activity android:name=".ui.ClipHeaderActivity" />
         <activity
             android:name=".ui.me.activity.ApplyRefundActivity"
             android:screenOrientation="portrait"
@@ -78,13 +79,14 @@
 
         <activity android:name=".ui.me.activity.GoodsInfoActivity" />
         <activity android:name=".ui.me.activity.NewActivity" />
-        <!--请标明，谁知道你写的什么鬼-->
-        <activity android:name=".ui.me.activity.ProblemDetailsActivity"></activity>
-        <!--产品详情-->
-        <activity android:name=".ui.home.activity.ProductDetailActivity"></activity>
-        <!--专题详情-->
-        <activity android:name=".ui.home.activity.SpecialDetailActivity"></activity>
-
+        <!-- 请标明，谁知道你写的什么鬼 -->
+        <activity android:name=".ui.me.activity.ProblemDetailsActivity" />
+        <!-- 产品详情 -->
+        <activity android:name=".ui.home.activity.ProductDetailActivity" />
+        <!-- 专题详情 -->
+        <activity android:name=".ui.home.activity.SpecialDetailActivity" />
+        <activity android:name=".ui.me.activity.AddCommentActivity" />
+        <activity android:name=".ui.shoppcart.activity.EditShoppCartActivity"></activity>
     </application>
 
 </manifest>

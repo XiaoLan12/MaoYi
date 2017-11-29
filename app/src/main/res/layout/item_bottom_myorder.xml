@@ -14,7 +14,7 @@
             style="@style/MY.Theme.Widget.Text"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/dp_5"
-            android:text="(运费到付)" />
+            android:text="(含运费￥10.00)" />
         <TextView
             android:id="@+id/tradeltotal_tv"
             style="@style/MY.Theme.Widget.Text"
@@ -30,6 +30,7 @@
             android:id="@+id/tradelnumber_total_tv"
             style="@style/MY.Theme.Widget.Text"
             android:layout_marginRight="@dimen/dp_5"
+
             android:layout_toLeftOf="@+id/tradeltotalTv"
             />
     </RelativeLayout>

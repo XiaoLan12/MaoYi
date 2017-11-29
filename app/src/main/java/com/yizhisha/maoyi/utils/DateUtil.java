@@ -10,15 +10,21 @@ import java.util.Date;
 public class DateUtil {
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分");
     private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+    private static SimpleDateFormat sdf2 = new SimpleDateFormat("MM.dd HH:mm");
         /*时间戳转换成字符窜*/
         public static String getDateToString(long time) {
             Date d = new Date(time);
             return sdf.format(d);
         }
-              /*时间戳转换成字符窜*/
+
     public static String getDateToString1(long time) {
         Date d = new Date(time);
         return sdf1.format(d);
+    }
+    /*时间戳转换成字符窜*/
+    public static String getDateToString2(long time) {
+        Date d = new Date(time);
+        return sdf2.format(d);
     }
     public static long getDateTimeDiff(Long startdate, Long endDate) {
 

@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 
 public class OrderFootBean implements Serializable{
-    private float totalprice;
+    private double totalprice;
     private String orderno;
     private int status;
     private int amount;
@@ -25,7 +25,7 @@ public class OrderFootBean implements Serializable{
     }
 
 
-    public float getTotalprice() {
+    public double getTotalprice() {
         return totalprice;
     }
 
@@ -37,7 +37,7 @@ public class OrderFootBean implements Serializable{
         this.status = status;
     }
 
-    public void setTotalprice(float totalprice) {
+    public void setTotalprice(double totalprice) {
         this.totalprice = totalprice;
     }
 

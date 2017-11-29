@@ -1,5 +1,6 @@
 package com.yizhisha.maoyi;
 
+import com.yizhisha.maoyi.bean.json.MeInfoBean;
 import com.yizhisha.maoyi.bean.json.SortedListBean;
 
 import java.util.ArrayList;
@@ -12,7 +13,13 @@ import java.util.List;
 public class AppConstant {
     public static final String HOME_CURRENT_TAB_POSITION="HOME_CURRENT_TAB_POSITION";
     public static final int UID=3;
+    public static MeInfoBean meInfoBean=null;
 
+    //头像前缀
+    public static final String HEAD_IMG_URL="http://dyc.maozhiwang.com/data/attached/avatar/";
+    //评论图片前缀
+
+    public static final String COMENT_IMG_URL="http://dyc.maozhiwang.com/data/attached/comment/";
     //轮播前缀
     public static final String BANNER_IMG_URL="http://dyc.maozhiwang.com/data/attached/special/";
     //商品图片

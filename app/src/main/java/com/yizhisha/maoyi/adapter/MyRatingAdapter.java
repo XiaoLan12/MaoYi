@@ -15,7 +15,7 @@ import java.util.List;
 
 public class MyRatingAdapter extends BaseQuickAdapter<String,BaseViewHolder> {
     public MyRatingAdapter(@Nullable List<String> data) {
-        super(R.layout.myrating_item,data);
+        super(R.layout.item_middle_tovualution,data);
     }
 
     @Override

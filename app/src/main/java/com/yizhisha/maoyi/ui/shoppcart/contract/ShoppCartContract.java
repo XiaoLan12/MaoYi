@@ -18,7 +18,6 @@ public interface ShoppCartContract {
         void deleteShoppCart(String msg);
         void deleteOneShoppCart(String msg, int groupPosition, int childPosition);
         void showLoading();
-
         void hideLoading();
 
         void showEmpty();
