@@ -101,9 +101,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                         <ImageView
-                            android:layout_width="@dimen/dp_25"
-                            android:layout_height="@dimen/dp_25"
-                            android:src="@drawable/ic_launcher"/>
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"
+                            android:src="@drawable/user_order_obligation"/>
 
                         <TextView
                             android:id="@+id/unpaymentNum_iv"
@@ -114,6 +114,7 @@
                             android:text="1"
                             android:gravity="top|center_horizontal"
                             android:paddingBottom="@dimen/dp_2"
+
                             android:textColor="@color/common_color"
                             android:textSize="@dimen/font_small" />
                     </FrameLayout>
@@ -121,6 +122,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/common_h"
+                        android:layout_marginTop="4dp"
+                        android:textSize="@dimen/dp_12"
                         android:text="待付款"/>
                 </LinearLayout>
                 <LinearLayout
@@ -134,9 +137,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                         <ImageView
-                            android:layout_width="@dimen/dp_25"
-                            android:layout_height="@dimen/dp_25"
-                            android:src="@drawable/ic_launcher"/>
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"
+                            android:src="@drawable/user_order_substitute_delivery"/>
                         <ImageView
                             android:id="@+id/unshippingNum_iv"
                             android:layout_width="@dimen/dp_10"
@@ -147,6 +150,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textSize="@dimen/dp_12"
                         android:textColor="@color/common_h"
                         android:text="待发货"/>
                 </LinearLayout>
@@ -161,9 +166,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                         <ImageView
-                            android:layout_width="@dimen/dp_25"
-                            android:layout_height="@dimen/dp_25"
-                            android:src="@drawable/ic_launcher"/>
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"
+                            android:src="@drawable/user_order_collect_goods"/>
                         <ImageView
                             android:id="@+id/unreceive_goodsNum_iv"
                             android:layout_width="@dimen/dp_10"
@@ -174,8 +179,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textSize="@dimen/dp_12"
                         android:textColor="@color/common_h"
-                        android:text="待付款"/>
+                        android:text="待收货"/>
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/finish_ll"
@@ -188,9 +195,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                         <ImageView
-                            android:layout_width="@dimen/dp_25"
-                            android:layout_height="@dimen/dp_25"
-                            android:src="@drawable/ic_launcher"/>
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"
+                            android:src="@drawable/user_order_complete"/>
                         <ImageView
                             android:id="@+id/finishNum_iv"
                             android:layout_width="@dimen/dp_10"
@@ -202,6 +209,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/common_h"
+                        android:layout_marginTop="4dp"
+                        android:textSize="@dimen/dp_12"
                         android:text="已完成"/>
                 </LinearLayout>
                 <LinearLayout
@@ -215,9 +224,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                         <ImageView
-                            android:layout_width="@dimen/dp_25"
-                            android:layout_height="@dimen/dp_25"
-                            android:src="@drawable/ic_launcher"/>
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"
+                            android:src="@drawable/user_order_refund"/>
                         <ImageView
                             android:id="@+id/refundNum_iv"
                             android:layout_width="@dimen/dp_10"
@@ -229,6 +238,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/common_h"
+                        android:layout_marginTop="4dp"
+                        android:textSize="@dimen/dp_12"
                         android:text="退款/售后"/>
                 </LinearLayout>
             </LinearLayout>
@@ -244,7 +255,7 @@
                     android:layout_width="@dimen/dp_20"
                     android:layout_height="@dimen/dp_20"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/ic_launcher"/>
+                    android:src="@drawable/user_setting"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -252,7 +263,7 @@
                     android:layout_toRightOf="@+id/setting_iv"
                     android:layout_marginLeft="@dimen/dp_5"
                     android:layout_centerVertical="true"
-                    android:textSize="@dimen/font_normal2"
+                    android:textSize="@dimen/dp_14"
                     android:textColor="@color/common_h1"/>
                 <ImageView
                     android:layout_width="@dimen/dp_20"
@@ -274,7 +285,7 @@
                     android:layout_width="@dimen/dp_20"
                     android:layout_height="@dimen/dp_20"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/ic_launcher"/>
+                    android:src="@drawable/user_card_bag"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -282,7 +293,7 @@
                     android:layout_toRightOf="@+id/coupon_iv"
                     android:layout_marginLeft="@dimen/dp_5"
                     android:layout_centerVertical="true"
-                    android:textSize="@dimen/font_normal2"
+                    android:textSize="@dimen/dp_14"
                     android:textColor="@color/common_h1"/>
                 <ImageView
                     android:layout_width="@dimen/dp_20"
@@ -304,7 +315,7 @@
                     android:layout_width="@dimen/dp_20"
                     android:layout_height="@dimen/dp_20"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/ic_launcher"/>
+                    android:src="@drawable/user_collection"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -312,7 +323,7 @@
                     android:layout_toRightOf="@+id/collect_iv"
                     android:layout_marginLeft="@dimen/dp_5"
                     android:layout_centerVertical="true"
-                    android:textSize="@dimen/font_normal2"
+                    android:textSize="@dimen/dp_14"
                     android:textColor="@color/common_h1"/>
                 <ImageView
                     android:layout_width="@dimen/dp_20"
@@ -334,7 +345,7 @@
                     android:layout_width="@dimen/dp_20"
                     android:layout_height="@dimen/dp_20"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/ic_launcher"/>
+                    android:src="@drawable/user_footprint"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -342,7 +353,7 @@
                     android:layout_toRightOf="@+id/footprint_iv"
                     android:layout_marginLeft="@dimen/dp_5"
                     android:layout_centerVertical="true"
-                    android:textSize="@dimen/font_normal2"
+                    android:textSize="@dimen/dp_14"
                     android:textColor="@color/common_h1"/>
                 <ImageView
                     android:layout_width="@dimen/dp_20"
@@ -364,7 +375,7 @@
                     android:layout_width="@dimen/dp_20"
                     android:layout_height="@dimen/dp_20"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/ic_launcher"/>
+                    android:src="@drawable/user_commet"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -372,7 +383,7 @@
                     android:layout_toRightOf="@+id/myEvaluation_iv"
                     android:layout_marginLeft="@dimen/dp_5"
                     android:layout_centerVertical="true"
-                    android:textSize="@dimen/font_normal2"
+                    android:textSize="@dimen/dp_14"
                     android:textColor="@color/common_h1"/>
                 <ImageView
                     android:layout_width="@dimen/dp_20"
@@ -394,7 +405,7 @@
                     android:layout_width="@dimen/dp_20"
                     android:layout_height="@dimen/dp_20"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/ic_launcher"/>
+                    android:src="@drawable/user_about_us"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -402,7 +413,7 @@
                     android:layout_toRightOf="@+id/aboutUs_iv"
                     android:layout_marginLeft="@dimen/dp_5"
                     android:layout_centerVertical="true"
-                    android:textSize="@dimen/font_normal2"
+                    android:textSize="@dimen/dp_14"
                     android:textColor="@color/common_h1"/>
                 <ImageView
                     android:layout_width="@dimen/dp_20"
@@ -424,7 +435,7 @@
                     android:layout_width="@dimen/dp_20"
                     android:layout_height="@dimen/dp_20"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/ic_launcher"/>
+                    android:src="@drawable/user_custom_service"/>
                 <TextView
                     android:id="@+id/serviceHotline_tv"
                     android:layout_width="wrap_content"
@@ -433,7 +444,7 @@
                     android:layout_toRightOf="@+id/serviceHotline_iv"
                     android:layout_marginLeft="@dimen/dp_5"
                     android:layout_centerVertical="true"
-                    android:textSize="@dimen/font_normal2"
+                    android:textSize="@dimen/dp_14"
                     android:textColor="@color/common_h1"/>
                 <TextView
                     android:layout_width="wrap_content"
