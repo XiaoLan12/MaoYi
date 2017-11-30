@@ -25,4 +25,10 @@ public class AppConstant {
     //商品图片
     public static final String PRUDUCT_IMG_URL="http://dyc.maozhiwang.com/data/attached/goods/";
     public static List<SortedListBean> sortedBeanList=new ArrayList<>();
- }
+
+
+    public static final String WEIXIN_APP_ID="wxcf3dcbc781d32889";
+    public static final String  APP_SECRET="7eef53125b9e6fd5be1dd7294c35f5eb";
+//    微信Prepayurl：https://api.mch.weixin.qq.com/pay/unifiedorder
+
+}

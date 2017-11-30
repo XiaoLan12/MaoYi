@@ -9,6 +9,8 @@
         <attr name="rightButtonIcon1" format="reference"/>
         <attr name="rightButtonText1" format="string"/>
     </declare-styleable>
+
+
     !--自定星级控件-->
     <declare-styleable name="StarView">
         <attr name="mImageWidth" format="dimension"/>
@@ -18,5 +20,11 @@
         <attr name="mMargin" format="dimension" />
         <attr name="mStarNum" format="integer" />
         <attr name="mStarChoose" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="TimeView">
+        <attr name="tvtitles" format="string"/>
+        <attr name="tvtitleColors" format="color"/>
+        <attr name="tvtitleSizes" format="dimension"/>
     </declare-styleable>
 </resources>
