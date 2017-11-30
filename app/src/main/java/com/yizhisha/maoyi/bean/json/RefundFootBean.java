@@ -9,7 +9,16 @@ import java.io.Serializable;
 public class RefundFootBean implements Serializable{
     private int refundstatus;
     private String orderno;
+    private String refundno;
     private int type;
+
+    public String getRefundno() {
+        return refundno;
+    }
+
+    public void setRefundno(String refundno) {
+        this.refundno = refundno;
+    }
 
     public int getRefundstatus() {
         return refundstatus;

@@ -12,6 +12,8 @@ import com.yizhisha.maoyi.bean.json.MeInfoBean;
 import com.yizhisha.maoyi.bean.json.MyCommentBean;
 import com.yizhisha.maoyi.bean.json.MyOrderBean;
 import com.yizhisha.maoyi.bean.json.RefundBean;
+import com.yizhisha.maoyi.bean.json.RefundDetailBean;
+import com.yizhisha.maoyi.bean.json.RefundExpressBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
 import com.yizhisha.maoyi.bean.json.ShopcartListBean;
 import com.yizhisha.maoyi.bean.json.SimilarRecommenBean;
@@ -153,6 +155,15 @@ public class Api {
     //退款列表
     public Observable<RefundBean> loadRefundList(int uid){
         return service.loadRefundList(uid);
+    }
+    //退款详情
+    public Observable<RefundDetailBean> loadRefundDetail(Map<String,String> map){
+        return service.loadRefundDetail(map);
+    }
+
+    //退款物流
+    public Observable<RefundExpressBean> loadRefundExpress(String  refundno){
+        return service.loadRefundExpress(refundno);
     }
     public Observable<LoginBean> login(){
         return service.login();

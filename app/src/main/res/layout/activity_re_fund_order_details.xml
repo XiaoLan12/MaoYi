@@ -12,15 +12,11 @@
         app:leftButtonIcon="@drawable/ic_back"
         android:layout_alignParentTop="true"
         app:title="退款进度"/>
-    <com.yizhisha.maoyi.widget.CommonLoadingView
-        android:id="@+id/loadingView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
-        >
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar"
             >
             <LinearLayout
                 android:layout_width="match_parent"
@@ -87,7 +83,39 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:background="@color/white">
                 </android.support.v7.widget.RecyclerView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="32dp"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:paddingRight="@dimen/dp_10">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="退款金额:"/>
+                    <TextView
+                        android:id="@+id/pric_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:paddingLeft="32dp"
+                    android:paddingRight="@dimen/dp_10">
+                    <TextView
 
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="退款原因:"/>
+                    <TextView
+                        android:id="@+id/reason_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                </LinearLayout>
                 <View
                     android:layout_marginTop="@dimen/dp_100"
                     style="@style/MY.Theme.Widget.Divider.Line.Vertical" />
@@ -98,29 +126,44 @@
 
         </ScrollView>
 
-    </com.yizhisha.maoyi.widget.CommonLoadingView>
     <LinearLayout
         android:id="@+id/linearlayout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center_vertical">
+
         <TextView
+            android:id="@+id/look_express_tv"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@color/blue"
+            android:gravity="center"
+            android:text="查看物流"
+            android:visibility="gone"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/refund_tv"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:gravity="center"
             android:textColor="@color/white"
             android:background="@color/blue"
+            android:visibility="gone"
             android:text="退货" />
 
         <TextView
+            android:id="@+id/cacle_refund_tv"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:gravity="center"
             android:background="@color/common_color"
             android:textColor="@color/white"
+            android:visibility="gone"
             android:text="撤销申请" />
     </LinearLayout>
     </RelativeLayout>

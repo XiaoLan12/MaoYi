@@ -72,7 +72,7 @@ public class ReFundOrderActivity extends BaseActivity<ReFundOrderPresenter> impl
                         if(dataList.get(position) instanceof RefundFootBean) {
                             RefundFootBean footBean = (RefundFootBean) dataList.get(position);
                             Bundle bundle = new Bundle();
-                            bundle.putString("ORDERID", footBean.getOrderno());
+                            bundle.putString("REFUNDNO", footBean.getRefundno());
                             startActivity(ReFundOrderDetailsActivity.class,bundle);
                         }
                         break;

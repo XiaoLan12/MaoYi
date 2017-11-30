@@ -4,41 +4,65 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
-import com.yizhisha.maoyi.adapter.OrderInfoAdapter;
+import com.yizhisha.maoyi.adapter.RefundInfoAdapter;
 import com.yizhisha.maoyi.adapter.RefundOrderDetailsAdapter;
 import com.yizhisha.maoyi.base.BaseActivity;
 import com.yizhisha.maoyi.base.BaseToolbar;
-import com.yizhisha.maoyi.bean.json.MyOrderListBean;
-import com.yizhisha.maoyi.bean.json.OrderInfoBean;
-import com.yizhisha.maoyi.widget.CommonLoadingView;
+import com.yizhisha.maoyi.bean.json.RefundDetailBean;
+import com.yizhisha.maoyi.ui.me.contract.ReFundOrderDetailsContract;
+import com.yizhisha.maoyi.ui.me.presenter.ReFundOrderDetailsPresenter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class ReFundOrderDetailsActivity extends BaseActivity {
+public class ReFundOrderDetailsActivity extends BaseActivity<ReFundOrderDetailsPresenter> implements ReFundOrderDetailsContract.View {
     @Bind(R.id.toolbar)
     BaseToolbar toolbar;
     @Bind(R.id.recyclerview)
     RecyclerView mRecyclerView;
     @Bind(R.id.recyclerview1)
     RecyclerView mRecyclerView1;
-    @Bind(R.id.loadingView)
-    CommonLoadingView mLoadingView;
+    @Bind(R.id.orderNumber_tv)
+    TextView orderNumberTv;
+    @Bind(R.id.refundNumber_tv)
+    TextView refundNumberTv;
+    @Bind(R.id.linearlayout)
+    LinearLayout linearlayout;
+    @Bind(R.id.pric_tv)
+    TextView pricTv;
+    @Bind(R.id.reason_tv)
+    TextView reasonTv;
+    @Bind(R.id.look_express_tv)
+    TextView lookExpressTv;
+    @Bind(R.id.refund_tv)
+    TextView refundTv;
+    @Bind(R.id.cacle_refund_tv)
+    TextView cacleRefundTv;
+
 
     private RefundOrderDetailsAdapter mAdapter;
-    private List<MyOrderListBean.Goods> dataList=new ArrayList<>();
+    private List<RefundDetailBean.Goods> dataList = new ArrayList<>();
+    private RefundDetailBean.Refund order;
+    private RefundInfoAdapter mAdapter1;
+    private List<RefundDetailBean.Log> dataList1 = new ArrayList<>();
+    private String refundNo = "";
 
-    private OrderInfoAdapter mAdapter1;
-    private List<OrderInfoBean> dataList1=new ArrayList<>();
-    private String orderNo="";
     @Override
     protected int getLayoutId() {
         return R.layout.activity_re_fund_order_details;
     }
+
     @Override
     protected void initToolBar() {
         toolbar.setLeftButtonOnClickLinster(new View.OnClickListener() {
@@ -48,42 +72,101 @@ public class ReFundOrderDetailsActivity extends BaseActivity {
             }
         });
     }
+
     @Override
     protected void initView() {
-        Bundle bundle=getIntent().getExtras();
-        if(bundle!=null){
-            orderNo=bundle.getString("ORDERID","");
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            refundNo = bundle.getString("REFUNDNO", "");
         }
-        mLoadingView.loadSuccess();
-        data();
-        data1();
         initAdapter();
+        loadRefundDetail();
     }
-    private void initAdapter(){
+
+    //加载详情
+    private void loadRefundDetail() {
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", String.valueOf(AppConstant.UID));
+        map.put("refundno", refundNo);
+        mPresenter.loadRefundDetail(map);
+    }
+
+    private void initAdapter() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mRecyclerView.setNestedScrollingEnabled(false);
-        mAdapter=new RefundOrderDetailsAdapter(dataList);
+        mAdapter = new RefundOrderDetailsAdapter(dataList);
         mRecyclerView.setAdapter(mAdapter);
 
         mRecyclerView1.setLayoutManager(new LinearLayoutManager(mContext));
         mRecyclerView1.setNestedScrollingEnabled(false);
-        mAdapter1=new OrderInfoAdapter(dataList1);
+        mAdapter1 = new RefundInfoAdapter(dataList1);
         mRecyclerView1.setAdapter(mAdapter1);
 
     }
-    private void data(){
-        MyOrderListBean.Goods goodsBean=new MyOrderListBean().new Goods();
-            dataList.add(goodsBean);
+
+    @Override
+    public void loadRefundDetailSuccess(RefundDetailBean data) {
+        dataList.clear();
+        dataList1.clear();
+        dataList = data.getGoods();
+        dataList1 = data.getLog();
+        order = data.getRefund();
+        if (order != null) {
+            orderNumberTv.setText(order.getOrderno());
+            refundNumberTv.setText(order.getRefundno());
+            pricTv.setText("￥:" + order.getPic());
+            reasonTv.setText(order.getReason());
+            if(order.getType()==1){
+                switch (order.getRefundstatus()){
+                    case 1:
+                        cacleRefundTv.setVisibility(View.VISIBLE);
+                        break;
+                }
+            }else if(order.getType()==2){
+                switch (order.getRefundstatus()){
+                    case 1:
+                        cacleRefundTv.setVisibility(View.VISIBLE);
+                        break;
+                    case 2:
+                        refundTv.setVisibility(View.VISIBLE);
+                        cacleRefundTv.setVisibility(View.VISIBLE);
+                        break;
+                    case 3:
+                        lookExpressTv.setVisibility(View.VISIBLE);
+                        break;
+
+                }
+            }
+        }
+        mAdapter1.setNewData(dataList1);
+        mAdapter.setNewData(dataList);
     }
-    private void data1(){
-        dataList1.add(new OrderInfoBean("2016-09-18 08:33:50","您的订单开始处理"));
-        dataList1.add(new OrderInfoBean("2016-09-18 08:40:23","您的订单待配货"));
-        dataList1.add(new OrderInfoBean("2016-09-18 08:51:33","您的包裹已出库"));
-        dataList1.add(new OrderInfoBean("2016-09-18 21:12:53","【深圳市龙华函件中心】已收寄"));
-        dataList1.add(new OrderInfoBean("2016-09-18 17:44:20","到达【深圳】"));
-        dataList1.add(new OrderInfoBean("2016-09-18 21:26:51","离开【深圳市龙华函件中心】，下一站【深圳市】"));
-        dataList1.add(new OrderInfoBean("2016-09-18 23:18:21","到达【深圳市处理中心】"));
-        dataList1.add(new OrderInfoBean("2016-09-19 01:14:30","离开【深圳市处理中心】，下一站【广州市】"));
-        dataList1.add(new OrderInfoBean("2016-09-19 04:42:11","到达【广东省广州邮件处理中心】"));
+
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void loadFail(String msg) {
+
+    }
+    @OnClick({R.id.look_express_tv})
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.look_express_tv:
+                Bundle bundle = new Bundle();
+                bundle.putString("REFUNDNO", order.getRefundno());
+                startActivity(OrderTrackingActivity.class,bundle);
+                break;
+        }
     }
 }

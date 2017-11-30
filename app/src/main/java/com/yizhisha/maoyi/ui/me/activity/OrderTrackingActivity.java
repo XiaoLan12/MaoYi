@@ -10,18 +10,21 @@ import com.yizhisha.maoyi.adapter.MyOrderDetailsAdapter;
 import com.yizhisha.maoyi.adapter.OrderInfoAdapter;
 import com.yizhisha.maoyi.base.BaseActivity;
 import com.yizhisha.maoyi.bean.json.OrderInfoBean;
+import com.yizhisha.maoyi.bean.json.RefundExpressBean;
+import com.yizhisha.maoyi.ui.me.contract.OrderTrackContract;
+import com.yizhisha.maoyi.ui.me.presenter.OrderTrackPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 
-public class OrderTrackingActivity extends BaseActivity {
+public class OrderTrackingActivity extends BaseActivity<OrderTrackPresenter> implements OrderTrackContract.View{
     @Bind(R.id.recyclerview)
     RecyclerView mRecyclerView;
     private OrderInfoAdapter mAdapter;
     private List<OrderInfoBean> dataList=new ArrayList<>();
-
+    private String refundNo = "";
     @Override
     protected int getLayoutId() {
         return R.layout.activity_order_tracking;
@@ -32,8 +35,12 @@ public class OrderTrackingActivity extends BaseActivity {
     }
     @Override
     protected void initView() {
-        data();
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            refundNo = bundle.getString("REFUNDNO", "");
+        }
         initAdapter();
+        mPresenter.loadRefundExpressDetail(refundNo);
     }
     private void initAdapter(){
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -52,5 +59,33 @@ public class OrderTrackingActivity extends BaseActivity {
         dataList.add(new OrderInfoBean("2016-09-18 23:18:21","到达【深圳市处理中心】"));
         dataList.add(new OrderInfoBean("2016-09-19 01:14:30","离开【深圳市处理中心】，下一站【广州市】"));
         dataList.add(new OrderInfoBean("2016-09-19 04:42:11","到达【广东省广州邮件处理中心】"));
+    }
+
+    @Override
+    public void loadRefundExpressSuccess(RefundExpressBean data) {
+        dataList.clear();
+        List<RefundExpressBean.Result> result=data.getResult();
+        if(result.size()==0){
+           return;
+        }
+        for(RefundExpressBean.Result result1:result){
+            OrderInfoBean orderInfoBean=new OrderInfoBean(result1.getStatus(),result1.getTime());
+            dataList.add(orderInfoBean);
+        }
+        mAdapter.setNewData(dataList);
+    }
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void loadFail(String msg) {
+
     }
 }

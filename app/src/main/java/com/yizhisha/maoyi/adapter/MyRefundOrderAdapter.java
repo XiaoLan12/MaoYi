@@ -73,7 +73,7 @@ public class MyRefundOrderAdapter extends BaseQuickAdapter<Object,BaseViewHolder
                             helper.setText(R.id.refundType_tv,"待处理");
                             break;
                         case 2:
-                            helper.setText(R.id.refundType_tv,"待买家退款");
+                            helper.setText(R.id.refundType_tv,"待卖家退款");
                             break;
                         case 3:
                             helper.setText(R.id.refundType_tv,"待卖家收货");

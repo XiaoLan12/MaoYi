@@ -217,11 +217,11 @@ public interface ApiService {
 
     //退款详情
     @GET("app/order/refundOrder/")
-    Observable<RefundDetailBean> loadRefund(@QueryMap Map<String, String> param);
+    Observable<RefundDetailBean> loadRefundDetail(@QueryMap Map<String, String> param);
 
     //退款物流信息
     @GET("app/order/expressviewrefund/")
-    Observable<RefundExpressBean> loadRefundExpress(@QueryMap Map<String, String> param);
+    Observable<RefundExpressBean> loadRefundExpress(@Query("refundno") String refundno);
 
     @GET("app/user/dologin/mobile/15626036029/password/123456")
     Observable<LoginBean> login();

@@ -157,6 +157,7 @@ public class DataHelper {
 
             RefundFootBean orderFootBean=new RefundFootBean();
             orderFootBean.setOrderno(refund.getOrderno());
+            orderFootBean.setRefundno(refund.getRefundno());
             orderFootBean.setRefundstatus(refund.getRefundstatus());
             orderFootBean.setType(refund.getType());
             dataList.add(orderFootBean);
