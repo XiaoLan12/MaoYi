@@ -223,6 +223,10 @@ public interface ApiService {
     @GET("app/order/expressviewrefund/")
     Observable<RefundExpressBean> loadRefundExpress(@Query("refundno") String refundno);
 
+    //物流信息
+    @GET("app/order/expressView/")
+    Observable<RefundExpressBean> loadExpress(@Query("orderno") String orderno);
+
     @GET("app/user/dologin/mobile/15626036029/password/123456")
     Observable<LoginBean> login();
 

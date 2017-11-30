@@ -13,19 +13,22 @@ public class MyOrderListBean implements Serializable{
     private int status;
     private int amount;
     private double totalprice;
-    private int addtime;
-    private Address address;
-    private String address_id;
+    private long addtime;
+    private String linkman;
+    private String mobile;
+    private String address;
+    private int address_id;
     private String payorderno;
     private String express_no;
     private int express_id;
     private int refundstatus;
-    private int paytime;
-    private int shiptime;
-    private int receivetime;
-    private int donetime;
+    private long paytime;
+    private long shiptime;
+    private long receivetime;
+    private long donetime;
+    private String refundno;
     private List<Goods> goods;
-    //private Refund refund;
+    private Refund refund;
 
     public int getId() {
         return id;
@@ -47,15 +50,23 @@ public class MyOrderListBean implements Serializable{
         return totalprice;
     }
 
-    public int getAddtime() {
+    public long getAddtime() {
         return addtime;
     }
 
-    public Address getAddress() {
+    public String getLinkman() {
+        return linkman;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public String getAddress() {
         return address;
     }
 
-    public String getAddress_id() {
+    public int getAddress_id() {
         return address_id;
     }
 
@@ -75,29 +86,33 @@ public class MyOrderListBean implements Serializable{
         return refundstatus;
     }
 
-    public int getPaytime() {
+    public long getPaytime() {
         return paytime;
     }
 
-    public int getShiptime() {
+    public long getShiptime() {
         return shiptime;
     }
 
-    public int getReceivetime() {
+    public long getReceivetime() {
         return receivetime;
     }
 
-    public int getDonetime() {
+    public long getDonetime() {
         return donetime;
+    }
+
+    public String getRefundno() {
+        return refundno;
     }
 
     public List<Goods> getGoods() {
         return goods;
     }
 
-   /* public Refund getRefund() {
+    public Refund getRefund() {
         return refund;
-    }*/
+    }
 
     public class Address {
 

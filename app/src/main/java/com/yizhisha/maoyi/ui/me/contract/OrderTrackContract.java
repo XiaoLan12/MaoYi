@@ -13,7 +13,7 @@ import java.util.Map;
 
 public interface OrderTrackContract {
     interface View extends BaseView {
-        //void loadRefundExpressSuccess(RefundDetailBean data);
+        //void loadExpressSuccess(RefundDetailBean data);
         void loadRefundExpressSuccess(RefundExpressBean data);
         void showLoading();
         void hideLoading();
@@ -22,7 +22,7 @@ public interface OrderTrackContract {
     }
 
     abstract class Presenter extends BasePresenter<View> {
-        //public abstract void loadRefundDetail(Map<String, String> params);
+        public abstract void loadExpressDetail(String orderno);
         public abstract void loadRefundExpressDetail(String refunndno);
 
     }

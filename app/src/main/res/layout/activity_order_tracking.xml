@@ -13,7 +13,7 @@
         app:title="订单追踪"/>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,13 +22,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/dp_10">
+        android:layout_marginBottom="@dimen/dp_10"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="vertical">
-            <LinearLayout
+            <!--<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/dp_10"
@@ -46,7 +47,7 @@
                     android:textColor="@color/common_h2"
                     tools:text="已发货"/>
             </LinearLayout>
-
+-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -84,7 +85,7 @@
                     tools:text="已发货"/>
             </LinearLayout>
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/dp_10"
@@ -100,7 +101,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/common_h2"
                     tools:text="已发货"/>
-            </LinearLayout>
+            </LinearLayout>-->
         </LinearLayout>
         <LinearLayout
             android:id="@+id/officialPhone_ll"
@@ -126,7 +127,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@color/white">
     </android.support.v7.widget.RecyclerView>

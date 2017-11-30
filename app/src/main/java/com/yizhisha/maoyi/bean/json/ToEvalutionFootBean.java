@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class ToEvalutionFootBean implements Serializable{
     private String orderno;
-    private int addtime;
+    private long addtime;
     private String detail;
     private int orderId;
 
@@ -20,11 +20,11 @@ public class ToEvalutionFootBean implements Serializable{
         this.orderno = orderno;
     }
 
-    public int getAddtime() {
+    public long getAddtime() {
         return addtime;
     }
 
-    public void setAddtime(int addtime) {
+    public void setAddtime(long addtime) {
         this.addtime = addtime;
     }
 

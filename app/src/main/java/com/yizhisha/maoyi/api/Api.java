@@ -165,6 +165,11 @@ public class Api {
     public Observable<RefundExpressBean> loadRefundExpress(String  refundno){
         return service.loadRefundExpress(refundno);
     }
+
+    //物流
+    public Observable<RefundExpressBean> loadExpress(String  refundno){
+        return service.loadExpress(refundno);
+    }
     public Observable<LoginBean> login(){
         return service.login();
     }

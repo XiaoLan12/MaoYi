@@ -15,8 +15,10 @@ import com.yizhisha.maoyi.adapter.MyOrderAdapter;
 import com.yizhisha.maoyi.base.BaseFragment;
 import com.yizhisha.maoyi.bean.DataHelper;
 import com.yizhisha.maoyi.bean.json.MyOrderListBean;
+import com.yizhisha.maoyi.bean.json.OrderFootBean;
 import com.yizhisha.maoyi.ui.me.activity.ApplyRefundActivity;
 import com.yizhisha.maoyi.ui.me.activity.MyOrderDetailsActivity;
+import com.yizhisha.maoyi.ui.me.activity.OrderTrackingActivity;
 import com.yizhisha.maoyi.ui.me.contract.MyOrderContract;
 import com.yizhisha.maoyi.ui.me.presenter.MyOrderPresenter;
 import com.yizhisha.maoyi.utils.RescourseUtil;
@@ -114,9 +116,21 @@ public class MyOrderFragment extends BaseFragment<MyOrderPresenter> implements M
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()){
-                    case R.id.contact_the_merchant_tv:
+                    case R.id.refunds_tv:
+
                         //startActivity(OrderTrackingActivity.class);
                         startActivity(ApplyRefundActivity.class);
+                        break;
+                    case R.id.order_track_tv:
+                        if(dataList.get(position) instanceof OrderFootBean) {
+                            OrderFootBean goods= (OrderFootBean) dataList.get(position);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("ORDERNO", goods.getOrderno());
+                            bundle.putInt("TYPE",1);
+                            startActivity(OrderTrackingActivity.class,bundle);
+                        }
+
+
                         break;
                 }
             }

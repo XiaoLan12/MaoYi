@@ -126,12 +126,10 @@ public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> 
         mTvOrderInfo.setText(state[orderList.getStatus()]);
 
         mTvOrderNo.setText(orderList.getOrderno());
-        MyOrderListBean.Address adress = orderList.getAddress();
-        if (adress != null) {
-            mTvConsignee.setText(adress.getLinkman());
-            mTvConsigneePhone.setText(adress.getMobile());
-            mTvShipAddress.setText(adress.getAddress());
-        }
+
+            mTvConsignee.setText(orderList.getLinkman());
+            mTvConsigneePhone.setText(orderList.getMobile());
+            mTvShipAddress.setText(orderList.getAddress());
         mTvOrderTime.setText(DateUtil.getDateToString1(orderList.getAddtime() * 1000));
         mTvPayTime.setText(DateUtil.getDateToString1(orderList.getPaytime() * 1000));
         distributiontimeOrderdetail.setText(DateUtil.getDateToString1(orderList.getShiptime() * 1000));

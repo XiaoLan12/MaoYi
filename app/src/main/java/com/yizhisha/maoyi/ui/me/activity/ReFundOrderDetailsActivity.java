@@ -164,7 +164,8 @@ public class ReFundOrderDetailsActivity extends BaseActivity<ReFundOrderDetailsP
         switch (v.getId()){
             case R.id.look_express_tv:
                 Bundle bundle = new Bundle();
-                bundle.putString("REFUNDNO", order.getRefundno());
+                bundle.putString("ORDERNO", order.getRefundno());
+                bundle.putInt("TYPE",2);
                 startActivity(OrderTrackingActivity.class,bundle);
                 break;
         }

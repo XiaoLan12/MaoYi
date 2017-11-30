@@ -11,6 +11,26 @@ import com.yizhisha.maoyi.ui.me.contract.OrderTrackContract;
 
 public class OrderTrackPresenter extends OrderTrackContract.Presenter {
     @Override
+    public void loadExpressDetail(String orderno) {
+        addSubscrebe(Api.getInstance().loadExpress(orderno),new RxSubscriber<RefundExpressBean>(mContext,true){
+            @Override
+            protected void onSuccess(RefundExpressBean info) {
+                if(info!=null){
+                    if(info.getStatus().equals("y")){
+                        mView.loadRefundExpressSuccess(info);
+                    }else{
+                        mView.loadFail(info.getInfo());
+                    }
+                }
+            }
+            @Override
+            protected void onFailure(String message) {
+                mView.loadFail(message);
+            }
+        });
+    }
+
+    @Override
     public void loadRefundExpressDetail(String refunndno) {
         addSubscrebe(Api.getInstance().loadRefundExpress(refunndno),new RxSubscriber<RefundExpressBean>(mContext,true){
             @Override
