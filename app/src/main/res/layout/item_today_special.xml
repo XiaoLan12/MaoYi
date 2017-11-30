@@ -46,15 +46,13 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/dp_14"
             android:layout_marginLeft="14dp"
-            android:layout_marginRight="14dp"
-            android:text="距离结束"/>
+            android:text="距结束："/>
         <com.yizhisha.maoyi.widget.TimeView
             android:id="@+id/tv_count_down"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dp_10"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+
+           android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/dp_5"
             android:layout_marginTop="@dimen/dp_5"
             android:layout_marginBottom="@dimen/dp_5"

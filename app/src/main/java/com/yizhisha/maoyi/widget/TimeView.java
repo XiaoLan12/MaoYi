@@ -118,6 +118,7 @@ public class TimeView extends View {
         canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), mPaint);
         mPaint.setColor(RescourseUtil.getColor(R.color.red1));
         canvas.drawText(StartAndEndTimeDiff(cur+subTime), getWidth() / 2 - mBound.width() / 2, getHeight() / 2 + mBound.height() / 2, mPaint);
+
         mHandler.sendEmptyMessageDelayed(1, 1000);
     }
     /**
@@ -136,10 +137,11 @@ public class TimeView extends View {
         long miao = t / 1000 % 60;
         long min = t / 1000 / 60 % 60;
         long h = t / 1000 / 60 / 60;
+        return h + ":" + min + ":" + String.format("%02d", miao);
 
-        return h + "时:" + min + "分:" + String.format("%02d", miao) + "秒:"
+      /*  return h + "时:" + min + "分:" + String.format("%02d", miao) + "秒:"
                 + String.format("%03d", haomiao);
-
+*/
     }
 
     /**
