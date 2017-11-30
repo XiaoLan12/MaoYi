@@ -19,6 +19,11 @@
     <!-- Widget -->
 
     <style name="MY.Theme.Widget"/>
+<!--透明主题-->
+    <style name="AppTransparentTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+    </style>
     <!-- Widget - Divider 直线 -->
     <style name="MY.Theme.Widget.Divider">
         <item name="android:layout_width">0dp</item>
