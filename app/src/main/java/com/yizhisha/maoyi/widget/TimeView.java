@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -79,6 +80,7 @@ public class TimeView extends View {
         mPaint.setTextSize(mTitleSize);
         mBound = new Rect();
         mPaint.getTextBounds(mTitle, 0, mTitle.length(), mBound);
+
     }
     /**
      * 重写onMeasure
@@ -102,6 +104,7 @@ public class TimeView extends View {
         if (heightMode == MeasureSpec.EXACTLY) {
             height = heightSize;
         } else {
+
             mPaint.setTextSize(mTitleSize);
             mPaint.getTextBounds(mTitle, 0, mTitle.length(), mBound);
             height = (int) (getPaddingTop() + mBound.height() + getPaddingBottom());
@@ -115,9 +118,30 @@ public class TimeView extends View {
         Date curDate = new Date();// 获取当前时间
         long cur = curDate.getTime();// 获取当前时间
         mPaint.setColor(mTitleColor); // 这里设置 画笔颜色
-        canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), mPaint);
-        mPaint.setColor(RescourseUtil.getColor(R.color.red1));
-        canvas.drawText(StartAndEndTimeDiff(cur+subTime), getWidth() / 2 - mBound.width() / 2, getHeight() / 2 + mBound.height() / 2, mPaint);
+        mPaint.setStyle(Paint.Style.STROKE);
+        canvas.drawRect(0, getMeasuredWidth(), getMeasuredWidth(), getMeasuredHeight(), mPaint);
+        mPaint.setColor(RescourseUtil.getColor(R.color.common_color));
+       String[] s= StartAndEndTimeDiff(cur+subTime).split(":");
+        canvas.drawText(s[0], getWidth() / 2 - mBound.width() / 2+2, getHeight() / 2 + mBound.height() / 2, mPaint);
+        canvas.drawText(s[1], getWidth() / 2 - mBound.width() / 2+getWidth()/3+16, getHeight() / 2 + mBound.height() / 2, mPaint);
+        canvas.drawText(s[2], getWidth() / 2 - mBound.width() / 2+getWidth()/3*2+24, getHeight() / 2 + mBound.height() / 2, mPaint);
+
+        canvas.drawText(":", getWidth() / 2 - mBound.width() / 2+getWidth()/3-4, getHeight() / 2 + mBound.height() / 2, mPaint);
+        canvas.drawText(":", getWidth() / 2 - mBound.width() / 2+getWidth()/3*2, getHeight() / 2 + mBound.height() / 2, mPaint);
+//        mPaint1.setColor(mTitleColor); // 这里设置 画笔颜色
+//        canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), mPaint1);
+//        mPaint1.setColor(RescourseUtil.getColor(R.color.red1));
+//        canvas.drawText(StartAndEndTimeDiff(cur+subTime), getWidth() / 2 - mBound1.width() / 2, getHeight() / 2 + mBound1.height() / 2, mPaint1);
+
+
+        RectF rel4 = new RectF( 0,  0, getMeasuredWidth()/3-16,  getMeasuredHeight());
+        canvas.drawRoundRect(rel4, 15, 15, mPaint);
+
+       RectF rel5 = new RectF( getMeasuredWidth()/3+8,0 , getMeasuredWidth()/3*2-8,  getMeasuredHeight());
+        canvas.drawRoundRect(rel5, 15, 15, mPaint);
+
+        RectF rel6 = new RectF( getMeasuredWidth()/3*2+16,0, getMeasuredWidth(),  getMeasuredHeight());
+        canvas.drawRoundRect(rel6, 15, 15, mPaint);
 
         mHandler.sendEmptyMessageDelayed(1, 1000);
     }
@@ -137,7 +161,20 @@ public class TimeView extends View {
         long miao = t / 1000 % 60;
         long min = t / 1000 / 60 % 60;
         long h = t / 1000 / 60 / 60;
-        return h + ":" + min + ":" + String.format("%02d", miao);
+       /* String miao1=miao+"";
+        String min1=min+"";
+        String h1=h+"";
+
+        if(h<10){
+            h1="0"+0;
+        }
+        if(min<10){
+            min1="0"+0;
+        }
+       if(miao<10){
+            miao1="0"+0;
+        }*/
+        return h + ":" + String.format("%02d", min) + ":" + String.format("%02d", miao);
 
       /*  return h + "时:" + min + "分:" + String.format("%02d", miao) + "秒:"
                 + String.format("%03d", haomiao);
