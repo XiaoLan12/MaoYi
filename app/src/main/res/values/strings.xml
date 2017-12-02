@@ -9,4 +9,10 @@
     <string name="shppcart">购物车</string>
     <string name="me">个人中心</string>
     <string name="total">合计：￥</string>
+
+
+    <string name="hint_input_phone">请输入您的手机号</string>
+    <string name="hint_input_code">请输入验证码</string>
+    <string name="hint_set_pwd">请设置登录密码</string>
+    <string name="hint_again_pwd">请再次输入登录密码</string>
 </resources>
