@@ -76,7 +76,6 @@
             android:background="@drawable/shape_gray_selector"
             android:layout_marginRight="@dimen/dp_8"
             android:visibility="gone"
-
             android:text="删除订单"/>
         <TextView
             android:id="@+id/confirm_goods_tv"

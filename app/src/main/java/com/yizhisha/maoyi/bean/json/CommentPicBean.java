@@ -7,11 +7,17 @@ package com.yizhisha.maoyi.bean.json;
 public class CommentPicBean {
     private String CommentPic;
 
+    private String refundPic;
+
     public String getCommentPic() {
         return CommentPic;
     }
 
     public void setCommentPic(String commentPic) {
         CommentPic = commentPic;
+    }
+
+    public String getRefundPic() {
+        return refundPic;
     }
 }

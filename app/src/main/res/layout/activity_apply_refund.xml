@@ -15,15 +15,10 @@
         android:layout_alignParentTop="true"
         app:title="申请退款"
         />
-    <com.yizhisha.maoyi.widget.CommonLoadingView
-        android:id="@+id/loadingView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
-        >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
         >
     <ScrollView
         android:layout_width="match_parent"
@@ -57,12 +52,6 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/font_small"
                     android:text="请选择退款类型"/>
-                <ImageView
-                    android:id="@+id/refundType_iv"
-                    android:layout_width="@dimen/dp_16"
-                    android:layout_height="@dimen/dp_16"
-                    android:src="@drawable/ic_launcher"
-                    android:layout_alignParentRight="true"/>
             </RelativeLayout>
         </LinearLayout>
 
@@ -195,10 +184,10 @@
 
         android:background="@color/white">
         <Button
+            android:id="@+id/submit_btn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40"
             android:background="@drawable/shape_pink"
-
             android:textColor="@color/white"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_10"
@@ -206,5 +195,4 @@
             android:text="提交"/>
     </LinearLayout>
     </RelativeLayout>
-    </com.yizhisha.maoyi.widget.CommonLoadingView>
     </RelativeLayout>

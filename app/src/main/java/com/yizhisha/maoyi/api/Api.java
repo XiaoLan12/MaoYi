@@ -11,9 +11,11 @@ import com.yizhisha.maoyi.bean.json.LoginBean;
 import com.yizhisha.maoyi.bean.json.MeInfoBean;
 import com.yizhisha.maoyi.bean.json.MyCommentBean;
 import com.yizhisha.maoyi.bean.json.MyOrderBean;
+import com.yizhisha.maoyi.bean.json.OrderListBean;
 import com.yizhisha.maoyi.bean.json.RefundBean;
 import com.yizhisha.maoyi.bean.json.RefundDetailBean;
 import com.yizhisha.maoyi.bean.json.RefundExpressBean;
+import com.yizhisha.maoyi.bean.json.RefundPicBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
 import com.yizhisha.maoyi.bean.json.ShopcartListBean;
 import com.yizhisha.maoyi.bean.json.SimilarRecommenBean;
@@ -132,9 +134,22 @@ public class Api {
     public Observable<MyOrderBean> loadOrderList(Map<String,String> map){
         return service.getOrderList(map);
     }
+    //订单查询
+    public Observable<MyOrderBean> queryOrderList(Map<String,String> map){
+        return service.queryOrderList(map);
+    }
+
     //订单详情
     public Observable<MyOrderBean> loadOrderDetail(Map<String,String> map){
         return service.getOrderDetails(map);
+    }
+    //确认收货
+    public Observable<RequestStatusBean> sureGoods(Map<String,String> map){
+        return service.sureGoods(map);
+    }
+    //取消订单
+    public Observable<RequestStatusBean> cancelOrder(Map<String,String> map){
+        return service.cancelOrder(map);
     }
     //我的评论
     public Observable<MyCommentBean> loadMyComment(int uid){
@@ -170,6 +185,16 @@ public class Api {
     public Observable<RefundExpressBean> loadExpress(String  refundno){
         return service.loadExpress(refundno);
     }
+
+    //退款申请
+    public Observable<RequestStatusBean> refundApply(Map<String,String> map){
+        return service.refundApply(map);
+    }
+    //退款图片上传
+    public Observable<RefundPicBean> uploadRefundPic(MultipartBody.Part body){
+        return service.uploadRefundPic(body);
+    }
+
     public Observable<LoginBean> login(){
         return service.login();
     }

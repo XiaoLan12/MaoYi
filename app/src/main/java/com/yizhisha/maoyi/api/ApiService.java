@@ -15,6 +15,7 @@ import com.yizhisha.maoyi.bean.json.OrderListBean;
 import com.yizhisha.maoyi.bean.json.RefundBean;
 import com.yizhisha.maoyi.bean.json.RefundDetailBean;
 import com.yizhisha.maoyi.bean.json.RefundExpressBean;
+import com.yizhisha.maoyi.bean.json.RefundPicBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
 import com.yizhisha.maoyi.bean.json.ShopcartListBean;
 import com.yizhisha.maoyi.bean.json.SimilarRecommenBean;
@@ -120,7 +121,7 @@ public interface ApiService {
     //查询订单
     @FormUrlEncoded
     @POST("app/order/orderSelect")
-    Observable<OrderListBean> queryOrderList(@FieldMap Map<String,String> map);
+    Observable<MyOrderBean> queryOrderList(@FieldMap Map<String,String> map);
 
     //获得订单详情
     @GET("app/order/orderDetail")
@@ -135,6 +136,8 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("app/order/order_receive/")
     Observable<RequestStatusBean> sureGoods(@FieldMap Map<String,String> map);
+
+    //退款申请
 
     //登录
     @FormUrlEncoded
@@ -230,6 +233,15 @@ public interface ApiService {
     @GET("app/user/dologin/mobile/15626036029/password/123456")
     Observable<LoginBean> login();
 
+    //退款申请
+    @FormUrlEncoded
+    @POST("app/order/refundApply/")
+    Observable<RequestStatusBean> refundApply(@FieldMap Map<String, String> param);
+
+    //退款图片上传
+    @Multipart
+    @POST("app/ajax/uploadRefundPic/")
+    Observable<RefundPicBean> uploadRefundPic(@Part MultipartBody.Part file);
 
     //首页今日专场轮播图
     @GET("app/dailyTopSlider/")

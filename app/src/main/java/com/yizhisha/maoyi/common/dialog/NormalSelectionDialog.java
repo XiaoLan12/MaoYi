@@ -80,14 +80,19 @@ public class NormalSelectionDialog {
         }else{
             title.setVisibility(View.GONE);
         }
-        //设置底部“取消”按钮
-        bottomBtn.setTextSize(mBuilder.getItemTextSize());
-        LinearLayout.LayoutParams btnLp=new LinearLayout.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
-                mBuilder.getItemHeight());
-        btnLp.topMargin=10;
-        bottomBtn.setLayoutParams(btnLp);
+        if(mBuilder.isBoolCancle()){
+            bottomBtn.setVisibility(View.VISIBLE);
+            //设置底部“取消”按钮
+            bottomBtn.setTextSize(mBuilder.getItemTextSize());
+            LinearLayout.LayoutParams btnLp=new LinearLayout.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
+                    mBuilder.getItemHeight());
+            btnLp.topMargin=10;
+            bottomBtn.setLayoutParams(btnLp);
+        }else{
+            bottomBtn.setVisibility(View.GONE);
+        }
+
         if(datas.size()==1){
-            Log.d("TTT","到佛爱豆");
             Button button=getButton(datas.get(0),0);
             if(mBuilder.isBoolTitle()){
                 button.setBackgroundResource(R.drawable.selector_widget_actiondialog_bottom);
@@ -178,6 +183,7 @@ public class NormalSelectionDialog {
         private int itemTextColor;
         private float itemTextSize;
         //取消按钮属性
+        private boolean boolCancle;
         private String cancleButtonText;
         private int cancleTextColor;
         private boolean isTouchOutside;
@@ -197,6 +203,7 @@ public class NormalSelectionDialog {
             this.mContext = context;
             //默认标题属性
             boolTitle = false;
+            boolCancle=true;
             titleHeight = DensityUtil.dip2px(50); // 默认title高度
             titleText = "请选择";
             titleTextColor = ContextCompat.getColor(mContext, R.color.common_h2);
@@ -307,7 +314,14 @@ public class NormalSelectionDialog {
             this.itemTextSize = itemTextSize;
             return this;
         }
+        public boolean isBoolCancle() {
+            return boolCancle;
+        }
 
+        public Builder setBoolCancle(boolean boolCancle) {
+            this.boolCancle = boolCancle;
+            return this;
+        }
         public String getCancleButtonText() {
             return cancleButtonText;
         }
@@ -320,6 +334,7 @@ public class NormalSelectionDialog {
             this.cancleTextColor = Color;
             return this;
         }
+
         public NormalSelectionDialog build(){
             return new NormalSelectionDialog(this);
         }

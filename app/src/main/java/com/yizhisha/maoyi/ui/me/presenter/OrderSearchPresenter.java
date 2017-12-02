@@ -3,24 +3,22 @@ package com.yizhisha.maoyi.ui.me.presenter;
 import com.yizhisha.maoyi.api.Api;
 import com.yizhisha.maoyi.base.rx.RxSubscriber;
 import com.yizhisha.maoyi.bean.json.MyOrderBean;
-import com.yizhisha.maoyi.bean.json.MyOrderListBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
-import com.yizhisha.maoyi.ui.me.contract.MyOrderContract;
+import com.yizhisha.maoyi.ui.me.contract.OrderSearchContract;
 
 import java.util.Map;
 
 /**
- * Created by Administrator on 2017/11/26 0026.
+ * Created by Administrator on 2017/12/1 0001.
  */
 
-public class MyOrderPresenter extends MyOrderContract.Presenter{
-
+public class OrderSearchPresenter extends OrderSearchContract.Presenter{
     @Override
     public void loadOrder(Map<String, String> param, boolean isShowLoad) {
         if(isShowLoad){
             mView.showLoading();
         }
-        addSubscrebe(Api.getInstance().loadOrderList(param),
+        addSubscrebe(Api.getInstance().queryOrderList(param),
                 new RxSubscriber<MyOrderBean>(mContext, false) {
                     @Override
                     protected void onSuccess(MyOrderBean bean) {
