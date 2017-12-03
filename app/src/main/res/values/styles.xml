@@ -19,6 +19,8 @@
     <!-- Widget -->
 
     <style name="MY.Theme.Widget"/>
+
+
 <!--透明主题-->
     <style name="AppTransparentTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowIsTranslucent">true</item>

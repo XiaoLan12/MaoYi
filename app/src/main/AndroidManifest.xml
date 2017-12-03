@@ -91,6 +91,11 @@
         <activity android:name=".ui.me.activity.AddCommentActivity" />
         <activity android:name=".ui.shoppcart.activity.EditShoppCartActivity" />
 
+        <!--登录-->
+        <activity android:name=".ui.login.activity.LoginFragmentActivity"></activity>
+        <!--注册-->
+        <activity android:name=".ui.login.activity.RegisterActivity"></activity>
+
         <!-- 微信登录 -->
         <activity
             android:name=".wxapi.WXEntryActivity"

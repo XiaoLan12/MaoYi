@@ -20,6 +20,7 @@ import com.yizhisha.maoyi.bean.json.MeInfoBean;
 import com.yizhisha.maoyi.common.dialog.DialogInterface;
 import com.yizhisha.maoyi.common.dialog.NormalAlertDialog;
 import com.yizhisha.maoyi.event.UserHeadEvent;
+import com.yizhisha.maoyi.ui.login.activity.LoginFragmentActivity;
 import com.yizhisha.maoyi.ui.me.activity.AboutUsActivity;
 import com.yizhisha.maoyi.ui.me.activity.CouponsActivity;
 import com.yizhisha.maoyi.ui.me.activity.MyCollectActivity;
@@ -67,7 +68,7 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
     }
     @OnClick({R.id.myorder_rl, R.id.unpayment_ll, R.id.unshipping_ll, R.id.unreceive_goods_ll,
             R.id.finish_ll, R.id.refund_ll, R.id.setting_rl, R.id.coupon_rl, R.id.collect_rl,
-            R.id.footprint_rl, R.id.myEvaluation_rl, R.id.aboutUs_rl, R.id.serviceHotline_rl})
+            R.id.footprint_rl, R.id.myEvaluation_rl, R.id.aboutUs_rl, R.id.serviceHotline_rl,R.id.userPhoto_iv})
     /**
      *
      */
@@ -120,6 +121,9 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
                 break;
             case R.id.aboutUs_rl:
                 startActivity(AboutUsActivity.class);
+                break;
+            case R.id.userPhoto_iv:
+                startActivity(LoginFragmentActivity.class);
                 break;
             case R.id.serviceHotline_rl:
                 new NormalAlertDialog.Builder(activity)
