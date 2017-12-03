@@ -51,13 +51,29 @@
                 android:textSize="@dimen/font_normal2"
                 tools:text="商品名"
                 />
-
+            <ImageView
+                android:id="@+id/edit_iv"
+                android:layout_width="@dimen/dp_25"
+                android:layout_height="@dimen/dp_25"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_launcher"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tradecolor_shoppcar2_tv"
                 android:layout_below="@+id/tradename_shoppcar2_tv"
                 android:layout_toRightOf="@+id/tradecolor_tv"
+                tools:text="说明"
+                android:layout_marginTop="@dimen/dp_5"
+                android:singleLine="true"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tradesize_shoppcar2_tv"
+                android:layout_below="@+id/tradename_shoppcar2_tv"
+                android:layout_toRightOf="@+id/tradecolor_shoppcar2_tv"
+                android:layout_marginLeft="@dimen/dp_5"
                 tools:text="说明"
                 android:layout_marginTop="@dimen/dp_5"
                 android:singleLine="true"
@@ -77,6 +93,14 @@
                 android:layout_toRightOf="@+id/tradepriceTv"
                 android:textSize="@dimen/font_normal3"
                 android:textColor="@color/common_color" />
+            <TextView
+                android:id="@+id/tradeamount_tv"
+                style="@style/MY.Theme.Widget.Text"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:text=""
+                android:textColor="@color/common_h2" />
         </RelativeLayout>
 
 

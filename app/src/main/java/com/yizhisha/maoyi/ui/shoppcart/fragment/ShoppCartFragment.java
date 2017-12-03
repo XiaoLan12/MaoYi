@@ -1,25 +1,40 @@
 package com.yizhisha.maoyi.ui.shoppcart.fragment;
 
 import android.graphics.Color;
-import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
+import com.yizhisha.maoyi.adapter.EditShoppcartAdapter;
 import com.yizhisha.maoyi.adapter.ShoppCartAdapter;
 import com.yizhisha.maoyi.base.BaseFragment;
 import com.yizhisha.maoyi.base.BaseToolbar;
+import com.yizhisha.maoyi.bean.GoodsAttrsBean;
 import com.yizhisha.maoyi.bean.json.GoodsBean;
 import com.yizhisha.maoyi.bean.json.ShopcartBean;
+import com.yizhisha.maoyi.bean.json.SingleShoppGoodBean;
 import com.yizhisha.maoyi.bean.json.StoreBean;
+import com.yizhisha.maoyi.common.dialog.CustomDialog;
 import com.yizhisha.maoyi.common.dialog.DialogInterface;
 import com.yizhisha.maoyi.common.dialog.NormalAlertDialog;
 import com.yizhisha.maoyi.ui.shoppcart.contract.ShoppCartContract;
@@ -27,11 +42,15 @@ import com.yizhisha.maoyi.ui.shoppcart.presenter.ShoppCartPresenter;
 import com.yizhisha.maoyi.utils.RescourseUtil;
 import com.yizhisha.maoyi.utils.ToastUtil;
 import com.yizhisha.maoyi.widget.CommonLoadingView;
+import com.yizhisha.maoyi.widget.SKUInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -64,6 +83,7 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
     @Bind(R.id.loadingView)
     CommonLoadingView mLoadingView;
 
+    private CustomDialog dialog;
     private ShoppCartAdapter adapter;
     //定义父列表项List数据集合
     List<Map<String, Object>> parentMapList = new ArrayList<Map<String, Object>>();
@@ -99,6 +119,10 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
         initAdapter();
         mPresenter.loadShoppCart(AppConstant.UID,true);
     }
+    private void loadSingleShoopCart(Map<String,String> map){
+        mPresenter.loadSingleShoppCart(map);
+
+    }
     private void initAdapter(){
         mSwipeRefreshLayout.setColorSchemeColors(RescourseUtil.getColor(R.color.red),
                 RescourseUtil.getColor(R.color.red));
@@ -130,6 +154,7 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
         btnSettle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 StringBuilder str=new StringBuilder();
                 String sid = "";
                 for (int i = 0; i < parentMapList.size(); i++) {
@@ -149,6 +174,7 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
                     ToastUtil.showShortToast("请选择要购买的商品");
                     return;
                 }
+
               /*  Bundle bundle=new Bundle();
                 bundle.putInt("ORDERTYPE",2);
                 bundle.putString("gid",sid);
@@ -224,10 +250,11 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
         adapter.setOnGoodsEditChangeListenr(new ShoppCartAdapter.OnGoodsEditChangeListenr() {
             @Override
             public void onEditChange(GoodsBean goodsBean) {
-               /* Bundle bundle=new Bundle();
-                bundle.putInt("gid",goodsBean.getGid());
-                bundle.putInt("sid",goodsBean.getSid());
-                startActivityForResult(SingleShopCartActivity.class,bundle,100);*/
+            Map<String,String> map=new HashMap<String, String>();
+                map.put("gid",String.valueOf(goodsBean.getGid()));
+                map.put("sid",String.valueOf(goodsBean.getSid()));
+                map.put("uid",String.valueOf(AppConstant.UID));
+                loadSingleShoopCart(map);
             }
         });
         expandableListView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -289,6 +316,7 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
 
                 GoodsBean goodsBean=new GoodsBean();
                 goodsBean.setGid(goods.get(j).getGid());
+                goodsBean.setSid(goods.get(j).getSid());
                 goodsBean.setTitle(goods.get(j).getTitle());
                 goodsBean.setPrice(goods.get(j).getPrice());
                 goodsBean.setLitpic(goods.get(j).getLitpic());
@@ -315,6 +343,79 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
 
         }
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void loadSingleSuccess(SingleShoppGoodBean data) {
+        dataBean=new GoodsAttrsBean();
+        List<GoodsAttrsBean.AttributesBean> attributesBeanList=new ArrayList<>();
+        List<GoodsAttrsBean.StockGoodsBean> stockGoodsBeanList=new ArrayList<>();
+        if(data.getStyle()!=null&&data.getStyle().size()>0){
+            List<SingleShoppGoodBean.Style> styles=data.getStyle();
+            GoodsAttrsBean.AttributesBean attributesBean=new GoodsAttrsBean().new AttributesBean();
+            attributesBean.setTabID(0);
+            attributesBean.setTabName("颜色分类:");
+            List<String> colors=new ArrayList<>();
+            List<String> sizes=new ArrayList<>();
+            List<String> newSizes=new ArrayList<>();
+            for(int i=0;i<styles.size();i++){
+                colors.add(styles.get(i).getColor());
+                String[] strArray = null;
+                strArray = styles.get(i).getSize().split(",");
+                for(String size:strArray){
+                    sizes.add(size);
+                }
+            }
+            attributesBean.setAttributesItem(colors);
+            GoodsAttrsBean.AttributesBean attributesBean1=new GoodsAttrsBean().new AttributesBean();
+            attributesBean1.setTabID(1);
+            attributesBean1.setTabName("尺码:");
+            newSizes.addAll(removeDuplicateWithOrder(sizes));
+            attributesBean1.setAttributesItem(newSizes);
+            attributesBeanList.add(attributesBean);
+            attributesBeanList.add(attributesBean1);
+
+
+            for(int i=0;i<styles.size();i++){
+
+                GoodsAttrsBean.StockGoodsBean.GoodsInfoBean goodsInfoBean=new GoodsAttrsBean().new StockGoodsBean().new GoodsInfoBean();
+                goodsInfoBean.setTabID(0);
+                goodsInfoBean.setTabName("颜色分类:");
+                goodsInfoBean.setTabValue(styles.get(i).getColor());
+                String[] strArray = null;
+                strArray = styles.get(i).getSize().split(",");
+                for(String size:strArray){
+                    List<GoodsAttrsBean.StockGoodsBean.GoodsInfoBean> goodsInfoBeans=new ArrayList<>();
+                    GoodsAttrsBean.StockGoodsBean stockGoodsBean=new GoodsAttrsBean().new StockGoodsBean();
+                    GoodsAttrsBean.StockGoodsBean.GoodsInfoBean goodsInfoBean1=new GoodsAttrsBean().new StockGoodsBean().new GoodsInfoBean();
+                    goodsInfoBean1.setTabID(1);
+                    goodsInfoBean1.setTabName("尺码:");
+                    goodsInfoBean1.setTabValue(size);
+                    goodsInfoBeans.add(goodsInfoBean);
+                    goodsInfoBeans.add(goodsInfoBean1);
+                    stockGoodsBean.setGoodsID(i);
+                    stockGoodsBean.setGoodsInfo(goodsInfoBeans);
+                    stockGoodsBeanList.add(stockGoodsBean);
+                }
+
+            }
+            dataBean.setAttributes(attributesBeanList);
+            dataBean.setStockGoods(stockGoodsBeanList);
+            Dialog(data);
+        }
+    }
+    public  List removeDuplicateWithOrder(List list) {
+        Set set = new HashSet();
+        List newList = new ArrayList();
+        for (Iterator iter = list.iterator(); iter.hasNext();) {
+            Object element = iter.next();
+            if (set.add(element))
+                newList.add(element);
+        }
+        list.clear();
+        list.addAll(newList);
+        return list;
+
     }
     @Override
     public void deleteShoppCart(String msg) {
@@ -414,6 +515,91 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
 
                 break;
 
+        }
+    }
+
+    private GoodsAttrsBean dataBean;
+    private EditShoppcartAdapter mAdapter;
+    //自定义dialog弹窗
+    public void Dialog(SingleShoppGoodBean goodBean){
+
+        dialog = new CustomDialog(activity,R.style.Dialog);//设置dialog的样式
+        Window window = dialog.getWindow();
+        window.setGravity(Gravity.BOTTOM);
+        window.setWindowAnimations(R.style.bottomDialogAnim); // 添加动画
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+        WindowManager m = activity.getWindowManager();
+        Display d = m.getDefaultDisplay();
+        WindowManager.LayoutParams lp = window.getAttributes();
+        //这句就是设置dialog横向满屏了。
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;     //dialog屏幕占比
+        window.setAttributes(lp);
+
+        RecyclerView dialog_listView = (RecyclerView) dialog.findViewById(R.id.dialog_listView);
+        LinearLayout dialog_confirm_ll = (LinearLayout) dialog.findViewById(R.id.dialog_confirm_ll);
+        RelativeLayout custom_dialog_close = (RelativeLayout) dialog.findViewById(R.id.custom_dialog_close);
+        TextView dialog_goods_name = (TextView) dialog.findViewById(R.id.dialog_goods_name);
+        ImageView dialog_img = (ImageView) dialog.findViewById(R.id.dialog_img);
+        TextView dialog_goods_price = (TextView) dialog.findViewById(R.id.dialog_goods_price);
+        tv_item_minus_comm_detail = (TextView) dialog.findViewById(R.id.tv_item_minus_comm_detail);
+        tv_item_number_comm_detail = (TextView) dialog.findViewById(R.id.tv_item_number_comm_detail);
+        TextView tv_item_add_comm_detail = (TextView) dialog.findViewById(R.id.tv_item_add_comm_detail);
+
+        dialog_goods_name.setText(goodBean.getTitle());
+        dialog_goods_price.setText("￥:"+goodBean.getPrice());
+        dialog_listView.setLayoutManager(new LinearLayoutManager(mContext));
+        mAdapter = new EditShoppcartAdapter(dataBean.getAttributes(), dataBean.getStockGoods());
+        dialog_listView.setAdapter(mAdapter);
+        mAdapter.setSKUInterface(new SKUInterface() {
+            @Override
+            public void selectedAttribute(String[] attr) {
+
+            }
+
+            @Override
+            public void uncheckAttribute(String[] attr) {
+
+            }
+        });
+        custom_dialog_close.setOnClickListener(new DialogClick());
+        tv_item_minus_comm_detail.setOnClickListener(new DialogClick());
+        tv_item_add_comm_detail.setOnClickListener(new DialogClick());
+
+        dialog_confirm_ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //PayMent(string);
+                dialog.dismiss();
+            }
+        });
+    }
+    private int goods_nmb = 1;
+    private TextView tv_item_minus_comm_detail,tv_item_number_comm_detail,tv_item_add_comm_detail,goods_type,dialog_goods_price;
+    public class DialogClick implements View.OnClickListener{
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.custom_dialog_close:
+                    dialog.dismiss();
+                    break;
+                case R.id.tv_item_minus_comm_detail:
+                    //减少购买数量
+                    goods_nmb--;
+                    if (goods_nmb<1){
+                        //Toast.makeText(getApplication(),"已是最低购买量",Toast.LENGTH_SHORT).show();
+                    }else {
+                        tv_item_number_comm_detail.setText(String.valueOf(goods_nmb));
+                    }
+                    break;
+                case R.id.tv_item_add_comm_detail:
+                    //增加购买数量
+                    goods_nmb++;
+                    tv_item_number_comm_detail.setText(String.valueOf(goods_nmb));
+                    break;
+            }
         }
     }
 }

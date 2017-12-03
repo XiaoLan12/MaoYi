@@ -121,27 +121,34 @@ public class TimeView extends View {
         mPaint.setStyle(Paint.Style.STROKE);
         canvas.drawRect(0, getMeasuredWidth(), getMeasuredWidth(), getMeasuredHeight(), mPaint);
         mPaint.setColor(RescourseUtil.getColor(R.color.common_color));
-       String[] s= StartAndEndTimeDiff(cur+subTime).split(":");
-        canvas.drawText(s[0], getWidth() / 2 - mBound.width() / 2+4, getHeight() / 2 + mBound.height() / 2, mPaint);
-        canvas.drawText(s[1], getWidth() / 2 - mBound.width() / 2+getWidth()/3+16, getHeight() / 2 + mBound.height() / 2, mPaint);
-        canvas.drawText(s[2], getWidth() / 2 - mBound.width() / 2+getWidth()/3*2+24, getHeight() / 2 + mBound.height() / 2, mPaint);
 
-        canvas.drawText(":", getWidth() / 2 - mBound.width() / 2+getWidth()/3-8, getHeight() / 2 + mBound.height() / 2, mPaint);
-        canvas.drawText(":", getWidth() / 2 - mBound.width() / 2+getWidth()/3*2, getHeight() / 2 + mBound.height() / 2, mPaint);
 //        mPaint1.setColor(mTitleColor); // 这里设置 画笔颜色
 //        canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), mPaint1);
 //        mPaint1.setColor(RescourseUtil.getColor(R.color.red1));
+        if(StartAndEndTimeDiff(cur+subTime).equals("活动未开始")||StartAndEndTimeDiff(cur+subTime).equals("活动已结束")){
+            canvas.drawText(StartAndEndTimeDiff(cur+subTime), getWidth() / 2 - mBound.width() / 2, getHeight() / 2 + mBound.height() / 2, mPaint);
+        }else{
+            String[] s= StartAndEndTimeDiff(cur+subTime).split(":");
+            canvas.drawText(s[0], getWidth() / 2 - mBound.width() / 2+4, getHeight() / 2 + mBound.height() / 2, mPaint);
+            canvas.drawText(s[1], getWidth() / 2 - mBound.width() / 2+getWidth()/3+16, getHeight() / 2 + mBound.height() / 2, mPaint);
+            canvas.drawText(s[2], getWidth() / 2 - mBound.width() / 2+getWidth()/3*2+24, getHeight() / 2 + mBound.height() / 2, mPaint);
+
+            canvas.drawText(":", getWidth() / 2 - mBound.width() / 2+getWidth()/3-8, getHeight() / 2 + mBound.height() / 2, mPaint);
+            canvas.drawText(":", getWidth() / 2 - mBound.width() / 2+getWidth()/3*2, getHeight() / 2 + mBound.height() / 2, mPaint);
+
+            RectF rel4 = new RectF( 1,  1, getMeasuredWidth()/3-16,  getMeasuredHeight());
+            canvas.drawRoundRect(rel4, 15, 15, mPaint);
+
+            RectF rel5 = new RectF( getMeasuredWidth()/3+8,1 , getMeasuredWidth()/3*2-8,  getMeasuredHeight());
+            canvas.drawRoundRect(rel5, 15, 15, mPaint);
+
+            RectF rel6 = new RectF( getMeasuredWidth()/3*2+16,1, getMeasuredWidth(),  getMeasuredHeight());
+            canvas.drawRoundRect(rel6, 15, 15, mPaint);
+
+        }
 //        canvas.drawText(StartAndEndTimeDiff(cur+subTime), getWidth() / 2 - mBound1.width() / 2, getHeight() / 2 + mBound1.height() / 2, mPaint1);
 
 
-        RectF rel4 = new RectF( 1,  1, getMeasuredWidth()/3-16,  getMeasuredHeight());
-        canvas.drawRoundRect(rel4, 15, 15, mPaint);
-
-       RectF rel5 = new RectF( getMeasuredWidth()/3+8,1 , getMeasuredWidth()/3*2-8,  getMeasuredHeight());
-        canvas.drawRoundRect(rel5, 15, 15, mPaint);
-
-        RectF rel6 = new RectF( getMeasuredWidth()/3*2+16,1, getMeasuredWidth(),  getMeasuredHeight());
-        canvas.drawRoundRect(rel6, 15, 15, mPaint);
 
         mHandler.sendEmptyMessageDelayed(1, 1000);
     }

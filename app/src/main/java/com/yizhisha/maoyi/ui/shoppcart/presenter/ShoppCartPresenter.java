@@ -4,6 +4,8 @@ import com.yizhisha.maoyi.api.Api;
 import com.yizhisha.maoyi.base.rx.RxSubscriber;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
 import com.yizhisha.maoyi.bean.json.ShopcartListBean;
+import com.yizhisha.maoyi.bean.json.SingleShoppCartBean;
+import com.yizhisha.maoyi.bean.json.SingleShoppGoodBean;
 import com.yizhisha.maoyi.ui.shoppcart.contract.ShoppCartContract;
 
 import java.util.Map;
@@ -33,6 +35,31 @@ public class ShoppCartPresenter extends ShoppCartContract.Presenter{
                     protected void onFailure(String message) {
                         mView.hideLoading();
                         mView.loadFail(1,message);
+                    }
+                });
+    }
+
+    @Override
+    public void loadSingleShoppCart(Map<String, String> map) {
+        addSubscrebe(Api.getInstance().loadSingleShpCart(map),
+                new RxSubscriber<SingleShoppCartBean>(mContext, false) {
+                    @Override
+                    protected void onSuccess(SingleShoppCartBean bean) {
+                        if(bean!=null){
+                            SingleShoppGoodBean good=bean.getGoods();
+                            if(good.getStatus().equals("y")){
+                                mView.loadSingleSuccess(good);
+                            }else{
+                                mView.loadFail(0,good.getInfo());
+                            }
+                        }else{
+                            mView.loadFail(0,"数据加载失败");
+                        }
+
+                    }
+                    @Override
+                    protected void onFailure(String message) {
+                        mView.loadFail(0,message);
                     }
                 });
     }

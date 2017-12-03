@@ -64,10 +64,8 @@ public class NormalAlertDialog {
             mTitle.setVisibility(View.GONE);
         }
         if(mBuilder.isBoolSubtitleTitle()){
-            Log.d("TTT","TTTT");
             mSubtitleTitle.setVisibility(View.VISIBLE);
         }else{
-            Log.d("TTT","TTTTfsdf");
             mSubtitleTitle.setVisibility(View.GONE);
         }
         if(mBuilder.isSingleModel){

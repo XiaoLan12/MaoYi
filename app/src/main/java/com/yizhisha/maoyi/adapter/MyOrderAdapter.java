@@ -62,10 +62,13 @@ public class MyOrderAdapter extends BaseQuickAdapter<Object,BaseViewHolder> {
                 break;
             case ITEM_CONTENT:
                 MyOrderListBean.Goods goods= (MyOrderListBean.Goods) item;
+                String detail=goods.getDetail();
                 helper.setText(R.id.tradename_myorder_tv,goods.getTitle());
                 helper.setText(R.id.tradecolor_myorder_tv,goods.getRemark());
                 helper.setText(R.id.tradeprice_myorder_tv,"￥"+goods.getTotalprice());
-                helper.setText(R.id.tradecolor_myorder_tv,goods.getDetail());
+                helper.setText(R.id.tradecolor_myorder_tv,detail.substring(0,detail.indexOf("#")));
+                helper.setText(R.id.tradesize_myorder_tv,detail.substring(detail.indexOf("#")+1, detail.lastIndexOf("#")));
+                helper.setText(R.id.tradeamount_myorder_tv,"x"+goods.getAmount());
                /* GlideUtil.getInstance().LoadContextBitmap(mContext, AppConstant.INDEX_RECOMMEND_TYPE_IMG_URL+goods.getLitpic(),
                         (ImageView) helper.getView(R.id.tradehead_myorder_iv),GlideUtil.LOAD_BITMAP);*/
                 helper.itemView.setOnClickListener(new View.OnClickListener() {

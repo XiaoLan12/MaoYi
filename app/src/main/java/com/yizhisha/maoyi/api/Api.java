@@ -11,15 +11,13 @@ import com.yizhisha.maoyi.bean.json.LoginBean;
 import com.yizhisha.maoyi.bean.json.MeInfoBean;
 import com.yizhisha.maoyi.bean.json.MyCommentBean;
 import com.yizhisha.maoyi.bean.json.MyOrderBean;
-import com.yizhisha.maoyi.bean.json.OrderListBean;
 import com.yizhisha.maoyi.bean.json.RefundBean;
 import com.yizhisha.maoyi.bean.json.RefundDetailBean;
 import com.yizhisha.maoyi.bean.json.RefundExpressBean;
-import com.yizhisha.maoyi.bean.json.RefundPicBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
 import com.yizhisha.maoyi.bean.json.ShopcartListBean;
 import com.yizhisha.maoyi.bean.json.SimilarRecommenBean;
-import com.yizhisha.maoyi.bean.json.SingleShopCartBean;
+import com.yizhisha.maoyi.bean.json.SingleShoppCartBean;
 import com.yizhisha.maoyi.bean.json.SortedListBean;
 import com.yizhisha.maoyi.bean.json.SpecialDetailBean;
 import com.yizhisha.maoyi.bean.json.UserHeadBean;
@@ -119,7 +117,7 @@ public class Api {
         return service.getShoppCartList(uid);
     }
     //加载单个购物车
-    public Observable<SingleShopCartBean> loadSingleShpCart(Map<String,String> map){
+    public Observable<SingleShoppCartBean> loadSingleShpCart(Map<String,String> map){
         return service.loadSingleShpCart(map);
     }
     //修改购物车
@@ -171,11 +169,16 @@ public class Api {
     public Observable<RefundBean> loadRefundList(int uid){
         return service.loadRefundList(uid);
     }
+
     //退款详情
     public Observable<RefundDetailBean> loadRefundDetail(Map<String,String> map){
         return service.loadRefundDetail(map);
     }
 
+    //撤销退款
+    public Observable<RequestStatusBean> refundDel(Map<String,String> map){
+        return service.refundDel(map);
+    }
     //退款物流
     public Observable<RefundExpressBean> loadRefundExpress(String  refundno){
         return service.loadRefundExpress(refundno);
@@ -191,8 +194,12 @@ public class Api {
         return service.refundApply(map);
     }
     //退款图片上传
-    public Observable<RefundPicBean> uploadRefundPic(MultipartBody.Part body){
+    public Observable<CommentPicBean> uploadRefundPic(MultipartBody.Part body){
         return service.uploadRefundPic(body);
+    }
+    //提交退货
+    public Observable<RequestStatusBean> refundGood(Map<String,String> map){
+        return service.refundGood(map);
     }
 
     public Observable<LoginBean> login(){

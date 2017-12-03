@@ -45,11 +45,16 @@ public class DataHelper {
                 orderGoodsItem.setOrderno(order.getOrderno());
                 dataList.add(orderGoodsItem);
             }
+            MyOrderListBean.Refund refund=order.getRefund();
+
             OrderFootBean orderFootBean=new OrderFootBean();
             orderFootBean.setTotalprice(order.getTotalprice());
             orderFootBean.setStatus(order.getStatus());
             orderFootBean.setAmount(goodses.size());
             orderFootBean.setOrderno(order.getOrderno());
+            if(refund!=null){
+                orderFootBean.setType(order.getRefund().getType());
+            }
             dataList.add(orderFootBean);
         }
         return dataList;

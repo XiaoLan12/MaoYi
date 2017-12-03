@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ import com.yizhisha.maoyi.base.BaseActivity;
 import com.yizhisha.maoyi.base.BaseToolbar;
 import com.yizhisha.maoyi.common.dialog.DialogInterface;
 import com.yizhisha.maoyi.common.dialog.LoadingDialog;
+import com.yizhisha.maoyi.common.dialog.NormalAlertDialog;
 import com.yizhisha.maoyi.common.dialog.NormalSelectionDialog;
 import com.yizhisha.maoyi.ui.me.contract.ApplyRefundContract;
 import com.yizhisha.maoyi.ui.me.presenter.ApplyRefundPresenter;
@@ -68,6 +70,7 @@ public class ApplyRefundActivity extends BaseActivity<ApplyRefundPresenter> impl
     private ArrayList<String> path = new ArrayList<String>();
     private ArrayList<String> loadPath = new ArrayList<String>();
     private String refundNo = "";
+    private int mType;
     private static final int REQUEST_CAMERA_CODE = 10;
     private static final int REQUEST_PREVIEW_CODE = 20;
 
@@ -78,7 +81,12 @@ public class ApplyRefundActivity extends BaseActivity<ApplyRefundPresenter> impl
 
     @Override
     protected void initToolBar() {
-
+        toolbar.setLeftButtonOnClickLinster(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish_Activity(ApplyRefundActivity.this);
+            }
+        });
     }
 
     @Override
@@ -86,6 +94,12 @@ public class ApplyRefundActivity extends BaseActivity<ApplyRefundPresenter> impl
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             refundNo = bundle.getString("ORDERNO", "");
+            mType=bundle.getInt("TYPE",1);
+        }
+        if(mType==1){
+            refundTypeTv.setText("仅退款");
+        }else{
+            refundTypeTv.setText("退货退款");
         }
         initAdapter();
 
@@ -143,7 +157,7 @@ public class ApplyRefundActivity extends BaseActivity<ApplyRefundPresenter> impl
         body.put("detail",refundExplainEt.getText().toString().trim());
         body.put("money",refundAmountTv.getText().toString().trim());
         body.put("pic",photo);
-        body.put("type",String.valueOf(2));
+        body.put("type",String.valueOf(mType));
         mPresenter.addRefund(body);
     }
 
@@ -167,7 +181,21 @@ public class ApplyRefundActivity extends BaseActivity<ApplyRefundPresenter> impl
     }
     @Override
     public void addRefundSuccess(String data) {
-
+        new NormalAlertDialog.Builder(this)
+                .setBoolTitle(false)
+                .setContentText(data)
+                .setSingleModel(true)
+                .setSingleText("确认")
+                .setSingleTextColor(R.color.blue)
+                .setWidth(0.75f)
+                .setHeight(0.33f)
+                .setSingleListener(new DialogInterface.OnSingleClickListener<NormalAlertDialog>() {
+                    @Override
+                    public void clickSingleButton(NormalAlertDialog dialog, View view) {
+                        finish_Activity(ApplyRefundActivity.this);
+                        dialog.dismiss();
+                    }
+                }).build().show();
     }
     @Override
     public void addPicSuccess(String img) {
@@ -177,13 +205,13 @@ public class ApplyRefundActivity extends BaseActivity<ApplyRefundPresenter> impl
             for(int i=0;i<loadPath.size();i++){
                 str.append(loadPath.get(i)).append(",");
             }
-
+            uploadRefund(str.substring(0,str.length()-1).toString());
         }
     }
 
     @Override
     public void showLoading() {
-        mLoadingDialog=new LoadingDialog(this,"请稍后...",false);
+        mLoadingDialog=new LoadingDialog(this,"正在提交申请...",false);
         mLoadingDialog.show();
     }
     @Override
@@ -212,11 +240,11 @@ public class ApplyRefundActivity extends BaseActivity<ApplyRefundPresenter> impl
             }
         }, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA);
     }
-    @OnClick({R.id.refundCause_iv,R.id.submit_btn})
+    @OnClick({R.id.refundCause_rl,R.id.submit_btn})
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.refundCause_iv:
+            case R.id.refundCause_rl:
                 final List<String> headData=new ArrayList<>();
                 headData.add("多拍了,不想要");
                 headData.add("空包裹");
@@ -253,14 +281,12 @@ public class ApplyRefundActivity extends BaseActivity<ApplyRefundPresenter> impl
                     return;
                 }
                 showLoading();
-                if (path.contains("selectpic")) {
-                    path.remove("selectpic");
-                }
-                if(path.size()>0) {
+
+                if(path.size()>1) {
                     loadPath.clear();
                     uploadPic();
                 }else{
-
+                    uploadRefund("");
                 }
                 break;
         }

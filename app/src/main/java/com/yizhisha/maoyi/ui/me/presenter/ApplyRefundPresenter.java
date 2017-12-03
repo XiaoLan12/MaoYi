@@ -25,6 +25,7 @@ public class ApplyRefundPresenter extends ApplyRefundContract.Presenter{
                         if(requestStatusBean!=null&&requestStatusBean.getStatus().equals("y")){
                             mView.addRefundSuccess(requestStatusBean.getInfo());
                         }else{
+                            mView.hideLoading();
                             mView.loadFail(requestStatusBean.getInfo());
                         }
                     }

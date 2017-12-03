@@ -17,10 +17,27 @@
                     android:layout_centerVertical="true"
                     tools:text="仅退款,退款成功"/>
                 <TextView
+                    android:id="@+id/delete_refundorder_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_5"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:visibility="gone"
+                    android:background="@drawable/shape_gray_selector"
+                    android:layout_toLeftOf="@+id/contact_the_merchant_tv"
+                    android:layout_marginRight="@dimen/dp_5"
+                    android:textColor="@color/common_h2"
+                    android:text="删除订单"/>
+                <TextView
                     android:id="@+id/contact_the_merchant_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/dp_10"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_5"
+                    android:paddingBottom="@dimen/dp_5"
                     android:background="@drawable/shape_blue_selector"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/dp_8"

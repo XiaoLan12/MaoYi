@@ -11,10 +11,17 @@ public class OrderFootBean implements Serializable{
     private String orderno;
     private int status;
     private int amount;
+    private int type;
     private String clinkman;
     private int commentstatus;
 
+    public int getType() {
+        return type;
+    }
 
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public int getCommentstatus() {
         return commentstatus;

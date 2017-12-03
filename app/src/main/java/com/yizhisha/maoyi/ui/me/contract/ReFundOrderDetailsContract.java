@@ -16,7 +16,7 @@ import java.util.Map;
 public interface ReFundOrderDetailsContract {
     interface View extends BaseView {
         void loadRefundDetailSuccess(RefundDetailBean data);
-        //void loadExpressSuccess(RefundExpressBean data);
+        void refundDel(String data);
         void showLoading();
         void hideLoading();
         void loadFail(String msg);
@@ -25,7 +25,7 @@ public interface ReFundOrderDetailsContract {
 
     abstract class Presenter extends BasePresenter<View> {
         public abstract void loadRefundDetail(Map<String, String> params);
-        //public abstract void loadExpressDetail(String refunndno);
+        public abstract void refundDel(Map<String, String> params);
 
     }
 }

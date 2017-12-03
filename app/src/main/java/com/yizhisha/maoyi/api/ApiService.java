@@ -11,15 +11,13 @@ import com.yizhisha.maoyi.bean.json.LoginBean;
 import com.yizhisha.maoyi.bean.json.MeInfoBean;
 import com.yizhisha.maoyi.bean.json.MyCommentBean;
 import com.yizhisha.maoyi.bean.json.MyOrderBean;
-import com.yizhisha.maoyi.bean.json.OrderListBean;
 import com.yizhisha.maoyi.bean.json.RefundBean;
 import com.yizhisha.maoyi.bean.json.RefundDetailBean;
 import com.yizhisha.maoyi.bean.json.RefundExpressBean;
-import com.yizhisha.maoyi.bean.json.RefundPicBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
 import com.yizhisha.maoyi.bean.json.ShopcartListBean;
 import com.yizhisha.maoyi.bean.json.SimilarRecommenBean;
-import com.yizhisha.maoyi.bean.json.SingleShopCartBean;
+import com.yizhisha.maoyi.bean.json.SingleShoppCartBean;
 import com.yizhisha.maoyi.bean.json.SortedListBean;
 import com.yizhisha.maoyi.bean.json.SpecialDetailBean;
 import com.yizhisha.maoyi.bean.json.UserHeadBean;
@@ -103,7 +101,7 @@ public interface ApiService {
 
     //加载单个购物车
     @GET("app/ucenter/shopcartShow")
-    Observable<SingleShopCartBean> loadSingleShpCart(@QueryMap Map<String, String> param);
+    Observable<SingleShoppCartBean> loadSingleShpCart(@QueryMap Map<String, String> param);
 
     //修改购物车
     @FormUrlEncoded
@@ -222,6 +220,10 @@ public interface ApiService {
     @GET("app/order/refundOrder/")
     Observable<RefundDetailBean> loadRefundDetail(@QueryMap Map<String, String> param);
 
+    //撤销退款
+    @GET("app/order/refundDel/")
+    Observable<RequestStatusBean> refundDel(@QueryMap Map<String, String> param);
+
     //退款物流信息
     @GET("app/order/expressviewrefund/")
     Observable<RefundExpressBean> loadRefundExpress(@Query("refundno") String refundno);
@@ -241,7 +243,12 @@ public interface ApiService {
     //退款图片上传
     @Multipart
     @POST("app/ajax/uploadRefundPic/")
-    Observable<RefundPicBean> uploadRefundPic(@Part MultipartBody.Part file);
+    Observable<CommentPicBean> uploadRefundPic(@Part MultipartBody.Part file);
+
+    //提交退货
+    @FormUrlEncoded
+    @POST("app/order/refundExpress/")
+    Observable<RequestStatusBean> refundGood(@FieldMap Map<String, String> param);
 
     //首页今日专场轮播图
     @GET("app/dailyTopSlider/")

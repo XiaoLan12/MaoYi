@@ -254,7 +254,7 @@ public class MyOrderListBean implements Serializable{
         private String refundno;
         private String orderno;
         private String uid;
-        private String type;
+        private int type;
         private String reason;
         private String detail;
         private String pic;
@@ -300,10 +300,10 @@ public class MyOrderListBean implements Serializable{
             return uid;
         }
 
-        public void setType(String type) {
+        public void setType(int type) {
             this.type = type;
         }
-        public String getType() {
+        public int getType() {
             return type;
         }
 

@@ -34,4 +34,24 @@ public class ReFundOrderDetailsPresenter extends ReFundOrderDetailsContract.Pres
         });
     }
 
+    @Override
+    public void refundDel(Map<String, String> params) {
+        addSubscrebe(Api.getInstance().refundDel(params),new RxSubscriber<RequestStatusBean>(mContext,true){
+            @Override
+            protected void onSuccess(RequestStatusBean info) {
+                if(info!=null){
+                    if(info.getStatus().equals("y")){
+                        mView.refundDel(info.getInfo());
+                    }else{
+                        mView.loadFail(info.getInfo());
+                    }
+                }
+            }
+            @Override
+            protected void onFailure(String message) {
+                mView.loadFail(message);
+            }
+        });
+    }
+
 }

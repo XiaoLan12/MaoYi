@@ -3,6 +3,7 @@ package com.yizhisha.maoyi.ui.me.activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import com.yizhisha.maoyi.base.BaseToolbar;
 import com.yizhisha.maoyi.bean.json.RefundDetailBean;
 import com.yizhisha.maoyi.ui.me.contract.ReFundOrderDetailsContract;
 import com.yizhisha.maoyi.ui.me.presenter.ReFundOrderDetailsPresenter;
+import com.yizhisha.maoyi.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,6 +92,13 @@ public class ReFundOrderDetailsActivity extends BaseActivity<ReFundOrderDetailsP
         map.put("refundno", refundNo);
         mPresenter.loadRefundDetail(map);
     }
+    //撤销退款
+    private void refundDel(int id) {
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", String.valueOf(AppConstant.UID));
+        map.put("id", String.valueOf(id));
+        mPresenter.refundDel(map);
+    }
 
     private void initAdapter() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -142,6 +151,11 @@ public class ReFundOrderDetailsActivity extends BaseActivity<ReFundOrderDetailsP
         mAdapter.setNewData(dataList);
     }
 
+    @Override
+    public void refundDel(String data) {
+        ToastUtil.showShortToast(data);
+    }
+
 
     @Override
     public void showLoading() {
@@ -155,10 +169,9 @@ public class ReFundOrderDetailsActivity extends BaseActivity<ReFundOrderDetailsP
 
     @Override
     public void loadFail(String msg) {
-
+        ToastUtil.showShortToast(msg);
     }
-    @OnClick({R.id.look_express_tv})
-
+    @OnClick({R.id.look_express_tv,R.id.cacle_refund_tv,R.id.refund_tv})
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -167,6 +180,14 @@ public class ReFundOrderDetailsActivity extends BaseActivity<ReFundOrderDetailsP
                 bundle.putString("ORDERNO", order.getRefundno());
                 bundle.putInt("TYPE",2);
                 startActivity(OrderTrackingActivity.class,bundle);
+                break;
+            case R.id.cacle_refund_tv:
+                refundDel(order.getId());
+                break;
+            case R.id.refund_tv:
+                Bundle bundle1 = new Bundle();
+                bundle1.putInt("REFUNDID",order.getId());
+                startActivity(RefundGoodActivity.class,bundle1);
                 break;
         }
     }

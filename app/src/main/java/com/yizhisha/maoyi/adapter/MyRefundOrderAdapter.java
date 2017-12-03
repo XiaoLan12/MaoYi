@@ -52,9 +52,13 @@ public class MyRefundOrderAdapter extends BaseQuickAdapter<Object,BaseViewHolder
                 break;
             case ITEM_CONTENT:
                 final RefundListBean.Goods goods= (RefundListBean.Goods) item;
+                String detail=goods.getDetail();
                 helper.setText(R.id.tradename_tv,goods.getTitle());
                 helper.setText(R.id.tradecolor_tv,goods.getDetail());
                 helper.setText(R.id.tradeprice_tv,"￥:"+goods.getPrice());
+                helper.setText(R.id.tradecolor_tv,detail.substring(0,detail.indexOf("#")));
+                helper.setText(R.id.tradesize_tv,detail.substring(detail.indexOf("#")+1, detail.lastIndexOf("#")));
+                helper.setText(R.id.tradeamount_tv,"x"+goods.getAmount());
                 break;
             case ITEM_FOOTER:
                 final RefundFootBean footBean= (RefundFootBean) item;
@@ -62,24 +66,30 @@ public class MyRefundOrderAdapter extends BaseQuickAdapter<Object,BaseViewHolder
                     switch (footBean.getRefundstatus()){
                         case 1:
                             helper.setText(R.id.refundType_tv,"待处理");
+                            helper.setVisible(R.id.delete_refundorder_tv,false);
                             break;
                         case 2:
                             helper.setText(R.id.refundType_tv,"退款成功");
+                            helper.setVisible(R.id.delete_refundorder_tv,true);
                             break;
                     }
                 }else if(footBean.getType()==2){
                     switch (footBean.getRefundstatus()){
                         case 1:
                             helper.setText(R.id.refundType_tv,"待处理");
+                            helper.setVisible(R.id.delete_refundorder_tv,false);
                             break;
                         case 2:
                             helper.setText(R.id.refundType_tv,"待卖家退款");
+                            helper.setVisible(R.id.delete_refundorder_tv,false);
                             break;
                         case 3:
                             helper.setText(R.id.refundType_tv,"待卖家收货");
+                            helper.setVisible(R.id.delete_refundorder_tv,false);
                             break;
                         case 4:
                             helper.setText(R.id.refundType_tv,"退款成功");
+                            helper.setVisible(R.id.delete_refundorder_tv,true);
                             break;
                     }
                 }

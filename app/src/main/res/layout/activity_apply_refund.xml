@@ -67,6 +67,7 @@
                 android:textColor="@color/common_h"
                 android:text="退款原因"/>
             <RelativeLayout
+                android:id="@+id/refundCause_rl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp_10"
@@ -107,6 +108,7 @@
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_marginRight="@dimen/dp_10"
                     android:textSize="@dimen/font_small"
+                    android:inputType="number"
                     android:background="@drawable/shape_gray"
                     android:hint="请输入退款金额"/>
         </LinearLayout>

@@ -143,9 +143,7 @@ public class ShoppCartAdapter extends BaseExpandableListAdapter {
         groupViewHolder.mTvEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //onEditingTvChangeListener.onEditingTvChange(dealAllEditingIsEditing());
                 setupEditing(groupPosition);
-
             }
         });
         if (groupPosition == 0) {
@@ -167,6 +165,7 @@ public class ShoppCartAdapter extends BaseExpandableListAdapter {
                     .findViewById(R.id.childshopp_cb);
             childViewHolder.mRlNormal= (RelativeLayout) convertView.findViewById(R.id.shop_normal_rl);
             childViewHolder.mIvPic= (ImageView) convertView.findViewById(R.id.tradehead_shoppcar2_iv);
+            childViewHolder.mEditIv=convertView.findViewById(R.id.edit_iv);
             //常规下：
             childViewHolder.tv_items_child_desc = (TextView) convertView
                     .findViewById(R.id.tradename_shoppcar2_tv);
@@ -174,6 +173,11 @@ public class ShoppCartAdapter extends BaseExpandableListAdapter {
                     .findViewById(R.id.tradeprice_tv);
             childViewHolder.id_tv_color = (TextView) convertView
                     .findViewById(R.id.tradecolor_shoppcar2_tv);
+            childViewHolder.id_tv_size = (TextView) convertView
+                    .findViewById(R.id.tradesize_shoppcar2_tv);
+            childViewHolder.id_tv_amount = (TextView) convertView
+                    .findViewById(R.id.tradeamount_tv);
+
             convertView.setTag(childViewHolder);
         } else {
             childViewHolder = (ChildViewHolder) convertView.getTag();
@@ -198,10 +202,15 @@ public class ShoppCartAdapter extends BaseExpandableListAdapter {
         }else{
             childViewHolder.mRlNormal.setVisibility(View.VISIBLE);
         }
+
         //childViewHolder.id_tv_price.setText(String.format(context.getString(R.string.price), goodsBean.getPrice()+""));
         childViewHolder.id_cb_select_child.setChecked(goodsBean.isChecked());
         childViewHolder.tv_items_child_desc.setText(goodsBean.getTitle());
-        childViewHolder.id_tv_color.setText(goodsBean.getDetail());
+        childViewHolder.id_tv_price.setText(goodsBean.getPrice()+"");
+        String detail=goodsBean.getDetail();
+        childViewHolder.id_tv_color.setText("颜色:"+detail.substring(0,detail.indexOf("#")));
+        childViewHolder.id_tv_size.setText("尺码:"+detail.substring(detail.indexOf("#")+1, detail.lastIndexOf("#")));
+        childViewHolder.id_tv_amount.setText("x"+goodsBean.getAmount());
        /* GlideUtil.getInstance().LoadContextBitmap(context, AppConstant.INDEX_RECOMMEND_TYPE_IMG_URL+goodsBean.getLitpic(),
                 (ImageView) childViewHolder.mIvPic,GlideUtil.LOAD_BITMAP);*/
         childViewHolder.id_cb_select_child.setOnClickListener(new View.OnClickListener() {
@@ -228,7 +237,12 @@ public class ShoppCartAdapter extends BaseExpandableListAdapter {
 
             }
         });
-
+        childViewHolder.mEditIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onGoodsEditChangeListenr.onEditChange(goodsBean);
+            }
+        });
         return convertView;
     }
 
@@ -421,10 +435,13 @@ public class ShoppCartAdapter extends BaseExpandableListAdapter {
         RelativeLayout mRlNormal;
         RelativeLayout mRlEdit;
         ImageView mIvPic;
+        ImageView mEditIv;
 
         TextView tv_items_child_desc;
         TextView id_tv_price;
         TextView id_tv_color;
+        TextView id_tv_size;
+        TextView id_tv_amount;
 
         LinearLayout mLlEdit;
         TextView mTvEditShop;

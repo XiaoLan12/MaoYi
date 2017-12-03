@@ -56,8 +56,8 @@
             android:layout_marginRight="@dimen/dp_5"
             android:layout_marginTop="@dimen/dp_5"
             android:layout_marginBottom="@dimen/dp_5"
-            app:tvtitles="活动已结束浏流"
-            app:tvtitleColors="@color/white"
+            app:tvtitles=" 456  :  44 :  44 "
+            app:tvtitleColors="@color/gray1"
             app:tvtitleSizes="@dimen/dp_14"
             />
     </LinearLayout>

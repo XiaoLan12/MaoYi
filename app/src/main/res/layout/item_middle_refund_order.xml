@@ -30,7 +30,7 @@
             style="@style/MY.Theme.Widget.Text"
             android:textSize="@dimen/font_small"
             android:textColor="@color/common_h2"
-            android:text="颜色分类:"
+            android:text="颜色:"
             android:layout_below="@+id/tradename_tv"
             android:layout_alignLeft="@+id/tradename_tv"
             android:layout_alignStart="@+id/tradename_tv" />
@@ -41,6 +41,26 @@
             android:layout_below="@+id/tradename_tv"
             android:textSize="@dimen/font_small"
             android:layout_toRightOf="@+id/tradecolorTv"
+            />
+
+        <TextView
+            android:id="@+id/tradesizeTv"
+            style="@style/MY.Theme.Widget.Text"
+            android:textSize="@dimen/font_small"
+            android:textColor="@color/common_h2"
+            android:text="尺码:"
+            android:layout_toRightOf="@+id/tradecolor_tv"
+            android:layout_below="@+id/tradename_tv"
+            android:layout_marginLeft="@dimen/dp_10"
+             />
+
+        <TextView
+            android:id="@+id/tradesize_tv"
+            style="@style/MY.Theme.Widget.Text"
+            android:layout_below="@+id/tradename_tv"
+            android:textSize="@dimen/font_small"
+            android:text=""
+            android:layout_toRightOf="@+id/tradesizeTv"
             />
 
         <TextView
@@ -61,6 +81,14 @@
             android:textSize="@dimen/font_small"
             android:layout_marginLeft="@dimen/dp_5"
             android:textColor="@color/common_color" />
+        <TextView
+            android:id="@+id/tradeamount_tv"
+            style="@style/MY.Theme.Widget.Text"
+            android:layout_alignBottom="@+id/tradehead_iv"
+            android:layout_alignParentRight="true"
+            android:text="x1"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:textColor="@color/common_h2" />
     </RelativeLayout>
     <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"
         android:layout_height="@dimen/dp_10"

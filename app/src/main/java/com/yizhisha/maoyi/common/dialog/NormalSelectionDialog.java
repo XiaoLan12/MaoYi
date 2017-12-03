@@ -42,9 +42,13 @@ public class NormalSelectionDialog {
 
         Window window=mDialog.getWindow();
         WindowManager.LayoutParams lp=window.getAttributes();
-        lp.width = (int) (DensityUtil.getScreenWidth(builder.getContext()) *
-                builder.getItemWidth());
-        lp.height=WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.width = (int) (DensityUtil.getScreenWidth(builder.getContext()));
+
+        if(builder.getHeight()!=0){
+            lp.height= (int) (DensityUtil.getScreenHeight(builder.getContext())*builder.getHeight());
+        }else {
+            lp.height=WindowManager.LayoutParams.WRAP_CONTENT;
+        }
         lp.gravity= Gravity.BOTTOM;
         window.setAttributes(lp);
 
@@ -72,7 +76,7 @@ public class NormalSelectionDialog {
             lp.height=mBuilder.getTitleHeight();
 
             title.setLayoutParams(lp);
-            if(datas.size()!=0){
+            if(datas.size()!=0&&mBuilder.isBoolTitle()){
                 title.setBackgroundResource(R.drawable.selector_widget_actiondialog_top);
             }else{
                 title.setBackgroundResource(R.drawable.selector_widget_actiondialog_single);
@@ -188,6 +192,8 @@ public class NormalSelectionDialog {
         private int cancleTextColor;
         private boolean isTouchOutside;
 
+        private float height=0;
+
 
 
         public boolean isTouchOutside() {
@@ -294,6 +300,15 @@ public class NormalSelectionDialog {
 
         public Builder setItemWidth(float itemWidth) {
             this.itemWidth = itemWidth;
+            return this;
+        }
+
+        public float getHeight() {
+            return height;
+        }
+
+        public Builder setHeight(float height) {
+            this.height = height;
             return this;
         }
 
