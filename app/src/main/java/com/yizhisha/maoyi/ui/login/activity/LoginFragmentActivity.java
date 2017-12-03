@@ -13,7 +13,7 @@ import com.yizhisha.maoyi.ui.login.fragment.PhoneLoginFragment;
  * Created by Administrator on 2017/12/2.
  */
 
-public class LoginFragmentActivity extends BaseActivity {
+public class LoginFragmentActivity extends BaseActivity implements LoginFragment.switchFragmentListener{
     private FindPwdFragment findPwdFragment;
     private LoginFragment loginFragment;
     private PhoneLoginFragment phoneLoginFragment;
@@ -57,7 +57,7 @@ public class LoginFragmentActivity extends BaseActivity {
         currentFragment = targetFragment;
     }
 
- /*   @Override
+    @Override
     public void switchFragment(int index) {
         if(index==1){
             if(findPwdFragment==null){
@@ -70,5 +70,5 @@ public class LoginFragmentActivity extends BaseActivity {
             }
             switchFragment(phoneLoginFragment,"phoneLoginFragment");
         }
-    }*/
+    }
 }

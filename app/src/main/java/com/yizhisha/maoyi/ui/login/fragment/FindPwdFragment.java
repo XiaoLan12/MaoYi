@@ -1,5 +1,6 @@
 package com.yizhisha.maoyi.ui.login.fragment;
 
+import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.base.BaseFragment;
 
 /**
@@ -9,7 +10,7 @@ import com.yizhisha.maoyi.base.BaseFragment;
 public class FindPwdFragment extends BaseFragment{
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.layout.fragment_findpwd;
     }
 
     @Override

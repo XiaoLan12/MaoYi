@@ -5,14 +5,14 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <com.yizhisha.taosha.base.BaseToolbar
+    <com.yizhisha.maoyi.base.BaseToolbar
         android:id="@+id/toolbar"
         style="@style/basetoolbarStyle"
         app:leftButtonIcon="@drawable/icon_back"
         app:title="注册"/>
     <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"/>
 
-    <com.yizhisha.taosha.widget.ClearEditText
+    <com.yizhisha.maoyi.widget.ClearEditText
         android:id="@+id/account_register_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
         android:layout_below="@+id/login_view1"
         android:gravity="center_vertical"
         >
-        <com.yizhisha.taosha.widget.ClearEditText
+        <com.yizhisha.maoyi.widget.ClearEditText
             android:id="@+id/setpwd_register_et"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
         android:layout_below="@+id/login_view1"
         android:gravity="center_vertical"
         >
-        <com.yizhisha.taosha.widget.ClearEditText
+        <com.yizhisha.maoyi.widget.ClearEditText
             android:id="@+id/againpwd_register_et"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -113,7 +113,7 @@
     <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10"/>
-    <com.yizhisha.taosha.widget.ClearEditText
+    <com.yizhisha.maoyi.widget.ClearEditText
         android:id="@+id/company_register_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
