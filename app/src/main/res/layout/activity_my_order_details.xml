@@ -271,79 +271,116 @@
                     android:layout_height="50dp"
                     android:background="@color/common_bg"
                     android:gravity="center_vertical">
-                    <TextView
-                        android:id="@+id/refunds_tv"
+                    <LinearLayout
+                        android:id="@+id/contact_the_merchant_ll"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:padding="@dimen/dp_8"
-                        android:background="@drawable/shape_gray_selector"
-                        android:layout_marginRight="@dimen/dp_8"
-                        android:text="申请退款"/>
-                    <TextView
-                        android:id="@+id/cancel_the_order_tv"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:padding="@dimen/dp_8"
-                        android:background="@drawable/shape_gray_selector"
-                        android:layout_marginRight="@dimen/dp_8"
-                        android:visibility="gone"
-                        android:text="取消订单"/>
-                    <TextView
-                        android:id="@+id/order_track_tv"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:padding="@dimen/dp_8"
-                        android:background="@drawable/shape_gray_selector"
-                        android:layout_marginRight="@dimen/dp_8"
-                        android:visibility="gone"
-                        android:text="订单跟踪"/>
-                    <TextView
-                        android:id="@+id/delete_order_tv"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:padding="@dimen/dp_8"
-                        android:background="@drawable/shape_gray_selector"
-                        android:layout_marginRight="@dimen/dp_8"
-                        android:visibility="gone"
-                        android:text="删除订单"/>
-                    <TextView
-                        android:id="@+id/confirm_goods_tv"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:padding="@dimen/dp_8"
-                        android:background="@drawable/shape_pink_selector"
-                        android:layout_marginRight="@dimen/dp_8"
-                        android:visibility="gone"
-                        android:textColor="@color/common_color"
-                        android:text="确认收货"/>
-                    <TextView
-                        android:id="@+id/againbuy_tv"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:padding="@dimen/dp_8"
-                        android:background="@drawable/shape_pink_selector"
-                        android:layout_marginRight="@dimen/dp_8"
-                        android:visibility="gone"
-                        android:textColor="@color/common_color"
-                        android:text="再次购买"/>
+                        android:background="@color/white"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="@dimen/dp_25"
+                            android:layout_height="@dimen/dp_25"
+                            android:src="@drawable/ic_launcher"/>
+                        <TextView
+                            android:id="@+id/contact_the_merchant_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/blue"
+                            android:text="联系卖家" />
 
-                    <TextView
-                        android:id="@+id/immediate_payment_tv"
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/refunds_ll"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:textColor="@color/common_color"
-                        android:padding="@dimen/dp_8"
-                        android:background="@drawable/shape_pink_selector"
                         android:visibility="gone"
-                        android:layout_marginRight="@dimen/dp_5"
-                        android:text="立即付款"/>
+                        android:layout_marginLeft="1dp"
+                        android:background="@color/white"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="@dimen/dp_25"
+                            android:layout_height="@dimen/dp_25"
+                            android:src="@drawable/ic_launcher"/>
+
+                        <TextView
+                            android:id="@+id/refunds_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/common_color"
+                            android:text="申请退款"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/confirm_goods_ll"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:background="@color/common_color"
+                        android:visibility="gone"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="@dimen/dp_25"
+                            android:layout_height="@dimen/dp_25"
+                            android:src="@drawable/ic_launcher"/>
+                        <TextView
+                            android:id="@+id/confirm_goods_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/white"
+                            android:text="确认收货"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/againbuy_ll"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:background="@color/common_color"
+                        android:visibility="gone"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="@dimen/dp_25"
+                            android:layout_height="@dimen/dp_25"
+                            android:src="@drawable/ic_launcher"/>
+                        <TextView
+                            android:id="@+id/againbuy_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:text="再次购买"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/immediate_payment_ll"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:visibility="gone"
+                        android:layout_marginLeft="1dp"
+                        android:background="@color/common_color"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="@dimen/dp_25"
+                            android:layout_height="@dimen/dp_25"
+                            android:src="@drawable/ic_launcher"/>
+                        <TextView
+                            android:id="@+id/immediate_payment_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/dp_5"
+                            android:textColor="@color/white"
+                            android:text="立即付款"/>
+                    </LinearLayout>
+
+
                 </LinearLayout>
 
             </LinearLayout>

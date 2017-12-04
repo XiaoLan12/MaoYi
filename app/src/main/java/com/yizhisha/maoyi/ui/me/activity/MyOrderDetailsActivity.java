@@ -65,20 +65,14 @@ public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> 
     @Bind(R.id.distributiontime_orderdetail)
     TextView distributiontimeOrderdetail;
 
-    @Bind(R.id.refunds_tv)
-    TextView refundsTv;
-    @Bind(R.id.cancel_the_order_tv)
-    TextView cancelTheOrderTv;
-    @Bind(R.id.order_track_tv)
-    TextView orderTrackTv;
-    @Bind(R.id.delete_order_tv)
-    TextView deleteOrderTv;
-    @Bind(R.id.confirm_goods_tv)
-    TextView confirmGoodsTv;
-    @Bind(R.id.againbuy_tv)
-    TextView againbuyTv;
-    @Bind(R.id.immediate_payment_tv)
-    TextView immediatePaymentTv;
+    @Bind(R.id.refunds_ll)
+    LinearLayout refundsTv;
+    @Bind(R.id.confirm_goods_ll)
+    LinearLayout confirmGoodsTv;
+    @Bind(R.id.againbuy_ll)
+    LinearLayout againbuyTv;
+    @Bind(R.id.immediate_payment_ll)
+    LinearLayout immediatePaymentTv;
 
     private MyOrderDetailsAdapter mAdapter;
     private String orderNo = "";
@@ -246,48 +240,33 @@ public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> 
         switch (paystate){
             case 0:
                 refundsTv.setVisibility(View.GONE);
-                cancelTheOrderTv.setVisibility(View.VISIBLE);
                 confirmGoodsTv.setVisibility(View.GONE);
-                orderTrackTv.setVisibility(View.GONE);
                 againbuyTv.setVisibility(View.GONE);
-                deleteOrderTv.setVisibility(View.GONE);
-                immediatePaymentTv.setVisibility(View.GONE);
+                immediatePaymentTv.setVisibility(View.VISIBLE);
                 break;
             case 1:
                 refundsTv.setVisibility(View.VISIBLE);
-                cancelTheOrderTv.setVisibility(View.GONE);
                 confirmGoodsTv.setVisibility(View.GONE);
-                orderTrackTv.setVisibility(View.GONE);
                 againbuyTv.setVisibility(View.GONE);
-                deleteOrderTv.setVisibility(View.GONE);
                 immediatePaymentTv.setVisibility(View.GONE);
                 break;
             case 2:
                 refundsTv.setVisibility(View.VISIBLE);
-                cancelTheOrderTv.setVisibility(View.GONE);
-                confirmGoodsTv.setVisibility(View.GONE);
-                orderTrackTv.setVisibility(View.VISIBLE);
-                againbuyTv.setVisibility(View.VISIBLE);
-                deleteOrderTv.setVisibility(View.GONE);
+                confirmGoodsTv.setVisibility(View.VISIBLE);
+                againbuyTv.setVisibility(View.GONE);
                 immediatePaymentTv.setVisibility(View.GONE);
                 break;
             case 3:
                 refundsTv.setVisibility(View.VISIBLE);
-                cancelTheOrderTv.setVisibility(View.GONE);
                 confirmGoodsTv.setVisibility(View.GONE);
-                orderTrackTv.setVisibility(View.GONE);
                 againbuyTv.setVisibility(View.VISIBLE);
-                deleteOrderTv.setVisibility(View.GONE);
-                immediatePaymentTv.setVisibility(View.VISIBLE);
+                immediatePaymentTv.setVisibility(View.GONE);
                 break;
             case 4:
                 refundsTv.setVisibility(View.GONE);
-                cancelTheOrderTv.setVisibility(View.GONE);
                 confirmGoodsTv.setVisibility(View.GONE);
-                orderTrackTv.setVisibility(View.GONE);
-                againbuyTv.setVisibility(View.GONE);
-                deleteOrderTv.setVisibility(View.VISIBLE);
-                immediatePaymentTv.setVisibility(View.VISIBLE);
+                againbuyTv.setVisibility(View.VISIBLE);
+                immediatePaymentTv.setVisibility(View.GONE);
                 break;
         }
     }
