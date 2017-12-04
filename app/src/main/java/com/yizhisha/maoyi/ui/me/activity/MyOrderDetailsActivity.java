@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.adapter.MyOrderDetailsAdapter;
@@ -52,14 +53,6 @@ public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> 
     TextView mTvTradelTotal;
     @Bind(R.id.tradelpaymentpay_tv)
     TextView mTvTradelPaymentPay;
-    @Bind(R.id.contactSeller_ll)
-    LinearLayout mLlContactSeller;
-    @Bind(R.id.confirm_goods_tv)
-    TextView mTvConfirmGoods;
-    @Bind(R.id.refound_ll)
-    LinearLayout mLlRefound;
-    @Bind(R.id.againbuy_tv)
-    TextView mTvAgeinBuy;
 
     @Bind(R.id.orderInfo_tv)
     TextView mTvOrderInfo;
@@ -71,6 +64,21 @@ public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> 
     TextView distributionwayOrderdetailTv;
     @Bind(R.id.distributiontime_orderdetail)
     TextView distributiontimeOrderdetail;
+
+    @Bind(R.id.refunds_tv)
+    TextView refundsTv;
+    @Bind(R.id.cancel_the_order_tv)
+    TextView cancelTheOrderTv;
+    @Bind(R.id.order_track_tv)
+    TextView orderTrackTv;
+    @Bind(R.id.delete_order_tv)
+    TextView deleteOrderTv;
+    @Bind(R.id.confirm_goods_tv)
+    TextView confirmGoodsTv;
+    @Bind(R.id.againbuy_tv)
+    TextView againbuyTv;
+    @Bind(R.id.immediate_payment_tv)
+    TextView immediatePaymentTv;
 
     private MyOrderDetailsAdapter mAdapter;
     private String orderNo = "";
@@ -127,9 +135,9 @@ public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> 
 
         mTvOrderNo.setText(orderList.getOrderno());
 
-            mTvConsignee.setText(orderList.getLinkman());
-            mTvConsigneePhone.setText(orderList.getMobile());
-            mTvShipAddress.setText(orderList.getAddress());
+        mTvConsignee.setText(orderList.getLinkman());
+        mTvConsigneePhone.setText(orderList.getMobile());
+        mTvShipAddress.setText(orderList.getAddress());
         mTvOrderTime.setText(DateUtil.getDateToString1(orderList.getAddtime() * 1000));
         mTvPayTime.setText(DateUtil.getDateToString1(orderList.getPaytime() * 1000));
         distributiontimeOrderdetail.setText(DateUtil.getDateToString1(orderList.getShiptime() * 1000));
@@ -164,6 +172,7 @@ public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> 
         }
 
         switchState(order.getStatus(),order.getPayment());*/
+       switchState(orderList.getStatus());
     }
 
     @Override
@@ -225,10 +234,61 @@ public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> 
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+    /**
+     * 根据交易状态，切换布局显示
+     *
+     * @param paystate 0 未付款
+     *                 1 待发货
+     *                 2 待收货
+     *                 3 已收货
+     */
+    private void switchState(int paystate){
+        switch (paystate){
+            case 0:
+                refundsTv.setVisibility(View.GONE);
+                cancelTheOrderTv.setVisibility(View.VISIBLE);
+                confirmGoodsTv.setVisibility(View.GONE);
+                orderTrackTv.setVisibility(View.GONE);
+                againbuyTv.setVisibility(View.GONE);
+                deleteOrderTv.setVisibility(View.GONE);
+                immediatePaymentTv.setVisibility(View.GONE);
+                break;
+            case 1:
+                refundsTv.setVisibility(View.VISIBLE);
+                cancelTheOrderTv.setVisibility(View.GONE);
+                confirmGoodsTv.setVisibility(View.GONE);
+                orderTrackTv.setVisibility(View.GONE);
+                againbuyTv.setVisibility(View.GONE);
+                deleteOrderTv.setVisibility(View.GONE);
+                immediatePaymentTv.setVisibility(View.GONE);
+                break;
+            case 2:
+                refundsTv.setVisibility(View.VISIBLE);
+                cancelTheOrderTv.setVisibility(View.GONE);
+                confirmGoodsTv.setVisibility(View.GONE);
+                orderTrackTv.setVisibility(View.VISIBLE);
+                againbuyTv.setVisibility(View.VISIBLE);
+                deleteOrderTv.setVisibility(View.GONE);
+                immediatePaymentTv.setVisibility(View.GONE);
+                break;
+            case 3:
+                refundsTv.setVisibility(View.VISIBLE);
+                cancelTheOrderTv.setVisibility(View.GONE);
+                confirmGoodsTv.setVisibility(View.GONE);
+                orderTrackTv.setVisibility(View.GONE);
+                againbuyTv.setVisibility(View.VISIBLE);
+                deleteOrderTv.setVisibility(View.GONE);
+                immediatePaymentTv.setVisibility(View.VISIBLE);
+                break;
+            case 4:
+                refundsTv.setVisibility(View.GONE);
+                cancelTheOrderTv.setVisibility(View.GONE);
+                confirmGoodsTv.setVisibility(View.GONE);
+                orderTrackTv.setVisibility(View.GONE);
+                againbuyTv.setVisibility(View.GONE);
+                deleteOrderTv.setVisibility(View.VISIBLE);
+                immediatePaymentTv.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 }

@@ -17,8 +17,8 @@ public interface ShoppCartContract {
     interface View extends BaseView {
         void loadSuccess(List<ShopcartBean> data);
         void loadSingleSuccess(SingleShoppGoodBean data);
+        void editShoppCartSuccess(String result);
         void deleteShoppCart(String msg);
-        void deleteOneShoppCart(String msg, int groupPosition, int childPosition);
         void showLoading();
         void hideLoading();
 
@@ -31,8 +31,8 @@ public interface ShoppCartContract {
 
         public abstract void loadShoppCart(int uid,boolean isShowLoad);
         public abstract void loadSingleShoppCart(Map<String, String> map);
+        public abstract void editShoppCart(Map<String, String> map);
         public abstract void deleteShoppCart(Map<String, String> map);
-        public abstract void deleteOneShoppCart(Map<String, String> map,int groupPosition, int childPosition);
 
     }
 }

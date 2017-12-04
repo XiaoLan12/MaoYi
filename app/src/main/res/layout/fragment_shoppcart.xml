@@ -19,40 +19,11 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <LinearLayout
-        android:id="@+id/linearlayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dp_10"
-        android:gravity="center_vertical">
-        <ImageView
-            android:layout_width="@dimen/dp_25"
-            android:layout_height="@dimen/dp_25"
-            android:src="@drawable/ic_launcher"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/common_color"
-            tools:text="19:10:08"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="敦伦尽分看见啊"/>
-    </LinearLayout>
-    <View
-        style="@style/MY.Theme.Widget.Divider.Line.Vertical"
-        android:layout_below="@+id/linearlayout"
-        android:id="@+id/view"
-        android:layout_height="@dimen/dp_10"
-        />
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swiperefreshlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/rlBottomBar"
-        android:layout_below="@+id/view">
+        android:layout_above="@+id/rlBottomBar">
             <ExpandableListView
                 android:id="@+id/expandableListView"
                 android:layout_width="match_parent"

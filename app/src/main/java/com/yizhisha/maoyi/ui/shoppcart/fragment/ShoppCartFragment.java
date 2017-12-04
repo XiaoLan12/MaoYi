@@ -36,6 +36,7 @@ import com.yizhisha.maoyi.bean.json.SingleShoppGoodBean;
 import com.yizhisha.maoyi.bean.json.StoreBean;
 import com.yizhisha.maoyi.common.dialog.CustomDialog;
 import com.yizhisha.maoyi.common.dialog.DialogInterface;
+import com.yizhisha.maoyi.common.dialog.LoadingDialog;
 import com.yizhisha.maoyi.common.dialog.NormalAlertDialog;
 import com.yizhisha.maoyi.ui.shoppcart.contract.ShoppCartContract;
 import com.yizhisha.maoyi.ui.shoppcart.presenter.ShoppCartPresenter;
@@ -83,12 +84,25 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
     @Bind(R.id.loadingView)
     CommonLoadingView mLoadingView;
 
-    private CustomDialog dialog;
+
     private ShoppCartAdapter adapter;
     //定义父列表项List数据集合
     List<Map<String, Object>> parentMapList = new ArrayList<Map<String, Object>>();
     //定义子列表项List数据集合
     List<List<Map<String, Object>>> childMapList_list = new ArrayList<List<Map<String, Object>>>();
+
+    //编辑购物车
+    private GoodsAttrsBean dataBean;
+    private EditShoppcartAdapter mAdapter;
+    private LoadingDialog mLoadingDialog;
+    private CustomDialog dialog;
+    private int goods_nmb = 1;
+    private TextView tv_item_minus_comm_detail,tv_item_number_comm_detail,dialog_selected_goods;
+    private String goodColor,goodSize;
+
+    //编辑的商品
+    private int editGid;
+    private int editSid;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_shoppcart;
@@ -108,10 +122,8 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
             public void onClick(View view) {
                 if(mToobar.getRightButton1Text().equals("完成")){
                     changeFootShowDeleteView(false);
-
                 }else{
                     changeFootShowDeleteView(true);
-
                 }
             }
         });
@@ -213,44 +225,13 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
                 //setupViewsShow(isHasGoods);
             }
         });
-        //删除单项商品
-        adapter.setOnDeleteShopListener(new ShoppCartAdapter.OnDeleteShopListener() {
-            @Override
-            public void onDeleteShop(final int groupPosition, final int childPosition) {
-                new NormalAlertDialog.Builder(activity)
-                        .setBoolTitle(false)
-                        .setContentText("确定删除该商品吗?")
-                        .setContentTextColor(R.color.blue)
-                        .setLeftText("取消")
-                        .setLeftTextColor(R.color.blue)
-                        .setRightText("确认")
-                        .setRightTextColor(R.color.blue)
-                        .setWidth(0.75f)
-                        .setHeight(0.33f)
-                        .setOnclickListener(new DialogInterface.OnLeftAndRightClickListener<NormalAlertDialog>() {
-                            @Override
-                            public void clickLeftButton(NormalAlertDialog dialog, View view) {
-                                dialog.dismiss();
-                            }
-                            @Override
-                            public void clickRightButton(NormalAlertDialog dialog, View view) {
-                                final GoodsBean goodsBean = (GoodsBean) childMapList_list.get(groupPosition).get(childPosition).get("childName");
-                                Map<String,String> map=new HashMap<>();
-                                map.put("uid",String.valueOf(AppConstant.UID));
-                                map.put("sid", String.valueOf(goodsBean.getSid()));
-                                mPresenter.deleteOneShoppCart(map,groupPosition,childPosition);
-                                adapter.removeOneGood(groupPosition,childPosition);
-                                dialog.dismiss();
 
-                            }
-                        }).build().show();
-
-            }
-        });
         adapter.setOnGoodsEditChangeListenr(new ShoppCartAdapter.OnGoodsEditChangeListenr() {
             @Override
             public void onEditChange(GoodsBean goodsBean) {
-            Map<String,String> map=new HashMap<String, String>();
+                editGid=goodsBean.getGid();
+                editSid=goodsBean.getSid();
+                Map<String,String> map=new HashMap<String, String>();
                 map.put("gid",String.valueOf(goodsBean.getGid()));
                 map.put("sid",String.valueOf(goodsBean.getSid()));
                 map.put("uid",String.valueOf(AppConstant.UID));
@@ -404,6 +385,16 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
             Dialog(data);
         }
     }
+
+    @Override
+    public void editShoppCartSuccess(String result) {
+        if(mLoadingDialog!=null){
+            mLoadingDialog.cancelDialog();
+        }
+        onRefresh();
+        ToastUtil.showShortToast(result);
+    }
+    //去掉List集合的重复值
     public  List removeDuplicateWithOrder(List list) {
         Set set = new HashSet();
         List newList = new ArrayList();
@@ -420,11 +411,7 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
     @Override
     public void deleteShoppCart(String msg) {
         adapter.removeGoods();
-        mToobar.setRightButtonText("编辑");
-    }
-    @Override
-    public void deleteOneShoppCart(String msg, int groupPosition, int childPosition) {
-        mPresenter.loadShoppCart(AppConstant.UID,false);
+        ToastUtil.showShortToast(msg);
     }
     @Override
     public void showLoading() {
@@ -448,6 +435,9 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
     @Override
     public void loadFail(int code, String msg) {
         if(code==0){
+            if(mLoadingDialog!=null){
+                mLoadingDialog.cancelDialog();
+            }
             ToastUtil.showShortToast(msg);
             return;
         }
@@ -482,7 +472,7 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
                     }
                 }
                 if(str.length()==0){
-                    ToastUtil.showShortToast("请选择要购买的商品");
+                    ToastUtil.showShortToast("请选择要删除的商品");
                     return;
                 }
                 final String sid = str.substring(0, str.length() - 1);
@@ -518,11 +508,10 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
         }
     }
 
-    private GoodsAttrsBean dataBean;
-    private EditShoppcartAdapter mAdapter;
+
     //自定义dialog弹窗
     public void Dialog(SingleShoppGoodBean goodBean){
-
+        goods_nmb=1;
         dialog = new CustomDialog(activity,R.style.Dialog);//设置dialog的样式
         Window window = dialog.getWindow();
         window.setGravity(Gravity.BOTTOM);
@@ -532,7 +521,6 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
         WindowManager m = activity.getWindowManager();
         Display d = m.getDefaultDisplay();
         WindowManager.LayoutParams lp = window.getAttributes();
-        //这句就是设置dialog横向满屏了。
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;     //dialog屏幕占比
         window.setAttributes(lp);
@@ -540,14 +528,21 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
         RecyclerView dialog_listView = (RecyclerView) dialog.findViewById(R.id.dialog_listView);
         LinearLayout dialog_confirm_ll = (LinearLayout) dialog.findViewById(R.id.dialog_confirm_ll);
         RelativeLayout custom_dialog_close = (RelativeLayout) dialog.findViewById(R.id.custom_dialog_close);
-        TextView dialog_goods_name = (TextView) dialog.findViewById(R.id.dialog_goods_name);
+        dialog_selected_goods = (TextView) dialog.findViewById(R.id.dialog_selected_goods);
         ImageView dialog_img = (ImageView) dialog.findViewById(R.id.dialog_img);
         TextView dialog_goods_price = (TextView) dialog.findViewById(R.id.dialog_goods_price);
         tv_item_minus_comm_detail = (TextView) dialog.findViewById(R.id.tv_item_minus_comm_detail);
         tv_item_number_comm_detail = (TextView) dialog.findViewById(R.id.tv_item_number_comm_detail);
         TextView tv_item_add_comm_detail = (TextView) dialog.findViewById(R.id.tv_item_add_comm_detail);
+        String detail=goodBean.getShopcart().getDetail();
+        if(detail!=null&&!detail.equals("")){
+            goodColor=detail.substring(0,detail.indexOf("#"));
+            goodSize=detail.substring(detail.indexOf("#")+1, detail.lastIndexOf("#"));
+            dialog_selected_goods.setText("已选:"+'"'+goodColor+'"'+" "+'"'+goodSize+'"');
+        }else{
+            dialog_selected_goods.setText("已选:");
+        }
 
-        dialog_goods_name.setText(goodBean.getTitle());
         dialog_goods_price.setText("￥:"+goodBean.getPrice());
         dialog_listView.setLayoutManager(new LinearLayoutManager(mContext));
         mAdapter = new EditShoppcartAdapter(dataBean.getAttributes(), dataBean.getStockGoods());
@@ -555,12 +550,36 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
         mAdapter.setSKUInterface(new SKUInterface() {
             @Override
             public void selectedAttribute(String[] attr) {
+                    goodColor=attr[0];
+                    goodSize=attr[1];
+                    String str1 = attr[0];
+                    String str2 = attr[1];
+                    if (!str1.equals("") && !str2.equals("")) {
+                        dialog_selected_goods.setText("已选:" + '"' + str1 + '"' + " " + '"' + str2 + '"');
+                    } else if (str1.equals("")&&!str2.equals("")){
+                        dialog_selected_goods.setText("已选:" + '"' + str2 + '"');
+                    }else if (str2.equals("")&&!str1.equals("")){
+                        dialog_selected_goods.setText("已选:" + '"' + str1 + '"');
+                    }else{
+                        dialog_selected_goods.setText("已选:");
+                    }
 
             }
-
             @Override
             public void uncheckAttribute(String[] attr) {
-
+                    goodColor=attr[0];
+                    goodSize=attr[1];
+                    String str1 = attr[0];
+                    String str2 = attr[1];
+                    if (!str1.equals("") && !str2.equals("")) {
+                        dialog_selected_goods.setText("已选:" + '"' + str1 + '"' + " " + '"' + str2 + '"');
+                    } else if (str1.equals("")&&!str2.equals("")){
+                        dialog_selected_goods.setText("已选:" + '"' + str2 + '"');
+                    }else if (str2.equals("")&&!str1.equals("")){
+                        dialog_selected_goods.setText("已选:" + '"' + str1 + '"');
+                    }else{
+                        dialog_selected_goods.setText("已选:");
+                    }
             }
         });
         custom_dialog_close.setOnClickListener(new DialogClick());
@@ -570,19 +589,39 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
         dialog_confirm_ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //PayMent(string);
+                if(goodColor==null||goodColor.equals("")){
+                    ToastUtil.showShortToast("请选择商品颜色");
+                    return;
+                }
+                if(goodColor==null||goodSize.equals("")){
+                    ToastUtil.showShortToast("请选择商品尺码");
+                    return;
+                }
+                mLoadingDialog=new LoadingDialog(activity,"正在修改购物车...",false);
+                mLoadingDialog.show();
+                StringBuilder str=new StringBuilder();
+                str.append(goodColor).append("#");
+                str.append(goodSize).append("#").append(tv_item_number_comm_detail.getText().toString().trim());
+                Map<String,String> map=new HashMap<>();
+                map.put("gid",String.valueOf(editGid));
+                map.put("sid",String.valueOf(editSid));
+                map.put("uid",String.valueOf(AppConstant.UID));
+                map.put("savetype","edit");
+                map.put("amount",tv_item_number_comm_detail.getText().toString().trim());
+                map.put("detail",str.toString());
+                mPresenter.editShoppCart(map);
                 dialog.dismiss();
             }
         });
     }
-    private int goods_nmb = 1;
-    private TextView tv_item_minus_comm_detail,tv_item_number_comm_detail,tv_item_add_comm_detail,goods_type,dialog_goods_price;
+
     public class DialogClick implements View.OnClickListener{
 
         @Override
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.custom_dialog_close:
+
                     dialog.dismiss();
                     break;
                 case R.id.tv_item_minus_comm_detail:

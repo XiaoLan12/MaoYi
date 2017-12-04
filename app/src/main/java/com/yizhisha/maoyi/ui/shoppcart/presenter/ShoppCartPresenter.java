@@ -10,6 +10,8 @@ import com.yizhisha.maoyi.ui.shoppcart.contract.ShoppCartContract;
 
 import java.util.Map;
 
+import static android.R.id.message;
+
 /**
  * Created by lan on 2017/7/10.
  */
@@ -65,6 +67,25 @@ public class ShoppCartPresenter extends ShoppCartContract.Presenter{
     }
 
     @Override
+    public void editShoppCart(Map<String, String> map) {
+        addSubscrebe(Api.getInstance().changeShopCart(map),
+                new RxSubscriber<RequestStatusBean>(mContext, false) {
+                    @Override
+                    protected void onSuccess(RequestStatusBean bean) {
+                            if(bean.getStatus().equals("y")){
+                                mView.editShoppCartSuccess(bean.getInfo());
+                            }else{
+                                mView.loadFail(0,bean.getInfo());
+                            }
+                    }
+                    @Override
+                    protected void onFailure(String message) {
+                        mView.loadFail(0,message);
+                    }
+                });
+    }
+
+    @Override
     public void deleteShoppCart(Map<String, String> map) {
         addSubscrebe(Api.getInstance().deleteShoppCart(map),new RxSubscriber<RequestStatusBean>(mContext,true){
 
@@ -83,22 +104,4 @@ public class ShoppCartPresenter extends ShoppCartContract.Presenter{
         });
     }
 
-    @Override
-    public void deleteOneShoppCart(Map<String, String> map, final int groupPosition, final int childPosition) {
-        addSubscrebe(Api.getInstance().deleteShoppCart(map),new RxSubscriber<RequestStatusBean>(mContext,true){
-
-            @Override
-            protected void onSuccess(RequestStatusBean requestStatusBean) {
-                if("y".equals(requestStatusBean.getStatus())){
-                    mView.deleteOneShoppCart(requestStatusBean.getInfo(),groupPosition,childPosition);
-                }else{
-                    mView.loadFail(0,requestStatusBean.getInfo());
-                }
-            }
-            @Override
-            protected void onFailure(String message) {
-                mView.loadFail(0,message);
-            }
-        });
-    }
 }

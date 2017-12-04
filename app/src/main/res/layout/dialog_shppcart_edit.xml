@@ -39,7 +39,7 @@
                     android:orientation="vertical"
                     android:paddingRight="14dp">
                     <TextView
-                        android:id="@+id/dialog_goods_name"
+                        android:id="@+id/dialog_selected_goods"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_10"
@@ -172,14 +172,11 @@
                     android:layout_marginRight="14dp"
                     android:background="@color/background_color"/>
             </RelativeLayout>
-            <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"
-                android:layout_height="@dimen/dp_10"/>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="@color/white">
+                android:background="@color/common_color">
                 <LinearLayout
                     android:id="@+id/dialog_confirm_ll"
                     android:layout_width="match_parent"
@@ -187,11 +184,12 @@
                     android:orientation="horizontal"
                     android:padding="14dp"
                     android:gravity="center"
-                    android:background="@color/blue">
+                    android:background="@color/common_color">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="确定"
+                        android:textSize="@dimen/font_normal2"
                         android:textColor="@color/white"/>
                 </LinearLayout>
             </LinearLayout>
