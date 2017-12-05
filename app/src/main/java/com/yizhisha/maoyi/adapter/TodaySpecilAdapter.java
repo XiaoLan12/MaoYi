@@ -1,6 +1,5 @@
 package com.yizhisha.maoyi.adapter;
 
-import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.widget.ImageView;
@@ -13,6 +12,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.bean.json.DailyBean;
+import com.yizhisha.maoyi.utils.RescourseUtil;
 import com.yizhisha.maoyi.widget.time.TimerUtils;
 
 import java.text.SimpleDateFormat;
@@ -45,9 +45,9 @@ public class TodaySpecilAdapter extends BaseQuickAdapter<DailyBean,BaseViewHolde
         }
         TextView tv5= TimerUtils.getTimer(TimerUtils.JD_STYLE,mContext,Long.parseLong(item.getSpc_endtime()+"000")-System.currentTimeMillis(),s,R.drawable.timer_shape)
                 .setTimerPadding(12,12,12,12)//设置内间距
-                .setTimerTextColor(Color.RED)//设置字体颜色
+                .setTimerTextColor(RescourseUtil.getColor(R.color.common_color))//设置字体颜色
                 .setTimerTextSize(38)//设置字体大小
-                .setTimerGapColor(Color.RED)//设置间隔的颜色
+                .setTimerGapColor(RescourseUtil.getColor(R.color.common_color))//设置间隔的颜色
                 .getmDateTv();//拿到TextView对象
         parent.addView(tv5);
         setmLayoutParams(tv5);

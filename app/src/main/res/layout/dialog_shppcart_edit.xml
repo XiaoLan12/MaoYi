@@ -172,10 +172,12 @@
                     android:layout_marginRight="14dp"
                     android:background="@color/background_color"/>
             </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+
                 android:background="@color/common_color">
                 <LinearLayout
                     android:id="@+id/dialog_confirm_ll"
