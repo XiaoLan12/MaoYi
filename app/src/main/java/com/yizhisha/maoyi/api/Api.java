@@ -245,5 +245,12 @@ public class Api {
     public Observable<SimilarRecommenBean> getSimilarRecommen(){
         return service.getSimilarRecommen();
     }
-
+    //获取验证码
+    public Observable<RequestStatusBean> getCode(Map<String, String> map){
+        return service.getCode(map);
+    }
+    //注册
+    public Observable<RequestStatusBean> Register(Map<String, String> map){
+        return service.Register(map);
+    }
 }

@@ -6,15 +6,12 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.base.BaseFragment;
 import com.yizhisha.maoyi.base.BaseToolbar;
 import com.yizhisha.maoyi.ui.login.activity.RegisterActivity;
+import com.yizhisha.maoyi.ui.login.presenter.LoginPresenter;
 import com.yizhisha.maoyi.widget.ClearEditText;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -23,7 +20,7 @@ import butterknife.OnClick;
  * Created by Administrator on 2017/12/2.
  */
 
-public class LoginFragment extends BaseFragment{
+public class LoginFragment extends BaseFragment<LoginPresenter>{
 
     @Bind(R.id.toolbar)
     BaseToolbar toolbar;
