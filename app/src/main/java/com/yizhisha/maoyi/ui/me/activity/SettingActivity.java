@@ -6,21 +6,28 @@ import android.view.View;
 
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.base.BaseActivity;
+import com.yizhisha.maoyi.base.BaseToolbar;
 import com.yizhisha.maoyi.utils.RescourseUtil;
 
+import butterknife.Bind;
 import butterknife.OnClick;
 import qiu.niorgai.StatusBarCompat;
 
 public class SettingActivity extends BaseActivity {
-
+    @Bind(R.id.toolbar)
+    BaseToolbar toolbar;
     @Override
     protected int getLayoutId() {
-        StatusBarCompat.setStatusBarColor(this, RescourseUtil.getColor(R.color.common_divider_narrow));
         return R.layout.activity_setting;
     }
     @Override
     protected void initToolBar(){
-
+        toolbar.setLeftButtonOnClickLinster(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish_Activity(SettingActivity.this);
+            }
+        });
     }
     @Override
     protected void initView(){

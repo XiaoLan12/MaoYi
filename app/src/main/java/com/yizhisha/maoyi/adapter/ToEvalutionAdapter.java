@@ -1,6 +1,7 @@
 package com.yizhisha.maoyi.adapter;
 
 import android.view.View;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -51,7 +52,28 @@ public class ToEvalutionAdapter extends BaseQuickAdapter<Object,BaseViewHolder> 
                 final ToEvalutionFootBean orderFootBean= (ToEvalutionFootBean) item;
                 helper.setText(R.id.date_tv, DateUtil.getDateToString2(orderFootBean.getAddtime()));
                 helper.setText(R.id.color_tv, orderFootBean.getDetail());
-                helper.addOnClickListener(R.id.add_comment_tv);
+                TextView addCommentTv=helper.getView(R.id.add_comment_tv);
+                if(orderFootBean.getStatus()==3&&orderFootBean.getCommentstatus()==0){
+                    addCommentTv.setText("立即评价");
+                    addCommentTv.setBackgroundResource(R.drawable.shape_blue_selector);
+                    helper.addOnClickListener(R.id.add_comment_tv);
+                }else if(orderFootBean.getStatus()==4&&orderFootBean.getCommentstatus()==1){
+                    addCommentTv.setText("立即评价");
+                    addCommentTv.setBackgroundResource(R.drawable.shape_blue_selector);
+                    helper.addOnClickListener(R.id.add_comment_tv);
+                }
+                else if(orderFootBean.getStatus()==4&&orderFootBean.getCommentstatus()==2){
+                    addCommentTv.setText("已追评");
+                    addCommentTv.setBackgroundResource(R.color.white);
+                }
+                else if(orderFootBean.getStatus()==4&&orderFootBean.getCommentstatus()==3){
+                    addCommentTv.setText("已删除");
+                    addCommentTv.setBackgroundResource(R.color.white);
+                }else{
+                    addCommentTv.setText("");
+                    addCommentTv.setBackgroundResource(R.color.white);
+                }
+
                 /*helper.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

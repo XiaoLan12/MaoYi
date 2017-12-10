@@ -85,6 +85,8 @@ public class DataHelper {
             footBean.setAddtime(order.getAddtime());
             footBean.setOrderno(order.getOrderno());
             footBean.setOrderId(order.getId());
+            footBean.setCommentstatus(order.getCommentstatus());
+            footBean.setStatus(order.getStatus());
             dataList.add(footBean);
         }
         return dataList;

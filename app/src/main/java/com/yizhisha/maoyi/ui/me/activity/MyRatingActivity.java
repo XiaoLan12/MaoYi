@@ -27,8 +27,7 @@ public class MyRatingActivity extends BaseActivity {
     @Bind(R.id.viewpager)
     ViewPager viewPager;
 
-    private String[] mTitles = {"待评价", "已评价"};
-    private int[] mType = {1, 2};
+    private String[] mTitles = {"待评价","可追评","已评价"};
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     @Override
     protected int getLayoutId() {
@@ -46,7 +45,8 @@ public class MyRatingActivity extends BaseActivity {
     @Override
     protected void initView() {
 
-            mFragments.add(ToEvaluationFragment.getInstance());
+            mFragments.add(ToEvaluationFragment.getInstance(3));
+        mFragments.add(ToEvaluationFragment.getInstance(4));
             mFragments.add(HaveEvaluationFragment.getInstance());
         slidingTabLayout.setViewPager(viewPager, mTitles, this, mFragments);
     }

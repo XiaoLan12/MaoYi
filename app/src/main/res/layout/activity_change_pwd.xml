@@ -8,12 +8,13 @@
     <com.yizhisha.maoyi.base.BaseToolbar
         android:id="@+id/toolbar"
         style="@style/basetoolbarStyle"
-        android:background="@color/common_divider_narrow"
+        android:background="@color/common_color"
         app:leftButtonIcon="@drawable/ic_back"
         app:rightButtonIcon="@drawable/ic_launcher"
         app:title="修改密码"
-        app:titleColors="@color/common_h"/>
+        />
     <com.yizhisha.maoyi.widget.ClearEditText
+        android:id="@+id/old_pwd_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="请输入登录密码"
@@ -40,12 +41,12 @@
         android:paddingTop="@dimen/dp_14"
         >
         <com.yizhisha.maoyi.widget.ClearEditText
+            android:id="@+id/new_pwd_et"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="请设置6-12新的登录密码"
             android:textSize="@dimen/font_normal"
-
             android:background="@null"/>
         <ImageView
             android:id="@+id/isShow_pwd_iv"
@@ -59,6 +60,7 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10"/>
     <Button
+        android:id="@+id/save_btn"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
         android:background="@drawable/shape_redbtn_selector"

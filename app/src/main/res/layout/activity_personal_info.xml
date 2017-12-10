@@ -8,11 +8,10 @@
     <com.yizhisha.maoyi.base.BaseToolbar
         android:id="@+id/toolbar"
         style="@style/basetoolbarStyle"
-        android:background="@color/common_divider_narrow"
+        android:background="@color/common_color"
         app:leftButtonIcon="@drawable/ic_back"
         app:rightButtonIcon="@drawable/ic_launcher"
         app:title="个人资料"
-        app:titleColors="@color/common_h"
         />
     <RelativeLayout
         android:id="@+id/userHead_rl"
