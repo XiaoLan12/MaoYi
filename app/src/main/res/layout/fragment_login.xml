@@ -29,20 +29,21 @@
         android:drawablePadding="@dimen/dp_5"
         android:textSize="@dimen/font_normal"
         android:textColorHint="@color/common_h2"
-        android:hint="@string/hint_input_phone"
-        android:drawableLeft="@drawable/icon_user"/>
+        android:hint="@string/hint_input_phone" />
         </LinearLayout>
     <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"
         android:id="@+id/login_view1"
         android:layout_below="@+id/login_ll1"
         android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginRight="@dimen/dp_10"/>
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@color/common_color"/>
     <LinearLayout
         android:id="@+id/login_ll2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/login_view1"
         android:gravity="center_vertical"
+        android:layout_marginTop="14dp"
         >
 
         <com.yizhisha.maoyi.widget.ClearEditText
@@ -51,7 +52,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:drawableLeft="@drawable/icon_lock"
             android:drawablePadding="@dimen/dp_5"
             android:hint="请输入登录密码"
             android:padding="@dimen/dp_10"
@@ -68,10 +68,35 @@
     </LinearLayout>
     <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"
         android:id="@+id/login_view2"
+
         android:layout_below="@+id/login_ll2"
         android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginRight="@dimen/dp_10"/>
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@color/common_color"/>
+        <LinearLayout
+            android:id="@+id/login_l13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/login_view2"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="14dp"
+            android:padding="@dimen/dp_10">
+            <TextView
+                android:id="@+id/register_tv"
+                style="@style/MY.Theme.Widget.Text"
 
+                android:text="没有账号?立即注册"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="10"/>
+            <TextView
+                android:id="@+id/findpwd_tv"
+                style="@style/MY.Theme.Widget.Text"
+                android:layout_alignParentRight="true"
+                android:text="忘记密码"/>
+
+        </LinearLayout>
     <Button
         android:id="@+id/login_btn"
         android:layout_width="match_parent"
@@ -79,26 +104,12 @@
         android:text="登 录"
         android:textSize="@dimen/font_normal2"
         android:textColor="@color/white"
-        android:layout_below="@+id/login_view2"
-        android:layout_marginTop="@dimen/dp_20"
+        android:layout_below="@+id/login_l13"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10"
         android:background="@drawable/shape_redbtn_selector"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/login_btn"
-        android:padding="@dimen/dp_10">
-        <TextView
-            android:id="@+id/findpwd_tv"
-            style="@style/MY.Theme.Widget.Text"
-            android:text="忘记密码"/>
-        <TextView
-            android:id="@+id/register_tv"
-            style="@style/MY.Theme.Widget.Text"
-            android:layout_alignParentRight="true"
-            android:text="没有账号?立即注册"/>
-    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

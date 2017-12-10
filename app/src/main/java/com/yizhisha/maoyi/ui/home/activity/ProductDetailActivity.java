@@ -121,7 +121,6 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
     @Override
     protected void initToolBar() {
 
-
     }
 
     @Override
