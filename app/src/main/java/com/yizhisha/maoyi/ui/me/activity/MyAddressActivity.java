@@ -32,6 +32,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MyAddressActivity extends BaseActivity<MyAddressPresenter> implements MyAddressContract.View,SwipeRefreshLayout.OnRefreshListener {
 
@@ -202,5 +203,23 @@ public class MyAddressActivity extends BaseActivity<MyAddressPresenter> implemen
     @Override
     public void onRefresh() {
         mPresenter.loadAddress(AppConstant.UID,false);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==2&&resultCode==2){
+            mPresenter.loadAddress(AppConstant.UID,false);
+        }
+    }
+    @OnClick({R.id.add_address_tv})
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.add_address_tv:
+                Bundle bundle=new Bundle();
+                bundle.putInt("TYPE",0);
+                startActivityForResult(AddAddressActivity.class,bundle,2);
+                break;
+        }
     }
 }

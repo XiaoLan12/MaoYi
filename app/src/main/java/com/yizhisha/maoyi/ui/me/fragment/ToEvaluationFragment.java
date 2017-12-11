@@ -44,8 +44,10 @@ public class ToEvaluationFragment extends BaseFragment<MyOrderPresenter> impleme
 
     private ToEvalutionAdapter mAdapter;
     private ArrayList<Object> dataList=new ArrayList<>();
-    public static ToEvaluationFragment getInstance() {
+    private int mStatus;
+    public static ToEvaluationFragment getInstance(int status) {
         ToEvaluationFragment sf = new ToEvaluationFragment();
+        sf.mStatus=status;
         return sf;
     }
     @Override
@@ -62,7 +64,7 @@ public class ToEvaluationFragment extends BaseFragment<MyOrderPresenter> impleme
     private void load(boolean isShowLoad){
         Map<String,String> map=new HashMap<>();
         map.put("uid",String.valueOf(AppConstant.UID));
-        map.put("status", String.valueOf(4));
+        map.put("status", String.valueOf(mStatus));
 
         mPresenter.loadOrder(map,isShowLoad);
     }
@@ -82,10 +84,18 @@ public class ToEvaluationFragment extends BaseFragment<MyOrderPresenter> impleme
                     case R.id.add_comment_tv:
                         if(dataList.get(position) instanceof ToEvalutionFootBean) {
                             ToEvalutionFootBean footBean= (ToEvalutionFootBean) dataList.get(position);
-                            Bundle commentbundle = new Bundle();
-                            commentbundle.putInt("TYPE",1);
-                            commentbundle.putInt("ORDERID",footBean.getOrderId());
-                            startActivity(AddCommentActivity.class,commentbundle);
+                            if(footBean.getStatus()==3){
+                                Bundle commentbundle = new Bundle();
+                                commentbundle.putInt("TYPE",1);
+                                commentbundle.putInt("ORDERID",footBean.getOrderId());
+                                startActivity(AddCommentActivity.class,commentbundle);
+                            }else if(footBean.getStatus()==4){
+                                Bundle commentbundle = new Bundle();
+                                commentbundle.putInt("TYPE",2);
+                                commentbundle.putInt("ORDERID",footBean.getOrderId());
+                                startActivity(AddCommentActivity.class,commentbundle);
+                            }
+
                         }
                         break;
                 }

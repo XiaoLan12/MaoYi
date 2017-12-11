@@ -62,7 +62,7 @@ public interface ApiService {
     Observable<UserHeadBean> changeUserHead(@Part("uid") RequestBody uid, @Part MultipartBody.Part file);
 
     //收货地址列表
-    @GET("/app/ucenter/address")
+    @GET("app/ucenter/address")
     Observable<GoodsListBean> loadGoodsAddress(@Query("uid") int uid);
 
     //收货地址保存
@@ -166,7 +166,7 @@ public interface ApiService {
 
     //修改密码
     @FormUrlEncoded
-    @POST("app/ucenter/password_save/")
+    @POST("app/user/changepassword/")
     Observable<RequestStatusBean> changePwd(@FieldMap Map<String,String> map);
 
     //获得微信登录的数据

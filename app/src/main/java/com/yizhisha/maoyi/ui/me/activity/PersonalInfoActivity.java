@@ -101,7 +101,6 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter> im
     }
     @Override
     protected int getLayoutId() {
-        StatusBarCompat.setStatusBarColor(this, RescourseUtil.getColor(R.color.common_divider_narrow));
         return R.layout.activity_personal_info;
     }
 

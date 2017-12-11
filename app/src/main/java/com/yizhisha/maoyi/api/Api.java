@@ -201,6 +201,11 @@ public class Api {
     public Observable<RequestStatusBean> refundGood(Map<String,String> map){
         return service.refundGood(map);
     }
+    //修改密码
+    public Observable<RequestStatusBean> changePwd(Map<String,String> map){
+        return service.changePwd(map);
+    }
+
     //登录
     public Observable<LoginBean> login(){
         return service.login();

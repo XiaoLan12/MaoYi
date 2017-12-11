@@ -22,6 +22,7 @@ public class MyOrderListBean implements Serializable{
     private String express_no;
     private int express_id;
     private int refundstatus;
+    private int commentstatus;
     private long paytime;
     private long shiptime;
     private long receivetime;
@@ -112,6 +113,10 @@ public class MyOrderListBean implements Serializable{
 
     public Refund getRefund() {
         return refund;
+    }
+
+    public int getCommentstatus() {
+        return commentstatus;
     }
 
     public class Address {

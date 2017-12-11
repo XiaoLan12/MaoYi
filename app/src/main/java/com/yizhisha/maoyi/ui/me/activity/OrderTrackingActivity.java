@@ -3,6 +3,7 @@ package com.yizhisha.maoyi.ui.me.activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import com.yizhisha.maoyi.R;
@@ -42,7 +43,12 @@ public class OrderTrackingActivity extends BaseActivity<OrderTrackPresenter> imp
 
     @Override
     protected void initToolBar() {
-
+        toolbar.setLeftButtonOnClickLinster(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish_Activity(OrderTrackingActivity.this);
+            }
+        });
     }
 
     @Override

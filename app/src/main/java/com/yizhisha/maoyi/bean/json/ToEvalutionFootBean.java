@@ -11,6 +11,16 @@ public class ToEvalutionFootBean implements Serializable{
     private long addtime;
     private String detail;
     private int orderId;
+    private int commentstatus;
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getOrderno() {
         return orderno;
@@ -42,5 +52,13 @@ public class ToEvalutionFootBean implements Serializable{
 
     public void setOrderId(int orderId) {
         this.orderId = orderId;
+    }
+
+    public int getCommentstatus() {
+        return commentstatus;
+    }
+
+    public void setCommentstatus(int commentstatus) {
+        this.commentstatus = commentstatus;
     }
 }

@@ -129,7 +129,7 @@ public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> 
         if (orderList == null) {
             return;
         }
-        String state[] = new String[]{"您还未支付该订单", "买家已付款,待发货", "商家已发货", "交易成功", "已评价"};
+        String state[] = new String[]{"等待付款", "等待发货", "等待收货", "交易成功", "交易关闭"};
         mTvOrderInfo.setText(state[orderList.getStatus()]);
 
         mTvOrderNo.setText(orderList.getOrderno());
@@ -225,7 +225,6 @@ public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> 
     public void loadFail(int code, String msg) {
 
     }
-
     @Override
     public void loadWeChatPayStateFail(String msg) {
 

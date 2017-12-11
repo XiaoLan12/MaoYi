@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,6 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/common_h2"
+            android:textSize="@dimen/font_small"
             tools:text="2017-06-18" />
 
         <TextView
@@ -26,6 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_5"
             android:text="颜色:"
+            android:textSize="@dimen/font_small"
             android:textColor="@color/common_h2" />
 
         <TextView
@@ -34,19 +37,21 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/common_h2"
+            android:textSize="@dimen/font_small"
             tools:text="#1231" />
 
         <TextView
             android:id="@+id/add_comment_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_blue_selector"
+            android:background="@null"
             android:paddingBottom="@dimen/dp_8"
             android:paddingLeft="@dimen/dp_14"
             android:paddingRight="@dimen/dp_14"
             android:paddingTop="@dimen/dp_8"
-            android:text="立即评价"
             android:textColor="@color/blue" />
     </LinearLayout>
-    <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"/>
+
+    <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"
+        android:layout_height="@dimen/dp_10"/>
 </LinearLayout>
