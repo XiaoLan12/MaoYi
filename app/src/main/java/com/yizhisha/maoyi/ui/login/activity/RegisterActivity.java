@@ -167,6 +167,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
                 Map<String,String> map1=new HashMap<>();
                 map1.put("mobile",accountRegisterEt.getText().toString().trim());
                 map1.put("mobilecode",code);
+                map1.put("password",pwd);
                 map1.put("utype","1");
                 map1.put("regip","127.0.0.0");
                 mPresenter.register(map1);

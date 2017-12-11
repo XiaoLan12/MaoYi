@@ -84,6 +84,7 @@ public class Api {
     public Observable<UserHeadBean> changeUserHead(RequestBody uid, MultipartBody.Part body){
         return service.changeUserHead(uid,body);
     }
+
     //收货地址列表
     public Observable<GoodsListBean> loadGoodsAddress(int uid){
         return service.loadGoodsAddress(uid);
