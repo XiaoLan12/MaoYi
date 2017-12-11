@@ -140,7 +140,7 @@ public interface ApiService {
     //登录
     @FormUrlEncoded
     @POST("app/user/dologin/")
-    Observable<RequestStatusBean> Login(@FieldMap Map<String,String> map);
+    Observable<LoginBean> Login(@FieldMap Map<String,String> map);
 
     //注册
     @FormUrlEncoded
@@ -276,7 +276,6 @@ public interface ApiService {
     //专题详情列表
     @GET("app/goods/specialGoodsList/")
     Observable<SpecialDetailBean> getSpecialGoodsList(@QueryMap Map<String, String> param);
-
 
     //商品详情
     @GET("app/goods/goodsDetail/")

@@ -201,9 +201,13 @@ public class Api {
     public Observable<RequestStatusBean> refundGood(Map<String,String> map){
         return service.refundGood(map);
     }
-
+    //登录
     public Observable<LoginBean> login(){
         return service.login();
+    }
+
+    public Observable<LoginBean> Login(Map<String, String> map){
+        return service.Login(map);
     }
 
     //首页今日专场轮播图

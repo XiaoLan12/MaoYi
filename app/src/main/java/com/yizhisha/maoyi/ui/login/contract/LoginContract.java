@@ -2,6 +2,7 @@ package com.yizhisha.maoyi.ui.login.contract;
 
 import com.yizhisha.maoyi.base.BasePresenter;
 import com.yizhisha.maoyi.base.BaseView;
+import com.yizhisha.maoyi.bean.json.LoginBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
 
 import java.util.Map;
@@ -12,7 +13,7 @@ import java.util.Map;
 
 public interface LoginContract {
     interface View extends BaseView {
-        void loginSuccess(RequestStatusBean info);
+        void loginSuccess(LoginBean info);
 
         //        void weChatLoginSuccess(RequestStatusBean bean);
 //

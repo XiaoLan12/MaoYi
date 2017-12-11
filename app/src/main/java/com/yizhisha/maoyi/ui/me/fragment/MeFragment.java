@@ -3,13 +3,9 @@ package com.yizhisha.maoyi.ui.me.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
@@ -35,7 +31,6 @@ import com.yizhisha.maoyi.utils.GlideUtil;
 import com.yizhisha.maoyi.utils.ToastUtil;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -63,6 +58,7 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
     @Override
     protected void initView() {
         mPresenter.loadHeadInfo(AppConstant.UID);
+
         event();
 
     }
@@ -182,6 +178,7 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
         if (subscription != null&&!subscription.isUnsubscribed()) {
             subscription.unsubscribe();
         }
