@@ -162,7 +162,7 @@ public interface ApiService {
     //手机快捷登录
     @FormUrlEncoded
     @POST("app/user/quicklogin/")
-    Observable<RequestStatusBean> phoneLogin(@FieldMap Map<String,String> map);
+    Observable<LoginBean> phoneLogin(@FieldMap Map<String,String> map);
 
     //修改密码
     @FormUrlEncoded

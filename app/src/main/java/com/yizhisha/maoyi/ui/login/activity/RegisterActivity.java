@@ -17,6 +17,7 @@ import com.yizhisha.maoyi.ui.login.contract.RegisterContract;
 import com.yizhisha.maoyi.ui.login.presenter.RegisterPresenter;
 import com.yizhisha.maoyi.utils.CheckUtils;
 import com.yizhisha.maoyi.utils.CountDownTimerUtil;
+import com.yizhisha.maoyi.utils.IPUtil;
 import com.yizhisha.maoyi.utils.ToastUtil;
 import com.yizhisha.maoyi.widget.ClearEditText;
 
@@ -52,8 +53,8 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     @Bind(R.id.login_register_tv)
     TextView loginRegisterTv;
 
-
     private boolean isHidden1 = true;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_register;
@@ -72,9 +73,8 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
 
     @Override
     protected void initView() {
-
+//        Log.e("TTT", IPUtil.getIPAddress(RegisterActivity.this));
     }
-
 
     @Override
     public void registerSuccess(RequestStatusBean info) {
@@ -94,6 +94,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     public void loadFail(String msg) {
 
         ToastUtil.showShortToast(msg);
+
     }
 
     @Override
@@ -169,7 +170,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
                 map1.put("mobilecode",code);
                 map1.put("password",pwd);
                 map1.put("utype","1");
-                map1.put("regip","127.0.0.0");
+                map1.put("regip", IPUtil.getIPAddress(RegisterActivity.this));
                 mPresenter.register(map1);
                 break;
 

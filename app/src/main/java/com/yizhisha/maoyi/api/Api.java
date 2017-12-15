@@ -207,14 +207,20 @@ public class Api {
         return service.changePwd(map);
     }
 
-    //登录
+
     public Observable<LoginBean> login(){
         return service.login();
     }
-
+    //登录
     public Observable<LoginBean> Login(Map<String, String> map){
         return service.Login(map);
     }
+
+    //手机快捷登录
+    public Observable<LoginBean> phoneLogin(Map<String, String> map){
+        return service.phoneLogin(map);
+    }
+
 
     //首页今日专场轮播图
     public Observable<List<WeekTopBean>> getDailyTopSlider(){
