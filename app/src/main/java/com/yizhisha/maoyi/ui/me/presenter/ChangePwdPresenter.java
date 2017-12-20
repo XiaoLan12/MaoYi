@@ -18,11 +18,7 @@ public class ChangePwdPresenter extends ChangePwdContract.Presenter{
                 new RxSubscriber<RequestStatusBean>(mContext, true) {
                     @Override
                     protected void onSuccess(RequestStatusBean requestStatusBean) {
-                        if("y".equals(requestStatusBean.getStatus())){
-                            mView.changePwdSuccess(requestStatusBean.getInfo());
-                        }else{
-                            mView.loadFail(requestStatusBean.getInfo());
-                        }
+
                     }
                     @Override
                     protected void onFailure(String message) {
