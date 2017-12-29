@@ -84,7 +84,7 @@
             <TextView
                 android:id="@+id/register_tv"
                 style="@style/MY.Theme.Widget.Text"
-
+                android:textColor="@color/common_color"
                 android:text="没有账号?立即注册"/>
             <View
                 android:layout_width="0dp"

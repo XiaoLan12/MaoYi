@@ -22,15 +22,17 @@
             android:textSize="@dimen/font_normal"
             android:drawablePadding="@dimen/dp_5"
             android:textColorHint="@color/common_h2"
-            android:drawableLeft="@drawable/icon_user"
+
             android:padding="@dimen/dp_10" />
     <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"
         android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginRight="@dimen/dp_10"/>
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@color/common_color"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/login_view1"
+        android:layout_marginTop="20dp"
         android:gravity="center_vertical"
         >
         <com.yizhisha.maoyi.widget.ClearEditText
@@ -43,20 +45,33 @@
         android:textColor="@color/common_h2"
         android:hint="@string/hint_input_code"
         android:drawablePadding="@dimen/dp_5"
+
         android:textColorHint="@color/common_h2"
-        android:textSize="@dimen/font_normal"
-        android:drawableLeft="@drawable/icon_shield"/>
+        android:textSize="@dimen/font_normal" />
         <TextView
             android:id="@+id/getcode_phonelogin_tv"
             style="@style/MY.Theme.Widget.Text"
-            android:textColor="@color/red2"
+            android:textColor="@color/common_color"
             android:layout_marginRight="@dimen/dp_10"
+
             android:text="获取验证码"/>
     </LinearLayout>
     <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"
         android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginRight="@dimen/dp_10"/>
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@color/common_color"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="6dp"
+    android:gravity="right">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="快速注册"/>
 
+</LinearLayout>
     <Button
         android:id="@+id/sure_phonelogin_btn"
         android:layout_width="match_parent"

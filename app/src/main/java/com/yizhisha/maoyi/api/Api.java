@@ -84,6 +84,7 @@ public class Api {
     public Observable<UserHeadBean> changeUserHead(RequestBody uid, MultipartBody.Part body){
         return service.changeUserHead(uid,body);
     }
+
     //收货地址列表
     public Observable<GoodsListBean> loadGoodsAddress(int uid){
         return service.loadGoodsAddress(uid);
@@ -206,9 +207,20 @@ public class Api {
         return service.changePwd(map);
     }
 
+
     public Observable<LoginBean> login(){
         return service.login();
     }
+    //登录
+    public Observable<LoginBean> Login(Map<String, String> map){
+        return service.Login(map);
+    }
+
+    //手机快捷登录
+    public Observable<LoginBean> phoneLogin(Map<String, String> map){
+        return service.phoneLogin(map);
+    }
+
 
     //首页今日专场轮播图
     public Observable<List<WeekTopBean>> getDailyTopSlider(){
