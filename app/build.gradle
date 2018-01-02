@@ -39,6 +39,7 @@ dependencies {
     //颜色和尺码选择
 
     //微信支付
+    compile files('libs/commons-lang.jar')
     compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
     compile 'com.android.support:support-v4:26.0.0-alpha1'
     compile 'com.android.support:design:26.0.0-alpha1'
@@ -57,5 +58,4 @@ dependencies {
     compile 'com.hyman:flowlayout-lib:1.1.2'
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.0.2'
     testCompile 'junit:junit:4.12'
-    compile files('libs/commons-lang.jar')
 }

@@ -20,6 +20,8 @@ import com.yizhisha.maoyi.bean.json.SimilarRecommenBean;
 import com.yizhisha.maoyi.bean.json.SingleShoppCartBean;
 import com.yizhisha.maoyi.bean.json.SortedListBean;
 import com.yizhisha.maoyi.bean.json.SpecialDetailBean;
+import com.yizhisha.maoyi.bean.json.StudioBean;
+import com.yizhisha.maoyi.bean.json.StudioShopBean;
 import com.yizhisha.maoyi.bean.json.UserHeadBean;
 import com.yizhisha.maoyi.bean.json.WechatBean;
 import com.yizhisha.maoyi.bean.json.WechatInfoBean;
@@ -284,5 +286,15 @@ public interface ApiService {
     @GET("app/recommend/tid/")
     Observable<SimilarRecommenBean> getSimilarRecommen();
 
+    //工作室
+    @GET("app/goods/workshopList/")
+    Observable<StudioBean> getStudio();
 
+    //工作室
+    @GET("app/goods/workshopGoods/")
+    Observable<StudioShopBean> getStudioShop(@QueryMap Map<String, String> param);
+
+    //收藏工作室
+    @GET("app/goods/workshopFav/")
+    Observable<RequestStatusBean> focusWork(@QueryMap Map<String, String> param);
 }

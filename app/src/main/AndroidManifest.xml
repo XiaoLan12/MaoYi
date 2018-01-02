@@ -54,7 +54,7 @@
         <activity android:name=".ui.me.activity.ReFundOrderDetailsActivity" />
         <activity android:name=".ui.me.activity.MyAddressActivity" />
         <activity android:name=".ui.ClipHeaderActivity" />
-        <activity android:name=".ui.me.activity.AddAddressActivity"/>
+        <activity android:name=".ui.me.activity.AddAddressActivity" />
         <activity
             android:name=".ui.me.activity.ApplyRefundActivity"
             android:screenOrientation="portrait"
@@ -92,10 +92,10 @@
         <activity android:name=".ui.me.activity.AddCommentActivity" />
         <activity android:name=".ui.shoppcart.activity.EditShoppCartActivity" />
 
-        <!--登录-->
-        <activity android:name=".ui.login.activity.LoginFragmentActivity"></activity>
-        <!--注册-->
-        <activity android:name=".ui.login.activity.RegisterActivity"></activity>
+        <!-- 登录 -->
+        <activity android:name=".ui.login.activity.LoginFragmentActivity" />
+        <!-- 注册 -->
+        <activity android:name=".ui.login.activity.RegisterActivity" />
 
         <!-- 微信登录 -->
         <activity
@@ -115,9 +115,11 @@
             android:name=".ui.me.activity.OrderSearchActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".ui.me.activity.RefundGoodActivity"
+        <activity
+            android:name=".ui.me.activity.RefundGoodActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".ui.home.activity.StudioShopActivity"></activity>
     </application>
 
 </manifest>

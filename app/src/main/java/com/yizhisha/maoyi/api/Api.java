@@ -20,6 +20,8 @@ import com.yizhisha.maoyi.bean.json.SimilarRecommenBean;
 import com.yizhisha.maoyi.bean.json.SingleShoppCartBean;
 import com.yizhisha.maoyi.bean.json.SortedListBean;
 import com.yizhisha.maoyi.bean.json.SpecialDetailBean;
+import com.yizhisha.maoyi.bean.json.StudioBean;
+import com.yizhisha.maoyi.bean.json.StudioShopBean;
 import com.yizhisha.maoyi.bean.json.UserHeadBean;
 import com.yizhisha.maoyi.bean.json.WeekListBean;
 import com.yizhisha.maoyi.bean.json.WeekTopBean;
@@ -42,7 +44,7 @@ import rx.Observable;
  */
 
 public class Api {
-    public final static String API_BASE_URL = "http://dyc.maozhiwang.com/index.php/";
+    public final static String API_BASE_URL = "http://dyc.maozhiwang.com/";
     public static Api instance;
     private ApiService service;
 
@@ -268,5 +270,18 @@ public class Api {
     //注册
     public Observable<RequestStatusBean> Register(Map<String, String> map){
         return service.Register(map);
+    }
+    //获得工作室
+    public Observable<StudioBean> getStudio(){
+        return service.getStudio();
+    }
+    //获得工作室商品列表
+    public Observable<StudioShopBean> getStudioShop(Map<String, String> map){
+        return service.getStudioShop(map);
+    }
+
+    //获得工作室商品列表
+    public Observable<RequestStatusBean> focusWork(Map<String, String> map){
+        return service.focusWork(map);
     }
 }
