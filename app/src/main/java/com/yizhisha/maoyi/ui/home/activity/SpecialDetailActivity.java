@@ -4,11 +4,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.adapter.SDayExplosionAdapter;
@@ -52,11 +54,18 @@ public class SpecialDetailActivity extends BaseActivity<SpecialDetailPresenter> 
     }
 
     @Override
-    protected void initView() { mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
-
+    protected void initView() {
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         mAdapter = new SDayExplosionAdapter(dataLists);
         mRecyclerView.setAdapter(mAdapter);
-
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("gid", dataLists.get(position).getId());
+                startActivity(ProductDetailActivity.class,bundle);
+            }
+        });
 //        mAdapter.setNewData(dataLists);
         addHeadView();
         Map<String,String> map=new HashMap<>();
@@ -69,20 +78,10 @@ public class SpecialDetailActivity extends BaseActivity<SpecialDetailPresenter> 
 
         mAdapter.addHeaderView(view);
     }
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
-
     @Override
     public void getSpecialDetailSuccess(SpecialDetailBean model) {
         dataLists=model.getGoods();
         mAdapter.setNewData(dataLists);
-
         imageUrl = new ArrayList<>();
         for(int i=0;i<model.getSpecial().size();i++){
             imageUrl.add(AppConstant.BANNER_IMG_URL+model.getSpecial().get(i).getSpc_litpic());

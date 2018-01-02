@@ -5,17 +5,17 @@ package com.yizhisha.maoyi.bean.json;
  */
 
 public class WeekListBean {
-    private String id;
+    private int id;
     private String  title;
     private String litpic;
     private String price;
     private String sales;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

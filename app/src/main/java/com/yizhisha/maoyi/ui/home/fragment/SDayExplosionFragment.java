@@ -1,5 +1,6 @@
 package com.yizhisha.maoyi.ui.home.fragment;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -50,7 +51,9 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(ProductDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("gid", dataLists.get(position).getId());
+                startActivity(ProductDetailActivity.class,bundle);
             }
         });
 //        mAdapter.setNewData(dataLists);

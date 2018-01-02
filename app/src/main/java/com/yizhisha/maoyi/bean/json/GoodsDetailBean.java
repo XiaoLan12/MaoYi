@@ -9,6 +9,7 @@ public class GoodsDetailBean {
     private String info;
     private GoodsProductBean goods;
     private String favorite;
+    private Comment comment;
 
     public String getStatus() {
         return status;
@@ -50,5 +51,16 @@ public class GoodsDetailBean {
                 ", goods=" + goods +
                 ", favorite='" + favorite + '\'' +
                 '}';
+    }
+    public class Comment {
+
+        private String count;
+        public void setCount(String count) {
+            this.count = count;
+        }
+        public String getCount() {
+            return count;
+        }
+
     }
 }

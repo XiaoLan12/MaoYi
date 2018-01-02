@@ -16,13 +16,14 @@ public interface ProductDetailContract {
 
         void getGoodsDetailSuccess(GoodsDetailBean model);
         void getSimilarRecommenSuccess(SimilarRecommenBean model);
+        void addShoppCartSuccess(String result);
         void loadFail(String msg);
     }
 
     abstract class Presenter extends BasePresenter<ProductDetailContract.View> {
 
         public abstract void getGoodsDetail(Map<String,String> map);
-
+        public abstract void addShoppCart(Map<String, String> map);
         public abstract void getSimilarRecommen();
     }
 }

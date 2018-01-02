@@ -113,6 +113,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
 
     private PopupWindow popupWindow;
     GoodsProductBean goodsProductBean;
+    private int mGid;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_product_detail;
@@ -125,31 +126,21 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
 
     @Override
     protected void initView() {
+        Bundle bundle=getIntent().getExtras();
+        if(bundle!=null){
+            mGid=bundle.getInt("gid");
+        }
         rlTuijian.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-
         mAdapter1 = new SDayExplosionAdapter(dataLists);
         rlTuijian.setAdapter(mAdapter);
-        mAdapter1.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(ProductDetailActivity.class);
-            }
-        });
+
 
         Map<String, String> map = new HashMap<>();
-        map.put("gid", "3");
+        map.put("gid", String.valueOf(mGid));
+        map.put("uid", String.valueOf(AppConstant.UID));
         mPresenter.getGoodsDetail(map);
-
         mPresenter.getSimilarRecommen();
     }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
-
     @Override
     public void getGoodsDetailSuccess(GoodsDetailBean model) {
          goodsProductBean = model.getGoods();
@@ -184,68 +175,94 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
         tvMoney.setText("￥" + goodsProductBean.getPrice());
         Glide.with(ProductDetailActivity.this).load(AppConstant.PRUDUCT_IMG_URL + goodsProductBean.getLitpic()).into(imgLitpic);
     }
-    @OnClick({R.id.ll_select_color_size})
+    private void ShopAttri(){
+        dataBean=new GoodsAttrsBean();
+        List<GoodsAttrsBean.AttributesBean> attributesBeanList=new ArrayList<>();
+        List<GoodsAttrsBean.StockGoodsBean> stockGoodsBeanList=new ArrayList<>();
+        if(goodsProductBean.getStyle()!=null&&goodsProductBean.getStyle().size()>0){
+            List<GoodsStyleBean> styles=goodsProductBean.getStyle();
+            GoodsAttrsBean.AttributesBean attributesBean=new GoodsAttrsBean().new AttributesBean();
+            attributesBean.setTabID(0);
+            attributesBean.setTabName("颜色分类:");
+            List<String> colors=new ArrayList<>();
+            List<String> sizes=new ArrayList<>();
+            List<String> newSizes=new ArrayList<>();
+            for(int i=0;i<styles.size();i++){
+                colors.add(styles.get(i).getColor());
+                String[] strArray = null;
+                strArray = styles.get(i).getSize().split(",");
+                for(String size:strArray){
+                    sizes.add(size);
+                }
+            }
+            attributesBean.setAttributesItem(colors);
+            GoodsAttrsBean.AttributesBean attributesBean1=new GoodsAttrsBean().new AttributesBean();
+            attributesBean1.setTabID(1);
+            attributesBean1.setTabName("尺码:");
+            newSizes.addAll(removeDuplicateWithOrder(sizes));
+            attributesBean1.setAttributesItem(newSizes);
+            attributesBeanList.add(attributesBean);
+            attributesBeanList.add(attributesBean1);
+
+
+            for(int i=0;i<styles.size();i++){
+
+                GoodsAttrsBean.StockGoodsBean.GoodsInfoBean goodsInfoBean=new GoodsAttrsBean().new StockGoodsBean().new GoodsInfoBean();
+                goodsInfoBean.setTabID(0);
+                goodsInfoBean.setTabName("颜色分类:");
+                goodsInfoBean.setTabValue(styles.get(i).getColor());
+                String[] strArray = null;
+                strArray = styles.get(i).getSize().split(",");
+                for(String size:strArray){
+                    List<GoodsAttrsBean.StockGoodsBean.GoodsInfoBean> goodsInfoBeans=new ArrayList<>();
+                    GoodsAttrsBean.StockGoodsBean stockGoodsBean=new GoodsAttrsBean().new StockGoodsBean();
+                    GoodsAttrsBean.StockGoodsBean.GoodsInfoBean goodsInfoBean1=new GoodsAttrsBean().new StockGoodsBean().new GoodsInfoBean();
+                    goodsInfoBean1.setTabID(1);
+                    goodsInfoBean1.setTabName("尺码:");
+                    goodsInfoBean1.setTabValue(size);
+                    goodsInfoBeans.add(goodsInfoBean);
+                    goodsInfoBeans.add(goodsInfoBean1);
+                    stockGoodsBean.setGoodsID(i);
+                    stockGoodsBean.setGoodsInfo(goodsInfoBeans);
+                    stockGoodsBeanList.add(stockGoodsBean);
+                }
+
+            }
+            dataBean.setAttributes(attributesBeanList);
+            dataBean.setStockGoods(stockGoodsBeanList);
+            Dialog(goodsProductBean);
+        }
+    }
+    @OnClick({R.id.ll_select_color_size,R.id.tv_shopping_cart})
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()){
             case R.id.ll_select_color_size:
-                dataBean=new GoodsAttrsBean();
-                List<GoodsAttrsBean.AttributesBean> attributesBeanList=new ArrayList<>();
-                List<GoodsAttrsBean.StockGoodsBean> stockGoodsBeanList=new ArrayList<>();
-                if(goodsProductBean.getStyle()!=null&&goodsProductBean.getStyle().size()>0){
-                    List<GoodsStyleBean> styles=goodsProductBean.getStyle();
-                    GoodsAttrsBean.AttributesBean attributesBean=new GoodsAttrsBean().new AttributesBean();
-                    attributesBean.setTabID(0);
-                    attributesBean.setTabName("颜色分类:");
-                    List<String> colors=new ArrayList<>();
-                    List<String> sizes=new ArrayList<>();
-                    List<String> newSizes=new ArrayList<>();
-                    for(int i=0;i<styles.size();i++){
-                        colors.add(styles.get(i).getColor());
-                        String[] strArray = null;
-                        strArray = styles.get(i).getSize().split(",");
-                        for(String size:strArray){
-                            sizes.add(size);
-                        }
-                    }
-                    attributesBean.setAttributesItem(colors);
-                    GoodsAttrsBean.AttributesBean attributesBean1=new GoodsAttrsBean().new AttributesBean();
-                    attributesBean1.setTabID(1);
-                    attributesBean1.setTabName("尺码:");
-                    newSizes.addAll(removeDuplicateWithOrder(sizes));
-                    attributesBean1.setAttributesItem(newSizes);
-                    attributesBeanList.add(attributesBean);
-                    attributesBeanList.add(attributesBean1);
-
-
-                    for(int i=0;i<styles.size();i++){
-
-                        GoodsAttrsBean.StockGoodsBean.GoodsInfoBean goodsInfoBean=new GoodsAttrsBean().new StockGoodsBean().new GoodsInfoBean();
-                        goodsInfoBean.setTabID(0);
-                        goodsInfoBean.setTabName("颜色分类:");
-                        goodsInfoBean.setTabValue(styles.get(i).getColor());
-                        String[] strArray = null;
-                        strArray = styles.get(i).getSize().split(",");
-                        for(String size:strArray){
-                            List<GoodsAttrsBean.StockGoodsBean.GoodsInfoBean> goodsInfoBeans=new ArrayList<>();
-                            GoodsAttrsBean.StockGoodsBean stockGoodsBean=new GoodsAttrsBean().new StockGoodsBean();
-                            GoodsAttrsBean.StockGoodsBean.GoodsInfoBean goodsInfoBean1=new GoodsAttrsBean().new StockGoodsBean().new GoodsInfoBean();
-                            goodsInfoBean1.setTabID(1);
-                            goodsInfoBean1.setTabName("尺码:");
-                            goodsInfoBean1.setTabValue(size);
-                            goodsInfoBeans.add(goodsInfoBean);
-                            goodsInfoBeans.add(goodsInfoBean1);
-                            stockGoodsBean.setGoodsID(i);
-                            stockGoodsBean.setGoodsInfo(goodsInfoBeans);
-                            stockGoodsBeanList.add(stockGoodsBean);
-                        }
-
-                    }
-                    dataBean.setAttributes(attributesBeanList);
-                    dataBean.setStockGoods(stockGoodsBeanList);
-                    Dialog(goodsProductBean);
+                ShopAttri();
+                break;
+            case R.id.tv_shopping_cart:
+                ShopAttri();
+                if(goodColor==null||goodColor.equals("")){
+                    ToastUtil.showShortToast("请选择商品颜色");
+                    return;
                 }
+                if(goodColor==null||goodSize.equals("")){
+                    ToastUtil.showShortToast("请选择商品尺码");
+                    return;
+                }
+                mLoadingDialog=new LoadingDialog(this,"正在修改购物车...",false);
+                mLoadingDialog.show();
+                StringBuilder str=new StringBuilder();
+                str.append(goodColor).append("#");
+                str.append(goodSize).append("#").append(tv_item_number_comm_detail.getText().toString().trim());
+                Map<String,String> map=new HashMap<>();
+                map.put("gid",String.valueOf(goodsProductBean.getId()));
+                map.put("uid",String.valueOf(AppConstant.UID));
+                map.put("savetype","add");
+                map.put("amount",tv_item_number_comm_detail.getText().toString().trim());
+                map.put("detail",str.toString());
+                mPresenter.addShoppCart(map);
                 break;
         }
 
@@ -371,7 +388,6 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.custom_dialog_close:
-
                     dialog.dismiss();
                     break;
                 case R.id.tv_item_minus_comm_detail:
@@ -395,6 +411,14 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
     public void getSimilarRecommenSuccess(SimilarRecommenBean model) {
         dataLists = model.getGoods();
         mAdapter1.setNewData(dataLists);
+    }
+
+    @Override
+    public void addShoppCartSuccess(String result) {
+        if(mLoadingDialog!=null){
+            mLoadingDialog.cancelDialog();
+        }
+        ToastUtil.showShortToast(result);
     }
 
     @Override
