@@ -1,4 +1,5 @@
 package com.yizhisha.maoyi.bean;
+import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.bean.json.MyCommentHeadBean;
 import com.yizhisha.maoyi.bean.json.MyCommentListBean;
 import com.yizhisha.maoyi.bean.json.MyOrderListBean;
@@ -17,7 +18,6 @@ import java.util.List;
  */
 
 public class DataHelper {
-    private static final String COMMENTURL="http://www.taoshamall.com/data/attached/comment/";
     /**
      * List<Object>有三种数据类型：
      * 1、GoodsOrderInfo 表示每个小订单的头部信息（订单号、订单状态、店铺名称）
@@ -124,13 +124,11 @@ public class DataHelper {
                 String date[] = myComment.getComment_photos().split(",");
                 List<String> list = new ArrayList<>();
                 for (int j = 0; j < date.length; j++) {
-                    list.add(COMMENTURL+date[j]);
+                    list.add(AppConstant.COMENT_IMG_URL+date[j]);
                 }
                 myComment.setCommentPhotos(list);
-
             }
             dataList.add(myComment);
-
         }
         return dataList;
     }

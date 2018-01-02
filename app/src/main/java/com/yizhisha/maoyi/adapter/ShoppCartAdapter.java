@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.bean.json.GoodsBean;
 import com.yizhisha.maoyi.bean.json.StoreBean;
@@ -160,13 +161,10 @@ public class ShoppCartAdapter extends BaseExpandableListAdapter {
                     .findViewById(R.id.tradesize_shoppcar2_tv);
             childViewHolder.id_tv_amount = (TextView) convertView
                     .findViewById(R.id.tradeamount_tv);
-
             convertView.setTag(childViewHolder);
         } else {
             childViewHolder = (ChildViewHolder) convertView.getTag();
         }
-
-
         final GoodsBean goodsBean = (GoodsBean) childMapList_list.get(groupPosition).get(childPosition).get("childName");
       /*  convertView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,8 +188,8 @@ public class ShoppCartAdapter extends BaseExpandableListAdapter {
         }
 
         childViewHolder.id_tv_amount.setText("x"+goodsBean.getAmount());
-       /* GlideUtil.getInstance().LoadContextBitmap(context, AppConstant.INDEX_RECOMMEND_TYPE_IMG_URL+goodsBean.getLitpic(),
-                (ImageView) childViewHolder.mIvPic,GlideUtil.LOAD_BITMAP);*/
+        GlideUtil.getInstance().LoadContextBitmap(context, AppConstant.PRUDUCT_IMG_URL+goodsBean.getLitpic(),
+                (ImageView) childViewHolder.mIvPic,GlideUtil.LOAD_BITMAP);
         childViewHolder.id_cb_select_child.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

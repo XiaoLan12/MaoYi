@@ -25,8 +25,8 @@ public class MyCollectAdapter extends BaseQuickAdapter<CollectListBean.Favorite,
     protected void convert(BaseViewHolder helper, CollectListBean.Favorite item) {
         helper.setText(R.id.titel_tv,item.getTitle());
         helper.setText(R.id.price_tv,item.getPrice());
-       /* GlideUtil.getInstance().LoadContextBitmap(mContext, AppConstant.INDEX_RECOMMEND_TYPE_IMG_URL+item.getLitpic(),
-                (ImageView) helper.getView(R.id.photo_iv),GlideUtil.LOAD_BITMAP);*/
+        GlideUtil.getInstance().LoadContextBitmap(mContext, AppConstant.PRUDUCT_IMG_URL+item.getLitpic(),
+                (ImageView) helper.getView(R.id.photo_iv),GlideUtil.LOAD_BITMAP);
         helper.addOnClickListener(R.id.find_tv);
     }
 }

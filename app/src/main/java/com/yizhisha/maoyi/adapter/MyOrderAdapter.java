@@ -7,10 +7,12 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.util.MultiTypeDelegate;
+import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.bean.json.MyOrderListBean;
 import com.yizhisha.maoyi.bean.json.OrderFootBean;
 import com.yizhisha.maoyi.bean.json.OrderHeadBean;
+import com.yizhisha.maoyi.utils.GlideUtil;
 
 /**
  * Created by Administrator on 2017/6/25 0025.
@@ -69,8 +71,8 @@ public class MyOrderAdapter extends BaseQuickAdapter<Object,BaseViewHolder> {
                 helper.setText(R.id.tradecolor_myorder_tv,detail.substring(0,detail.indexOf("#")));
                 helper.setText(R.id.tradesize_myorder_tv,detail.substring(detail.indexOf("#")+1, detail.lastIndexOf("#")));
                 helper.setText(R.id.tradeamount_myorder_tv,"x"+goods.getAmount());
-               /* GlideUtil.getInstance().LoadContextBitmap(mContext, AppConstant.INDEX_RECOMMEND_TYPE_IMG_URL+goods.getLitpic(),
-                        (ImageView) helper.getView(R.id.tradehead_myorder_iv),GlideUtil.LOAD_BITMAP);*/
+                GlideUtil.getInstance().LoadContextBitmap(mContext, AppConstant.PRUDUCT_IMG_URL+goods.getLitpic(),
+                        (ImageView) helper.getView(R.id.tradehead_myorder_iv),GlideUtil.LOAD_BITMAP);
                 helper.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

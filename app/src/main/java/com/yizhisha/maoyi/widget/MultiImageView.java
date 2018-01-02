@@ -2,12 +2,14 @@ package com.yizhisha.maoyi.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
 
+import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.utils.DensityUtil;
 import com.yizhisha.maoyi.utils.GlideUtil;
@@ -173,7 +175,7 @@ public class MultiImageView extends LinearLayout {
 	}
 
 	private ImageView createImageView(int position, final boolean isMultiImage) {
-		String url = imagesList.get(position);
+		String url =imagesList.get(position);
 		ImageView imageView = new ImageView(getContext());
 		if(isMultiImage){
 			imageView.setScaleType(ScaleType.CENTER_CROP);
@@ -188,7 +190,7 @@ public class MultiImageView extends LinearLayout {
 		imageView.setTag(R.id.image_tag,position);
 		imageView.setId(url.hashCode());
 		imageView.setOnClickListener(mImageViewOnClickListener);
-		GlideUtil.getInstance().LoadContextBitmap(imageView.getContext(),url,imageView,GlideUtil.LOAD_BITMAP);
+		GlideUtil.getInstance().LoadContextBitmap(imageView.getContext(), url,imageView,GlideUtil.LOAD_BITMAP);
 		return imageView;
 	}
 

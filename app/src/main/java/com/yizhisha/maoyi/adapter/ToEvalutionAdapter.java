@@ -1,17 +1,20 @@
 package com.yizhisha.maoyi.adapter;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.util.MultiTypeDelegate;
+import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.bean.json.MyOrderListBean;
 import com.yizhisha.maoyi.bean.json.OrderFootBean;
 import com.yizhisha.maoyi.bean.json.OrderHeadBean;
 import com.yizhisha.maoyi.bean.json.ToEvalutionFootBean;
 import com.yizhisha.maoyi.utils.DateUtil;
+import com.yizhisha.maoyi.utils.GlideUtil;
 
 /**
  * Created by Administrator on 2017/6/25 0025.
@@ -45,8 +48,8 @@ public class ToEvalutionAdapter extends BaseQuickAdapter<Object,BaseViewHolder> 
                 MyOrderListBean.Goods goods= (MyOrderListBean.Goods) item;
                 helper.setText(R.id.titel_tv,goods.getTitle());
                 helper.setText(R.id.price_tv,"￥"+goods.getTotalprice());
-               /* GlideUtil.getInstance().LoadContextBitmap(mContext, AppConstant.INDEX_RECOMMEND_TYPE_IMG_URL+goods.getLitpic(),
-                        (ImageView) helper.getView(R.id.tradehead_myorder_iv),GlideUtil.LOAD_BITMAP);*/
+                GlideUtil.getInstance().LoadContextBitmap(mContext, AppConstant.PRUDUCT_IMG_URL+goods.getLitpic(),
+                        (ImageView) helper.getView(R.id.photo_iv),GlideUtil.LOAD_BITMAP);
                 break;
             case ITEM_FOOTER:
                 final ToEvalutionFootBean orderFootBean= (ToEvalutionFootBean) item;

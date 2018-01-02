@@ -61,7 +61,7 @@ public class HaveEvaluationAdapter extends BaseQuickAdapter<Object,BaseViewHolde
                 helper.setText(R.id.tradecolor_myorder_tv,goods.getRemark());
                 helper.setText(R.id.tradeprice_myorder_tv,"￥"+goods.getTotalprice()+"元");
                 helper.setText(R.id.tradecolor_myorder_tv,goods.getDetail());
-                GlideUtil.getInstance().LoadContextBitmap(mContext, AppConstant.COMENT_IMG_URL+goods.getLitpic(),
+                GlideUtil.getInstance().LoadContextBitmap(mContext, AppConstant.PRUDUCT_IMG_URL+goods.getLitpic(),
                         (ImageView) helper.getView(R.id.tradehead_myorder_iv),GlideUtil.LOAD_BITMAP);
                 break;
             case ITEM_FOOTER:
@@ -95,6 +95,9 @@ public class HaveEvaluationAdapter extends BaseQuickAdapter<Object,BaseViewHolde
                     MultiImageView multiImageView = helper.getView(R.id.cilrcleimgMv_mycomment);
                     final List<String> photos = myComment.getCommentPhotos();
                     if (photos != null && photos.size() > 0) {
+                        for(String str:photos){
+
+                        }
                         multiImageView.setList(photos);
                         multiImageView.setOnItemClickListener(new MultiImageView.OnItemClickListener() {
                             @Override
