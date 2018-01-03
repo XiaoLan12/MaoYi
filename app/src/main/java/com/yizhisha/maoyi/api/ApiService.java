@@ -11,6 +11,7 @@ import com.yizhisha.maoyi.bean.json.LoginBean;
 import com.yizhisha.maoyi.bean.json.MeInfoBean;
 import com.yizhisha.maoyi.bean.json.MyCommentBean;
 import com.yizhisha.maoyi.bean.json.MyOrderBean;
+import com.yizhisha.maoyi.bean.json.OrderSureBean;
 import com.yizhisha.maoyi.bean.json.RefundBean;
 import com.yizhisha.maoyi.bean.json.RefundDetailBean;
 import com.yizhisha.maoyi.bean.json.RefundExpressBean;
@@ -297,4 +298,8 @@ public interface ApiService {
     //收藏工作室
     @GET("app/goods/workshopFav/")
     Observable<RequestStatusBean> focusWork(@QueryMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("app/order/confirm")
+    Observable<OrderSureBean> orderSure(@FieldMap Map<String, String> param);
 }

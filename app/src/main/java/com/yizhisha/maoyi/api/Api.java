@@ -11,6 +11,7 @@ import com.yizhisha.maoyi.bean.json.LoginBean;
 import com.yizhisha.maoyi.bean.json.MeInfoBean;
 import com.yizhisha.maoyi.bean.json.MyCommentBean;
 import com.yizhisha.maoyi.bean.json.MyOrderBean;
+import com.yizhisha.maoyi.bean.json.OrderSureBean;
 import com.yizhisha.maoyi.bean.json.RefundBean;
 import com.yizhisha.maoyi.bean.json.RefundDetailBean;
 import com.yizhisha.maoyi.bean.json.RefundExpressBean;
@@ -283,5 +284,9 @@ public class Api {
     //获得工作室商品列表
     public Observable<RequestStatusBean> focusWork(Map<String, String> map){
         return service.focusWork(map);
+    }
+    //订单确认
+    public Observable<OrderSureBean> orderSure(Map<String,String> map){
+        return service.orderSure(map);
     }
 }

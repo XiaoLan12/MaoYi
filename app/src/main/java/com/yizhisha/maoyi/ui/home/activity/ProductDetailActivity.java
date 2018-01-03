@@ -33,6 +33,7 @@ import com.yizhisha.maoyi.common.dialog.CustomDialog;
 import com.yizhisha.maoyi.common.dialog.LoadingDialog;
 import com.yizhisha.maoyi.ui.home.contract.ProductDetailContract;
 import com.yizhisha.maoyi.ui.home.presenter.ProductDetailPresenter;
+import com.yizhisha.maoyi.utils.GlideUtil;
 import com.yizhisha.maoyi.utils.ToastUtil;
 import com.yizhisha.maoyi.widget.SKUInterface;
 
@@ -102,11 +103,23 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
     TextView tvShoppingCart;
     @Bind(R.id.tv_shopping)
     TextView tvShopping;
+    @Bind(R.id.shop_attri_tv)
+    TextView shopAttriTv;
     @Bind(R.id.bottom_ll)
     LinearLayout bottomLl;
     @Bind(R.id.ll_select_color_size)
     LinearLayout llSelectColorSize;
-
+    //评论
+    @Bind(R.id.comment_amount_tv)
+    TextView commentAmountTv;
+    @Bind(R.id.comment_img_iv)
+    ImageView commentImgIv;
+    @Bind(R.id.comment_name_tv)
+    TextView commentNameTv;
+    @Bind(R.id.comment_content_tv)
+    TextView commentContentTv;
+    @Bind(R.id.look_allcomment_tv)
+    TextView lookAllcommentTv;
 
     private SDayExplosionAdapter mAdapter1;
     private List<WeekListBean> dataLists = new ArrayList<>();
@@ -174,8 +187,39 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
         tvSales.setText("月销量：" + goodsProductBean.getSales() + "笔");
         tvMoney.setText("￥" + goodsProductBean.getPrice());
         Glide.with(ProductDetailActivity.this).load(AppConstant.PRUDUCT_IMG_URL + goodsProductBean.getLitpic()).into(imgLitpic);
+        shopAttri();
+        initComment(model);
     }
-    private void ShopAttri(){
+    //加载评论
+    private void initComment(GoodsDetailBean goodsDetailBean) {
+        GoodsDetailBean.Comment comment = goodsDetailBean.getComment();
+        if (comment != null && comment.getCount() > 0) {
+           /* commentAmountTv.setText("全部评价(" + comment.getCount() + ")");
+            GlideUtil.getInstance().LoadContextCircleBitmap(this, AppConstant.HEAD_IMG_URL + comment.getAvatar(), userheadIv,
+                    R.drawable.icon_head_normal, R.drawable.icon_head_normal);
+            if (comment.getMobile() != null && !comment.getMobile().equals("")) {
+                userphoneTv.setText(comment.getMobile().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2"));
+            }
+            commentDetailsTv.setText(comment.getComment_detail());
+            lookAllcommentTv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("ID", id);
+                    startActivity(CommentYarnActivity.class, bundle);
+                }
+            });*/
+            commentImgIv.setVisibility(View.VISIBLE);
+
+        } else {
+            commentAmountTv.setText("产品评价(0)");
+            commentImgIv.setVisibility(View.GONE);
+            commentContentTv.setText("暂无评论");
+            lookAllcommentTv.setVisibility(View.GONE);
+        }
+    }
+    //加载商品属性
+    private void shopAttri(){
         dataBean=new GoodsAttrsBean();
         List<GoodsAttrsBean.AttributesBean> attributesBeanList=new ArrayList<>();
         List<GoodsAttrsBean.StockGoodsBean> stockGoodsBeanList=new ArrayList<>();
@@ -228,41 +272,31 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
                 }
 
             }
-            dataBean.setAttributes(attributesBeanList);
-            dataBean.setStockGoods(stockGoodsBeanList);
-            Dialog(goodsProductBean);
+
+
         }
+        dataBean.setAttributes(attributesBeanList);
+        dataBean.setStockGoods(stockGoodsBeanList);
     }
-    @OnClick({R.id.ll_select_color_size,R.id.tv_shopping_cart})
+    @OnClick({R.id.ll_select_color_size,R.id.tv_shopping_cart,R.id.tv_shopping})
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()){
             case R.id.ll_select_color_size:
-                ShopAttri();
+                    Dialog(goodsProductBean,0);
+                    dialog_confirm_ll.setVisibility(View.GONE);
+                    dialog_confirm2_ll.setVisibility(View.VISIBLE);
+                break;
+            case R.id.tv_shopping:
+                Dialog(goodsProductBean,1);
+                dialog_confirm_ll.setVisibility(View.VISIBLE);
+                dialog_confirm2_ll.setVisibility(View.GONE);
                 break;
             case R.id.tv_shopping_cart:
-                ShopAttri();
-                if(goodColor==null||goodColor.equals("")){
-                    ToastUtil.showShortToast("请选择商品颜色");
-                    return;
-                }
-                if(goodColor==null||goodSize.equals("")){
-                    ToastUtil.showShortToast("请选择商品尺码");
-                    return;
-                }
-                mLoadingDialog=new LoadingDialog(this,"正在修改购物车...",false);
-                mLoadingDialog.show();
-                StringBuilder str=new StringBuilder();
-                str.append(goodColor).append("#");
-                str.append(goodSize).append("#").append(tv_item_number_comm_detail.getText().toString().trim());
-                Map<String,String> map=new HashMap<>();
-                map.put("gid",String.valueOf(goodsProductBean.getId()));
-                map.put("uid",String.valueOf(AppConstant.UID));
-                map.put("savetype","add");
-                map.put("amount",tv_item_number_comm_detail.getText().toString().trim());
-                map.put("detail",str.toString());
-                mPresenter.addShoppCart(map);
+                Dialog(goodsProductBean,2);
+                dialog_confirm_ll.setVisibility(View.VISIBLE);
+                dialog_confirm2_ll.setVisibility(View.GONE);
                 break;
         }
 
@@ -274,45 +308,47 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
     private CustomDialog dialog;
     private int goods_nmb = 1;
     private TextView tv_item_minus_comm_detail,tv_item_number_comm_detail,dialog_selected_goods;
+    private TextView shopCartTv,shopTv;
+    private LinearLayout dialog_confirm_ll,dialog_confirm2_ll;
     private String goodColor,goodSize;
     //自定义dialog弹窗
-    public void Dialog(GoodsProductBean goodBean){
+    public void Dialog(GoodsProductBean goodBean, final int type){
         goods_nmb=1;
-        dialog = new CustomDialog(ProductDetailActivity.this,R.style.Dialog);//设置dialog的样式
-        Window window = dialog.getWindow();
-        window.setGravity(Gravity.BOTTOM);
-        window.setWindowAnimations(R.style.bottomDialogAnim); // 添加动画
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.show();
-        WindowManager m = ProductDetailActivity.this.getWindowManager();
-        Display d = m.getDefaultDisplay();
-        WindowManager.LayoutParams lp = window.getAttributes();
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;     //dialog屏幕占比
-        window.setAttributes(lp);
+        if(dialog==null) {
+            dialog = new CustomDialog(ProductDetailActivity.this, R.style.Dialog);//设置dialog的样式
+            Window window = dialog.getWindow();
+            window.setGravity(Gravity.BOTTOM);
+            window.setWindowAnimations(R.style.bottomDialogAnim); // 添加动画
+            dialog.setCanceledOnTouchOutside(true);
 
-        RecyclerView dialog_listView = (RecyclerView) dialog.findViewById(R.id.dialog_listView);
-        LinearLayout dialog_confirm_ll = (LinearLayout) dialog.findViewById(R.id.dialog_confirm_ll);
-        RelativeLayout custom_dialog_close = (RelativeLayout) dialog.findViewById(R.id.custom_dialog_close);
-        dialog_selected_goods = (TextView) dialog.findViewById(R.id.dialog_selected_goods);
-        ImageView dialog_img = (ImageView) dialog.findViewById(R.id.dialog_img);
-        TextView dialog_goods_price = (TextView) dialog.findViewById(R.id.dialog_goods_price);
-        tv_item_minus_comm_detail = (TextView) dialog.findViewById(R.id.tv_item_minus_comm_detail);
-        tv_item_number_comm_detail = (TextView) dialog.findViewById(R.id.tv_item_number_comm_detail);
-        TextView tv_item_add_comm_detail = (TextView) dialog.findViewById(R.id.tv_item_add_comm_detail);
-       /* String detail=goodBean.getShopcart().getDetail();
-        if(detail!=null&&!detail.equals("")){
-            goodColor=detail.substring(0,detail.indexOf("#"));
-            goodSize=detail.substring(detail.indexOf("#")+1, detail.lastIndexOf("#"));
-            dialog_selected_goods.setText("已选:"+'"'+goodColor+'"'+" "+'"'+goodSize+'"');
-        }else{
-            dialog_selected_goods.setText("已选:");
-        }*/
+            WindowManager m = ProductDetailActivity.this.getWindowManager();
+            Display d = m.getDefaultDisplay();
+            WindowManager.LayoutParams lp = window.getAttributes();
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;     //dialog屏幕占比
+            window.setAttributes(lp);
 
-        dialog_goods_price.setText("￥:"+goodBean.getPrice());
-        dialog_listView.setLayoutManager(new LinearLayoutManager(mContext));
-        mAdapter = new EditShoppcartAdapter(dataBean.getAttributes(), dataBean.getStockGoods());
-        dialog_listView.setAdapter(mAdapter);
+            RecyclerView dialog_listView = (RecyclerView) dialog.findViewById(R.id.dialog_listView);
+            dialog_confirm_ll = (LinearLayout) dialog.findViewById(R.id.dialog_confirm_ll);
+            dialog_confirm2_ll = (LinearLayout) dialog.findViewById(R.id.dialog_confirm2_ll);
+            shopCartTv = (TextView) dialog.findViewById(R.id.tv_shopping_cart);
+            shopTv = (TextView) dialog.findViewById(R.id.tv_shopping);
+            RelativeLayout custom_dialog_close = (RelativeLayout) dialog.findViewById(R.id.custom_dialog_close);
+            dialog_selected_goods = (TextView) dialog.findViewById(R.id.dialog_selected_goods);
+            ImageView dialog_img = (ImageView) dialog.findViewById(R.id.dialog_img);
+            TextView dialog_goods_price = (TextView) dialog.findViewById(R.id.dialog_goods_price);
+            tv_item_minus_comm_detail = (TextView) dialog.findViewById(R.id.tv_item_minus_comm_detail);
+            tv_item_number_comm_detail = (TextView) dialog.findViewById(R.id.tv_item_number_comm_detail);
+            TextView tv_item_add_comm_detail = (TextView) dialog.findViewById(R.id.tv_item_add_comm_detail);
+            custom_dialog_close.setOnClickListener(new ProductDetailActivity.DialogClick());
+            tv_item_minus_comm_detail.setOnClickListener(new ProductDetailActivity.DialogClick());
+            tv_item_add_comm_detail.setOnClickListener(new ProductDetailActivity.DialogClick());
+            dialog_goods_price.setText("￥:" + goodBean.getPrice());
+            dialog_listView.setLayoutManager(new LinearLayoutManager(mContext));
+            mAdapter = new EditShoppcartAdapter(dataBean.getAttributes(), dataBean.getStockGoods());
+            dialog_listView.setAdapter(mAdapter);
+        }
+
         mAdapter.setSKUInterface(new SKUInterface() {
             @Override
             public void selectedAttribute(String[] attr) {
@@ -322,12 +358,16 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
                 String str2 = attr[1];
                 if (!str1.equals("") && !str2.equals("")) {
                     dialog_selected_goods.setText("已选:" + '"' + str1 + '"' + " " + '"' + str2 + '"');
+                    shopAttriTv.setText("已选:" + '"' + str1 + '"' + " " + '"' + str2 + '"');
                 } else if (str1.equals("")&&!str2.equals("")){
                     dialog_selected_goods.setText("已选:" + '"' + str2 + '"');
+                    shopAttriTv.setText("已选:" + '"' + str2 + '"');
                 }else if (str2.equals("")&&!str1.equals("")){
                     dialog_selected_goods.setText("已选:" + '"' + str1 + '"');
+                    shopAttriTv.setText("已选:" + '"' + str1 + '"');
                 }else{
                     dialog_selected_goods.setText("已选:");
+                    shopAttriTv.setText("请选择尺码颜色");
                 }
 
             }
@@ -339,20 +379,83 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
                 String str2 = attr[1];
                 if (!str1.equals("") && !str2.equals("")) {
                     dialog_selected_goods.setText("已选:" + '"' + str1 + '"' + " " + '"' + str2 + '"');
+                    shopAttriTv.setText("已选:" + '"' + str1 + '"' + " " + '"' + str2 + '"');
                 } else if (str1.equals("")&&!str2.equals("")){
                     dialog_selected_goods.setText("已选:" + '"' + str2 + '"');
+                    shopAttriTv.setText("已选:" + '"' + str2 + '"');
                 }else if (str2.equals("")&&!str1.equals("")){
                     dialog_selected_goods.setText("已选:" + '"' + str1 + '"');
+                    shopAttriTv.setText("已选:" + '"' + str1 + '"');
                 }else{
                     dialog_selected_goods.setText("已选:");
+                    shopAttriTv.setText("请选择尺码颜色");
                 }
             }
         });
-        custom_dialog_close.setOnClickListener(new ProductDetailActivity.DialogClick());
-        tv_item_minus_comm_detail.setOnClickListener(new ProductDetailActivity.DialogClick());
-        tv_item_add_comm_detail.setOnClickListener(new ProductDetailActivity.DialogClick());
+
 
         dialog_confirm_ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(goodColor==null||goodColor.equals("")){
+                    ToastUtil.showShortToast("请选择商品颜色");
+                    return;
+                }
+                if(goodColor==null||goodSize.equals("")){
+                    ToastUtil.showShortToast("请选择商品尺码");
+                    return;
+                }
+                if(type==1){
+                    String detail=goodColor+"#"+goodSize;
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("gid", Integer.valueOf(goodsProductBean.getId()));
+                    bundle.putString("detail", detail);
+                    bundle.putInt("amount", goods_nmb);
+                    startActivity(SureOrderActivity.class, bundle);
+                }else{
+                    mLoadingDialog=new LoadingDialog(ProductDetailActivity.this,"",false);
+                    mLoadingDialog.show();
+                    StringBuilder str=new StringBuilder();
+                    str.append(goodColor).append("#");
+                    str.append(goodSize).append("#").append(tv_item_number_comm_detail.getText().toString().trim());
+                    Map<String,String> map=new HashMap<>();
+                    map.put("gid",String.valueOf(goodsProductBean.getId()));
+                    map.put("uid",String.valueOf(AppConstant.UID));
+                    map.put("savetype","add");
+                    map.put("amount",tv_item_number_comm_detail.getText().toString().trim());
+                    map.put("detail",str.toString());
+                    mPresenter.addShoppCart(map);
+                }
+                dialog.dismiss();
+            }
+        });
+        shopCartTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(goodColor==null||goodColor.equals("")){
+                    ToastUtil.showShortToast("请选择商品颜色");
+                    return;
+                }
+                if(goodColor==null||goodSize.equals("")){
+                    ToastUtil.showShortToast("请选择商品尺码");
+                    return;
+                }
+                mLoadingDialog=new LoadingDialog(ProductDetailActivity.this,"",false);
+                mLoadingDialog.show();
+                StringBuilder str=new StringBuilder();
+                str.append(goodColor).append("#");
+                str.append(goodSize).append("#").append(tv_item_number_comm_detail.getText().toString().trim());
+                Map<String,String> map=new HashMap<>();
+                map.put("gid",String.valueOf(goodsProductBean.getId()));
+                map.put("uid",String.valueOf(AppConstant.UID));
+                map.put("savetype","add");
+                map.put("amount",tv_item_number_comm_detail.getText().toString().trim());
+                map.put("detail",str.toString());
+                mPresenter.addShoppCart(map);
+                dialog.dismiss();
+            }
+        });
+        shopTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(goodColor==null||goodColor.equals("")){
@@ -367,6 +470,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
                 dialog.dismiss();
             }
         });
+        dialog.show();
     }
     //去掉List集合的重复值
     public  List removeDuplicateWithOrder(List list) {

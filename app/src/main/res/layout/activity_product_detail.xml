@@ -176,6 +176,7 @@
                     android:paddingRight="14dp">
 
                     <TextView
+                        android:id="@+id/shop_attri_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -203,6 +204,7 @@
                     android:paddingTop="4dp">
 
                     <TextView
+                        android:id="@+id/comment_amount_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="产品评价(899)"
@@ -216,22 +218,24 @@
                         android:orientation="horizontal">
 
                         <ImageView
+                            android:id="@+id/comment_img_iv"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:src="@drawable/ic_launcher" />
 
                         <TextView
+                            android:id="@+id/comment_name_tv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="12345678912"
                             android:textSize="14sp" />
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/comment_content_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="ssfjslfjsl上飞机收到了快捷方式东方斯卡拉房间"
+                        android:text=""
                         android:textSize="12sp" />
 
                     <LinearLayout
@@ -243,6 +247,7 @@
                         android:paddingTop="14dp">
 
                         <TextView
+                            android:id="@+id/look_allcomment_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/shape_pink_text_selector"
@@ -368,12 +373,12 @@
                     android:id="@+id/tv_devi_length2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="正常"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     android:background="@color/gray1"
+                    android:gravity="center"
+                    android:text="正常"
                     android:textSize="10sp" />
 
                 <TextView
@@ -381,8 +386,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
                     android:background="@color/gray1"
+                    android:gravity="center"
                     android:text="偏长"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -417,12 +422,12 @@
                     android:id="@+id/tv_devi_size2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="正常"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     android:background="@color/gray1"
+                    android:gravity="center"
+                    android:text="正常"
                     android:textSize="10sp" />
 
                 <TextView
@@ -430,8 +435,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
                     android:background="@color/gray1"
+                    android:gravity="center"
                     android:text="偏长"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -466,12 +471,12 @@
                     android:id="@+id/tv_devi_elastic2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:background="@color/gray1"
-                    android:text="适中"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/gray1"
+                    android:gravity="center"
+                    android:text="适中"
                     android:textSize="10sp" />
 
                 <TextView
@@ -479,8 +484,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
                     android:background="@color/gray1"
+                    android:gravity="center"
                     android:text="厚"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -511,14 +516,17 @@
                     android:layout_marginLeft="10dp"
                     android:background="@color/black1" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rl_product_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -545,9 +553,11 @@
                     android:layout_marginLeft="10dp"
                     android:background="@color/black1" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rl_tuijian"
                     android:layout_width="match_parent"

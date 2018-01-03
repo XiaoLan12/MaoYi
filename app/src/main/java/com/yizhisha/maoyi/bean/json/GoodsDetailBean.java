@@ -43,6 +43,10 @@ public class GoodsDetailBean {
         this.favorite = favorite;
     }
 
+    public Comment getComment() {
+        return comment;
+    }
+
     @Override
     public String toString() {
         return "GoodsDetailBean{" +
@@ -54,11 +58,11 @@ public class GoodsDetailBean {
     }
     public class Comment {
 
-        private String count;
-        public void setCount(String count) {
+        private int count;
+        public void setCount(int count) {
             this.count = count;
         }
-        public String getCount() {
+        public int getCount() {
             return count;
         }
 
