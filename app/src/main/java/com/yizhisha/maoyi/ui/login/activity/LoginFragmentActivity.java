@@ -22,7 +22,6 @@ public class LoginFragmentActivity extends BaseActivity implements LoginFragment
     protected int getLayoutId() {
         return R.layout.activity_login_fragment;
     }
-
     @Override
     protected void initToolBar() {
 

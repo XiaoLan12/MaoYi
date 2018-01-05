@@ -8,7 +8,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.base.BaseActivity;
 import com.yizhisha.maoyi.base.BaseToolbar;
@@ -20,10 +19,8 @@ import com.yizhisha.maoyi.utils.CountDownTimerUtil;
 import com.yizhisha.maoyi.utils.IPUtil;
 import com.yizhisha.maoyi.utils.ToastUtil;
 import com.yizhisha.maoyi.widget.ClearEditText;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import butterknife.Bind;
 import butterknife.OnClick;
 
@@ -78,6 +75,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
 
     @Override
     public void registerSuccess(RequestStatusBean info) {
+
         ToastUtil.showShortToast(info.getInfo());
         finish_Activity(RegisterActivity.this);
 
@@ -94,9 +92,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     public void loadFail(String msg) {
 
         ToastUtil.showShortToast(msg);
-
     }
-
     @Override
     public void showLoading() {
 

@@ -5,4 +5,5 @@ package com.yizhisha.maoyi.base;
  */
 
 public interface BaseView {
+    
 }
