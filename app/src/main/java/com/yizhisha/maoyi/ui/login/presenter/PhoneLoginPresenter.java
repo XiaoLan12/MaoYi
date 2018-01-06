@@ -15,7 +15,7 @@ import java.util.Map;
 public class PhoneLoginPresenter extends PhoneLoginContract.Presenter {
     @Override
     public void login(Map<String, String> map) {
-        addSubscrebe(Api.getInstance().Login(map), new RxSubscriber<LoginBean>(mContext,true) {
+        addSubscrebe(Api.getInstance().phoneLogin(map), new RxSubscriber<LoginBean>(mContext,true) {
             @Override
             protected void onSuccess(LoginBean requestStatusBean) {
                 if(requestStatusBean.getStatus().equals("y")){
