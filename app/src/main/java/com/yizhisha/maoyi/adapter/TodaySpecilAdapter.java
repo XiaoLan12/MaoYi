@@ -2,6 +2,7 @@ package com.yizhisha.maoyi.adapter;
 
 import android.support.annotation.Nullable;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -39,18 +40,30 @@ public class TodaySpecilAdapter extends BaseQuickAdapter<DailyBean,BaseViewHolde
         helper.setText(R.id.tv_time,"活动时间:"+ formatter.format(new Date(Long.parseLong(item.getSpc_starttime())*1000))+"-"+formatter.format(new Date(Long.parseLong(item.getSpc_endtime())*1000)));
 
         LinearLayout parent=helper.getView(R.id.parent);
+
         String  s=TimerUtils.TIME_STYLE_ONE;
         if(Long.parseLong(item.getSpc_endtime()+"000")-Long.parseLong(item.getSpc_starttime()+"000")>86400000){
             s=TimerUtils.TIME_STYLE_THREE1;
         }
-        TextView tv5= TimerUtils.getTimer(TimerUtils.JD_STYLE,mContext,Long.parseLong(item.getSpc_endtime()+"000")-System.currentTimeMillis(),s,R.drawable.timer_shape)
+        TextView tv5= TimerUtils.getTimer(TimerUtils.JD_STYLE,mContext,Long.parseLong(1518428305+"000")-System.currentTimeMillis(),s,R.drawable.timer_shape)
                 .setTimerPadding(12,12,12,12)//设置内间距
                 .setTimerTextColor(RescourseUtil.getColor(R.color.common_color))//设置字体颜色
                 .setTimerTextSize(38)//设置字体大小
                 .setTimerGapColor(RescourseUtil.getColor(R.color.common_color))//设置间隔的颜色
                 .getmDateTv();//拿到TextView对象
-        parent.addView(tv5);
-        setmLayoutParams(tv5);
+        /*int count=parent.getChildCount();
+        for(int i=0;i<count;i++){
+            View view =parent.getChildAt(i);
+            if(view instanceof TextView){
+                parent.removeView(tv5);
+            }
+        }*/
+        if(parent.getChildCount()==0){
+            parent.addView(tv5);
+            setmLayoutParams(tv5);
+        }
+//        parent.removeAllViews();
+
       /* try {
             mTvTimer.setData(Long.parseLong(item.getSpc_starttime()+"000"),Long.parseLong(item.getSpc_endtime()+"000"),System.currentTimeMillis()/1000);
 

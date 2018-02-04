@@ -19,6 +19,7 @@ import com.yizhisha.maoyi.bean.json.RequestStatusBean;
 import com.yizhisha.maoyi.bean.json.ShopcartListBean;
 import com.yizhisha.maoyi.bean.json.SimilarRecommenBean;
 import com.yizhisha.maoyi.bean.json.SingleShoppCartBean;
+import com.yizhisha.maoyi.bean.json.SortedGoodsBean;
 import com.yizhisha.maoyi.bean.json.SortedListBean;
 import com.yizhisha.maoyi.bean.json.SpecialDetailBean;
 import com.yizhisha.maoyi.bean.json.StudioBean;
@@ -274,7 +275,7 @@ public interface ApiService {
 
     //产品分类
     @GET("app/sorted/")
-    Observable<List<SortedListBean>> getSorted();
+    Observable<SortedGoodsBean> getSorted();
 
     //专题详情列表
     @GET("app/goods/specialGoodsList/")

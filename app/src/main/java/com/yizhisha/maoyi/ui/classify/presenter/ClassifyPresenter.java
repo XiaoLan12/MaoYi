@@ -2,6 +2,7 @@ package com.yizhisha.maoyi.ui.classify.presenter;
 
 import com.yizhisha.maoyi.api.Api;
 import com.yizhisha.maoyi.base.rx.RxSubscriber;
+import com.yizhisha.maoyi.bean.json.SortedGoodsBean;
 import com.yizhisha.maoyi.bean.json.SortedListBean;
 import com.yizhisha.maoyi.ui.classify.contract.ClassifyContract;
 
@@ -15,11 +16,11 @@ public class ClassifyPresenter extends ClassifyContract.Presenter{
 
     @Override
     public void getSortedList() {
-        addSubscrebe(Api.getInstance().getSorted(),new RxSubscriber<List<SortedListBean>>(mContext,true){
+        addSubscrebe(Api.getInstance().getSorted(),new RxSubscriber<SortedGoodsBean>(mContext,true){
 
             @Override
-            protected void onSuccess(List<SortedListBean> model) {
-                List<SortedListBean> model1=model;
+            protected void onSuccess(SortedGoodsBean model) {
+                List<SortedListBean> model1=model.getGoods();
 //                model1.add(model.get(0));
 //                model1.add(model.get(0));
 
