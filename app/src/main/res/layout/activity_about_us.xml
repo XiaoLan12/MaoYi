@@ -21,6 +21,6 @@
         android:layout_marginRight="@dimen/dp_14"
         android:textColor="@color/common_h"
         android:textSize="@dimen/font_normal2"
-        android:text="发送的gas大噶删掉刚问题噶大公司gas的gas个任务给发二维法尔发而过"
+        android:text="@string/about_app"
         />
     </LinearLayout>

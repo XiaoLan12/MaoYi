@@ -23,6 +23,7 @@ import com.yizhisha.maoyi.ui.me.activity.MyCollectActivity;
 import com.yizhisha.maoyi.ui.me.activity.MyFootprintActivity;
 import com.yizhisha.maoyi.ui.me.activity.MyOrderActivity;
 import com.yizhisha.maoyi.ui.me.activity.MyRatingActivity;
+import com.yizhisha.maoyi.ui.me.activity.NewActivity;
 import com.yizhisha.maoyi.ui.me.activity.ReFundOrderActivity;
 import com.yizhisha.maoyi.ui.me.activity.SettingActivity;
 import com.yizhisha.maoyi.ui.me.contract.MeContract;
@@ -58,7 +59,12 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
     @Override
     protected void initView() {
         mPresenter.loadHeadInfo(AppConstant.UID);
-
+        toolbar.setRightButtonOnClickLinster(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(NewActivity.class);
+            }
+        });
         event();
 
     }
@@ -137,7 +143,7 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
 
                             @Override
                             public void clickRightButton(NormalAlertDialog dialog, View view) {
-                                Intent phoneIneten = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + "08979589578"));
+                                Intent phoneIneten = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + "0769-81064588"));
                                 startActivity(phoneIneten);
                                 dialog.dismiss();
                             }
