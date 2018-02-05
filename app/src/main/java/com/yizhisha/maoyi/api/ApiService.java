@@ -53,7 +53,6 @@ public interface ApiService {
     //用户中心首页头像名称显示
     @GET("app/ucenter/profile/")
     Observable<MeInfoBean> loadHeadInfo(@Query("uid") int uid);
-
     //个人资料修改
     @FormUrlEncoded
     @POST("app/ucenter/profileSave/")

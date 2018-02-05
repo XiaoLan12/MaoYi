@@ -48,14 +48,11 @@
             android:textSize="@dimen/dp_14"
             android:layout_marginLeft="14dp"
             android:text="距结束："/>
-        <LinearLayout
-            android:id="@+id/parent"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            >
-        </LinearLayout>
+       <com.yizhisha.maoyi.widget.RushBuyCountDownTimerView
+           android:id="@+id/timerview_ll"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content">
+       </com.yizhisha.maoyi.widget.RushBuyCountDownTimerView>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

@@ -1,6 +1,7 @@
 package com.yizhisha.maoyi.adapter;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,7 +13,9 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.bean.json.DailyBean;
+import com.yizhisha.maoyi.utils.DateUtil;
 import com.yizhisha.maoyi.utils.RescourseUtil;
+import com.yizhisha.maoyi.widget.RushBuyCountDownTimerView;
 import com.yizhisha.maoyi.widget.time.TimerUtils;
 
 import java.text.SimpleDateFormat;
@@ -37,8 +40,16 @@ public class TodaySpecilAdapter extends BaseQuickAdapter<DailyBean,BaseViewHolde
         ImageView imageView=helper.getView(R.id.imageView);
         Glide.with(mContext).load(AppConstant.BANNER_IMG_URL+item.getSpc_litpic()).into(imageView);
         helper.setText(R.id.tv_time,"活动时间:"+ formatter.format(new Date(Long.parseLong(item.getSpc_starttime())*1000))+"-"+formatter.format(new Date(Long.parseLong(item.getSpc_endtime())*1000)));
-
-        LinearLayout parent=helper.getView(R.id.parent);
+        boolean stopThread=false;
+        RushBuyCountDownTimerView timerView=helper.getView(R.id.timerview_ll);
+        if(item.getSpc_starttime()!=null&&item.getSpc_endtime()!=null) {
+            if(timerView!=null) {
+                Log.d("TTT", "开始" + DateUtil.getDateToString(Long.parseLong(item.getSpc_starttime()) * 1000));
+                Log.d("TTT", "结束" + DateUtil.getDateToString(Long.parseLong(item.getSpc_endtime()) * 1000));
+                timerView.setDateInfo(Long.parseLong(item.getSpc_starttime()) * 1000, Long.parseLong(item.getSpc_endtime()) * 1000);
+            }
+        }
+      /*  LinearLayout parent=helper.getView(R.id.parent);
         String  s=TimerUtils.TIME_STYLE_ONE;
         if(Long.parseLong(item.getSpc_endtime()+"000")-Long.parseLong(item.getSpc_starttime()+"000")>86400000){
             s=TimerUtils.TIME_STYLE_THREE1;
@@ -50,7 +61,7 @@ public class TodaySpecilAdapter extends BaseQuickAdapter<DailyBean,BaseViewHolde
                 .setTimerGapColor(RescourseUtil.getColor(R.color.common_color))//设置间隔的颜色
                 .getmDateTv();//拿到TextView对象
         parent.addView(tv5);
-        setmLayoutParams(tv5);
+        setmLayoutParams(tv5);*/
       /* try {
             mTvTimer.setData(Long.parseLong(item.getSpc_starttime()+"000"),Long.parseLong(item.getSpc_endtime()+"000"),System.currentTimeMillis()/1000);
 
