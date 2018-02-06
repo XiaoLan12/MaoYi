@@ -33,6 +33,7 @@ import com.yizhisha.maoyi.utils.ToastUtil;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import qiu.niorgai.StatusBarCompat;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -50,12 +51,28 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
     ImageView userPhotoIv;
     @Bind(R.id.userName_tv)
     TextView userNameTv;
+    @Bind(R.id.unpaymentNum_iv)
+    TextView unpaymentNumTv;
+    @Bind(R.id.unshippingNum_iv)
+    TextView unshippingNumTv;
+    @Bind(R.id.unreceive_goodsNum_iv)
+    TextView unreceiveGoodsNumTv;
+    @Bind(R.id.finishNum_iv)
+    TextView finishNumTv;
+    @Bind(R.id.refundNum_iv)
+    TextView refundNumTv;
     private Subscription subscription;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_me;
     }
-
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            mPresenter.loadHeadInfo(AppConstant.UID);
+        }
+    }
     @Override
     protected void initView() {
         mPresenter.loadHeadInfo(AppConstant.UID);
@@ -158,6 +175,45 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
     public void loadHeadSuccess(MeInfoBean info) {
         AppConstant.meInfoBean=info;
         userNameTv.setText(info.getNickname());
+        int[] count=info.getOrderCount();
+        for(int i=0;i<count.length;i++){
+            if(i==0){
+                if(count[i]==0){
+                    unpaymentNumTv.setVisibility(View.GONE);
+                }else{
+                    unpaymentNumTv.setVisibility(View.VISIBLE);
+                    unpaymentNumTv.setText(count[i]+"");
+                }
+            }else if(i==1){
+                if(count[i]==0){
+                    unshippingNumTv.setVisibility(View.GONE);
+                }else{
+                    unshippingNumTv.setVisibility(View.VISIBLE);
+                    unshippingNumTv.setText(count[i]+"");
+                }
+            }else if(i==2){
+                if(count[i]==0){
+                    unreceiveGoodsNumTv.setVisibility(View.GONE);
+                }else{
+                    unreceiveGoodsNumTv.setVisibility(View.VISIBLE);
+                    unreceiveGoodsNumTv.setText(count[i]+"");
+                }
+            }else if(i==3){
+                if(count[i]==0){
+                    finishNumTv.setVisibility(View.GONE);
+                }else{
+                    finishNumTv.setVisibility(View.VISIBLE);
+                    finishNumTv.setText(count[i]+"");
+                }
+            }else if(i==4){
+                if(count[i]==0){
+                    refundNumTv.setVisibility(View.GONE);
+                }else{
+                    refundNumTv.setVisibility(View.VISIBLE);
+                    refundNumTv.setText(count[i]+"");
+                }
+            }
+        }
         GlideUtil.getInstance().LoadContextCircleBitmap(activity, AppConstant.HEAD_IMG_URL+info.getAvatar(),userPhotoIv ,
                 R.drawable.icon_head_normal, R.drawable.icon_head_normal);
     }

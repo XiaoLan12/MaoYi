@@ -87,7 +87,7 @@ public class SortDetailFragment extends BaseFragment<SortDetailPresenter, String
     }
 
     private void initData() {
-        List<SortedListBean> sortedListBeen= AppConstant.sortedBeanList;
+        List<SortedListBean.SortedsBean> sortedListBeen= AppConstant.sortedBeanList;
 
         for (int i = 0; i < sortedListBeen.size(); i++) {
             RightBean head = new RightBean(sortedListBeen.get(i).getName());

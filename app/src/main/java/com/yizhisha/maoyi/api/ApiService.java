@@ -27,7 +27,7 @@ import com.yizhisha.maoyi.bean.json.UserHeadBean;
 import com.yizhisha.maoyi.bean.json.WechatBean;
 import com.yizhisha.maoyi.bean.json.WechatInfoBean;
 import com.yizhisha.maoyi.bean.json.WeekListBean;
-import com.yizhisha.maoyi.bean.json.WeekTopBean;
+import com.yizhisha.maoyi.bean.json.WeekTopListBean;
 
 import java.util.List;
 import java.util.Map;
@@ -171,6 +171,14 @@ public interface ApiService {
     @POST("app/user/changepassword/")
     Observable<RequestStatusBean> changePwd(@FieldMap Map<String,String> map);
 
+    //手机号绑定
+    @GET("app/ucenter/mobile_save/")
+    Observable<RequestStatusBean> bindPhone(@QueryMap Map<String,String> map);
+
+    //获得绑定的手机号码
+    @GET("app/ucenter/mobile_binding/")
+    Observable<RequestStatusBean> loadBindPhone(@Query("uid") int uid);
+
     //获得微信登录的数据
     @GET()
     Observable<WechatBean> getWeChatLoginData(@Url String url);
@@ -254,7 +262,7 @@ public interface ApiService {
 
     //首页今日专场轮播图
     @GET("app/dailyTopSlider/")
-    Observable<List<WeekTopBean>> getDailyTopSlider();
+    Observable<WeekTopListBean> getDailyTopSlider();
 
     //首页今日专场列表
     @GET("app/dailyList/")
@@ -262,10 +270,10 @@ public interface ApiService {
 
     //首页7日轮播图
     @GET("app/weekTop/")
-    Observable<List<WeekTopBean>> getWeekTop();
+    Observable<WeekTopListBean> getWeekTop();
     //首页7日爆款列表
     @GET("app/weekList/")
-    Observable<List<WeekListBean>> getWeekList();
+    Observable<WeekListBean> getWeekList();
 
     //首页往期专场
     @GET("app/pastList/")
@@ -273,7 +281,7 @@ public interface ApiService {
 
     //产品分类
     @GET("app/sorted/")
-    Observable<List<SortedListBean>> getSorted();
+    Observable<SortedListBean> getSorted();
 
     //专题详情列表
     @GET("app/goods/specialGoodsList/")

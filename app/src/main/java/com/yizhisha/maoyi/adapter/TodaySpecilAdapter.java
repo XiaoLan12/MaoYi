@@ -46,7 +46,7 @@ public class TodaySpecilAdapter extends BaseQuickAdapter<DailyBean,BaseViewHolde
             if(timerView!=null) {
                 Log.d("TTT", "开始" + DateUtil.getDateToString(Long.parseLong(item.getSpc_starttime()) * 1000));
                 Log.d("TTT", "结束" + DateUtil.getDateToString(Long.parseLong(item.getSpc_endtime()) * 1000));
-                timerView.setDateInfo(Long.parseLong(item.getSpc_starttime()) * 1000, Long.parseLong(item.getSpc_endtime()) * 1000);
+                timerView.init(Long.parseLong(item.getSpc_starttime()) * 1000, Long.parseLong(item.getSpc_endtime()) * 1000);
             }
         }
       /*  LinearLayout parent=helper.getView(R.id.parent);

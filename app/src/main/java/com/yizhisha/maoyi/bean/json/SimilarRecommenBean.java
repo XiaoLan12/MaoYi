@@ -7,13 +7,13 @@ import java.util.List;
  */
 
 public class SimilarRecommenBean {
-    private List<WeekListBean> goods;
+    private List<WeekListBean.WeekBean> goods;
 
-    public List<WeekListBean> getGoods() {
+    public List<WeekListBean.WeekBean> getGoods() {
         return goods;
     }
 
-    public void setGoods(List<WeekListBean> goods) {
+    public void setGoods(List<WeekListBean.WeekBean> goods) {
         this.goods = goods;
     }
 

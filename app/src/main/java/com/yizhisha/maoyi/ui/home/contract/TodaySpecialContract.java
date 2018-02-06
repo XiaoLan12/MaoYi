@@ -4,7 +4,7 @@ import com.yizhisha.maoyi.base.BasePresenter;
 import com.yizhisha.maoyi.base.BaseView;
 import com.yizhisha.maoyi.bean.json.DailyBean;
 import com.yizhisha.maoyi.bean.json.ListBean;
-import com.yizhisha.maoyi.bean.json.WeekTopBean;
+import com.yizhisha.maoyi.bean.json.WeekTopListBean;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
 
 public interface TodaySpecialContract {
     interface View extends BaseView {
-        void getDailyTopSliderSuccess(List<WeekTopBean> model);
+        void getDailyTopSliderSuccess(List<WeekTopListBean.WeekTopBean> model);
         void getDailyListSuccess(ListBean<DailyBean> model);
         void loadFail(String msg);
     }

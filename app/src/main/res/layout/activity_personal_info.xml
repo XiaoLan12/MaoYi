@@ -38,7 +38,7 @@
             android:layout_height="@dimen/dp_20"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_launcher"/>
+            android:src="@drawable/icon_right"/>
     </RelativeLayout>
     <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"/>
 
@@ -59,7 +59,7 @@
             android:layout_height="@dimen/dp_20"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_launcher"/>
+            android:src="@drawable/icon_right"/>
     </RelativeLayout>
     <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"/>
 
@@ -80,7 +80,7 @@
             android:layout_height="@dimen/dp_20"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_launcher"/>
+            android:src="@drawable/icon_right"/>
     </RelativeLayout>
     <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"/>
 </LinearLayout>

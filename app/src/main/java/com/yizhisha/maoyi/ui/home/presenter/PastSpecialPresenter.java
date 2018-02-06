@@ -4,10 +4,7 @@ import com.yizhisha.maoyi.api.Api;
 import com.yizhisha.maoyi.base.rx.RxSubscriber;
 import com.yizhisha.maoyi.bean.json.DailyBean;
 import com.yizhisha.maoyi.bean.json.ListBean;
-import com.yizhisha.maoyi.bean.json.WeekTopBean;
 import com.yizhisha.maoyi.ui.home.contract.PastSpecialContract;
-
-import java.util.List;
 
 /**
  * Created by Administrator on 2017/11/21.

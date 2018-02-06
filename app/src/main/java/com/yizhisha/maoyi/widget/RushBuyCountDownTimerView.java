@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -35,6 +36,11 @@ public class RushBuyCountDownTimerView extends LinearLayout{
     public RushBuyCountDownTimerView(Context context){
         this(context,null);
 
+    }
+    public void init(Long startdate, Long endDate){
+        startTime=startdate;
+        endTime=endDate;
+        new Thread(mRunnable).start();
     }
     public RushBuyCountDownTimerView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -81,6 +87,7 @@ public class RushBuyCountDownTimerView extends LinearLayout{
         }
     }
     Handler handler = new Handler(){
+
         public void handleMessage(Message msg){
 
             switch (msg.what){
@@ -88,17 +95,15 @@ public class RushBuyCountDownTimerView extends LinearLayout{
                     Date curDate = new Date();// 获取当前时间
                     long cur = curDate.getTime();// 获取当前时间
 
-                    if (startTime - (cur+subTime) > 0) {
+                    if (startTime - cur> 0) {
                         //activitStateTv.setText("活动未开始");
-                    } else if (endTime - (cur+subTime) > 0) {
+                    } else if (endTime - cur> 0) {
                        // activitStateTv.setText("距离结束还剩");
-                        setDateInfo((cur+subTime),endTime);
+                        setDateInfo(startTime,endTime);
                         //setDateInfo((cur+subTime),endTime*1000);
                     } else {
                        //activitStateTv.setText("活动已结束");
-
                     }
-
                     break;
             }
             super.handleMessage(msg);

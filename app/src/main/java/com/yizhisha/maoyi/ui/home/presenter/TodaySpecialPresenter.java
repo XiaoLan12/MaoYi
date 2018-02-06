@@ -4,7 +4,7 @@ import com.yizhisha.maoyi.api.Api;
 import com.yizhisha.maoyi.base.rx.RxSubscriber;
 import com.yizhisha.maoyi.bean.json.DailyBean;
 import com.yizhisha.maoyi.bean.json.ListBean;
-import com.yizhisha.maoyi.bean.json.WeekTopBean;
+import com.yizhisha.maoyi.bean.json.WeekTopListBean;
 import com.yizhisha.maoyi.ui.home.contract.TodaySpecialContract;
 
 import java.util.List;
@@ -16,11 +16,11 @@ import java.util.List;
 public class TodaySpecialPresenter extends TodaySpecialContract.Presenter{
     @Override
     public void getDailyTopSlider() {
-        addSubscrebe(Api.getInstance().getDailyTopSlider(),new RxSubscriber<List<WeekTopBean>>(mContext,true){
+        addSubscrebe(Api.getInstance().getDailyTopSlider(),new RxSubscriber<WeekTopListBean>(mContext,true){
 
             @Override
-            protected void onSuccess(List<WeekTopBean> model) {
-                mView.getDailyTopSliderSuccess(model);
+            protected void onSuccess(WeekTopListBean model) {
+                mView.getDailyTopSliderSuccess(model.getList());
 
             }
             @Override

@@ -25,7 +25,7 @@ import com.yizhisha.maoyi.bean.json.StudioBean;
 import com.yizhisha.maoyi.bean.json.StudioShopBean;
 import com.yizhisha.maoyi.bean.json.UserHeadBean;
 import com.yizhisha.maoyi.bean.json.WeekListBean;
-import com.yizhisha.maoyi.bean.json.WeekTopBean;
+import com.yizhisha.maoyi.bean.json.WeekTopListBean;
 
 import java.util.List;
 import java.util.Map;
@@ -210,6 +210,14 @@ public class Api {
         return service.changePwd(map);
     }
 
+    //绑定手机号码
+    public Observable<RequestStatusBean> bindPhone(Map<String, String> map){
+        return service.bindPhone(map);
+    }
+    //获得绑定的手机号码
+    public Observable<RequestStatusBean> loadBindPhone(int uid){
+        return service.loadBindPhone(uid);
+    }
 
     public Observable<LoginBean> login(){
         return service.login();
@@ -226,7 +234,7 @@ public class Api {
 
 
     //首页今日专场轮播图
-    public Observable<List<WeekTopBean>> getDailyTopSlider(){
+    public Observable<WeekTopListBean> getDailyTopSlider(){
         return service.getDailyTopSlider();
     }
     //首页今日专场列表
@@ -234,12 +242,12 @@ public class Api {
         return service.getDailyList();
     }
     //首页7日爆款列表
-    public Observable<List<WeekTopBean>> getWeekTop(){
+    public Observable<WeekTopListBean> getWeekTop(){
         return service.getWeekTop();
     }
 
     //首页7日爆款列表
-    public Observable<List<WeekListBean>> getWeekList(){
+    public Observable<WeekListBean> getWeekList(){
         return service.getWeekList();
     }
 
@@ -249,7 +257,7 @@ public class Api {
     }
 
     //产品分类
-    public Observable<List<SortedListBean>> getSorted(){
+    public Observable<SortedListBean> getSorted(){
         return service.getSorted();
     }
     //专题详情列表

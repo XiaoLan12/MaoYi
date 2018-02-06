@@ -27,7 +27,6 @@ public class ChangeNickNameActivity extends BaseActivity {
 
     @Override
     protected int getLayoutId() {
-        StatusBarCompat.setStatusBarColor(this, RescourseUtil.getColor(R.color.common_divider_narrow));
         return R.layout.activity_change_nick_name;
     }
 

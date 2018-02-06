@@ -16,7 +16,7 @@ import com.yizhisha.maoyi.adapter.TodaySpecilAdapter;
 import com.yizhisha.maoyi.base.BaseFragment;
 import com.yizhisha.maoyi.bean.json.DailyBean;
 import com.yizhisha.maoyi.bean.json.ListBean;
-import com.yizhisha.maoyi.bean.json.WeekTopBean;
+import com.yizhisha.maoyi.bean.json.WeekTopListBean;
 import com.yizhisha.maoyi.ui.home.activity.SpecialDetailActivity;
 import com.yizhisha.maoyi.ui.home.contract.TodaySpecialContract;
 import com.yizhisha.maoyi.ui.home.presenter.TodaySpecialPresenter;
@@ -78,8 +78,7 @@ public class TodaySpecialFragment extends BaseFragment<TodaySpecialPresenter>  i
 
 
     @Override
-    public void getDailyTopSliderSuccess(List<WeekTopBean> model) {
-        Log.e("TTT",model.get(0).getSpc_litpic());
+    public void getDailyTopSliderSuccess(List<WeekTopListBean.WeekTopBean> model) {
         imageUrl = new ArrayList<>();
         for(int i=0;i<model.size();i++){
             imageUrl.add(AppConstant.BANNER_IMG_URL+model.get(i).getSpc_litpic());

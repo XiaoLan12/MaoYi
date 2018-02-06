@@ -9,7 +9,7 @@ import java.util.List;
 public class SpecialDetailBean {
     private List<DailyBean> special;
     private String status;
-    private List<WeekListBean> goods;
+    private List<WeekListBean.WeekBean> goods;
 
     public List<DailyBean> getSpecial() {
         return special;
@@ -27,11 +27,11 @@ public class SpecialDetailBean {
         this.status = status;
     }
 
-    public List<WeekListBean> getGoods() {
+    public List<WeekListBean.WeekBean> getGoods() {
         return goods;
     }
 
-    public void setGoods(List<WeekListBean> goods) {
+    public void setGoods(List<WeekListBean.WeekBean> goods) {
         this.goods = goods;
     }
 

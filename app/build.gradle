@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'maoyi'
+            keyPassword '123456'
+            storeFile file('C:\\ProjectDemo\\AndroidProject\\MaoYi\\app\\maoyi.jks')
+            storePassword '123456'
+        }
+    }
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
     defaultConfig {
@@ -10,17 +18,23 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            signingConfig signingConfigs.config
+        }
     }
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
         }
+    }
+    productFlavors {
     }
 }
 
@@ -35,9 +49,7 @@ dependencies {
     compile project(':pickerview')
     compile project(':pictureselector')
     //轮播框架
-
     //颜色和尺码选择
-
     //微信支付
     compile files('libs/commons-lang.jar')
     compile 'com.android.support:appcompat-v7:26.0.0-alpha1'

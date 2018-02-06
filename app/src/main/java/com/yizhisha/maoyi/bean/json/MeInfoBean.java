@@ -7,9 +7,10 @@ package com.yizhisha.maoyi.bean.json;
 public class MeInfoBean {
     private String avatar;
     private String nickname;
-    private String sex;
+    private int sex;
     private String status;
     private String info;
+    private int[] orderCount;
 
     public String getAvatar() {
         return avatar;
@@ -19,7 +20,7 @@ public class MeInfoBean {
         return nickname;
     }
 
-    public String getSex() {
+    public int getSex() {
         return sex;
     }
 
@@ -39,7 +40,7 @@ public class MeInfoBean {
         this.nickname = nickname;
     }
 
-    public void setSex(String sex) {
+    public void setSex(int sex) {
         this.sex = sex;
     }
 
@@ -49,6 +50,10 @@ public class MeInfoBean {
 
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    public int[] getOrderCount() {
+        return orderCount;
     }
 
     @Override

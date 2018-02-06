@@ -90,20 +90,21 @@
                         <ImageView
                             android:layout_width="@dimen/dp_20"
                             android:layout_height="@dimen/dp_20"
+                            android:layout_marginTop="@dimen/dp_5"
+                            android:layout_marginRight="@dimen/dp_5"
                             android:src="@drawable/user_order_obligation"/>
 
                         <TextView
                             android:id="@+id/unpaymentNum_iv"
-                            android:layout_width="@dimen/dp_14"
-                            android:layout_height="@dimen/dp_14"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:textSize="10sp"
                             android:layout_gravity="right"
-                            android:background="@drawable/message_circle"
+                            android:gravity="center"
                             android:text="1"
-                            android:gravity="top|center_horizontal"
-                            android:paddingBottom="@dimen/dp_2"
-
                             android:textColor="@color/common_color"
-                            android:textSize="@dimen/font_small" />
+                            android:background="@drawable/design_red_point"/>
                     </FrameLayout>
                     <TextView
                         android:layout_width="wrap_content"
@@ -126,13 +127,20 @@
                         <ImageView
                             android:layout_width="@dimen/dp_20"
                             android:layout_height="@dimen/dp_20"
+                            android:layout_marginTop="@dimen/dp_5"
+                            android:layout_marginRight="@dimen/dp_5"
                             android:src="@drawable/user_order_substitute_delivery"/>
-                        <ImageView
+                        <TextView
                             android:id="@+id/unshippingNum_iv"
-                            android:layout_width="@dimen/dp_10"
-                            android:layout_height="@dimen/dp_10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:textSize="10sp"
                             android:layout_gravity="right"
-                            android:src="@drawable/ic_launcher"/>
+                            android:gravity="center"
+                            android:text="1"
+                            android:textColor="@color/common_color"
+                            android:background="@drawable/design_red_point"/>
                     </FrameLayout>
                     <TextView
                         android:layout_width="wrap_content"
@@ -155,13 +163,20 @@
                         <ImageView
                             android:layout_width="@dimen/dp_20"
                             android:layout_height="@dimen/dp_20"
+                            android:layout_marginTop="@dimen/dp_5"
+                            android:layout_marginRight="@dimen/dp_5"
                             android:src="@drawable/user_order_collect_goods"/>
-                        <ImageView
+                        <TextView
                             android:id="@+id/unreceive_goodsNum_iv"
-                            android:layout_width="@dimen/dp_10"
-                            android:layout_height="@dimen/dp_10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:textSize="10sp"
                             android:layout_gravity="right"
-                            android:src="@drawable/ic_launcher"/>
+                            android:gravity="center"
+                            android:text="1"
+                            android:textColor="@color/common_color"
+                            android:background="@drawable/design_red_point"/>
                     </FrameLayout>
                     <TextView
                         android:layout_width="wrap_content"
@@ -184,13 +199,21 @@
                         <ImageView
                             android:layout_width="@dimen/dp_20"
                             android:layout_height="@dimen/dp_20"
+                            android:layout_marginTop="@dimen/dp_5"
+                            android:layout_marginRight="@dimen/dp_5"
+
                             android:src="@drawable/user_order_complete"/>
-                        <ImageView
+                        <TextView
                             android:id="@+id/finishNum_iv"
-                            android:layout_width="@dimen/dp_10"
-                            android:layout_height="@dimen/dp_10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:textSize="10sp"
                             android:layout_gravity="right"
-                            android:src="@drawable/ic_launcher"/>
+                            android:gravity="center"
+                            android:text="1"
+                            android:textColor="@color/common_color"
+                            android:background="@drawable/design_red_point"/>
                     </FrameLayout>
                     <TextView
                         android:layout_width="wrap_content"
@@ -213,13 +236,20 @@
                         <ImageView
                             android:layout_width="@dimen/dp_20"
                             android:layout_height="@dimen/dp_20"
+                            android:layout_marginTop="@dimen/dp_5"
+                            android:layout_marginRight="@dimen/dp_5"
                             android:src="@drawable/user_order_refund"/>
-                        <ImageView
+                        <TextView
                             android:id="@+id/refundNum_iv"
-                            android:layout_width="@dimen/dp_10"
-                            android:layout_height="@dimen/dp_10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:textSize="10sp"
                             android:layout_gravity="right"
-                            android:src="@drawable/ic_launcher"/>
+                            android:gravity="center"
+                            android:text="1"
+                            android:textColor="@color/common_color"
+                            android:background="@drawable/design_red_point"/>
                     </FrameLayout>
                     <TextView
                         android:layout_width="wrap_content"
@@ -260,7 +290,7 @@
                     android:layout_height="@dimen/dp_20"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/ic_launcher"/>
+                    android:src="@drawable/icon_right"/>
             </RelativeLayout>
             <View
                 style="@style/MY.Theme.Widget.Divider.Line.Vertical"/>
@@ -290,7 +320,7 @@
                     android:layout_height="@dimen/dp_20"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/ic_launcher"/>
+                    android:src="@drawable/icon_right"/>
             </RelativeLayout>
             <View
                 style="@style/MY.Theme.Widget.Divider.Line.Vertical"/>
@@ -320,7 +350,7 @@
                     android:layout_height="@dimen/dp_20"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/ic_launcher"/>
+                    android:src="@drawable/icon_right"/>
             </RelativeLayout>
             <View
                 style="@style/MY.Theme.Widget.Divider.Line.Vertical"/>
@@ -350,7 +380,7 @@
                     android:layout_height="@dimen/dp_20"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/ic_launcher"/>
+                    android:src="@drawable/icon_right"/>
             </RelativeLayout>
             <View
                 style="@style/MY.Theme.Widget.Divider.Line.Vertical"/>
@@ -379,7 +409,7 @@
                     android:layout_height="@dimen/dp_20"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/ic_launcher"/>
+                    android:src="@drawable/icon_right"/>
             </RelativeLayout>
             <View
                 style="@style/MY.Theme.Widget.Divider.Line.Vertical"/>
@@ -408,7 +438,7 @@
                     android:layout_height="@dimen/dp_20"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/ic_launcher"/>
+                    android:src="@drawable/icon_right"/>
             </RelativeLayout>
             <View
                 style="@style/MY.Theme.Widget.Divider.Line.Vertical"/>
@@ -448,7 +478,7 @@
                     android:layout_height="@dimen/dp_20"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/ic_launcher"/>
+                    android:src="@drawable/icon_right"/>
             </RelativeLayout>
             <View
                 style="@style/MY.Theme.Widget.Divider.Line.Vertical"/>

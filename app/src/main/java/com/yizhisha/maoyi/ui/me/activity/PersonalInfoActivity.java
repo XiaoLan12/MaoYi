@@ -119,7 +119,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter> im
         MeInfoBean meInfoBean=AppConstant.meInfoBean;
         if(meInfoBean!=null){
             nicknameTv.setText(meInfoBean.getNickname());
-            sexTv.setText(meInfoBean.getSex());
+            sexTv.setText(meInfoBean.getSex()==0?"男":"女");
             GlideUtil.getInstance().LoadContextCircleBitmap(this,AppConstant.HEAD_IMG_URL+meInfoBean.getAvatar(),headIv,
                     R.drawable.icon_head_normal,R.drawable.icon_head_normal);
 
@@ -154,7 +154,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter> im
                                 sexTv.setText(sexDatas.get(position));
                                 Map<String,String> map=new HashMap<>();
                                 map.put("uid", String.valueOf(AppConstant.UID));
-                                map.put("sex", sexTv.getText().toString());
+                                map.put("sex", String.valueOf(sexDatas.get(position)));
                                 changeInfo(map);
                                 dialog.dismiss();
                             }

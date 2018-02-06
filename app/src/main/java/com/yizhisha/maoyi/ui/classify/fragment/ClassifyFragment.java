@@ -136,7 +136,7 @@ public class ClassifyFragment extends BaseFragment<com.yizhisha.maoyi.ui.classif
     }
 
     @Override
-    public void getSortedListSuccess(List<SortedListBean> model) {
+    public void getSortedListSuccess(List<SortedListBean.SortedsBean> model) {
 
         //获取asset目录下的资源文件
         String assetsData = getAssetsData("sort.json");

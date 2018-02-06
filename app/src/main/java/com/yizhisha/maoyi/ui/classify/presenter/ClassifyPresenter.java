@@ -1,5 +1,7 @@
 package com.yizhisha.maoyi.ui.classify.presenter;
 
+import android.util.Log;
+
 import com.yizhisha.maoyi.api.Api;
 import com.yizhisha.maoyi.base.rx.RxSubscriber;
 import com.yizhisha.maoyi.bean.json.SortedListBean;
@@ -15,15 +17,11 @@ public class ClassifyPresenter extends ClassifyContract.Presenter{
 
     @Override
     public void getSortedList() {
-        addSubscrebe(Api.getInstance().getSorted(),new RxSubscriber<List<SortedListBean>>(mContext,true){
+        addSubscrebe(Api.getInstance().getSorted(),new RxSubscriber<SortedListBean>(mContext,true){
 
             @Override
-            protected void onSuccess(List<SortedListBean> model) {
-                List<SortedListBean> model1=model;
-//                model1.add(model.get(0));
-//                model1.add(model.get(0));
-
-                mView.getSortedListSuccess(model1);
+            protected void onSuccess(SortedListBean model) {
+                mView.getSortedListSuccess(model.getList());
 
             }
             @Override

@@ -16,7 +16,7 @@ import com.yizhisha.maoyi.ui.me.contract.MeContract;
 public class MePresenter extends MeContract.Presenter{
     @Override
     public void loadHeadInfo(int uid) {
-        addSubscrebe(Api.getInstance().loadHeadInfo(uid),new RxSubscriber<MeInfoBean>(mContext,true){
+        addSubscrebe(Api.getInstance().loadHeadInfo(uid),new RxSubscriber<MeInfoBean>(mContext,false){
 
             @Override
             protected void onSuccess(MeInfoBean meInfoBean) {

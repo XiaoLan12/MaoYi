@@ -7,40 +7,57 @@ import java.util.List;
  */
 
 public class SortedListBean {
-    private String id;
-    private String name;
-    private List<SortedBean> cat;
 
-    public String getId() {
-        return id;
-    }
+    private List<SortedsBean> goods;
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<SortedBean> getCat() {
-        return cat;
-    }
-
-    public void setCat(List<SortedBean> cat) {
-        this.cat = cat;
+    public List<SortedsBean> getList() {
+        return goods;
     }
 
     @Override
     public String toString() {
         return "SortedListBean{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", cat=" + cat +
+                "list=" + goods +
                 '}';
     }
+
+    public class SortedsBean{
+        private String id;
+        private String name;
+        private List<SortedBean> cat;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public List<SortedBean> getCat() {
+            return cat;
+        }
+
+        public void setCat(List<SortedBean> cat) {
+            this.cat = cat;
+        }
+
+        @Override
+        public String toString() {
+            return "SortedListBean{" +
+                    "id='" + id + '\'' +
+                    ", name='" + name + '\'' +
+                    ", cat=" + cat +
+                    '}';
+        }
+    }
+
 }

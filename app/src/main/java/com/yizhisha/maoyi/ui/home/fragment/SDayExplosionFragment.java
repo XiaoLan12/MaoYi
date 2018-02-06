@@ -14,7 +14,7 @@ import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.adapter.SDayExplosionAdapter;
 import com.yizhisha.maoyi.base.BaseFragment;
 import com.yizhisha.maoyi.bean.json.WeekListBean;
-import com.yizhisha.maoyi.bean.json.WeekTopBean;
+import com.yizhisha.maoyi.bean.json.WeekTopListBean;
 import com.yizhisha.maoyi.ui.home.activity.ProductDetailActivity;
 import com.yizhisha.maoyi.ui.home.contract.SDayExplosionContract;
 import com.yizhisha.maoyi.ui.home.presenter.SDayExplosionPresenter;
@@ -36,7 +36,7 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
     private ImageView img_banner;
 
     private SDayExplosionAdapter mAdapter;
-    private List<WeekListBean> dataLists = new ArrayList<>();
+    private List<WeekListBean.WeekBean> dataLists = new ArrayList<>();
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_sday_explosion;
@@ -69,7 +69,7 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
     }
 
     @Override
-    public void getWeekToprSuccess(List<WeekTopBean> model) {
+    public void getWeekToprSuccess(List<WeekTopListBean.WeekTopBean> model) {
         Log.e("TTT",model.get(0).getSpc_litpic()+"-----");
         if(model!=null)
         GlideUtil.getInstance().LoadSupportv4FragmentBitmap(SDayExplosionFragment.this,AppConstant.BANNER_IMG_URL+model.get(0).getSpc_litpic(),img_banner,0,0,null);
@@ -77,7 +77,7 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
     }
 
     @Override
-    public void getWeekListtSuccess(List<WeekListBean> model) {
+    public void getWeekListtSuccess(List<WeekListBean.WeekBean> model) {
         dataLists=model;
         mAdapter.setNewData(dataLists);
     }

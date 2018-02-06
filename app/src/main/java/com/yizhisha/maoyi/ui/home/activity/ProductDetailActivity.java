@@ -122,7 +122,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
     TextView lookAllcommentTv;
 
     private SDayExplosionAdapter mAdapter1;
-    private List<WeekListBean> dataLists = new ArrayList<>();
+    private List<WeekListBean.WeekBean> dataLists = new ArrayList<>();
 
     private PopupWindow popupWindow;
     GoodsProductBean goodsProductBean;

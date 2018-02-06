@@ -23,7 +23,7 @@ public class AppConstant {
     public static final String BANNER_IMG_URL="http://dyc.maozhiwang.com/data/attached/special/";
     //商品图片
     public static final String PRUDUCT_IMG_URL="http://dyc.maozhiwang.com/data/attached/goods/";
-    public static List<SortedListBean> sortedBeanList=new ArrayList<>();
+    public static List<SortedListBean.SortedsBean> sortedBeanList=new ArrayList<>();
 
 
     public static final String WEIXIN_APP_ID="wxcf3dcbc781d32889";

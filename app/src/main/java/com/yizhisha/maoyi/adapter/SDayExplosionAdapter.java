@@ -16,13 +16,13 @@ import java.util.List;
  * Created by Administrator on 2017/11/12 0012.
  */
 
-public class SDayExplosionAdapter extends BaseQuickAdapter<WeekListBean,BaseViewHolder> {
-    public SDayExplosionAdapter(@Nullable List<WeekListBean> data) {
+public class SDayExplosionAdapter extends BaseQuickAdapter<WeekListBean.WeekBean,BaseViewHolder> {
+    public SDayExplosionAdapter(@Nullable List<WeekListBean.WeekBean> data) {
         super(R.layout.item_sday_explosion, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, WeekListBean item) {
+    protected void convert(BaseViewHolder helper, WeekListBean.WeekBean item) {
         helper.setText(R.id.tv_title,item.getTitle());
         helper.setText(R.id.tv_price,"￥"+item.getPrice());
         helper.setText(R.id.tv_sales,item.getSales()+"人付款");

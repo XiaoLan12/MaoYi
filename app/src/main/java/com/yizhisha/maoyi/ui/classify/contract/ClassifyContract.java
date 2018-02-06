@@ -13,7 +13,7 @@ import java.util.List;
 public interface ClassifyContract {
     interface View extends BaseView {
 
-        void getSortedListSuccess(List<SortedListBean> model);
+        void getSortedListSuccess(List<SortedListBean.SortedsBean> model);
         void loadFail(String msg);
     }
 

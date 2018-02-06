@@ -42,7 +42,7 @@ public class SpecialDetailActivity extends BaseActivity<SpecialDetailPresenter> 
     private Banner banner;
     private List<String> imageUrl;
     private SDayExplosionAdapter mAdapter;
-    private List<WeekListBean> dataLists = new ArrayList<>();
+    private List<WeekListBean.WeekBean> dataLists = new ArrayList<>();
     @Override
     protected int getLayoutId() {
         return R.layout.activity_special_detail;
