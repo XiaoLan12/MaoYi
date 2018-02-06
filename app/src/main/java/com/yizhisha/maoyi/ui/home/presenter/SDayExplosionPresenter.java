@@ -9,6 +9,7 @@ import com.yizhisha.maoyi.bean.json.WeekTopListBean;
 import com.yizhisha.maoyi.ui.home.contract.SDayExplosionContract;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/11/21.
@@ -30,8 +31,8 @@ public class SDayExplosionPresenter extends SDayExplosionContract.Presenter{
     }
 
     @Override
-    public void getWeekList() {
-        addSubscrebe(Api.getInstance().getWeekList(),new RxSubscriber<WeekListBean>(mContext,true){
+    public void getWeekList(Map<String,String> map) {
+        addSubscrebe(Api.getInstance().getWeekList(map),new RxSubscriber<WeekListBean>(mContext,false){
 
             @Override
             protected void onSuccess(WeekListBean model) {

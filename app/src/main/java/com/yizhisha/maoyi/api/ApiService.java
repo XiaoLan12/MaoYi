@@ -273,7 +273,7 @@ public interface ApiService {
     Observable<WeekTopListBean> getWeekTop();
     //首页7日爆款列表
     @GET("app/weekList/")
-    Observable<WeekListBean> getWeekList();
+    Observable<WeekListBean> getWeekList(@QueryMap Map<String, String> param);
 
     //首页往期专场
     @GET("app/pastList/")

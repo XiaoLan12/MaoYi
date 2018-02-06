@@ -247,8 +247,8 @@ public class Api {
     }
 
     //首页7日爆款列表
-    public Observable<WeekListBean> getWeekList(){
-        return service.getWeekList();
+    public Observable<WeekListBean> getWeekList(Map<String, String> map){
+        return service.getWeekList(map);
     }
 
     //首页往期专场列表

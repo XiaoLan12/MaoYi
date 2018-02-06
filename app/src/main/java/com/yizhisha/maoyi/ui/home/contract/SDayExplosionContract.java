@@ -6,6 +6,7 @@ import com.yizhisha.maoyi.bean.json.WeekListBean;
 import com.yizhisha.maoyi.bean.json.WeekTopListBean;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/11/21.
@@ -21,7 +22,7 @@ public interface SDayExplosionContract {
     abstract class Presenter extends BasePresenter<SDayExplosionContract.View> {
 
         public abstract void getWeekTop();
-        public abstract void getWeekList();
+        public abstract void getWeekList(Map<String,String> map);
 
     }
 }

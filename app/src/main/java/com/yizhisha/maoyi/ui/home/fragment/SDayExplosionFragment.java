@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yizhisha.maoyi.AppConstant;
@@ -19,9 +21,12 @@ import com.yizhisha.maoyi.ui.home.activity.ProductDetailActivity;
 import com.yizhisha.maoyi.ui.home.contract.SDayExplosionContract;
 import com.yizhisha.maoyi.ui.home.presenter.SDayExplosionPresenter;
 import com.yizhisha.maoyi.utils.GlideUtil;
+import com.yizhisha.maoyi.utils.RescourseUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 
@@ -34,6 +39,13 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
     RecyclerView mRecyclerView;
 
     private ImageView img_banner;
+    private ImageView img_select_price;
+    private TextView tv_select_select;
+    private TextView tv_select_price;
+    private TextView tv_select_xiaoliang;
+    private LinearLayout ll_select_price;
+    private int price=0;
+    private int xiaoliang=0;
 
     private SDayExplosionAdapter mAdapter;
     private List<WeekListBean.WeekBean> dataLists = new ArrayList<>();
@@ -58,14 +70,74 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
         });
 //        mAdapter.setNewData(dataLists);
         addHeadView();
-        mPresenter.getWeekList();
+        Map<String,String> map=new HashMap<>();
+        mPresenter.getWeekList(map);
         mPresenter.getWeekTop();
     }
     private void addHeadView() {
         View view=getActivity().getLayoutInflater().inflate(R.layout.headview_sday_explosion, (ViewGroup) mRecyclerView.getParent(), false);
         img_banner=view.findViewById(R.id.img_banner);
+        img_select_price=view.findViewById(R.id.img_select_price);
+          tv_select_select=view.findViewById(R.id.tv_select_select);
+          tv_select_price=view.findViewById(R.id.tv_select_price);
+          tv_select_xiaoliang=view.findViewById(R.id.tv_select_xiaoliang);
+        ll_select_price=view.findViewById(R.id.ll_select_price);
+        tv_select_xiaoliang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(price!=0){
+                    price=0;
+                    img_select_price.setImageResource(R.drawable.price_select_not);
+                    tv_select_price.setTextColor(RescourseUtil.getColor(R.color.black));
+                }
 
+                Map<String,String> map=new HashMap<>();
+                if(xiaoliang==0){
+                    xiaoliang=1;
+                    map.put("order","1");
+                    tv_select_xiaoliang.setTextColor(RescourseUtil.getColor(R.color.red1));
+                }else{
+                    xiaoliang=1;
+                    tv_select_xiaoliang.setTextColor(RescourseUtil.getColor(R.color.black));
+                }
+                mPresenter.getWeekList(map);
+            }
+        });
+        ll_select_price.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(xiaoliang!=0) {
+                    xiaoliang = 0;
+                    tv_select_xiaoliang.setTextColor(RescourseUtil.getColor(R.color.black));
+                }
+                Map<String,String> map=new HashMap<>();
+                if(price==0){
+                    img_select_price.setImageResource(R.drawable.price_select_up);
+                    tv_select_price.setTextColor(RescourseUtil.getColor(R.color.red1));
+                    price=4;
+                    map.put("order","4");
+                }else if(price==4){
+                    img_select_price.setImageResource(R.drawable.price_select_down);
+                    tv_select_price.setTextColor(RescourseUtil.getColor(R.color.red1));
+                    price=3;
+                    map.put("order","3");
+                }else {
+                    img_select_price.setImageResource(R.drawable.price_select_not);
+                    price=0;
+                    tv_select_price.setTextColor(RescourseUtil.getColor(R.color.black));
+                }
+                mPresenter.getWeekList(map);
+
+
+            }
+        });
         mAdapter.addHeaderView(view);
+    }
+//         所有帅选按钮变灰色
+    private void changeColor(){
+        tv_select_xiaoliang.setTextColor(RescourseUtil.getColor(R.color.black));
+        tv_select_price.setTextColor(RescourseUtil.getColor(R.color.black));
+        tv_select_select.setTextColor(RescourseUtil.getColor(R.color.black));
     }
 
     @Override
