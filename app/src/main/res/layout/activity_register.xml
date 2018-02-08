@@ -9,6 +9,7 @@
         android:id="@+id/toolbar"
         style="@style/basetoolbarStyle"
         app:leftButtonIcon="@drawable/icon_back"
+        android:background="@color/common_color"
         app:title="注册"/>
     <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"/>
 

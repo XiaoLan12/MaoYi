@@ -18,6 +18,7 @@ import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.bean.json.GoodsBean;
 import com.yizhisha.maoyi.bean.json.StoreBean;
+import com.yizhisha.maoyi.ui.home.activity.ProductDetailActivity;
 import com.yizhisha.maoyi.utils.GlideUtil;
 
 import java.util.List;
@@ -166,17 +167,16 @@ public class ShoppCartAdapter extends BaseExpandableListAdapter {
             childViewHolder = (ChildViewHolder) convertView.getTag();
         }
         final GoodsBean goodsBean = (GoodsBean) childMapList_list.get(groupPosition).get(childPosition).get("childName");
-      /*  convertView.setOnClickListener(new View.OnClickListener() {
+        convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(context,YarnActivity.class);
+                Intent intent=new Intent(context,ProductDetailActivity.class);
                 Bundle bundle=new Bundle();
-                bundle.putInt("TYPE",1);
-                bundle.putInt("id",goodsBean.getGid());
+                bundle.putInt("gid",goodsBean.getGid());
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }
-        });*/
+        });
         //childViewHolder.id_tv_price.setText(String.format(context.getString(R.string.price), goodsBean.getPrice()+""));
         childViewHolder.id_cb_select_child.setChecked(goodsBean.isChecked());
         childViewHolder.tv_items_child_desc.setText(goodsBean.getTitle());

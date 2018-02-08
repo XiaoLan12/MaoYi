@@ -32,17 +32,5 @@ public class MePresenter extends MeContract.Presenter{
             }
         });
     }
-    public void load(){
-        addSubscrebe(Api.getInstance().login(),new RxSubscriber<LoginBean>(mContext,true){
 
-            @Override
-            protected void onSuccess(LoginBean meInfoBean) {
-               loadHeadInfo(AppConstant.UID);
-            }
-            @Override
-            protected void onFailure(String message) {
-                mView.loadFail(message);
-            }
-        });
-    }
 }

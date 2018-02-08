@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    >
     <com.yizhisha.maoyi.base.BaseToolbar
         android:id="@+id/toolbar"
         style="@style/basetoolbarStyle"
+        android:layout_alignParentTop="true"
         android:background="@color/common_color"
         app:leftButtonIcon="@drawable/ic_back"
         app:title="问题详情"
         />
+    <LinearLayout
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <LinearLayout
         android:id="@+id/problem_answer1_ll"
         android:layout_width="match_parent"
@@ -123,5 +129,23 @@
             android:textColor="@color/common_h1"
             android:text="收到的货如果与购买的颜色尺码不相同可以向商家反馈，商家会与您协商退换等服务的。"/>
     </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center"
+        >
+        <TextView
+            android:id="@+id/dialhotline_tv"
+            style="@style/MY.Theme.Widget.Text"
+            android:padding="@dimen/dp_10"
+            android:textColor="@color/red1"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:background="@drawable/shape_pink_text_selector"
+            android:text="未解决?拨打热线"/>
+    </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

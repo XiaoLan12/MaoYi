@@ -19,6 +19,7 @@ import com.yizhisha.maoyi.bean.json.SpecialDetailBean;
 import com.yizhisha.maoyi.bean.json.WeekListBean;
 import com.yizhisha.maoyi.ui.home.contract.SpecialDetailContract;
 import com.yizhisha.maoyi.ui.home.presenter.SpecialDetailPresenter;
+import com.yizhisha.maoyi.ui.me.activity.NewActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
@@ -39,6 +40,8 @@ public class SpecialDetailActivity extends BaseActivity<SpecialDetailPresenter> 
 
     @Bind(R.id.recyclerview)
     RecyclerView mRecyclerView;
+    @Bind(R.id.new_iv)
+    ImageView newIv;
     private Banner banner;
     private List<String> imageUrl;
     private SDayExplosionAdapter mAdapter;
@@ -55,6 +58,12 @@ public class SpecialDetailActivity extends BaseActivity<SpecialDetailPresenter> 
 
     @Override
     protected void initView() {
+        newIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(NewActivity.class);
+            }
+        });
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         mAdapter = new SDayExplosionAdapter(dataLists);
         mRecyclerView.setAdapter(mAdapter);

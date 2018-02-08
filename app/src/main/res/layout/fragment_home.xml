@@ -9,7 +9,7 @@
         android:id="@+id/toolbar"
         style="@style/basetoolbarStyle"
         app:leftButtonIcon="@drawable/ic_launcher"
-        app:rightButtonIcon="@drawable/ic_launcher"
+        app:rightButtonIcon="@drawable/icon_new"
         android:background="@color/common_color"
         app:title="@string/home"/>
     <com.flyco.tablayout.SlidingTabLayout

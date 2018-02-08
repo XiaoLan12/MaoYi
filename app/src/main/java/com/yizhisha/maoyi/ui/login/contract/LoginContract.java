@@ -4,6 +4,8 @@ import com.yizhisha.maoyi.base.BasePresenter;
 import com.yizhisha.maoyi.base.BaseView;
 import com.yizhisha.maoyi.bean.json.LoginBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
+import com.yizhisha.maoyi.bean.json.WechatBean;
+import com.yizhisha.maoyi.bean.json.WechatInfoBean;
 
 import java.util.Map;
 
@@ -13,24 +15,24 @@ import java.util.Map;
 
 public interface LoginContract {
     interface View extends BaseView {
-        void loginSuccess(LoginBean info);
+        void loginSuccess(RequestStatusBean info);
 
-        //        void weChatLoginSuccess(RequestStatusBean bean);
-//
-//
-//        void registerSuccess(RequestStatusBean info);
-        //
-//        void findPwdSuccess(String info);
-//
-        void getCodeSuccess(RequestStatusBean info);
-        //
-//        void loadWeChatData(WechatBean wechatBean);
-//
+        void weChatLoginSuccess(RequestStatusBean bean);
+
+
+        void registerSuccess(String info);
+
+        void findPwdSuccess(String info);
+
+        void getCodeSuccess(String info);
+
+        void loadWeChatData(WechatBean wechatBean);
+
         void loadFail(String msg);
-//        void weChatLogin(String info);
-//
-//        void bindWeChatSuccess(String info);
-//        void loadWeChatInfo(WechatInfoBean bean);
+        void weChatLogin(String info);
+
+        void bindWeChatSuccess(String info);
+        void loadWeChatInfo(WechatInfoBean bean);
 
         void showLoading();
         void hideLoading();
@@ -38,15 +40,14 @@ public interface LoginContract {
     }
 
     abstract class Presenter extends BasePresenter<LoginContract.View> {
-
-                public abstract void login(Map<String, String> map);
-//        public abstract void register(Map<String, String> map);
-        //        public abstract void findPwd(Map<String, String> map);
+        public abstract void login(Map<String, String> map);
+        public abstract void register(Map<String, String> map);
+        public abstract void findPwd(Map<String, String> map);
         public abstract void getCode(Map<String, String> map);
-//        public abstract void loadWeChatData(String url);
-//        public abstract void weChatLogin(Map<String,String> map);
-//        public abstract void bindWeChat(Map<String,String> map);
-//        public abstract void loadWeChatInfo(String url);
+        public abstract void loadWeChatData(String url);
+        public abstract void weChatLogin(Map<String,String> map);
+        public abstract void bindWeChat(Map<String,String> map);
+        public abstract void loadWeChatInfo(String url);
 
 
     }

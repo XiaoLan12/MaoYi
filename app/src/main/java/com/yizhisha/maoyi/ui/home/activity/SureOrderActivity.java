@@ -53,6 +53,7 @@ public class SureOrderActivity extends BaseActivity<SureOrderPresenter> implemen
     private List<OrderSureBean.Goods> dataList=new ArrayList<>();
 
     private RadioSelectionDialog radioSelectionDialog;
+    private int mType=0;//当前订单类型,0:普通订单  1:购物车订单
     @Override
     protected int getLayoutId() {
         return R.layout.activity_sure_order;
@@ -66,7 +67,12 @@ public class SureOrderActivity extends BaseActivity<SureOrderPresenter> implemen
         initAdapter();
         Bundle bundle=getIntent().getExtras();
         if(bundle!=null){
-            loadOrder(bundle);
+            mType=bundle.getInt("ORDERTYPE");
+            if(mType==0){
+                loadOrder(bundle);
+            }else if(mType==1){
+                loadShoppOrder(bundle);
+            }
         }
     }
     //初始化一般商品适配器
@@ -85,11 +91,17 @@ public class SureOrderActivity extends BaseActivity<SureOrderPresenter> implemen
     }
     private void loadOrder(Bundle bundle){
         Map<String,String> map=new HashMap();
-        map.put("uid",String.valueOf(AppConstant.UID));
+        map.put("uid",String.valueOf(3));
         map.put("gid",String.valueOf(bundle.getInt("gid",0)));
         map.put("detail",bundle.getString("detail"));
         map.put("amount",String.valueOf(bundle.getInt("amount")));
         mPresenter.loadOrderSure(map);
+    }
+    private void loadShoppOrder(Bundle bundle){
+        Map<String,String> map=new HashMap();
+        map.put("uid",String.valueOf(3));
+        map.put("sid",bundle.getString("sid",""));
+        mPresenter.loadShopCartOrderSure(map);
     }
     @Override
     public void loadOrderSuccess(OrderSureBean data) {
@@ -110,6 +122,12 @@ public class SureOrderActivity extends BaseActivity<SureOrderPresenter> implemen
 
         }
     }
+
+    @Override
+    public void loadShopCartOrderSuccess(OrderSureBean data) {
+
+    }
+
     @Override
     public void showLoading() {
 

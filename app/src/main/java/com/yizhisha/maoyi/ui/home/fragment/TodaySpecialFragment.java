@@ -20,6 +20,7 @@ import com.yizhisha.maoyi.bean.json.WeekTopListBean;
 import com.yizhisha.maoyi.ui.home.activity.SpecialDetailActivity;
 import com.yizhisha.maoyi.ui.home.contract.TodaySpecialContract;
 import com.yizhisha.maoyi.ui.home.presenter.TodaySpecialPresenter;
+import com.yizhisha.maoyi.ui.me.activity.NewActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
@@ -38,6 +39,7 @@ public class TodaySpecialFragment extends BaseFragment<TodaySpecialPresenter>  i
 
     @Bind(R.id.recyclerview)
     RecyclerView mRecyclerView;
+
     private  Banner banner;
     private List<String> imageUrl;
 
@@ -64,6 +66,7 @@ public class TodaySpecialFragment extends BaseFragment<TodaySpecialPresenter>  i
                 startActivity(SpecialDetailActivity.class);
             }
         });
+
 
     }
 

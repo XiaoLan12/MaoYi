@@ -2,6 +2,7 @@ package com.yizhisha.maoyi.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
@@ -10,12 +11,18 @@ import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.base.BaseActivity;
 import com.yizhisha.maoyi.bean.MainTabEntity;
+import com.yizhisha.maoyi.common.dialog.DialogInterface;
+import com.yizhisha.maoyi.common.dialog.NormalSelectionDialog;
 import com.yizhisha.maoyi.ui.classify.fragment.ClassifyFragment;
 import com.yizhisha.maoyi.ui.home.fragment.HomeFragment;
+import com.yizhisha.maoyi.ui.login.activity.LoginFragmentActivity;
+import com.yizhisha.maoyi.ui.login.activity.RegisterActivity;
 import com.yizhisha.maoyi.ui.me.fragment.MeFragment;
 import com.yizhisha.maoyi.ui.shoppcart.fragment.ShoppCartFragment;
+import com.yizhisha.maoyi.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 
@@ -55,6 +62,14 @@ public class MainActivity extends BaseActivity {
     }
     @Override
     protected void initView() {
+        String welcome= (String) SharedPreferencesUtil.getValue(MainActivity.this,"WELCOME","");
+        if(welcome.equals("")){
+            startActivity(WelcomeActivity.class);
+            finish();
+        }
+        //初始化选项卡
+        AppConstant.isLogin = (boolean) SharedPreferencesUtil.getValue(this, "ISLOGIN",new Boolean(false));
+        AppConstant.UID= (int) SharedPreferencesUtil.getValue(this,"UID",new Integer(0));
         initTab();
     }
     /**
@@ -69,6 +84,41 @@ public class MainActivity extends BaseActivity {
         tabLayout.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
+                if(position==1){
+                    if(AppConstant.isLogin==false){
+                        final List<String> mDatas1=new ArrayList<>();
+                        mDatas1.add("登录");
+                        mDatas1.add("注册");
+                        NormalSelectionDialog dialog=new NormalSelectionDialog.Builder(MainActivity.this)
+                                .setBoolTitle(true)
+                                .setTitleText("温馨提示\n尊敬的用户,您尚未登录,请选择登录或注册")
+                                .setTitleHeight(55)
+                                .setItemHeight(45)
+                                .setItemTextColor(R.color.blue)
+                                .setItemTextSize(14)
+                                .setItemWidth(0.95f)
+                                .setCancleButtonText("取消")
+                                .setOnItemListener(new DialogInterface.OnItemClickListener<NormalSelectionDialog>() {
+                                    @Override
+                                    public void onItemClick(NormalSelectionDialog dialog, View button, int position) {
+                                        switch (position){
+                                            case 0:
+                                                startActivity(LoginFragmentActivity.class);
+                                                break;
+                                            case 1:
+                                                startActivity(RegisterActivity.class);
+                                                break;
+                                        }
+                                        dialog.dismiss();
+                                    }
+                                }).setTouchOutside(true)
+                                .build();
+                        dialog.setData(mDatas1);
+                        dialog.show();
+                        tabLayout.setCurrentTab(currentPosition);
+                        return;
+                    }
+                }
                 SwitchTo(position);
             }
             @Override

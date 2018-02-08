@@ -7,10 +7,10 @@ import java.util.List;
  */
 
 public class GoodsProductBean {
-    private String id;
+    private int id;
     private String title;
     private String pid;
-    private String tid;
+    private int tid;
     private String pname;
     private String tname;
     private String litpic;
@@ -23,17 +23,17 @@ public class GoodsProductBean {
     private String favs;
     private String sales;
     private String decription;
-    private String content;
+    private String[] content;
     private String material;
-    private String favorite;
+
     private List<GoodsStyleBean> style;
     private List<GoodsStyleBean> style2;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -53,11 +53,11 @@ public class GoodsProductBean {
         this.pid = pid;
     }
 
-    public String getTid() {
+    public int getTid() {
         return tid;
     }
 
-    public void setTid(String tid) {
+    public void setTid(int tid) {
         this.tid = tid;
     }
 
@@ -157,11 +157,11 @@ public class GoodsProductBean {
         this.decription = decription;
     }
 
-    public String getContent() {
+    public String[] getContent() {
         return content;
     }
 
-    public void setContent(String content) {
+    public void setContent(String[] content) {
         this.content = content;
     }
 
@@ -173,13 +173,7 @@ public class GoodsProductBean {
         this.material = material;
     }
 
-    public String getFavorite() {
-        return favorite;
-    }
 
-    public void setFavorite(String favorite) {
-        this.favorite = favorite;
-    }
 
     public List<GoodsStyleBean> getStyle() {
         return style;
@@ -218,7 +212,6 @@ public class GoodsProductBean {
                 ", decription='" + decription + '\'' +
                 ", content='" + content + '\'' +
                 ", material='" + material + '\'' +
-                ", favorite='" + favorite + '\'' +
                 ", style=" + style +
                 ", style2=" + style2 +
                 '}';

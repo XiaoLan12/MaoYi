@@ -17,17 +17,18 @@ import com.yizhisha.maoyi.bean.json.RefundDetailBean;
 import com.yizhisha.maoyi.bean.json.RefundExpressBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
 import com.yizhisha.maoyi.bean.json.ShopcartListBean;
-import com.yizhisha.maoyi.bean.json.SimilarRecommenBean;
+import com.yizhisha.maoyi.bean.json.SimilarRecommenListBean;
 import com.yizhisha.maoyi.bean.json.SingleShoppCartBean;
 import com.yizhisha.maoyi.bean.json.SortedListBean;
 import com.yizhisha.maoyi.bean.json.SpecialDetailBean;
 import com.yizhisha.maoyi.bean.json.StudioBean;
 import com.yizhisha.maoyi.bean.json.StudioShopBean;
 import com.yizhisha.maoyi.bean.json.UserHeadBean;
+import com.yizhisha.maoyi.bean.json.WechatBean;
+import com.yizhisha.maoyi.bean.json.WechatInfoBean;
 import com.yizhisha.maoyi.bean.json.WeekListBean;
 import com.yizhisha.maoyi.bean.json.WeekTopListBean;
 
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -100,9 +101,13 @@ public class Api {
     public Observable<RequestStatusBean> savaGoodsAddress(Map<String,String> map){
         return service.savaGoodsAddress(map);
     }
-    //获得收藏k列表
+    //获得收藏列表
     public Observable<CollectListBean> loadCollectList(Map<String, String> param){
         return service.getCollectList(param);
+    }
+    //收藏商品
+    public Observable<RequestStatusBean> collectProduct(Map<String, String> param){
+        return service.workshopFav(param);
     }
     //取消收藏
     public Observable<RequestStatusBean> cacheCollect(Map<String, String> param){
@@ -131,6 +136,10 @@ public class Api {
     //删除购物车
     public Observable<RequestStatusBean> deleteShoppCart(Map<String,String> map){
         return service.deleteShoppCart(map);
+    }
+    //购物车订单确认
+    public Observable<OrderSureBean> shopCartOrderSure(Map<String,String> map){
+        return service.shopCartOrderSure(map);
     }
     //订单列表
     public Observable<MyOrderBean> loadOrderList(Map<String,String> map){
@@ -219,11 +228,8 @@ public class Api {
         return service.loadBindPhone(uid);
     }
 
-    public Observable<LoginBean> login(){
-        return service.login();
-    }
     //登录
-    public Observable<LoginBean> Login(Map<String, String> map){
+    public Observable<RequestStatusBean> Login(Map<String, String> map){
         return service.Login(map);
     }
 
@@ -269,8 +275,8 @@ public class Api {
         return service.getGoodsDetail(map);
     }
     //商品详情的同类推荐
-    public Observable<SimilarRecommenBean> getSimilarRecommen(){
-        return service.getSimilarRecommen();
+    public Observable<SimilarRecommenListBean> getSimilarRecommen(int tid){
+        return service.getSimilarRecommen(tid);
     }
     //获取验证码
     public Observable<RequestStatusBean> getCode(Map<String, String> map){
@@ -280,6 +286,35 @@ public class Api {
     public Observable<RequestStatusBean> Register(Map<String, String> map){
         return service.Register(map);
     }
+    //找回密码
+    public Observable<RequestStatusBean> FindPwd(Map<String, String> map){
+        return service.FindPwd(map);
+    }
+    //获得微信登录的数据
+    public Observable<WechatBean> getWeChatLoginData(String url){
+        return service.getWeChatLoginData(url);
+    }
+    //微信登录
+    public Observable<RequestStatusBean> weChatLogin(Map<String,String> map){
+        return service.weChatLogin(map);
+    }
+    //绑定微信号
+    public Observable<RequestStatusBean> bindWeChat(Map<String,String> map){
+        return service.bindWeChat(map);
+    }
+    //微信解除绑定
+    public Observable<RequestStatusBean> unBindWeChat(int uid){
+        return service.unBindWeChat(uid);
+    }
+    //获得微信登录的数据
+    public Observable<WechatInfoBean> getWeChatInfo(String url){
+        return service.getWeChatInfo(url);
+    }
+    //微信解除绑定
+    public Observable<RequestStatusBean> showBindWeChart(int uid){
+        return service.showBindWeChart(uid);
+    }
+
     //获得工作室
     public Observable<StudioBean> getStudio(){
         return service.getStudio();

@@ -7,11 +7,13 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.base.BaseActivity;
 import com.yizhisha.maoyi.base.BaseToolbar;
 import com.yizhisha.maoyi.utils.CacheDataManager;
 import com.yizhisha.maoyi.utils.RescourseUtil;
+import com.yizhisha.maoyi.utils.SharedPreferencesUtil;
 import com.yizhisha.maoyi.utils.ToastUtil;
 
 import butterknife.Bind;
@@ -115,6 +117,13 @@ public class SettingActivity extends BaseActivity {
                 startActivity(MyAddressActivity.class);
                 break;
             case R.id.exit_btn:
+                SharedPreferencesUtil.removeValue(this,"ISLOGIN");
+                SharedPreferencesUtil.removeValue(this,"UID");
+                AppConstant.isLogin=false;
+                AppConstant.meInfoBean=null;
+                AppConstant.UID=0;
+                setResult(103);
+                finish_Activity(this);
                 break;
             case R.id.clean_cache_rl:
                 new Thread(new clearCache()).start();

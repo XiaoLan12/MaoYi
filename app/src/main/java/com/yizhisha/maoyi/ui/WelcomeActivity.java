@@ -12,6 +12,7 @@ import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.base.BaseActivity;
 import com.yizhisha.maoyi.ui.home.fragment.TodaySpecialFragment;
+import com.yizhisha.maoyi.utils.SharedPreferencesUtil;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerClickListener;
@@ -61,7 +62,9 @@ public class WelcomeActivity extends BaseActivity {
         tv_comming.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferencesUtil.putValue(WelcomeActivity.this,"WELCOME","yes");
                 startActivity(MainActivity.class);
+
             }
         });
         banner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {

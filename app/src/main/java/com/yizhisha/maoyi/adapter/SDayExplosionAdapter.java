@@ -1,6 +1,7 @@
 package com.yizhisha.maoyi.adapter;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;

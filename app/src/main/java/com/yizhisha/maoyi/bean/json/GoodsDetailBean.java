@@ -57,7 +57,9 @@ public class GoodsDetailBean {
                 '}';
     }
     public class Comment {
-
+        private String comment_detail;
+        private String mobile;
+        private String avatar;
         private int count;
         public void setCount(int count) {
             this.count = count;
@@ -66,5 +68,16 @@ public class GoodsDetailBean {
             return count;
         }
 
+        public String getComment_detail() {
+            return comment_detail;
+        }
+
+        public String getMobile() {
+            return mobile;
+        }
+
+        public String getAvatar() {
+            return avatar;
+        }
     }
 }

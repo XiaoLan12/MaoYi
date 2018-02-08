@@ -1,6 +1,7 @@
 package com.yizhisha.maoyi.ui.shoppcart.fragment;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -38,6 +39,7 @@ import com.yizhisha.maoyi.common.dialog.CustomDialog;
 import com.yizhisha.maoyi.common.dialog.DialogInterface;
 import com.yizhisha.maoyi.common.dialog.LoadingDialog;
 import com.yizhisha.maoyi.common.dialog.NormalAlertDialog;
+import com.yizhisha.maoyi.ui.home.activity.SureOrderActivity;
 import com.yizhisha.maoyi.ui.shoppcart.contract.ShoppCartContract;
 import com.yizhisha.maoyi.ui.shoppcart.presenter.ShoppCartPresenter;
 import com.yizhisha.maoyi.utils.RescourseUtil;
@@ -186,11 +188,11 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
                     ToastUtil.showShortToast("请选择要购买的商品");
                     return;
                 }
-
-              /*  Bundle bundle=new Bundle();
-                bundle.putInt("ORDERTYPE",2);
-                bundle.putString("gid",sid);
-                startActivity(SureOrderActivity.class,bundle);*/
+                Log.d("TTT","他妈妈"+sid);
+                Bundle bundle = new Bundle();
+                bundle.putString("sid", sid);
+                bundle.putInt("ORDERTYPE",1);
+                startActivity(SureOrderActivity.class, bundle);
             }
         });
         adapter.setOnGoodsCheckedChangeListener(new ShoppCartAdapter.OnGoodsCheckedChangeListener() {

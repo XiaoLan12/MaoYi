@@ -4,7 +4,7 @@ import com.yizhisha.maoyi.api.Api;
 import com.yizhisha.maoyi.base.rx.RxSubscriber;
 import com.yizhisha.maoyi.bean.json.GoodsDetailBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
-import com.yizhisha.maoyi.bean.json.SimilarRecommenBean;
+import com.yizhisha.maoyi.bean.json.SimilarRecommenListBean;
 import com.yizhisha.maoyi.ui.home.contract.ProductDetailContract;
 
 import java.util.Map;
@@ -20,9 +20,7 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter {
 
             @Override
             protected void onSuccess(GoodsDetailBean model) {
-
                 mView.getGoodsDetailSuccess(model);
-
             }
             @Override
             protected void onFailure(String message) {
@@ -51,14 +49,31 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter {
     }
 
     @Override
-    public void getSimilarRecommen() {
-        addSubscrebe(Api.getInstance().getSimilarRecommen(),new RxSubscriber<SimilarRecommenBean>(mContext,true){
+    public void getSimilarRecommen(int tid) {
+        addSubscrebe(Api.getInstance().getSimilarRecommen(tid),new RxSubscriber<SimilarRecommenListBean>(mContext,true){
 
             @Override
-            protected void onSuccess(SimilarRecommenBean model) {
+            protected void onSuccess(SimilarRecommenListBean model) {
+                if(model.getStatus().equals("y")) {
+                    mView.getSimilarRecommenSuccess(model.getGoods());
+                }else{
+                    mView.loadFail(model.getInfo());
+                }
 
-                mView.getSimilarRecommenSuccess(model);
+            }
+            @Override
+            protected void onFailure(String message) {
+                mView.loadFail(message);
+            }
+        });
+    }
 
+    @Override
+    public void collectProduct(Map<String, String> map) {
+        addSubscrebe(Api.getInstance().collectProduct(map), new RxSubscriber<RequestStatusBean>(mContext,"载入中...",true) {
+            @Override
+            protected void onSuccess(RequestStatusBean bean) {
+                    mView.collectProductSuccess(bean.getInfo());
             }
             @Override
             protected void onFailure(String message) {

@@ -32,4 +32,25 @@ public class SureOrderPresenter extends SureOrderContract.Presenter{
             }
         });
     }
+
+    @Override
+    public void loadShopCartOrderSure(Map<String, String> param) {
+        addSubscrebe(Api.getInstance().shopCartOrderSure(param), new RxSubscriber<OrderSureBean>(mContext,"载入中...",true) {
+            @Override
+            protected void onSuccess(OrderSureBean bean) {
+                if(bean.getStatus().equals("y")){
+                    mView.loadShopCartOrderSuccess(bean);
+                }else if(bean.getStatus().equals("n")&&bean.getInfo().equals("请先添加收货地址")||bean.getInfo().equals("请先添加收货地址。")){
+                    mView.loadShopCartOrderSuccess(bean);
+
+                }else{
+                    mView.loadFail(bean.getInfo());
+                }
+            }
+            @Override
+            protected void onFailure(String message) {
+                mView.loadFail(message);
+            }
+        });
+    }
 }

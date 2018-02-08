@@ -2,10 +2,14 @@ package com.yizhisha.maoyi.ui.home.fragment;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.Toolbar;
 
 import com.flyco.tablayout.SlidingTabLayout;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.base.BaseFragment;
+import com.yizhisha.maoyi.base.BaseToolbar;
+import com.yizhisha.maoyi.ui.me.activity.NewActivity;
 
 import java.util.ArrayList;
 
@@ -16,8 +20,8 @@ import butterknife.Bind;
  */
 
 public class HomeFragment extends BaseFragment {
-//    @Bind(R.id.toolbar)
-//    Toolbar toolbar;
+    @Bind(R.id.toolbar)
+    BaseToolbar toolbar;
     @Bind(R.id.slidingtablayout)
     SlidingTabLayout slidingTabLayout;
     @Bind(R.id.viewpager)
@@ -32,6 +36,12 @@ public class HomeFragment extends BaseFragment {
     }
     @Override
     protected void initView() {
+        toolbar.setRightButtonOnClickLinster(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(NewActivity.class);
+            }
+        });
         mFragments.add(new TodaySpecialFragment());
         mFragments.add(new SDayExplosionFragment());
         mFragments.add(new PastSpecialFragment());

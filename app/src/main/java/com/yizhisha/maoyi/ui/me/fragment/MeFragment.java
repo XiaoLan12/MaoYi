@@ -38,6 +38,8 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by lan on 2017/9/22.
  */
@@ -70,18 +72,26 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            mPresenter.loadHeadInfo(AppConstant.UID);
+            if(AppConstant.isLogin==true){
+                mPresenter.loadHeadInfo(AppConstant.UID);
+            }else{
+                userNameTv.setText("毛衣商城感谢您的支持,请登录");
+            }
         }
     }
     @Override
     protected void initView() {
-        mPresenter.loadHeadInfo(AppConstant.UID);
         toolbar.setRightButtonOnClickLinster(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(NewActivity.class);
             }
         });
+        if(AppConstant.isLogin==true){
+            mPresenter.loadHeadInfo(AppConstant.UID);
+        }else{
+            userNameTv.setText("毛衣商城感谢您的支持,请登录");
+        }
         event();
 
     }
@@ -236,6 +246,22 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
 //                        }
                     }
                 });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        switch (requestCode) {
+
+            case 103:
+                if(AppConstant.meInfoBean==null){
+                    userPhotoIv.setImageResource(R.drawable.icon_head_normal);
+                    userNameTv.setText("毛衣商城感谢您的支持,请登录");
+                }
+                break;
+
+            default:
+                break;
+        }
     }
     @Override
     public void onDestroyView() {

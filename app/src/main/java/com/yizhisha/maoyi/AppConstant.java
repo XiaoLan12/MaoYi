@@ -12,7 +12,8 @@ import java.util.List;
 
 public class AppConstant {
     public static final String HOME_CURRENT_TAB_POSITION="HOME_CURRENT_TAB_POSITION";
-    public static final int UID=3;
+    public static  int UID=3;
+    public static boolean isLogin=false;
     public static MeInfoBean meInfoBean=null;
 
     //头像前缀

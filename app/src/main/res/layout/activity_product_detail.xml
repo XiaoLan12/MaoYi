@@ -11,8 +11,8 @@
         style="@style/basetoolbarStyle"
         android:background="@color/common_color"
         app:leftButtonIcon="@drawable/ic_back"
-        app:rightButtonIcon="@drawable/ic_launcher"
-        app:title="我的评价" />
+        app:rightButtonIcon="@drawable/icon_new"
+        app:title="商品详情" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -122,7 +122,7 @@
                         android:layout_width="12dp"
                         android:layout_height="12dp"
                         android:layout_marginRight="6dp"
-                        android:src="@drawable/ic_launcher" />
+                        android:src="@drawable/ic_checkbox_seleted" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -135,7 +135,7 @@
                         android:layout_width="12dp"
                         android:layout_height="12dp"
                         android:layout_marginRight="6dp"
-                        android:src="@drawable/ic_launcher" />
+                        android:src="@drawable/ic_checkbox_seleted" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -148,7 +148,7 @@
                         android:layout_width="12dp"
                         android:layout_height="12dp"
                         android:layout_marginRight="6dp"
-                        android:src="@drawable/ic_launcher" />
+                        android:src="@drawable/ic_checkbox_seleted" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -182,11 +182,6 @@
                         android:layout_weight="1"
                         android:text="请选择尺码颜色"
                         android:textColor="@color/black" />
-
-                    <ImageView
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
-                        android:src="@drawable/ic_launcher" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -561,7 +556,9 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rl_tuijian"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+                    android:layout_height="wrap_content">
+
+                </android.support.v7.widget.RecyclerView>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
@@ -581,9 +578,10 @@
             android:orientation="vertical"
             android:layout_weight="1">
             <ImageView
+                android:id="@+id/collection_iv"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_launcher"/>
+                android:src="@drawable/icon_favorit_normale"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -601,7 +599,7 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_launcher"/>
+                android:src="@drawable/index_trolley_gray"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -25,15 +25,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.MainActivity">
-
-        </activity>
-        <activity android:name=".ui.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.WelcomeActivity"></activity>
         <!-- 我的订单 -->
         <activity
             android:name=".ui.me.activity.MyOrderActivity"
@@ -125,7 +123,8 @@
         <activity android:name=".ui.home.activity.StudioShopActivity" />
         <activity android:name=".ui.home.activity.SureOrderActivity" />
         <activity android:name=".ui.me.activity.ChangePhoneActivity" />
-        <activity android:name=".ui.me.activity.AnswerActivity"></activity>
+        <activity android:name=".ui.me.activity.AnswerActivity" />
+        <activity android:name=".ui.home.activity.CommentYarnActivity"></activity>
     </application>
 
 </manifest>

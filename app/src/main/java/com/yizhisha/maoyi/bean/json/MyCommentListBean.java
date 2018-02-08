@@ -169,6 +169,23 @@ public class MyCommentListBean implements MultiItemEntity {
             private long comment_retime;
             private String comment_detail_add;
             private long comment_addtime_add;
+        private String detail;
+
+        private String mobile;
+
+        private String avatar;
+
+        public String getDetail() {
+            return detail;
+        }
+
+        public String getMobile() {
+            return mobile;
+        }
+
+        public String getAvatar() {
+            return avatar;
+        }
 
         public String getComment_id() {
             return comment_id;

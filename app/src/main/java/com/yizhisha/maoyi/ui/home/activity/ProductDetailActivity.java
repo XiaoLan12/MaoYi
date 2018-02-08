@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.adapter.EditShoppcartAdapter;
+import com.yizhisha.maoyi.adapter.ProductDetailImgAdapter;
 import com.yizhisha.maoyi.adapter.SDayExplosionAdapter;
 import com.yizhisha.maoyi.base.BaseActivity;
 import com.yizhisha.maoyi.base.BaseToolbar;
@@ -27,14 +29,21 @@ import com.yizhisha.maoyi.bean.GoodsAttrsBean;
 import com.yizhisha.maoyi.bean.json.GoodsDetailBean;
 import com.yizhisha.maoyi.bean.json.GoodsProductBean;
 import com.yizhisha.maoyi.bean.json.GoodsStyleBean;
-import com.yizhisha.maoyi.bean.json.SimilarRecommenBean;
+import com.yizhisha.maoyi.bean.json.SimilarRecommenListBean;
 import com.yizhisha.maoyi.bean.json.WeekListBean;
 import com.yizhisha.maoyi.common.dialog.CustomDialog;
+import com.yizhisha.maoyi.common.dialog.DialogInterface;
 import com.yizhisha.maoyi.common.dialog.LoadingDialog;
+import com.yizhisha.maoyi.common.dialog.NormalSelectionDialog;
+import com.yizhisha.maoyi.common.dialog.PicShowDialog;
 import com.yizhisha.maoyi.ui.home.contract.ProductDetailContract;
 import com.yizhisha.maoyi.ui.home.presenter.ProductDetailPresenter;
+import com.yizhisha.maoyi.ui.login.activity.LoginFragmentActivity;
+import com.yizhisha.maoyi.ui.login.activity.RegisterActivity;
+import com.yizhisha.maoyi.ui.me.activity.NewActivity;
 import com.yizhisha.maoyi.utils.GlideUtil;
 import com.yizhisha.maoyi.utils.ToastUtil;
+import com.yizhisha.maoyi.widget.RecyclerViewDriverLine;
 import com.yizhisha.maoyi.widget.SKUInterface;
 
 import java.util.ArrayList;
@@ -46,7 +55,6 @@ import java.util.Map;
 import java.util.Set;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -95,6 +103,8 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
     RecyclerView rlProductDetail;
     @Bind(R.id.rl_tuijian)
     RecyclerView rlTuijian;
+    @Bind(R.id.collection_iv)
+    ImageView collectIv;
     @Bind(R.id.ll_collection)
     LinearLayout llCollection;
     @Bind(R.id.ll_shopping_cart)
@@ -126,7 +136,10 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
 
     private PopupWindow popupWindow;
     GoodsProductBean goodsProductBean;
+    GoodsDetailBean goodsDetailBean;
     private int mGid;
+    //详情
+    private List<String> contentList = new ArrayList<>();
     @Override
     protected int getLayoutId() {
         return R.layout.activity_product_detail;
@@ -134,7 +147,18 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
 
     @Override
     protected void initToolBar() {
-
+        toolbar.setRightButtonOnClickLinster(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(NewActivity.class);
+            }
+        });
+        toolbar.setLeftButtonOnClickLinster(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish_Activity(ProductDetailActivity.this);
+            }
+        });
     }
 
     @Override
@@ -145,18 +169,18 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
         }
         rlTuijian.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mAdapter1 = new SDayExplosionAdapter(dataLists);
-        rlTuijian.setAdapter(mAdapter);
-
-
+        rlTuijian.setAdapter(mAdapter1);
         Map<String, String> map = new HashMap<>();
         map.put("gid", String.valueOf(mGid));
-        map.put("uid", String.valueOf(AppConstant.UID));
+        map.put("uid", String.valueOf(3));
         mPresenter.getGoodsDetail(map);
-        mPresenter.getSimilarRecommen();
+
     }
     @Override
     public void getGoodsDetailSuccess(GoodsDetailBean model) {
-         goodsProductBean = model.getGoods();
+        goodsDetailBean=model;
+        goodsProductBean = model.getGoods();
+        mPresenter.getSimilarRecommen(goodsProductBean.getTid());
         String devi_lenth = goodsProductBean.getDevi_length();
         if (devi_lenth.equals("1")) {
             tvDeviLength1.setBackgroundResource(R.color.common_color);
@@ -186,29 +210,36 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
         tvPname.setText("商品品类：" + goodsProductBean.getPname());
         tvSales.setText("月销量：" + goodsProductBean.getSales() + "笔");
         tvMoney.setText("￥" + goodsProductBean.getPrice());
+        Log.d("TTT","aa"+goodsProductBean.toString());
+        if(model.getFavorite().equals("y")){
+            collectIv.setImageResource(R.drawable.icon_favorit);
+        }else{
+            collectIv.setImageResource(R.drawable.icon_favorit_normale);
+        }
         Glide.with(ProductDetailActivity.this).load(AppConstant.PRUDUCT_IMG_URL + goodsProductBean.getLitpic()).into(imgLitpic);
         shopAttri();
+        initDetails(goodsProductBean.getContent());
         initComment(model);
     }
     //加载评论
-    private void initComment(GoodsDetailBean goodsDetailBean) {
+    private void initComment(final GoodsDetailBean goodsDetailBean) {
         GoodsDetailBean.Comment comment = goodsDetailBean.getComment();
         if (comment != null && comment.getCount() > 0) {
-           /* commentAmountTv.setText("全部评价(" + comment.getCount() + ")");
-            GlideUtil.getInstance().LoadContextCircleBitmap(this, AppConstant.HEAD_IMG_URL + comment.getAvatar(), userheadIv,
+            commentAmountTv.setText("全部评价(" + comment.getCount() + ")");
+            GlideUtil.getInstance().LoadContextCircleBitmap(this, AppConstant.HEAD_IMG_URL + comment.getAvatar(), commentImgIv,
                     R.drawable.icon_head_normal, R.drawable.icon_head_normal);
             if (comment.getMobile() != null && !comment.getMobile().equals("")) {
-                userphoneTv.setText(comment.getMobile().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2"));
+                commentNameTv.setText(comment.getMobile().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2"));
             }
-            commentDetailsTv.setText(comment.getComment_detail());
+            commentContentTv.setText(comment.getComment_detail());
             lookAllcommentTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("ID", id);
-                    startActivity(CommentYarnActivity.class, bundle);
+                   /* Bundle bundle = new Bundle();
+                    bundle.putInt("ID", goodsDetailBean.getGoods().getId());
+                    startActivity(CommentYarnActivity.class, bundle);*/
                 }
-            });*/
+            });
             commentImgIv.setVisibility(View.VISIBLE);
 
         } else {
@@ -278,7 +309,29 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
         dataBean.setAttributes(attributesBeanList);
         dataBean.setStockGoods(stockGoodsBeanList);
     }
-    @OnClick({R.id.ll_select_color_size,R.id.tv_shopping_cart,R.id.tv_shopping})
+
+    private void initDetails(String[] arr){
+        if(arr==null){
+            return;
+        }
+        for (int i = 0; i <arr.length; i++) {
+            contentList.add(arr[i]);
+        }
+        rlProductDetail.setLayoutManager(new LinearLayoutManager(mContext));
+        rlProductDetail.addItemDecoration(new RecyclerViewDriverLine(this,RecyclerViewDriverLine.VERTICAL_LIST));
+        rlProductDetail.setHasFixedSize(true);
+        rlProductDetail.setNestedScrollingEnabled(false);
+        ProductDetailImgAdapter adapter = new ProductDetailImgAdapter(contentList);
+        rlProductDetail.setAdapter(adapter);
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                PicShowDialog dialog = new PicShowDialog(ProductDetailActivity.this, contentList, position);
+                dialog.show();
+            }
+        });
+    }
+    @OnClick({R.id.ll_select_color_size,R.id.tv_shopping_cart,R.id.tv_shopping,R.id.ll_collection})
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -297,6 +350,45 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
                 Dialog(goodsProductBean,2);
                 dialog_confirm_ll.setVisibility(View.VISIBLE);
                 dialog_confirm2_ll.setVisibility(View.GONE);
+                break;
+            case R.id.ll_collection:
+                if(AppConstant.isLogin==false){
+                    final List<String> mDatas1=new ArrayList<>();
+                    mDatas1.add("登录");
+                    mDatas1.add("注册");
+                    NormalSelectionDialog dialog=new NormalSelectionDialog.Builder(this)
+                            .setBoolTitle(true)
+                            .setTitleText("温馨提示\n尊敬的用户,您尚未登录,请选择登录或注册")
+                            .setTitleHeight(55)
+                            .setItemHeight(45)
+                            .setItemTextColor(R.color.blue)
+                            .setItemTextSize(14)
+                            .setItemWidth(0.95f)
+                            .setCancleButtonText("取消")
+                            .setOnItemListener(new DialogInterface.OnItemClickListener<NormalSelectionDialog>() {
+                                @Override
+                                public void onItemClick(NormalSelectionDialog dialog, View button, int position) {
+                                    switch (position){
+                                        case 0:
+                                            startActivity(LoginFragmentActivity.class);
+                                            break;
+                                        case 1:
+                                            startActivity(RegisterActivity.class);
+                                            break;
+                                    }
+                                    dialog.dismiss();
+                                }
+                            }).setTouchOutside(true)
+                            .build();
+                    dialog.setData(mDatas1);
+                    dialog.show();
+                    return;
+                }
+
+                Map<String, String> map = new HashMap<>();
+                map.put("id", String.valueOf(goodsProductBean.getId()));
+                map.put("uid", String.valueOf(AppConstant.UID));
+                mPresenter.collectProduct(map);
                 break;
         }
 
@@ -408,7 +500,8 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
                 if(type==1){
                     String detail=goodColor+"#"+goodSize;
                     Bundle bundle = new Bundle();
-                    bundle.putInt("gid", Integer.valueOf(goodsProductBean.getId()));
+                    bundle.putInt("ORDERTYPE",0);
+                    bundle.putInt("gid",Integer.valueOf(goodsProductBean.getId()));
                     bundle.putString("detail", detail);
                     bundle.putInt("amount", goods_nmb);
                     startActivity(SureOrderActivity.class, bundle);
@@ -512,8 +605,9 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
         }
     }
     @Override
-    public void getSimilarRecommenSuccess(SimilarRecommenBean model) {
-        dataLists = model.getGoods();
+    public void getSimilarRecommenSuccess(List<WeekListBean.WeekBean> model) {
+        dataLists.clear();
+        dataLists.addAll(model);
         mAdapter1.setNewData(dataLists);
     }
 
@@ -523,6 +617,12 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
             mLoadingDialog.cancelDialog();
         }
         ToastUtil.showShortToast(result);
+    }
+
+    @Override
+    public void collectProductSuccess(String msg) {
+        collectIv.setImageResource(R.drawable.icon_favorit);
+        ToastUtil.showShortToast(msg);
     }
 
     @Override

@@ -17,7 +17,7 @@ import com.yizhisha.maoyi.bean.json.RefundDetailBean;
 import com.yizhisha.maoyi.bean.json.RefundExpressBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
 import com.yizhisha.maoyi.bean.json.ShopcartListBean;
-import com.yizhisha.maoyi.bean.json.SimilarRecommenBean;
+import com.yizhisha.maoyi.bean.json.SimilarRecommenListBean;
 import com.yizhisha.maoyi.bean.json.SingleShoppCartBean;
 import com.yizhisha.maoyi.bean.json.SortedListBean;
 import com.yizhisha.maoyi.bean.json.SpecialDetailBean;
@@ -29,7 +29,6 @@ import com.yizhisha.maoyi.bean.json.WechatInfoBean;
 import com.yizhisha.maoyi.bean.json.WeekListBean;
 import com.yizhisha.maoyi.bean.json.WeekTopListBean;
 
-import java.util.List;
 import java.util.Map;
 
 import okhttp3.MultipartBody;
@@ -84,6 +83,10 @@ public interface ApiService {
     @GET("app/ucenter/favoriteAdd")
     Observable<RequestStatusBean> addCollect(@QueryMap Map<String, String> param);
 
+    //添加收藏
+    @GET("app/goods/workshopFav/")
+    Observable<RequestStatusBean> workshopFav(@QueryMap Map<String, String> param);
+
     //取消收藏
     @GET("app/ucenter/favoriteDelete")
     Observable<RequestStatusBean> cacheCollect(@QueryMap Map<String, String> param);
@@ -114,6 +117,11 @@ public interface ApiService {
     @GET("app/ucenter/shopcartDelete")
     Observable<RequestStatusBean> deleteShoppCart(@QueryMap  Map<String, String> param);
 
+    //购物车下单确认
+    @FormUrlEncoded
+    @POST("app/order/confirm_shopcart/")
+    Observable<OrderSureBean> shopCartOrderSure(@FieldMap Map<String, String> param);
+
     //获得订单列表
     @GET("app/order/orderList")
     Observable<MyOrderBean> getOrderList(@QueryMap  Map<String, String> param);
@@ -142,7 +150,7 @@ public interface ApiService {
     //登录
     @FormUrlEncoded
     @POST("app/user/dologin/")
-    Observable<LoginBean> Login(@FieldMap Map<String,String> map);
+    Observable<RequestStatusBean> Login(@FieldMap Map<String,String> map);
 
     //注册
     @FormUrlEncoded
@@ -242,8 +250,6 @@ public interface ApiService {
     @GET("app/order/expressView/")
     Observable<RefundExpressBean> loadExpress(@Query("orderno") String orderno);
 
-    @GET("app/user/dologin/mobile/15626036029/password/123456")
-    Observable<LoginBean> login();
 
     //退款申请
     @FormUrlEncoded
@@ -291,8 +297,8 @@ public interface ApiService {
     @GET("app/goods/goodsDetail/")
     Observable<GoodsDetailBean> getGoodsDetail(@QueryMap Map<String, String> param);
     //商品详情的同类推荐
-    @GET("app/recommend/tid/")
-    Observable<SimilarRecommenBean> getSimilarRecommen();
+    @GET("app/recommend/")
+    Observable<SimilarRecommenListBean> getSimilarRecommen(@Query("tid") int tid);
 
     //工作室
     @GET("app/goods/workshopList/")
