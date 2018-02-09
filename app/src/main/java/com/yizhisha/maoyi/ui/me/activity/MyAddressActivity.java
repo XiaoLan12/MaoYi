@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -92,10 +93,10 @@ public class MyAddressActivity extends BaseActivity<MyAddressPresenter> implemen
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if(mType==1) {
-                  /*  Intent intent = new Intent();
-                    intent.putExtra("ADDRESS", dataList.get(position));
+                    Intent intent = new Intent();
+                    intent.putExtra("ADDRESS", (Serializable) dataList.get(position));
                     setResult(2, intent);
-                    finish_Activity(MyAddressActivity.this);*/
+                    finish_Activity(MyAddressActivity.this);
                 }
             }
         });

@@ -27,6 +27,6 @@ public class StudioAdapter extends BaseQuickAdapter<StudioBean.StudioListBean,Ba
             helper.setText(R.id.name_tv,item.getWorkshop());
             helper.setText(R.id.address_tv,item.getAddress());
         ImageView imageView=helper.getView(R.id.img);
-        GlideUtil.getInstance().LoadContextBitmap(mContext,item.getAvatar(),imageView,GlideUtil.LOAD_BITMAP);
+        GlideUtil.getInstance().LoadContextBitmap(mContext,item.getCover(),imageView,GlideUtil.LOAD_BITMAP);
     }
 }

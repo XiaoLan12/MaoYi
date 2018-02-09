@@ -1,12 +1,13 @@
 package com.yizhisha.maoyi.bean.json;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2017/10/31 0031.
  */
 
-public class GoodsListBean {
+public class GoodsListBean  implements Serializable {
         private List<Address> address;
         private String status;
         private String info;
@@ -30,10 +31,10 @@ public class GoodsListBean {
         public String getInfo() {
             return info;
         }
-    public class Address {
+    public class Address  implements Serializable {
 
-        private String id;
-        private String uid;
+        private int id;
+        private int uid;
         private String linkman;
         private String area_pname;
         private String area_sname;
@@ -41,17 +42,17 @@ public class GoodsListBean {
         private String address;
         private String area_app;
         private String index;
-        public void setId(String id) {
+        public void setId(int id) {
             this.id = id;
         }
-        public String getId() {
+        public int getId() {
             return id;
         }
 
-        public void setUid(String uid) {
+        public void setUid(int uid) {
             this.uid = uid;
         }
-        public String getUid() {
+        public int getUid() {
             return uid;
         }
 

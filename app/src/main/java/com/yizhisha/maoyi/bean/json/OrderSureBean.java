@@ -38,6 +38,16 @@ public class OrderSureBean {
         private String price;
         private String amount;
         private int totalprice;
+        private int addressId;
+
+        public int getAddressId() {
+            return addressId;
+        }
+
+        public void setAddressId(int addressId) {
+            this.addressId = addressId;
+        }
+
         public void setGid(String gid) {
             this.gid = gid;
         }
