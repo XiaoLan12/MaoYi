@@ -84,7 +84,7 @@ public class MainActivity extends BaseActivity {
         tabLayout.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
-                if(position==1){
+                if(position==2){
                     if(AppConstant.isLogin==false){
                         final List<String> mDatas1=new ArrayList<>();
                         mDatas1.add("登录");

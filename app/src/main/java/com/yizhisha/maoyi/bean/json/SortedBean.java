@@ -41,4 +41,10 @@ public class SortedBean {
                 ", cat_litpic='" + cat_litpic + '\'' +
                 '}';
     }
+
+    public SortedBean(String cat_id, String cat_name, String cat_litpic) {
+        this.cat_id = cat_id;
+        this.cat_name = cat_name;
+        this.cat_litpic = cat_litpic;
+    }
 }

@@ -6,17 +6,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <com.youth.banner.Banner
-            android:id="@+id/banner"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            ></com.youth.banner.Banner>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:paddingBottom="@dimen/dp_10"
         android:paddingTop="@dimen/dp_10"
         android:orientation="horizontal">
@@ -60,4 +49,5 @@
             android:layout_weight="1"/>
 
     </LinearLayout>
+
 </LinearLayout>

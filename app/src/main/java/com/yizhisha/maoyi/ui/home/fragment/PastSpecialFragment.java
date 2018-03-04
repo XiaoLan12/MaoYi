@@ -1,5 +1,6 @@
 package com.yizhisha.maoyi.ui.home.fragment;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -43,7 +44,9 @@ public class PastSpecialFragment extends BaseFragment<PastSpecialPresenter> impl
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(SpecialDetailActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putString("spc_id",mAdapter.getData().get(position).getSpc_id());
+                startActivity(SpecialDetailActivity.class,bundle);
             }
         });
     }

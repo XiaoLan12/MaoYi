@@ -32,10 +32,6 @@ public class LoginWithWeiPopuwindow extends PopupWindow {
         WindowManager wm = (WindowManager) activity
                 .getSystemService(Context.WINDOW_SERVICE);
        int mScreenWidth = wm.getDefaultDisplay().getWidth();
-
-
-        this.tv_login_with_wei = tv_login_with_wei;
-        this.tv_register=tv_register;
         setWidth((int) (mScreenWidth*0.7));
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
 

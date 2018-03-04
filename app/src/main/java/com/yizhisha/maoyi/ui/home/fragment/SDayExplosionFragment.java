@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,8 +16,11 @@ import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.adapter.SDayExplosionAdapter;
 import com.yizhisha.maoyi.base.BaseFragment;
+import com.yizhisha.maoyi.bean.json.GoodsScreesBean;
+import com.yizhisha.maoyi.bean.json.GoodsScreesContentBean;
 import com.yizhisha.maoyi.bean.json.WeekListBean;
 import com.yizhisha.maoyi.bean.json.WeekTopListBean;
+import com.yizhisha.maoyi.common.popupwindow.GoodsScressPopuwindow;
 import com.yizhisha.maoyi.ui.home.activity.ProductDetailActivity;
 import com.yizhisha.maoyi.ui.home.contract.SDayExplosionContract;
 import com.yizhisha.maoyi.ui.home.presenter.SDayExplosionPresenter;
@@ -82,6 +86,38 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
           tv_select_price=view.findViewById(R.id.tv_select_price);
           tv_select_xiaoliang=view.findViewById(R.id.tv_select_xiaoliang);
         ll_select_price=view.findViewById(R.id.ll_select_price);
+        tv_select_select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GoodsScressPopuwindow popuwindow=new GoodsScressPopuwindow(mContext);
+                List<Object> objects=new ArrayList<>();
+                    GoodsScreesBean goodsScreesBean=new GoodsScreesBean();
+                    goodsScreesBean.setItem("裙子");
+                objects.add(goodsScreesBean);
+                    for(int i=0;i<3;i++){
+                        GoodsScreesContentBean goodsScreesContentBean=new GoodsScreesContentBean();
+                        goodsScreesContentBean.setTitle("item1");
+                        goodsScreesContentBean.setTitle("item2");
+                        goodsScreesContentBean.setTitle("item3");
+                        objects.add(goodsScreesContentBean);
+                    }
+
+                GoodsScreesBean goodsScreesBean1=new GoodsScreesBean();
+                goodsScreesBean1.setItem("库子");
+                objects.add(goodsScreesBean1);
+                for(int i=0;i<3;i++){
+                    GoodsScreesContentBean goodsScreesContentBean=new GoodsScreesContentBean();
+                    goodsScreesContentBean.setTitle("item1");
+                    goodsScreesContentBean.setTitle("item2");
+                    goodsScreesContentBean.setTitle("item3");
+                    objects.add(goodsScreesContentBean);
+                }
+
+                popuwindow.serData(objects);
+                popuwindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+            }
+        });
         tv_select_xiaoliang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,7 +133,7 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
                     map.put("order","1");
                     tv_select_xiaoliang.setTextColor(RescourseUtil.getColor(R.color.red1));
                 }else{
-                    xiaoliang=1;
+                    xiaoliang=0;
                     tv_select_xiaoliang.setTextColor(RescourseUtil.getColor(R.color.black));
                 }
                 mPresenter.getWeekList(map);

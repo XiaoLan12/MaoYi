@@ -18,7 +18,7 @@ import java.util.Map;
 public class SDayExplosionPresenter extends SDayExplosionContract.Presenter{
     @Override
     public void getWeekTop() {
-        addSubscrebe(Api.getInstance().getWeekTop(),new RxSubscriber<WeekTopListBean>(mContext,true){
+        addSubscrebe(Api.getInstance().getWeekTop(),new RxSubscriber<WeekTopListBean>(mContext,false){
             @Override
             protected void onSuccess(WeekTopListBean model) {
                 mView.getWeekToprSuccess(model.getList());
@@ -37,7 +37,6 @@ public class SDayExplosionPresenter extends SDayExplosionContract.Presenter{
             @Override
             protected void onSuccess(WeekListBean model) {
                 mView.getWeekListtSuccess(model.getList());
-
             }
             @Override
             protected void onFailure(String message) {

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class SortedListBean {
 
-    private List<SortedsBean> goods;
+    public List<SortedsBean> goods;
 
     public List<SortedsBean> getList() {
         return goods;
@@ -58,6 +58,18 @@ public class SortedListBean {
                     ", cat=" + cat +
                     '}';
         }
+
+        public SortedsBean(String id, String name, List<SortedBean> cat) {
+            this.id = id;
+            this.name = name;
+            this.cat = cat;
+        }
     }
 
+    public SortedListBean(List<SortedsBean> goods) {
+        this.goods = goods;
+    }
+    public SortedListBean() {
+
+    }
 }

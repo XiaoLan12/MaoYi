@@ -1,6 +1,7 @@
 package com.yizhisha.maoyi.ui.home.fragment;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -62,8 +63,10 @@ public class TodaySpecialFragment extends BaseFragment<TodaySpecialPresenter>  i
         addHeadView();
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(SpecialDetailActivity.class);
+            public void onItemClick(BaseQuickAdapter adapter1, View view, int position) {
+                Bundle bundle=new Bundle();
+                bundle.putString("spc_id",mAdapter.getData().get(position).getSpc_id());
+                startActivity(SpecialDetailActivity.class,bundle);
             }
         });
 

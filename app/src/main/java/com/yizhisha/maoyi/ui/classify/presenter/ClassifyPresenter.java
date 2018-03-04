@@ -5,6 +5,7 @@ import android.util.Log;
 import com.yizhisha.maoyi.api.Api;
 import com.yizhisha.maoyi.base.rx.RxSubscriber;
 import com.yizhisha.maoyi.bean.json.SortedListBean;
+import com.yizhisha.maoyi.bean.json.StudioBean;
 import com.yizhisha.maoyi.ui.classify.contract.ClassifyContract;
 
 import java.util.List;
@@ -23,6 +24,25 @@ public class ClassifyPresenter extends ClassifyContract.Presenter{
             protected void onSuccess(SortedListBean model) {
                 mView.getSortedListSuccess(model.getList());
 
+            }
+            @Override
+            protected void onFailure(String message) {
+                mView.loadFail(message);
+            }
+        });
+    }
+    @Override
+    public void getStudio(boolean isShowLoad) {
+
+        addSubscrebe(Api.getInstance().getStudio(), new RxSubscriber<StudioBean>(mContext,false) {
+            @Override
+            protected void onSuccess(StudioBean data) {
+
+                if(data.getStatus().equals("y")&&data.getWorkshop().size()>0){
+                    mView.getStudioSuccess(data.getWorkshop());
+                }else{
+                    mView.showEmpty();
+                }
             }
             @Override
             protected void onFailure(String message) {

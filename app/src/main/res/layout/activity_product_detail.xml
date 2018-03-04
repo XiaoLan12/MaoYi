@@ -26,6 +26,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/ll_img"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -33,11 +34,13 @@
                     android:id="@+id/img_litpic"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:adjustViewBounds="true"
                     />
                 <com.youth.banner.Banner
                     android:id="@+id/banner"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"></com.youth.banner.Banner>
+                    android:layout_height="380dp"></com.youth.banner.Banner>
 
             </LinearLayout>
 

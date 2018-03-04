@@ -130,6 +130,8 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
     TextView commentContentTv;
     @Bind(R.id.look_allcomment_tv)
     TextView lookAllcommentTv;
+    @Bind(R.id.ll_img)
+    LinearLayout llImg;
 
     private SDayExplosionAdapter mAdapter1;
     private List<WeekListBean.WeekBean> dataLists = new ArrayList<>();
@@ -217,6 +219,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
             collectIv.setImageResource(R.drawable.icon_favorit_normale);
         }
         Glide.with(ProductDetailActivity.this).load(AppConstant.PRUDUCT_IMG_URL + goodsProductBean.getLitpic()).into(imgLitpic);
+
         shopAttri();
         initDetails(goodsProductBean.getContent());
         initComment(model);

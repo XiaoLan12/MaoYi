@@ -194,4 +194,13 @@ public class StudioBean {
         }
 
     }
+
+    @Override
+    public String toString() {
+        return "StudioBean{" +
+                "status='" + status + '\'' +
+                ", info='" + info + '\'' +
+                ", workshop=" + workshop +
+                '}';
+    }
 }

@@ -12,7 +12,9 @@ import com.google.gson.Gson;
 import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.base.BaseFragment;
+import com.yizhisha.maoyi.bean.json.SortedBean;
 import com.yizhisha.maoyi.bean.json.SortedListBean;
+import com.yizhisha.maoyi.bean.json.StudioBean;
 import com.yizhisha.maoyi.gangedrecyclerview.CheckListener;
 import com.yizhisha.maoyi.gangedrecyclerview.ItemHeaderDecoration;
 import com.yizhisha.maoyi.gangedrecyclerview.RvListener;
@@ -39,6 +41,10 @@ public class ClassifyFragment extends BaseFragment<com.yizhisha.maoyi.ui.classif
     private boolean isMoved;
     private SortBean mSortBean;
 
+    private String sort;
+
+    List<SortedListBean.SortedsBean> sortedsBeanList2=new ArrayList<>();
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_classify;
@@ -48,9 +54,11 @@ public class ClassifyFragment extends BaseFragment<com.yizhisha.maoyi.ui.classif
     protected void initView() {
         initView1();
         initData();
-        mPresenter.getSortedList();
+
+        mPresenter.getStudio(true);
     }
     private void initData() {
+
 
     }
 
@@ -136,6 +144,19 @@ public class ClassifyFragment extends BaseFragment<com.yizhisha.maoyi.ui.classif
     }
 
     @Override
+    public void getStudioSuccess(List<StudioBean.StudioListBean> model) {
+        List<SortedBean>  sortedBeans=new ArrayList<>();
+        for(int i=0;i<model.size();i++){
+            sortedBeans.add(new SortedBean(model.get(i).getId()+"",model.get(i).getWorkshop(),model.get(i).getAvatar()));
+//            SortedListBean.SortedsBean sortedsBean=new SortedListBean.SortedsBean();
+//            sortedsBeanList2.add(new SortedListBean());
+        }
+        SortedListBean.SortedsBean sortedsBean=new SortedListBean().new SortedsBean("999","工作室",sortedBeans);
+        sortedsBeanList2.add(sortedsBean);
+        mPresenter.getSortedList();
+    }
+
+    @Override
     public void getSortedListSuccess(List<SortedListBean.SortedsBean> model) {
 
         //获取asset目录下的资源文件
@@ -149,6 +170,9 @@ public class ClassifyFragment extends BaseFragment<com.yizhisha.maoyi.ui.classif
         for (int i = 0; i < model.size(); i++) {
             list.add(model.get(i).getName());
         }
+        list.add("工作室");
+        model.addAll(sortedsBeanList2);
+
         AppConstant.sortedBeanList=model;
       /*  for (int i = 0; i < categoryOneArray.size(); i++) {
             list.add(categoryOneArray.get(i).getName());
@@ -170,6 +194,11 @@ public class ClassifyFragment extends BaseFragment<com.yizhisha.maoyi.ui.classif
 
     @Override
     public void loadFail(String msg) {
+
+    }
+
+    @Override
+    public void showEmpty() {
 
     }
 }

@@ -13,7 +13,7 @@ import com.yizhisha.maoyi.ui.home.contract.PastSpecialContract;
 public class PastSpecialPresenter extends PastSpecialContract.Presenter {
     @Override
     public void getPastList() {
-        addSubscrebe(Api.getInstance().getPastList(),new RxSubscriber<ListBean<DailyBean>>(mContext,true){
+        addSubscrebe(Api.getInstance().getPastList(),new RxSubscriber<ListBean<DailyBean>>(mContext,false){
 
             @Override
             protected void onSuccess(ListBean<DailyBean> model) {

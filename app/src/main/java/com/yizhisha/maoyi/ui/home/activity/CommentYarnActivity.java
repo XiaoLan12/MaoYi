@@ -42,6 +42,7 @@ public class CommentYarnActivity extends BaseActivity<CommentYarnPresenter> impl
     protected int getLayoutId() {
         return R.layout.activity_comment_yarn;
     }
+
     @Override
     protected void initToolBar() {
         toolbar.setLeftButtonOnClickLinster(new View.OnClickListener() {
@@ -51,6 +52,7 @@ public class CommentYarnActivity extends BaseActivity<CommentYarnPresenter> impl
             }
         });
     }
+
     @Override
     protected void initView() {
         Bundle bundle=getIntent().getExtras();

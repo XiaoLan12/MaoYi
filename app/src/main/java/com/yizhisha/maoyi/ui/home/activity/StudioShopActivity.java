@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,9 +22,12 @@ import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.adapter.MyAddressAdapter;
 import com.yizhisha.maoyi.adapter.StudioShopAdapter;
 import com.yizhisha.maoyi.base.BaseActivity;
+import com.yizhisha.maoyi.bean.json.GoodsScreesBean;
+import com.yizhisha.maoyi.bean.json.GoodsScreesContentBean;
 import com.yizhisha.maoyi.bean.json.StudioShopBean;
 import com.yizhisha.maoyi.common.dialog.DialogInterface;
 import com.yizhisha.maoyi.common.dialog.NormalAlertDialog;
+import com.yizhisha.maoyi.common.popupwindow.GoodsScressPopuwindow;
 import com.yizhisha.maoyi.ui.home.contract.StudioShopContract;
 import com.yizhisha.maoyi.ui.home.presenter.StudioShopPresenter;
 import com.yizhisha.maoyi.ui.me.activity.AddAddressActivity;
@@ -67,6 +73,16 @@ public class StudioShopActivity extends BaseActivity<StudioShopPresenter> implem
 
     private int mWid;//工作室ID；
     private boolean isFocus=false;
+
+
+    private ImageView img_banner;
+    private ImageView img_select_price;
+    private TextView tv_select_select;
+    private TextView tv_select_price;
+    private TextView tv_select_xiaoliang;
+    private LinearLayout ll_select_price;
+    private int price=0;
+    private int xiaoliang=0;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_studio_shop;
@@ -86,6 +102,7 @@ public class StudioShopActivity extends BaseActivity<StudioShopPresenter> implem
         body.put("wid",String.valueOf(mWid));
         body.put("uid",String.valueOf(AppConstant.UID));
         load(body,true);
+        addHeadView();
     }
     private void initAdapter(){
         swiperefreshlayout.setColorSchemeColors(RescourseUtil.getColor(R.color.red),
@@ -130,11 +147,107 @@ public class StudioShopActivity extends BaseActivity<StudioShopPresenter> implem
             GlideUtil.getInstance().LoadContextBitmap(this,workshop.getAvatar(),headIv,GlideUtil.LOAD_BITMAP);
             nameTv.setText(workshop.getLinkman());
         }
+
         dataLists.clear();
         dataLists.addAll(model.getGoods());
         mAdapter.setNewData(dataLists);
-    }
 
+    }
+    private void addHeadView() {
+        View view=this.getLayoutInflater().inflate(R.layout.headview_studio, (ViewGroup) recyclerview.getParent(), false);
+        img_banner=view.findViewById(R.id.img_banner);
+        img_select_price=view.findViewById(R.id.img_select_price);
+        tv_select_select=view.findViewById(R.id.tv_select_select);
+        tv_select_price=view.findViewById(R.id.tv_select_price);
+        tv_select_xiaoliang=view.findViewById(R.id.tv_select_xiaoliang);
+        ll_select_price=view.findViewById(R.id.ll_select_price);
+        tv_select_select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GoodsScressPopuwindow popuwindow=new GoodsScressPopuwindow(mContext);
+                List<Object> objects=new ArrayList<>();
+                GoodsScreesBean goodsScreesBean=new GoodsScreesBean();
+                goodsScreesBean.setItem("裙子");
+                objects.add(goodsScreesBean);
+                for(int i=0;i<3;i++){
+                    GoodsScreesContentBean goodsScreesContentBean=new GoodsScreesContentBean();
+                    goodsScreesContentBean.setTitle("item1");
+                    goodsScreesContentBean.setTitle("item2");
+                    goodsScreesContentBean.setTitle("item3");
+                    objects.add(goodsScreesContentBean);
+                }
+
+                GoodsScreesBean goodsScreesBean1=new GoodsScreesBean();
+                goodsScreesBean1.setItem("库子");
+                objects.add(goodsScreesBean1);
+                for(int i=0;i<3;i++){
+                    GoodsScreesContentBean goodsScreesContentBean=new GoodsScreesContentBean();
+                    goodsScreesContentBean.setTitle("item1");
+                    goodsScreesContentBean.setTitle("item2");
+                    goodsScreesContentBean.setTitle("item3");
+                    objects.add(goodsScreesContentBean);
+                }
+
+                popuwindow.serData(objects);
+                popuwindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+            }
+        });
+        tv_select_xiaoliang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(price!=0){
+                    price=0;
+                    img_select_price.setImageResource(R.drawable.price_select_not);
+                    tv_select_price.setTextColor(RescourseUtil.getColor(R.color.black));
+                }
+
+                Map<String,String> body=new HashMap<>();
+                body.put("wid",String.valueOf(mWid));
+                body.put("uid",String.valueOf(AppConstant.UID));
+                if(xiaoliang==0){
+                    xiaoliang=1;
+                    body.put("order","1");
+                    tv_select_xiaoliang.setTextColor(RescourseUtil.getColor(R.color.red1));
+                }else{
+                    xiaoliang=0;
+                    tv_select_xiaoliang.setTextColor(RescourseUtil.getColor(R.color.black));
+                }
+                load(body,false);
+            }
+        });
+        ll_select_price.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(xiaoliang!=0) {
+                    xiaoliang = 0;
+                    tv_select_xiaoliang.setTextColor(RescourseUtil.getColor(R.color.black));
+                }
+                Map<String,String> body=new HashMap<>();
+                body.put("wid",String.valueOf(mWid));
+                body.put("uid",String.valueOf(AppConstant.UID));
+                if(price==0){
+                    img_select_price.setImageResource(R.drawable.price_select_up);
+                    tv_select_price.setTextColor(RescourseUtil.getColor(R.color.red1));
+                    price=4;
+                    body.put("order","4");
+                }else if(price==4){
+                    img_select_price.setImageResource(R.drawable.price_select_down);
+                    tv_select_price.setTextColor(RescourseUtil.getColor(R.color.red1));
+                    price=3;
+                    body.put("order","3");
+                }else {
+                    img_select_price.setImageResource(R.drawable.price_select_not);
+                    price=0;
+                    tv_select_price.setTextColor(RescourseUtil.getColor(R.color.black));
+                }
+                load(body,false);
+
+
+            }
+        });
+        mAdapter.addHeaderView(view);
+    }
     @Override
     public void focusWorkSuccess(String msg) {
         if(isFocus){
