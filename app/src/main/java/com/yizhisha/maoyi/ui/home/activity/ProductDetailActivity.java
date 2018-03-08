@@ -1,6 +1,11 @@
 package com.yizhisha.maoyi.ui.home.activity;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.RequiresApi;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -8,6 +13,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -26,6 +32,7 @@ import com.yizhisha.maoyi.adapter.SDayExplosionAdapter;
 import com.yizhisha.maoyi.base.BaseActivity;
 import com.yizhisha.maoyi.base.BaseToolbar;
 import com.yizhisha.maoyi.bean.GoodsAttrsBean;
+import com.yizhisha.maoyi.bean.json.BannerResult;
 import com.yizhisha.maoyi.bean.json.GoodsDetailBean;
 import com.yizhisha.maoyi.bean.json.GoodsProductBean;
 import com.yizhisha.maoyi.bean.json.GoodsStyleBean;
@@ -43,6 +50,7 @@ import com.yizhisha.maoyi.ui.login.activity.RegisterActivity;
 import com.yizhisha.maoyi.ui.me.activity.NewActivity;
 import com.yizhisha.maoyi.utils.GlideUtil;
 import com.yizhisha.maoyi.utils.ToastUtil;
+import com.yizhisha.maoyi.widget.ImageSlideshow;
 import com.yizhisha.maoyi.widget.RecyclerViewDriverLine;
 import com.yizhisha.maoyi.widget.SKUInterface;
 
@@ -65,8 +73,9 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
 
     @Bind(R.id.toolbar)
     BaseToolbar toolbar;
-    @Bind(R.id.img_litpic)
-    ImageView imgLitpic;
+    @Bind(R.id.is_gallery)
+    ImageSlideshow imageSlideshow;
+
     @Bind(R.id.tv_title)
     TextView tvTitle;
     @Bind(R.id.tv_money)
@@ -142,6 +151,10 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
     private int mGid;
     //详情
     private List<String> contentList = new ArrayList<>();
+
+
+
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_product_detail;
@@ -177,11 +190,23 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
         map.put("uid", String.valueOf(3));
         mPresenter.getGoodsDetail(map);
 
+        // 为ImageSlideshow设置数据
+        imageSlideshow.setDotSpace(12);
+        imageSlideshow.setDotSize(12);
+        imageSlideshow.setDelay(3000);
+        imageSlideshow.commit();
+
     }
+
     @Override
     public void getGoodsDetailSuccess(GoodsDetailBean model) {
         goodsDetailBean=model;
         goodsProductBean = model.getGoods();
+
+        List<BannerResult> bannerResultsList=new ArrayList<>();
+        BannerResult bannerResult=new BannerResult();
+        bannerResult.setUrl(goodsProductBean.getLitpic());
+        imageSlideshow.setImageTitleBeanList(bannerResultsList);
         mPresenter.getSimilarRecommen(goodsProductBean.getTid());
         String devi_lenth = goodsProductBean.getDevi_length();
         if (devi_lenth.equals("1")) {
@@ -218,7 +243,6 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
         }else{
             collectIv.setImageResource(R.drawable.icon_favorit_normale);
         }
-        Glide.with(ProductDetailActivity.this).load(AppConstant.PRUDUCT_IMG_URL + goodsProductBean.getLitpic()).into(imgLitpic);
 
         shopAttri();
         initDetails(goodsProductBean.getContent());

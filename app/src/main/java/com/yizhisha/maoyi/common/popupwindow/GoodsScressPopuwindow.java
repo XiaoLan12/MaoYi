@@ -45,7 +45,7 @@ public class GoodsScressPopuwindow extends PopupWindow{
         WindowManager wm = (WindowManager) activity
                 .getSystemService(Context.WINDOW_SERVICE);
         int mScreenWidth = wm.getDefaultDisplay().getWidth();
-        setWidth((int) (mScreenWidth*0.7));
+        setWidth((int) (mScreenWidth));
         setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
         setAnimationStyle(R.style.showPopupAnimation);
         goodsScreesBeanList=new ArrayList<>();
