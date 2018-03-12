@@ -54,7 +54,7 @@ public class RadioSelectionDialog {
         View view = LayoutInflater.from(mcontext).inflate(R.layout.dialog_radio, null);
         TextView titleText = (TextView)view.findViewById(R.id.title_tv);
         titleText.setText(msg);
-        recyclerView=view.findViewById(R.id.recyclerview);
+        recyclerView= (RecyclerView) view.findViewById(R.id.recyclerview);
         mRadioDialog = new Dialog(mcontext, R.style.DialogStyle);
         mRadioDialog.setCanceledOnTouchOutside(true);
         mRadioDialog.setContentView(view, new LinearLayout.LayoutParams(DensityUtil.getScreenWidth(mcontext), LinearLayout.LayoutParams.MATCH_PARENT));

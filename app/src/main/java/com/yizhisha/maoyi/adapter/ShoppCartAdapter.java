@@ -150,7 +150,7 @@ public class ShoppCartAdapter extends BaseExpandableListAdapter {
             childViewHolder.id_cb_select_child = (CheckBox) convertView
                     .findViewById(R.id.childshopp_cb);
             childViewHolder.mIvPic= (ImageView) convertView.findViewById(R.id.tradehead_shoppcar2_iv);
-            childViewHolder.mEditIv=convertView.findViewById(R.id.edit_iv);
+            childViewHolder.mEditIv= (ImageView) convertView.findViewById(R.id.edit_iv);
             //常规下：
             childViewHolder.tv_items_child_desc = (TextView) convertView
                     .findViewById(R.id.tradename_shoppcar2_tv);

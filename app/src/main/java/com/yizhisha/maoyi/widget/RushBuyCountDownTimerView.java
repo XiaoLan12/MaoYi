@@ -48,10 +48,10 @@ public class RushBuyCountDownTimerView extends LinearLayout{
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.view_countdowntimer, this);
-        dayTv=view.findViewById(R.id.day_tv);
-        hourTv=view.findViewById(R.id.hour_tv);
-        minuteTv=view.findViewById(R.id.minute_tv);
-        secondTv=view.findViewById(R.id.second_tv);
+        dayTv= (TextView) view.findViewById(R.id.day_tv);
+        hourTv=(TextView)view.findViewById(R.id.hour_tv);
+        minuteTv=(TextView)view.findViewById(R.id.minute_tv);
+        secondTv=(TextView)view.findViewById(R.id.second_tv);
 
     }
     public RushBuyCountDownTimerView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -60,10 +60,10 @@ public class RushBuyCountDownTimerView extends LinearLayout{
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.view_countdowntimer, this);
-        dayTv=view.findViewById(R.id.day_tv);
-        hourTv=view.findViewById(R.id.hour_tv);
-        minuteTv=view.findViewById(R.id.minute_tv);
-        secondTv=view.findViewById(R.id.second_tv);
+        dayTv=(TextView)view.findViewById(R.id.day_tv);
+        hourTv=(TextView)view.findViewById(R.id.hour_tv);
+        minuteTv=(TextView)view.findViewById(R.id.minute_tv);
+        secondTv=(TextView)view.findViewById(R.id.second_tv);
 
     }
     public void setDateInfo(Long startdate, Long endDate) {

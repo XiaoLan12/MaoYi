@@ -31,6 +31,8 @@ import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -113,12 +115,12 @@ public class SpecialDetailActivity extends BaseActivity<SpecialDetailPresenter> 
     }
     private void addHeadView() {
         View view=getLayoutInflater().inflate(R.layout.headview_special_detail, (ViewGroup) mRecyclerView.getParent(), false);
-        banner=view.findViewById(R.id.banner);
-        img_select_price=view.findViewById(R.id.img_select_price);
-        tv_select_select=view.findViewById(R.id.tv_select_select);
-        tv_select_price=view.findViewById(R.id.tv_select_price);
-        tv_select_xiaoliang=view.findViewById(R.id.tv_select_xiaoliang);
-        ll_select_price=view.findViewById(R.id.ll_select_price);
+        banner= (Banner) view.findViewById(R.id.banner);
+        img_select_price=(ImageView)view.findViewById(R.id.img_select_price);
+        tv_select_select=(TextView)view.findViewById(R.id.tv_select_select);
+        tv_select_price=(TextView)view.findViewById(R.id.tv_select_price);
+        tv_select_xiaoliang=(TextView)view.findViewById(R.id.tv_select_xiaoliang);
+        ll_select_price= (LinearLayout) view.findViewById(R.id.ll_select_price);
         tv_select_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

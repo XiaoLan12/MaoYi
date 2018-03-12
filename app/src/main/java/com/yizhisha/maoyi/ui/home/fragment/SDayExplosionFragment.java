@@ -80,12 +80,12 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
     }
     private void addHeadView() {
         View view=getActivity().getLayoutInflater().inflate(R.layout.headview_sday_explosion, (ViewGroup) mRecyclerView.getParent(), false);
-        img_banner=view.findViewById(R.id.img_banner);
-        img_select_price=view.findViewById(R.id.img_select_price);
-          tv_select_select=view.findViewById(R.id.tv_select_select);
-          tv_select_price=view.findViewById(R.id.tv_select_price);
-          tv_select_xiaoliang=view.findViewById(R.id.tv_select_xiaoliang);
-        ll_select_price=view.findViewById(R.id.ll_select_price);
+        img_banner=(ImageView)view.findViewById(R.id.img_banner);
+        img_select_price=(ImageView)view.findViewById(R.id.img_select_price);
+          tv_select_select=(TextView)view.findViewById(R.id.tv_select_select);
+          tv_select_price=(TextView)view.findViewById(R.id.tv_select_price);
+          tv_select_xiaoliang=(TextView)view.findViewById(R.id.tv_select_xiaoliang);
+        ll_select_price=(LinearLayout)view.findViewById(R.id.ll_select_price);
         tv_select_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

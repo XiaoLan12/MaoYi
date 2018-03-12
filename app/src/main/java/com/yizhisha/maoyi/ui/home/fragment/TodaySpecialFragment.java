@@ -75,7 +75,7 @@ public class TodaySpecialFragment extends BaseFragment<TodaySpecialPresenter>  i
 
     private void addHeadView() {
         View view=getActivity().getLayoutInflater().inflate(R.layout.headview_today_specil, (ViewGroup) mRecyclerView.getParent(), false);
-        banner=view.findViewById(R.id.banner);
+        banner=(Banner)view.findViewById(R.id.banner);
         mPresenter.getDailyTopSlider();
         mPresenter.getDailyList();
         mAdapter.addHeaderView(view);

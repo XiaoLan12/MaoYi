@@ -56,7 +56,7 @@ public class GoodsScressPopuwindow extends PopupWindow{
         setOutsideTouchable(false);
         setTouchable(true);
 
-        recyclerView=mContentView.findViewById(R.id.recyclerview);
+        recyclerView= (RecyclerView) mContentView.findViewById(R.id.recyclerview);
         mAdapter=new GoodsScressAdapter();
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setHasFixedSize(true);
