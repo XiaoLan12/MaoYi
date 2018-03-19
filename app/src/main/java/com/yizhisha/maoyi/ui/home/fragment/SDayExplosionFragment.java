@@ -89,9 +89,10 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
         tv_select_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 GoodsScressPopuwindow popuwindow=new GoodsScressPopuwindow(mContext);
                 List<Object> objects=new ArrayList<>();
-                    GoodsScreesBean goodsScreesBean=new GoodsScreesBean();
+                 /*   GoodsScreesBean goodsScreesBean=new GoodsScreesBean();
                     goodsScreesBean.setItem("裙子");
                 objects.add(goodsScreesBean);
                     for(int i=0;i<3;i++){
@@ -112,9 +113,15 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
                     goodsScreesContentBean.setTitle("item3");
                     objects.add(goodsScreesContentBean);
                 }
+*/
+                String[] mVals = new String[]
+                        {"Hello", "Android", "Weclome Hi ", "Button", "TextView", "Hello",
+                                "Android", "Weclome", "Button ImageView", "TextView", "Helloworld",
+                                "Android", "Weclome Hello", "Button Text", "TextView"};
+                popuwindow.serData1(mVals);
 
                 popuwindow.serData(objects);
-                popuwindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                popuwindow.showAtLocation(view, Gravity.RIGHT, 0, 0);
 
             }
         });

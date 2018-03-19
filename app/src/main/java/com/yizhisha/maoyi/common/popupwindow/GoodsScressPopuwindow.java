@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -23,6 +24,9 @@ import com.yizhisha.maoyi.bean.json.GoodsScreesContentBean;
 import com.yizhisha.maoyi.bean.json.MyOrderListBean;
 import com.yizhisha.maoyi.bean.json.OrderFootBean;
 import com.yizhisha.maoyi.bean.json.OrderHeadBean;
+import com.zhy.view.flowlayout.FlowLayout;
+import com.zhy.view.flowlayout.TagAdapter;
+import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +42,8 @@ public class GoodsScressPopuwindow extends PopupWindow{
     private RecyclerView recyclerView;
     private List<Object> goodsScreesBeanList;
     private GoodsScressAdapter mAdapter;
+    private TagFlowLayout id_flowlayout;
+    private  LayoutInflater mInflater;
 
     public GoodsScressPopuwindow(Context activity){
         mActivity=activity;
@@ -45,7 +51,7 @@ public class GoodsScressPopuwindow extends PopupWindow{
         WindowManager wm = (WindowManager) activity
                 .getSystemService(Context.WINDOW_SERVICE);
         int mScreenWidth = wm.getDefaultDisplay().getWidth();
-        setWidth((int) (mScreenWidth));
+        setWidth((int) (mScreenWidth*0.6));
         setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
         setAnimationStyle(R.style.showPopupAnimation);
         goodsScreesBeanList=new ArrayList<>();
@@ -56,6 +62,8 @@ public class GoodsScressPopuwindow extends PopupWindow{
         setOutsideTouchable(false);
         setTouchable(true);
 
+          mInflater = LayoutInflater.from(activity);
+        id_flowlayout= (TagFlowLayout ) mContentView.findViewById(R.id.id_flowlayout);
         recyclerView= (RecyclerView) mContentView.findViewById(R.id.recyclerview);
         mAdapter=new GoodsScressAdapter();
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
@@ -63,7 +71,22 @@ public class GoodsScressPopuwindow extends PopupWindow{
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setAdapter(mAdapter);
 
+
     }
+    public void serData1(String[] mVals) {
+        id_flowlayout.setAdapter(new TagAdapter<String>(mVals)
+        {
+            @Override
+            public View getView(FlowLayout parent, int position, String s)
+            {
+                TextView tv = (TextView) mInflater.inflate(R.layout.tv,
+                        id_flowlayout, false);
+                tv.setText(s);
+                return tv;
+            }
+        });
+    }
+
     public void serData(List<Object> data){
         goodsScreesBeanList.clear();
 
