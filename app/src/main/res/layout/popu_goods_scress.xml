@@ -5,10 +5,11 @@
     xmlns:zhy="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_marginTop="44dp"
-    android:alpha="0.9"
+    android:alpha="1"
     android:background="@color/white">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </android.support.v7.widget.RecyclerView>
@@ -16,19 +17,53 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/common_bg"
+            android:padding="6dp"
+            android:text="上装"/>
         <com.zhy.view.flowlayout.TagFlowLayout
-            android:id="@+id/id_flowlayout"
+            android:id="@+id/id_flowlayout1"
             zhy:max_select="-1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp">
+            android:padding="4dp">
         </com.zhy.view.flowlayout.TagFlowLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/common_bg"
-            android:padding="@dimen/dp_10"
+            android:padding="6dp"
+            android:text="裙装"/>
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:id="@+id/id_flowlayout2"
+            zhy:max_select="-1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingRight="4dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="4dp"
+            android:paddingTop="4dp">
+        </com.zhy.view.flowlayout.TagFlowLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/common_bg"
+            android:padding="6dp"
+            android:text="裤装"/>
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:id="@+id/id_flowlayout3"
+            zhy:max_select="-1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp">
+        </com.zhy.view.flowlayout.TagFlowLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/common_bg"
+            android:padding="6dp"
             android:text="价格区间"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,5 +94,20 @@
         </LinearLayout>
 
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <TextView
+        android:id="@+id/tv_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/common_color"
+        android:padding="8dp"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_marginBottom="20dp"
+        android:text="开始搜索"/>
 
 </LinearLayout>

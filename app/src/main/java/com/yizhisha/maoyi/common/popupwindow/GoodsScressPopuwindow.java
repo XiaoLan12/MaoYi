@@ -32,17 +32,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by 小蓝 on 2018/2/9.
+ * Created by 小熊 on 2018/2/9.
  */
 
 public class GoodsScressPopuwindow extends PopupWindow{
     private View mContentView;
     private Context mActivity;
-
     private RecyclerView recyclerView;
     private List<Object> goodsScreesBeanList;
     private GoodsScressAdapter mAdapter;
-    private TagFlowLayout id_flowlayout;
+    private TagFlowLayout flowlayout1,flowlayout2,flowlayout3;
     private  LayoutInflater mInflater;
 
     public GoodsScressPopuwindow(Context activity){
@@ -63,7 +62,9 @@ public class GoodsScressPopuwindow extends PopupWindow{
         setTouchable(true);
 
           mInflater = LayoutInflater.from(activity);
-        id_flowlayout= (TagFlowLayout ) mContentView.findViewById(R.id.id_flowlayout);
+       flowlayout1= (TagFlowLayout ) mContentView.findViewById(R.id.id_flowlayout1);
+        flowlayout2= (TagFlowLayout ) mContentView.findViewById(R.id.id_flowlayout2);
+        flowlayout3= (TagFlowLayout ) mContentView.findViewById(R.id.id_flowlayout3);
         recyclerView= (RecyclerView) mContentView.findViewById(R.id.recyclerview);
         mAdapter=new GoodsScressAdapter();
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
@@ -73,14 +74,36 @@ public class GoodsScressPopuwindow extends PopupWindow{
 
 
     }
-    public void serData1(String[] mVals) {
-        id_flowlayout.setAdapter(new TagAdapter<String>(mVals)
+    public void serData1(String[] mVals1,String[] mVals2,String[] mVals3) {
+        flowlayout1.setAdapter(new TagAdapter<String>(mVals1)
         {
             @Override
             public View getView(FlowLayout parent, int position, String s)
             {
                 TextView tv = (TextView) mInflater.inflate(R.layout.tv,
-                        id_flowlayout, false);
+                        flowlayout1, false);
+                tv.setText(s);
+                return tv;
+            }
+        });
+        flowlayout2.setAdapter(new TagAdapter<String>(mVals2)
+        {
+            @Override
+            public View getView(FlowLayout parent, int position, String s)
+            {
+                TextView tv = (TextView) mInflater.inflate(R.layout.tv,
+                        flowlayout2, false);
+                tv.setText(s);
+                return tv;
+            }
+        });
+        flowlayout3.setAdapter(new TagAdapter<String>(mVals3)
+        {
+            @Override
+            public View getView(FlowLayout parent, int position, String s)
+            {
+                TextView tv = (TextView) mInflater.inflate(R.layout.tv,
+                        flowlayout3, false);
                 tv.setText(s);
                 return tv;
             }

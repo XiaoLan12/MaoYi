@@ -18,6 +18,7 @@ import com.yizhisha.maoyi.adapter.SDayExplosionAdapter;
 import com.yizhisha.maoyi.base.BaseFragment;
 import com.yizhisha.maoyi.bean.json.GoodsScreesBean;
 import com.yizhisha.maoyi.bean.json.GoodsScreesContentBean;
+import com.yizhisha.maoyi.bean.json.SortedListBean;
 import com.yizhisha.maoyi.bean.json.WeekListBean;
 import com.yizhisha.maoyi.bean.json.WeekTopListBean;
 import com.yizhisha.maoyi.common.popupwindow.GoodsScressPopuwindow;
@@ -26,6 +27,7 @@ import com.yizhisha.maoyi.ui.home.contract.SDayExplosionContract;
 import com.yizhisha.maoyi.ui.home.presenter.SDayExplosionPresenter;
 import com.yizhisha.maoyi.utils.GlideUtil;
 import com.yizhisha.maoyi.utils.RescourseUtil;
+import com.yizhisha.maoyi.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,6 +52,7 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
     private LinearLayout ll_select_price;
     private int price=0;
     private int xiaoliang=0;
+            private List<SortedListBean.SortedsBean> sortedsBeanList=new ArrayList<>();
 
     private SDayExplosionAdapter mAdapter;
     private List<WeekListBean.WeekBean> dataLists = new ArrayList<>();
@@ -77,6 +80,7 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
         Map<String,String> map=new HashMap<>();
         mPresenter.getWeekList(map);
         mPresenter.getWeekTop();
+        mPresenter.getSortedList();
     }
     private void addHeadView() {
         View view=getActivity().getLayoutInflater().inflate(R.layout.headview_sday_explosion, (ViewGroup) mRecyclerView.getParent(), false);
@@ -114,11 +118,26 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
                     objects.add(goodsScreesContentBean);
                 }
 */
-                String[] mVals = new String[]
-                        {"Hello", "Android", "Weclome Hi ", "Button", "TextView", "Hello",
-                                "Android", "Weclome", "Button ImageView", "TextView", "Helloworld",
-                                "Android", "Weclome Hello", "Button Text", "TextView"};
-                popuwindow.serData1(mVals);
+
+                 if(sortedsBeanList.size()==0){
+                     ToastUtil.showbottomShortToast("加载失败");
+                     mPresenter.getSortedList();
+                     return;
+                 }
+                String[] mVals1 = new String[sortedsBeanList.get(0).getCat().size()];
+                String[] mVals2 = new String[sortedsBeanList.get(1).getCat().size()];
+                String[] mVals3 = new String[sortedsBeanList.get(2).getCat().size()];
+                for(int i=0;i<sortedsBeanList.get(0).getCat().size();i++){
+                    mVals1[i]=sortedsBeanList.get(0).getCat().get(i).getCat_name();
+                }
+                for(int i=0;i<sortedsBeanList.get(1).getCat().size();i++){
+                    mVals2[i]=sortedsBeanList.get(1).getCat().get(i).getCat_name();
+                }
+                for(int i=0;i<sortedsBeanList.get(2).getCat().size();i++){
+                    mVals3[i]=sortedsBeanList.get(2).getCat().get(i).getCat_name();
+                }
+
+                popuwindow.serData1(mVals1,mVals2,mVals3);
 
                 popuwindow.serData(objects);
                 popuwindow.showAtLocation(view, Gravity.RIGHT, 0, 0);
@@ -171,7 +190,6 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
                 }
                 mPresenter.getWeekList(map);
 
-
             }
         });
         mAdapter.addHeaderView(view);
@@ -195,6 +213,12 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
     public void getWeekListtSuccess(List<WeekListBean.WeekBean> model) {
         dataLists=model;
         mAdapter.setNewData(dataLists);
+    }
+
+    @Override
+    public void getSortedListSuccess(List<SortedListBean.SortedsBean> model) {
+        sortedsBeanList=model;
+        Log.e("UUU",model.toString());
     }
 
     @Override

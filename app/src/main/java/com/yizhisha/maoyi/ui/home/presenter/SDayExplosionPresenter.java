@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.yizhisha.maoyi.api.Api;
 import com.yizhisha.maoyi.base.rx.RxSubscriber;
+import com.yizhisha.maoyi.bean.json.SortedListBean;
 import com.yizhisha.maoyi.bean.json.WeekListBean;
 import com.yizhisha.maoyi.bean.json.WeekTopListBean;
 import com.yizhisha.maoyi.ui.home.contract.SDayExplosionContract;
@@ -16,6 +17,22 @@ import java.util.Map;
  */
 
 public class SDayExplosionPresenter extends SDayExplosionContract.Presenter{
+    @Override
+    public void getSortedList() {
+        addSubscrebe(Api.getInstance().getSorted(),new RxSubscriber<SortedListBean>(mContext,false){
+
+            @Override
+            protected void onSuccess(SortedListBean model) {
+                Log.e("UUU","jinlail");
+                mView.getSortedListSuccess(model.getList());
+
+            }
+            @Override
+            protected void onFailure(String message) {
+                mView.loadFail(message);
+            }
+        });
+    }
     @Override
     public void getWeekTop() {
         addSubscrebe(Api.getInstance().getWeekTop(),new RxSubscriber<WeekTopListBean>(mContext,false){
