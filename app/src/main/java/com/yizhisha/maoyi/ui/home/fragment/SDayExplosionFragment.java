@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import butterknife.Bind;
 
@@ -56,6 +57,7 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
 
     private SDayExplosionAdapter mAdapter;
     private List<WeekListBean.WeekBean> dataLists = new ArrayList<>();
+    private     GoodsScressPopuwindow popuwindow;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_sday_explosion;
@@ -93,57 +95,51 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
         tv_select_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                GoodsScressPopuwindow popuwindow=new GoodsScressPopuwindow(mContext);
-                List<Object> objects=new ArrayList<>();
-                 /*   GoodsScreesBean goodsScreesBean=new GoodsScreesBean();
-                    goodsScreesBean.setItem("裙子");
-                objects.add(goodsScreesBean);
-                    for(int i=0;i<3;i++){
-                        GoodsScreesContentBean goodsScreesContentBean=new GoodsScreesContentBean();
-                        goodsScreesContentBean.setTitle("item1");
-                        goodsScreesContentBean.setTitle("item2");
-                        goodsScreesContentBean.setTitle("item3");
-                        objects.add(goodsScreesContentBean);
-                    }
-
-                GoodsScreesBean goodsScreesBean1=new GoodsScreesBean();
-                goodsScreesBean1.setItem("库子");
-                objects.add(goodsScreesBean1);
-                for(int i=0;i<3;i++){
-                    GoodsScreesContentBean goodsScreesContentBean=new GoodsScreesContentBean();
-                    goodsScreesContentBean.setTitle("item1");
-                    goodsScreesContentBean.setTitle("item2");
-                    goodsScreesContentBean.setTitle("item3");
-                    objects.add(goodsScreesContentBean);
-                }
-*/
-
-                 if(sortedsBeanList.size()==0){
-                     ToastUtil.showbottomShortToast("加载失败");
-                     mPresenter.getSortedList();
-                     return;
-                 }
-                String[] mVals1 = new String[sortedsBeanList.get(0).getCat().size()];
-                String[] mVals2 = new String[sortedsBeanList.get(1).getCat().size()];
-                String[] mVals3 = new String[sortedsBeanList.get(2).getCat().size()];
-                for(int i=0;i<sortedsBeanList.get(0).getCat().size();i++){
-                    mVals1[i]=sortedsBeanList.get(0).getCat().get(i).getCat_name();
-                }
-                for(int i=0;i<sortedsBeanList.get(1).getCat().size();i++){
-                    mVals2[i]=sortedsBeanList.get(1).getCat().get(i).getCat_name();
-                }
-                for(int i=0;i<sortedsBeanList.get(2).getCat().size();i++){
-                    mVals3[i]=sortedsBeanList.get(2).getCat().get(i).getCat_name();
-                }
-
-                popuwindow.serData1(mVals1,mVals2,mVals3);
-
-                popuwindow.serData(objects);
+            if(popuwindow!=null){
                 popuwindow.showAtLocation(view, Gravity.RIGHT, 0, 0);
+                return;
+            }else {
+                popuwindow = new GoodsScressPopuwindow(mContext);
+                if (sortedsBeanList.size() == 0) {
+                    ToastUtil.showbottomShortToast("加载失败");
+                    mPresenter.getSortedList();
+                    return;
+                }
+             final   String[] mVals1 = new String[sortedsBeanList.get(0).getCat().size()];
+             final   String[] mVals2 = new String[sortedsBeanList.get(1).getCat().size()];
+              final  String[] mVals3 = new String[sortedsBeanList.get(2).getCat().size()];
+                for (int i = 0; i < sortedsBeanList.get(0).getCat().size(); i++) {
+                    mVals1[i] = sortedsBeanList.get(0).getCat().get(i).getCat_name();
+                }
+                for (int i = 0; i < sortedsBeanList.get(1).getCat().size(); i++) {
+                    mVals2[i] = sortedsBeanList.get(1).getCat().get(i).getCat_name();
+                }
+                for (int i = 0; i < sortedsBeanList.get(2).getCat().size(); i++) {
+                    mVals3[i] = sortedsBeanList.get(2).getCat().get(i).getCat_name();
+                }
 
+                popuwindow.serData1(mVals1, mVals2, mVals3);
+                popuwindow.setSearchClickListener(new GoodsScressPopuwindow.SearchClickListener() {
+                    @Override
+                    public void searchClickLIstener(Set<Integer> selectPosSet1, Set<Integer> selectPosSet2, Set<Integer> selectPosSet3,List<Integer> liIn) {
+                        List<String> list=new ArrayList<>();
+                        for(Integer i:selectPosSet1){
+                            list.add(mVals1[i]);
+                        }
+                        for(Integer i:selectPosSet2){
+                            list.add(mVals2[i]);
+                        }
+                        for(Integer i:selectPosSet3){
+                            list.add(mVals3[i]);
+                        }
+                        ToastUtil.showbottomShortToast(list.toString()+liIn.toString());
+                    }
+                });
+                popuwindow.showAtLocation(view, Gravity.RIGHT, 0, 0);
+            }
             }
         });
+
         tv_select_xiaoliang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

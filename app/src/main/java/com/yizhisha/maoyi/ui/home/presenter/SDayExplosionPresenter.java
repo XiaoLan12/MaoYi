@@ -23,7 +23,7 @@ public class SDayExplosionPresenter extends SDayExplosionContract.Presenter{
 
             @Override
             protected void onSuccess(SortedListBean model) {
-                Log.e("UUU","jinlail");
+
                 mView.getSortedListSuccess(model.getList());
 
             }

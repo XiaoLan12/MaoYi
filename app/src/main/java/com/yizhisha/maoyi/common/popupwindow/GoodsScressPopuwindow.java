@@ -7,10 +7,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -30,6 +32,7 @@ import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by 小熊 on 2018/2/9.
@@ -42,7 +45,12 @@ public class GoodsScressPopuwindow extends PopupWindow{
     private List<Object> goodsScreesBeanList;
     private GoodsScressAdapter mAdapter;
     private TagFlowLayout flowlayout1,flowlayout2,flowlayout3;
+    private TextView tv_search;
     private  LayoutInflater mInflater;
+    private SearchClickListener searchClickListener;
+    private EditText et_price1,et_price2;
+
+    private List<String > list=new ArrayList<>();
 
     public GoodsScressPopuwindow(Context activity){
         mActivity=activity;
@@ -66,11 +74,58 @@ public class GoodsScressPopuwindow extends PopupWindow{
         flowlayout2= (TagFlowLayout ) mContentView.findViewById(R.id.id_flowlayout2);
         flowlayout3= (TagFlowLayout ) mContentView.findViewById(R.id.id_flowlayout3);
         recyclerView= (RecyclerView) mContentView.findViewById(R.id.recyclerview);
+        et_price1=(EditText) mContentView.findViewById(R.id.et_price1);
+        et_price2=(EditText) mContentView.findViewById(R.id.et_price2);
+        tv_search=(TextView)mContentView.findViewById(R.id.tv_search);
         mAdapter=new GoodsScressAdapter();
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setAdapter(mAdapter);
+       /* flowlayout1.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
+            @Override
+            public void onSelected(Set<Integer> selectPosSet) {
+
+                Log.e("UUU",selectPosSet.toString());
+                for(Integer c : selectPosSet) {
+                    Log.e("UUU",c+"");
+                }
+            }
+        });*/
+
+        tv_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(searchClickListener!=null){
+                    List<Integer > list=new ArrayList<>();
+                   String price1= et_price1.getText().toString().trim();
+                    String price2= et_price2.getText().toString().trim();
+                    if(!price1.equals("")){
+                        try {
+                            list.add(Integer.parseInt(price1));
+                        }catch (Exception e){
+
+                        }
+                    }
+                    if(!price2.equals("")){
+                        try {
+                            list.add(Integer.parseInt(price2));
+                        }catch (Exception e){
+
+                        }
+                    }
+                    if(list.size()==2){
+                        if(list.get(0)>list.get(1)){
+                            et_price1.setText(list.get(1)+"");
+                            et_price2.setText(list.get(0)+"");
+                        }
+                    }
+                    searchClickListener.searchClickLIstener(  flowlayout1.getSelectedList(),flowlayout2.getSelectedList(),flowlayout3.getSelectedList(),list);
+                }
+
+                dismiss();
+            }
+        });
 
 
     }
@@ -86,6 +141,7 @@ public class GoodsScressPopuwindow extends PopupWindow{
                 return tv;
             }
         });
+
         flowlayout2.setAdapter(new TagAdapter<String>(mVals2)
         {
             @Override
@@ -151,4 +207,12 @@ public class GoodsScressPopuwindow extends PopupWindow{
             }
         }
     }
+    public interface SearchClickListener{
+        public void searchClickLIstener(Set<Integer> selectPosSet1,Set<Integer> selectPosSet2,Set<Integer> selectPosSet3,List<Integer> list);
+    }
+    public void setSearchClickListener(SearchClickListener searchClickListener){
+        this.searchClickListener=searchClickListener;
+    }
+
+
 }
