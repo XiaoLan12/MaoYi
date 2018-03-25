@@ -1,10 +1,17 @@
 package com.yizhisha.maoyi.ui.home.activity;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +19,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -44,6 +52,8 @@ import com.yizhisha.maoyi.common.dialog.LoadingDialog;
 import com.yizhisha.maoyi.common.dialog.NormalSelectionDialog;
 import com.yizhisha.maoyi.common.dialog.PicShowDialog;
 import com.yizhisha.maoyi.ui.home.contract.ProductDetailContract;
+import com.yizhisha.maoyi.ui.home.jc.DemoFragment;
+import com.yizhisha.maoyi.ui.home.jc.DemoFragment1;
 import com.yizhisha.maoyi.ui.home.presenter.ProductDetailPresenter;
 import com.yizhisha.maoyi.ui.login.activity.LoginFragmentActivity;
 import com.yizhisha.maoyi.ui.login.activity.RegisterActivity;
@@ -64,17 +74,20 @@ import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 /**
  * Created by Administrator on 2017/11/16.
  */
-
-public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> implements ProductDetailContract.View {
+public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> implements ProductDetailContract.View, ViewPager.OnPageChangeListener {
 
     @Bind(R.id.toolbar)
     BaseToolbar toolbar;
     @Bind(R.id.is_gallery)
     ImageSlideshow imageSlideshow;
+    @Bind(R.id.viewpager)
+    ViewPager viewPager;
 
     @Bind(R.id.tv_title)
     TextView tvTitle;
@@ -154,7 +167,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
 
 
 
-
+    List<DemoFragment1> fragmentList = new ArrayList<>();
     @Override
     protected int getLayoutId() {
         return R.layout.activity_product_detail;
@@ -191,10 +204,10 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
         mPresenter.getGoodsDetail(map);
 
         // 为ImageSlideshow设置数据
-        imageSlideshow.setDotSpace(12);
-        imageSlideshow.setDotSize(12);
-        imageSlideshow.setDelay(3000);
-        imageSlideshow.commit();
+//        imageSlideshow.setDotSpace(12);
+//        imageSlideshow.setDotSize(12);
+//        imageSlideshow.setDelay(3000);
+//        imageSlideshow.commit();
 
     }
 
@@ -205,8 +218,22 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
 
         List<BannerResult> bannerResultsList=new ArrayList<>();
         BannerResult bannerResult=new BannerResult();
-        bannerResult.setUrl(goodsProductBean.getLitpic());
-        imageSlideshow.setImageTitleBeanList(bannerResultsList);
+        bannerResult.setUrl(AppConstant.PRUDUCT_IMG_URL+goodsProductBean.getLitpic());
+        bannerResultsList.add(bannerResult);
+        BannerResult bannerResult1=new BannerResult();
+        bannerResult1.setUrl("http://pic.ibaotu.com/00/56/32/78G888piCyDu.mp4");
+        bannerResultsList.add(bannerResult1);
+
+//        viewPager.setAdapter(new Myvpadapter( ProductDetailActivity.this,bannerResultsList));
+        fragmentList.add(new DemoFragment1().setIndex(-1));
+        fragmentList.add(new DemoFragment1().setIndex(-1));
+        MyAdapter myAdapter = new MyAdapter(getSupportFragmentManager());
+//        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager.setAdapter(myAdapter);
+        viewPager.setOnPageChangeListener(this);
+
+
+//        imageSlideshow.setImageTitleBeanList(bannerResultsList);
         mPresenter.getSimilarRecommen(goodsProductBean.getTid());
         String devi_lenth = goodsProductBean.getDevi_length();
         if (devi_lenth.equals("1")) {
@@ -357,6 +384,11 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
                 dialog.show();
             }
         });
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JCVideoPlayer.releaseAllVideos();
     }
     @OnClick({R.id.ll_select_color_size,R.id.tv_shopping_cart,R.id.tv_shopping,R.id.ll_collection})
     @Override
@@ -512,7 +544,6 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
             }
         });
 
-
         dialog_confirm_ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -606,6 +637,49 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
         return list;
 
     }
+    //viewpager标记
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        JCVideoPlayer.releaseAllVideos();
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+    public class MyAdapter extends FragmentPagerAdapter {
+
+        public MyAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int i) {
+            return fragmentList.get(i);
+        }
+
+        @Override
+        public int getCount() {
+            return fragmentList.size();
+        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (JCVideoPlayer.backPress()) {
+            return;
+        }
+        super.onBackPressed();
+    }
+
+
     public class DialogClick implements View.OnClickListener{
 
         @Override
@@ -656,4 +730,116 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
     public void loadFail(String msg) {
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+    public class Myvpadapter extends PagerAdapter {
+        int[] imageicon;
+        Context context;
+
+        List<BannerResult> imagelist=new ArrayList<>();
+        public Myvpadapter( Context context,
+                            List<BannerResult> imagelist) {
+            super();
+            this.imageicon = imageicon;
+            this.context = context;
+            this.imagelist = imagelist;
+        }
+
+        @Override
+        public int getCount() {
+            // TODO Auto-generated method stub
+            return imagelist.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View arg0, Object arg1) {
+            // TODO Auto-generated method stub
+            return arg0 == arg1;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            // TODO Auto-generated method stub
+            // super.destroyItem(container, position, object);
+//            container.removeView((View) object);
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+
+//            View view = LayoutInflater.from(context).inflate( R.layout.item_banner,container, true);
+            View view=View.inflate(context,R.layout.item_banner,null);
+            ImageView image=(ImageView)view.findViewById(R.id.img);
+            JCVideoPlayerStandard jcVideoPlayerStandard=(  JCVideoPlayerStandard)view.findViewById(R.id.videoplayer);
+            Log.e("HHH",imagelist.get(position).getUrl());
+            if(imagelist.get(position).getUrl().endsWith("mp4")){
+                try {
+                    jcVideoPlayerStandard.setUp(
+                         imagelist.get(position).getUrl(), JCVideoPlayer.SCREEN_LAYOUT_LIST,
+                            "");
+                    image.setVisibility(View.GONE);
+                    Bitmap bitmap=retriveVideoFrameFromVideo(imagelist.get(position).getUrl());
+                    jcVideoPlayerStandard.thumbImageView.setImageBitmap(bitmap);
+//                    image.setImageBitmap(bitmap);
+                    container.addView(view);
+                    return view;
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
+            }else{
+                jcVideoPlayerStandard.setVisibility(View.GONE);
+                Glide.with(context).load(imagelist.get(position).getUrl()).into(image);
+            }
+
+
+//            GlideUtil.getInstance().LoadContextBitmap(context,imagelist.get(position).getUrl(),image,"");
+//            ImageView image = imagelist.get(position % imagelist.size());
+            container.addView(view);
+            return view;
+        }
+
+    }
+    public static Bitmap retriveVideoFrameFromVideo(String videoPath)
+            throws Throwable
+    {
+        Bitmap bitmap = null;
+        MediaMetadataRetriever mediaMetadataRetriever = null;
+        try
+        {
+            mediaMetadataRetriever = new MediaMetadataRetriever();
+            if (Build.VERSION.SDK_INT >= 14)
+                mediaMetadataRetriever.setDataSource(videoPath, new HashMap<String, String>());
+            else
+                mediaMetadataRetriever.setDataSource(videoPath);
+            //   mediaMetadataRetriever.setDataSource(videoPath);
+            bitmap = mediaMetadataRetriever.getFrameAtTime();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            throw new Throwable(
+                    "Exception in retriveVideoFrameFromVideo(String videoPath)"
+                            + e.getMessage());
+
+        }
+        finally
+        {
+            if (mediaMetadataRetriever != null)
+            {
+                mediaMetadataRetriever.release();
+            }
+        }
+        return bitmap;
+    }*/
 }

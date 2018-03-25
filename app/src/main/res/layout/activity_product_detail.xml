@@ -33,8 +33,12 @@
                 <com.yizhisha.maoyi.widget.ImageSlideshow
                     android:id="@+id/is_gallery"
                     android:layout_width="match_parent"
+                    android:visibility="gone"
                     android:layout_height="212dp"/>
-
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"></android.support.v4.view.ViewPager>
 
             </LinearLayout>
 

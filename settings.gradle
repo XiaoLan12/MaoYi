@@ -1,1 +1,1 @@
-include ':app', ':StatusBarlibrary', ':library', ':pickerview', ':pictureselector'
+include ':app', ':StatusBarlibrary', ':library', ':pickerview', ':pictureselector', ':jcvideoplayer-lib'

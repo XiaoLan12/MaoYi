@@ -16,7 +16,7 @@ import java.util.Map;
 public class ProductDetailPresenter extends ProductDetailContract.Presenter {
     @Override
     public void getGoodsDetail(Map<String,String> map) {
-        addSubscrebe(Api.getInstance().getGoodsDetail(map),new RxSubscriber<GoodsDetailBean>(mContext,true){
+        addSubscrebe(Api.getInstance().getGoodsDetail(map),new RxSubscriber<GoodsDetailBean>(mContext,false){
 
             @Override
             protected void onSuccess(GoodsDetailBean model) {
@@ -50,7 +50,7 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter {
 
     @Override
     public void getSimilarRecommen(int tid) {
-        addSubscrebe(Api.getInstance().getSimilarRecommen(tid),new RxSubscriber<SimilarRecommenListBean>(mContext,true){
+        addSubscrebe(Api.getInstance().getSimilarRecommen(tid),new RxSubscriber<SimilarRecommenListBean>(mContext,false){
 
             @Override
             protected void onSuccess(SimilarRecommenListBean model) {

@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/MaoYi.iml" filepath="$PROJECT_DIR$/MaoYi.iml" />
       <module fileurl="file://$PROJECT_DIR$/StatusBarlibrary/StatusBarlibrary.iml" filepath="$PROJECT_DIR$/StatusBarlibrary/StatusBarlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jcvideoplayer-lib/jcvideoplayer-lib.iml" filepath="$PROJECT_DIR$/jcvideoplayer-lib/jcvideoplayer-lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/pickerview/pickerview.iml" filepath="$PROJECT_DIR$/pickerview/pickerview.iml" />
       <module fileurl="file://$PROJECT_DIR$/pictureselector/pictureselector.iml" filepath="$PROJECT_DIR$/pictureselector/pictureselector.iml" />
