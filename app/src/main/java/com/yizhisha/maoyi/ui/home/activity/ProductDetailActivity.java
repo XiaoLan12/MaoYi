@@ -225,8 +225,9 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
         bannerResultsList.add(bannerResult1);
 
 //        viewPager.setAdapter(new Myvpadapter( ProductDetailActivity.this,bannerResultsList));
-        fragmentList.add(new DemoFragment1().setIndex(-1));
-        fragmentList.add(new DemoFragment1().setIndex(-1));
+        fragmentList.add(new DemoFragment1().setIndex("http://pic.ibaotu.com/00/56/32/78G888piCyDu.mp4",0));
+        fragmentList.add(new DemoFragment1().setIndex(AppConstant.PRUDUCT_IMG_URL+goodsProductBean.getLitpic(),1));
+
         MyAdapter myAdapter = new MyAdapter(getSupportFragmentManager());
 //        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setAdapter(myAdapter);
@@ -730,9 +731,6 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
     public void loadFail(String msg) {
 
     }
-
-
-
 
 
 

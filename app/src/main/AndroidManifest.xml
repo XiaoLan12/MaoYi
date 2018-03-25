@@ -87,7 +87,9 @@
         <!-- 请标明，谁知道你写的什么鬼 -->
         <activity android:name=".ui.me.activity.ProblemDetailsActivity" />
         <!-- 产品详情 -->
-        <activity android:name=".ui.home.activity.ProductDetailActivity" />
+        <activity android:name=".ui.home.activity.ProductDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
         <!-- 专题详情 -->
         <activity android:name=".ui.home.activity.SpecialDetailActivity" />
         <activity android:name=".ui.me.activity.AddCommentActivity" />

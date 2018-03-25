@@ -1,6 +1,9 @@
 package com.yizhisha.maoyi.ui.home.jc;
 
 
+import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.yizhisha.maoyi.R;
+
+import java.util.HashMap;
 
 /**
  * Created by Nathen on 2017/6/9.
@@ -35,4 +40,5 @@ public class DemoFragment extends Fragment {
         listView.setAdapter(new VideoListAdapter(getActivity(), index));
         return listView;
     }
+
 }
