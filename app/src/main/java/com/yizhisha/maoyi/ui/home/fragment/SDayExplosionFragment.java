@@ -64,6 +64,7 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
 
     private SDayExplosionAdapter mAdapter;
     private List<WeekListBean.WeekBean> dataLists = new ArrayList<>();
+    private GoodsScressPopuwindow popuwindow;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_sday_explosion;
@@ -96,28 +97,47 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
             @Override
             public void onClick(View view) {
 
-                final GoodsScressPopuwindow popuwindow=new GoodsScressPopuwindow(mContext);
-                popuwindow.serData1(sortedsBeanList);
-                popuwindow.setOnSearchOnClick(new GoodsScressPopuwindow.OnSearchOnClick() {
-                    @Override
-                    public void onSearchLisenter() {
-                        List<Integer> data=popuwindow.getSelectData();
-                        StringBuffer buffer=new StringBuffer();
-                        for(Integer str:data){
-                             buffer.append(str).append(",");
+
+                if(popuwindow==null){
+                    popuwindow=new GoodsScressPopuwindow(mContext);
+                    popuwindow.serData1(sortedsBeanList);
+                    popuwindow.setOnSearchOnClick(new GoodsScressPopuwindow.OnSearchOnClick() {
+                        @Override
+                        public void onSearchLisenter() {
+                            List<Integer> data=popuwindow.getSelectData();
+                            String valuePrice=popuwindow.getPrice();
+                            StringBuffer buffer=new StringBuffer();
+                            for(Integer str:data){
+                                buffer.append(str).append(",");
+                            }
+                            String search="";
+                            if(buffer.length()>0) {
+                                search = buffer.substring(0, buffer.length() - 1).toString();
+                            }
+                            Map<String,String> map=new HashMap<>();
+                            if(price==0){
+                                if(xiaoliang!=0) {
+                                    map.put("order", xiaoliang + "");
+                                }
+                            }else{
+                                if(price!=0) {
+                                    map.put("order", price + "");
+                                }
+                            }
+                            if(!search.equals("")) {
+                                map.put("cid", search);
+                            }
+                            if(!valuePrice.equals("")){
+                                map.put("price", valuePrice);
+                            }
+                            mPresenter.getWeekList(map);
+                            popuwindow.dismiss();
                         }
-                        String search=buffer.substring(0,buffer.length()-1).toString();
-                        Map<String,String> map=new HashMap<>();
-                        if(price==0){
-                            map.put("order",xiaoliang+"");
-                        }else{
-                            map.put("order",price+"");
-                        }
-                        map.put("cid",search);
-                        mPresenter.getWeekList(map);
-                    }
-                });
-                popuwindow.showAtLocation(view, Gravity.RIGHT, 0, 0);
+                    });
+                    popuwindow.showAtLocation(view, Gravity.RIGHT, 0, 0);
+                }else{
+                    popuwindow.showAtLocation(view, Gravity.RIGHT, 0, 0);
+                }
 
             }
         });
