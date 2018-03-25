@@ -33,6 +33,8 @@ public class CommonLoadingView extends FrameLayout {
     private View loadingErrorView;
     //数据为空
     private View emptyView;
+    //错误的文字提示
+    private TextView errorTipTv;
 
 
     public CommonLoadingView(Context context, AttributeSet attrs) {
@@ -94,6 +96,7 @@ public class CommonLoadingView extends FrameLayout {
         mLoadingEmpyIv= (ImageView) rootView.findViewById(R.id.iv_empty);
         mLoadingEmpyTv= (TextView) rootView.findViewById(R.id.tv_empty);
         mLoadErrorLl = (LinearLayout) rootView.findViewById(R.id.load_error_ll);
+        errorTipTv=rootView.findViewById(R.id.text_erro);
         mLoadErrorLl.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,6 +152,13 @@ public class CommonLoadingView extends FrameLayout {
     public void loadError(){
         loadingView.setVisibility(GONE);
         loadingErrorView.setVisibility(VISIBLE);
+    }
+    public void loadError(String tip){
+        loadingView.setVisibility(GONE);
+        loadingErrorView.setVisibility(VISIBLE);
+        if(!tip.equals("")) {
+            errorTipTv.setText(tip);
+        }
     }
 
 

@@ -1,10 +1,14 @@
 package com.yizhisha.maoyi.utils;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
+import android.util.Base64;
 
 import com.yizhisha.maoyi.App;
 
@@ -23,4 +27,5 @@ public class RescourseUtil {
     public static String getString(@StringRes int id){
         return App.getAppContext().getString(id);
     }
+
 }

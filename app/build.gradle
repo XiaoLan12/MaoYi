@@ -9,7 +9,7 @@ android {
             storePassword '123456'
         }
     }
-    compileSdkVersion 25
+    compileSdkVersion 26
     buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "com.yizhisha.maoyi"
@@ -22,6 +22,7 @@ android {
     }
     buildTypes {
         release {
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -49,9 +50,7 @@ dependencies {
     compile project(':pickerview')
     compile project(':pictureselector')
     //轮播框架
-
     //颜色和尺码选择
-
     //微信支付
     compile files('libs/commons-lang.jar')
     compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
@@ -73,4 +72,6 @@ dependencies {
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.0.2'
     compile 'fm.jiecao:jiecaovideoplayer:5.5'
     testCompile 'junit:junit:4.12'
+    compile files('libs/httpclient-4.3.6.jar')
+    compile files('libs/jdom.jar')
 }

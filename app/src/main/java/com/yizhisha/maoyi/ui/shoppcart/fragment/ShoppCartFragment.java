@@ -177,7 +177,7 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
                     for (int j = 0; j < childMapList.size(); j++) {
                         GoodsBean goodsBean = (GoodsBean) childMapList.get(j).get("childName");
                         if(goodsBean.isChecked()){
-                            str.append(goodsBean.getGid()).append(",");
+                            str.append(goodsBean.getSid()).append(",");
                         }
                     }
                 }

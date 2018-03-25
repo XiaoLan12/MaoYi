@@ -3,6 +3,7 @@ package com.yizhisha.maoyi.ui.home.presenter;
 import com.yizhisha.maoyi.api.Api;
 import com.yizhisha.maoyi.base.rx.RxSubscriber;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
+import com.yizhisha.maoyi.bean.json.SortedListBean;
 import com.yizhisha.maoyi.bean.json.StudioBean;
 import com.yizhisha.maoyi.bean.json.StudioShopBean;
 import com.yizhisha.maoyi.ui.home.contract.StudioShopContract;
@@ -40,16 +41,29 @@ public class StudioShopPresenter extends StudioShopContract.Presenter{
             @Override
             protected void onSuccess(StudioShopBean data) {
                 mView.hideLoading();
-                if(data.getStatus().equals("y")){
+
                     mView.getStudioShopSuccess(data);
-                }else{
-                    mView.showEmpty();
-                }
+
             }
             @Override
             protected void onFailure(String message) {
                 mView.hideLoading();
                 mView.loadFail(1,message);
+            }
+        });
+    }
+
+    @Override
+    public void getSortedList() {
+        addSubscrebe(Api.getInstance().getSorted(),new RxSubscriber<SortedListBean>(mContext,false){
+            @Override
+            protected void onSuccess(SortedListBean model) {
+                mView.getSortedListSuccess(model.getList());
+
+            }
+            @Override
+            protected void onFailure(String message) {
+                mView.loadFail(0,message);
             }
         });
     }

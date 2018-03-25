@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_launcher"/>
+            />
     <RelativeLayout
         android:id="@+id/personalInfo_rl"
         android:layout_width="match_parent"
@@ -26,19 +26,12 @@
             android:layout_height="@dimen/dp_40">
             <ImageView
                 android:id="@+id/back_iv"
-                android:layout_width="@dimen/dp_40"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/dp_5"
-                android:layout_marginBottom="@dimen/dp_5"
+                android:layout_width="@dimen/dp_25"
+                android:layout_height="@dimen/dp_25"
+                android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
                 android:src="@drawable/ic_back"/>
-            <ImageView
-                android:layout_width="@dimen/dp_40"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/dp_5"
-                android:layout_marginBottom="@dimen/dp_5"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/ic_back"/>
+
         </RelativeLayout>
 
         <RelativeLayout

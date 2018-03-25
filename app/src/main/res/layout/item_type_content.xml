@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <TextView
+        android:layout_height="30dp"
+        android:id="@+id/top"
+        android:background="@color/gray1"
+        android:textColor="@color/common_h1"
+        android:gravity="center"
+        android:layout_width="match_parent"/>
+    <com.yizhisha.maoyi.widget.MyGridView
+        android:id="@+id/mygridview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:numColumns="3">
+    </com.yizhisha.maoyi.widget.MyGridView>
+</LinearLayout>

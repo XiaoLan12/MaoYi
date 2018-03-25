@@ -9,6 +9,7 @@ import java.util.List;
 public class SpecialDetailBean {
     private List<DailyBean> special;
     private String status;
+    private String info;
     private List<WeekListBean.WeekBean> goods;
 
     public List<DailyBean> getSpecial() {
@@ -35,11 +36,20 @@ public class SpecialDetailBean {
         this.goods = goods;
     }
 
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
     @Override
     public String toString() {
         return "SpecialDetailBean{" +
                 "special=" + special +
                 ", status='" + status + '\'' +
+                ", info='" + info + '\'' +
                 ", goods=" + goods +
                 '}';
     }

@@ -16,6 +16,7 @@ import com.yizhisha.maoyi.bean.json.RefundBean;
 import com.yizhisha.maoyi.bean.json.RefundDetailBean;
 import com.yizhisha.maoyi.bean.json.RefundExpressBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
+import com.yizhisha.maoyi.bean.json.ShopCartOrderSureBean;
 import com.yizhisha.maoyi.bean.json.ShopcartListBean;
 import com.yizhisha.maoyi.bean.json.SimilarRecommenListBean;
 import com.yizhisha.maoyi.bean.json.SingleShoppCartBean;
@@ -138,7 +139,7 @@ public class Api {
         return service.deleteShoppCart(map);
     }
     //购物车订单确认
-    public Observable<OrderSureBean> shopCartOrderSure(Map<String,String> map){
+    public Observable<ShopCartOrderSureBean> shopCartOrderSure(Map<String,String> map){
         return service.shopCartOrderSure(map);
     }
     //订单列表
@@ -266,6 +267,7 @@ public class Api {
     public Observable<SortedListBean> getSorted(){
         return service.getSorted();
     }
+
     //专题详情列表
     public Observable<SpecialDetailBean> getSpecialGoodsList(Map<String, String> map){
         return service.getSpecialGoodsList(map);
@@ -331,5 +333,19 @@ public class Api {
     //订单确认
     public Observable<OrderSureBean> orderSure(Map<String,String> map){
         return service.orderSure(map);
+    }
+
+    //普通商品和板毛创建订单
+    public Observable<RequestStatusBean> createOrder(Map<String,String> map){
+        return service.createOrder(map);
+    }
+
+    //购物车创建订单
+    public Observable<RequestStatusBean> createShopCartOrder(Map<String,String> map){
+        return service.createShopCartOrder(map);
+    }
+    //查询商品列表
+    public Observable<SpecialDetailBean> goodsSorted(Map<String,String> map){
+        return service.goodsSorted(map);
     }
 }

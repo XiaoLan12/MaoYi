@@ -194,7 +194,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
         imageSlideshow.setDotSpace(12);
         imageSlideshow.setDotSize(12);
         imageSlideshow.setDelay(3000);
-        imageSlideshow.commit();
+        //imageSlideshow.commit();
 
     }
 
@@ -237,7 +237,6 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
         tvPname.setText("商品品类：" + goodsProductBean.getPname());
         tvSales.setText("月销量：" + goodsProductBean.getSales() + "笔");
         tvMoney.setText("￥" + goodsProductBean.getPrice());
-        Log.d("TTT","aa"+goodsProductBean.toString());
         if(model.getFavorite().equals("y")){
             collectIv.setImageResource(R.drawable.icon_favorit);
         }else{
@@ -358,7 +357,8 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
             }
         });
     }
-    @OnClick({R.id.ll_select_color_size,R.id.tv_shopping_cart,R.id.tv_shopping,R.id.ll_collection})
+    @OnClick({R.id.ll_select_color_size,R.id.tv_shopping_cart,R.id.tv_shopping,R.id.ll_collection,
+    R.id.ll_shopping_cart})
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -377,6 +377,9 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
                 Dialog(goodsProductBean,2);
                 dialog_confirm_ll.setVisibility(View.VISIBLE);
                 dialog_confirm2_ll.setVisibility(View.GONE);
+                break;
+            case R.id.ll_shopping_cart:
+                startActivity(ShopCartActivity.class);
                 break;
             case R.id.ll_collection:
                 if(AppConstant.isLogin==false){
@@ -654,6 +657,6 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
 
     @Override
     public void loadFail(String msg) {
-
+        ToastUtil.showShortToast(msg);
     }
 }
