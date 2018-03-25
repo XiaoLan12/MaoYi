@@ -13,12 +13,12 @@ import com.yizhisha.maoyi.base.BaseActivity;
 import com.yizhisha.maoyi.bean.MainTabEntity;
 import com.yizhisha.maoyi.common.dialog.DialogInterface;
 import com.yizhisha.maoyi.common.dialog.NormalSelectionDialog;
-import com.yizhisha.maoyi.ui.classify.fragment.ClassifyFragment;
 import com.yizhisha.maoyi.ui.home.fragment.HomeFragment;
 import com.yizhisha.maoyi.ui.login.activity.LoginFragmentActivity;
 import com.yizhisha.maoyi.ui.login.activity.RegisterActivity;
 import com.yizhisha.maoyi.ui.me.fragment.MeFragment;
 import com.yizhisha.maoyi.ui.shoppcart.fragment.ShoppCartFragment;
+import com.yizhisha.maoyi.ui.type.TypeFragment;
 import com.yizhisha.maoyi.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class MainActivity extends BaseActivity {
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
 
     private HomeFragment homeFragment;
-    private ClassifyFragment classifyFragment;
+    private TypeFragment typeFragment;
     private ShoppCartFragment shoppCartFragment;
     private MeFragment meFragment;
     private int currentPosition;
@@ -135,17 +135,17 @@ public class MainActivity extends BaseActivity {
         int currentTabPosition = 0;
         if (savedInstanceState != null) {
             homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag("homeFragment");
-            classifyFragment= (ClassifyFragment) getSupportFragmentManager().findFragmentByTag("classifyFragment");
+            typeFragment= (TypeFragment) getSupportFragmentManager().findFragmentByTag("typeFragment");
             shoppCartFragment = (ShoppCartFragment) getSupportFragmentManager().findFragmentByTag("shoppCartFragment");
             meFragment = (MeFragment) getSupportFragmentManager().findFragmentByTag("meFragment");
             currentTabPosition = savedInstanceState.getInt(AppConstant.HOME_CURRENT_TAB_POSITION);
         } else {
             homeFragment = new HomeFragment();
-            classifyFragment=new ClassifyFragment();
+            typeFragment=new TypeFragment();
             shoppCartFragment = new ShoppCartFragment();
             meFragment = new MeFragment();
             transaction.add(R.id.fl_body, homeFragment, "homeFragment");
-            transaction.add(R.id.fl_body, classifyFragment, "classifyFragment");
+            transaction.add(R.id.fl_body, typeFragment, "typeFragment");
             transaction.add(R.id.fl_body, shoppCartFragment, "shoppCartFragment");
             transaction.add(R.id.fl_body, meFragment, "meFragment");
         }
@@ -162,7 +162,7 @@ public class MainActivity extends BaseActivity {
         switch (position) {
             //首页
             case 0:
-                transaction.hide(classifyFragment);
+                transaction.hide(typeFragment);
                 transaction.hide(shoppCartFragment);
                 transaction.hide(meFragment);
                 transaction.show(homeFragment);
@@ -173,21 +173,21 @@ public class MainActivity extends BaseActivity {
                 transaction.hide(homeFragment);
                 transaction.hide(shoppCartFragment);
                 transaction.hide(meFragment);
-                transaction.show(classifyFragment);
+                transaction.show(typeFragment);
                 transaction.commitAllowingStateLoss();
                 break;
             //购物车
             case 2:
                 transaction.hide(homeFragment);
                 transaction.hide(meFragment);
-                transaction.hide(classifyFragment);
+                transaction.hide(typeFragment);
                 transaction.show(shoppCartFragment);
                 transaction.commitAllowingStateLoss();
                 break;
             //个人中心
             case 3:
                 transaction.hide(homeFragment);
-                transaction.hide(classifyFragment);
+                transaction.hide(typeFragment);
                 transaction.hide(shoppCartFragment);
                 transaction.show(meFragment);
                 transaction.commitAllowingStateLoss();

@@ -24,6 +24,7 @@ import com.yizhisha.maoyi.adapter.StudioShopAdapter;
 import com.yizhisha.maoyi.base.BaseActivity;
 import com.yizhisha.maoyi.bean.json.GoodsScreesBean;
 import com.yizhisha.maoyi.bean.json.GoodsScreesContentBean;
+import com.yizhisha.maoyi.bean.json.SortedListBean;
 import com.yizhisha.maoyi.bean.json.StudioShopBean;
 import com.yizhisha.maoyi.common.dialog.DialogInterface;
 import com.yizhisha.maoyi.common.dialog.NormalAlertDialog;
@@ -83,6 +84,9 @@ public class StudioShopActivity extends BaseActivity<StudioShopPresenter> implem
     private LinearLayout ll_select_price;
     private int price=0;
     private int xiaoliang=0;
+    private List<SortedListBean.SortedsBean> sortedsBeanList=new ArrayList<>();
+
+    private GoodsScressPopuwindow popuwindow;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_studio_shop;
@@ -100,8 +104,11 @@ public class StudioShopActivity extends BaseActivity<StudioShopPresenter> implem
         initAdapter();
         Map<String,String> body=new HashMap<>();
         body.put("wid",String.valueOf(mWid));
-        body.put("uid",String.valueOf(AppConstant.UID));
+        if(AppConstant.isLogin) {
+            body.put("uid", String.valueOf(AppConstant.UID));
+        }
         load(body,true);
+        mPresenter.getSortedList();
         addHeadView();
     }
     private void initAdapter(){
@@ -147,10 +154,14 @@ public class StudioShopActivity extends BaseActivity<StudioShopPresenter> implem
             GlideUtil.getInstance().LoadContextBitmap(this,workshop.getAvatar(),headIv,GlideUtil.LOAD_BITMAP);
             nameTv.setText(workshop.getLinkman());
         }
+        if(model.getGoods().size()>0){
+            dataLists.clear();
+            dataLists.addAll(model.getGoods());
+            mAdapter.setNewData(dataLists);
+        }else{
+            showEmpty();
+        }
 
-        dataLists.clear();
-        dataLists.addAll(model.getGoods());
-        mAdapter.setNewData(dataLists);
 
     }
     private void addHeadView() {
@@ -164,32 +175,50 @@ public class StudioShopActivity extends BaseActivity<StudioShopPresenter> implem
         tv_select_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GoodsScressPopuwindow popuwindow=new GoodsScressPopuwindow(mContext);
-                List<Object> objects=new ArrayList<>();
-                GoodsScreesBean goodsScreesBean=new GoodsScreesBean();
-                goodsScreesBean.setItem("裙子");
-                objects.add(goodsScreesBean);
-                for(int i=0;i<3;i++){
-                    GoodsScreesContentBean goodsScreesContentBean=new GoodsScreesContentBean();
-                    goodsScreesContentBean.setTitle("item1");
-                    goodsScreesContentBean.setTitle("item2");
-                    goodsScreesContentBean.setTitle("item3");
-                    objects.add(goodsScreesContentBean);
+                if(popuwindow==null){
+                    popuwindow=new GoodsScressPopuwindow(mContext);
+                    popuwindow.serData1(sortedsBeanList);
+                    popuwindow.setOnSearchOnClick(new GoodsScressPopuwindow.OnSearchOnClick() {
+                        @Override
+                        public void onSearchLisenter() {
+                            List<Integer> data=popuwindow.getSelectData();
+                            String valuePrice=popuwindow.getPrice();
+                            StringBuffer buffer=new StringBuffer();
+                            for(Integer str:data){
+                                buffer.append(str).append(",");
+                            }
+                            String search="";
+                            if(buffer.length()>0) {
+                                search = buffer.substring(0, buffer.length() - 1).toString();
+                            }
+                            Map<String,String> map=new HashMap<>();
+                            if(price==0){
+                                if(xiaoliang!=0) {
+                                    map.put("order", xiaoliang + "");
+                                }
+                            }else{
+                                if(price!=0) {
+                                    map.put("order", price + "");
+                                }
+                            }
+                            if(!search.equals("")) {
+                                map.put("cid", search);
+                            }
+                            if(!valuePrice.equals("")){
+                                map.put("price", valuePrice);
+                            }
+                            map.put("wid",String.valueOf(mWid));
+                            if(AppConstant.isLogin) {
+                                map.put("uid", String.valueOf(AppConstant.UID));
+                            }
+                            load(map,false);
+                            popuwindow.dismiss();
+                        }
+                    });
+                    popuwindow.showAtLocation(view, Gravity.RIGHT, 0, 0);
+                }else{
+                    popuwindow.showAtLocation(view, Gravity.RIGHT, 0, 0);
                 }
-
-                GoodsScreesBean goodsScreesBean1=new GoodsScreesBean();
-                goodsScreesBean1.setItem("库子");
-                objects.add(goodsScreesBean1);
-                for(int i=0;i<3;i++){
-                    GoodsScreesContentBean goodsScreesContentBean=new GoodsScreesContentBean();
-                    goodsScreesContentBean.setTitle("item1");
-                    goodsScreesContentBean.setTitle("item2");
-                    goodsScreesContentBean.setTitle("item3");
-                    objects.add(goodsScreesContentBean);
-                }
-
-                popuwindow.serData(objects);
-                popuwindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
             }
         });
@@ -204,7 +233,9 @@ public class StudioShopActivity extends BaseActivity<StudioShopPresenter> implem
 
                 Map<String,String> body=new HashMap<>();
                 body.put("wid",String.valueOf(mWid));
-                body.put("uid",String.valueOf(AppConstant.UID));
+                if(AppConstant.isLogin) {
+                    body.put("uid", String.valueOf(AppConstant.UID));
+                }
                 if(xiaoliang==0){
                     xiaoliang=1;
                     body.put("order","1");
@@ -225,7 +256,9 @@ public class StudioShopActivity extends BaseActivity<StudioShopPresenter> implem
                 }
                 Map<String,String> body=new HashMap<>();
                 body.put("wid",String.valueOf(mWid));
-                body.put("uid",String.valueOf(AppConstant.UID));
+                if(AppConstant.isLogin) {
+                    body.put("uid", String.valueOf(AppConstant.UID));
+                }
                 if(price==0){
                     img_select_price.setImageResource(R.drawable.price_select_up);
                     tv_select_price.setTextColor(RescourseUtil.getColor(R.color.red1));
@@ -257,6 +290,12 @@ public class StudioShopActivity extends BaseActivity<StudioShopPresenter> implem
         }
         ToastUtil.showShortToast(msg);
     }
+
+    @Override
+    public void getSortedListSuccess(List<SortedListBean.SortedsBean> model) {
+        sortedsBeanList=model;
+    }
+
     @Override
     public void showLoading() {
         loadingView.load();
@@ -284,6 +323,9 @@ public class StudioShopActivity extends BaseActivity<StudioShopPresenter> implem
             public void doRequestData() {
                 Map<String,String> body=new HashMap<>();
                 body.put("wid",String.valueOf(mWid));
+                if(AppConstant.isLogin) {
+                    body.put("uid", String.valueOf(AppConstant.UID));
+                }
                 load(body,true);
             }
         });

@@ -20,6 +20,7 @@ import com.yizhisha.maoyi.adapter.SDayExplosionAdapter;
 import com.yizhisha.maoyi.base.BaseActivity;
 import com.yizhisha.maoyi.bean.json.GoodsScreesBean;
 import com.yizhisha.maoyi.bean.json.GoodsScreesContentBean;
+import com.yizhisha.maoyi.bean.json.SortedListBean;
 import com.yizhisha.maoyi.bean.json.SpecialDetailBean;
 import com.yizhisha.maoyi.bean.json.WeekListBean;
 import com.yizhisha.maoyi.common.popupwindow.GoodsScressPopuwindow;
@@ -27,6 +28,8 @@ import com.yizhisha.maoyi.ui.home.contract.SpecialDetailContract;
 import com.yizhisha.maoyi.ui.home.presenter.SpecialDetailPresenter;
 import com.yizhisha.maoyi.ui.me.activity.NewActivity;
 import com.yizhisha.maoyi.utils.RescourseUtil;
+import com.yizhisha.maoyi.utils.ToastUtil;
+import com.yizhisha.maoyi.widget.CommonLoadingView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
@@ -53,23 +56,34 @@ public class SpecialDetailActivity extends BaseActivity<SpecialDetailPresenter> 
     ImageView newIv;
     @Bind(R.id.img_back)
     ImageView imgBack;
+    @Bind(R.id.loadingView)
+    CommonLoadingView mLoadingView;
 
-    private Banner banner;
+    @Bind(R.id.banner)
+    Banner banner;
     private List<String> imageUrl;
     private SDayExplosionAdapter mAdapter;
     private List<WeekListBean.WeekBean> dataLists = new ArrayList<>();
 
 
-
-    private ImageView img_select_price;
-    private TextView tv_select_select;
-    private TextView tv_select_price;
-    private TextView tv_select_xiaoliang;
-    private LinearLayout ll_select_price;
+    @Bind(R.id.img_select_price)
+    ImageView img_select_price;
+    @Bind(R.id.tv_select_select)
+    TextView tv_select_select;
+    @Bind(R.id.tv_select_price)
+    TextView tv_select_price;
+    @Bind(R.id.tv_select_xiaoliang)
+    TextView tv_select_xiaoliang;
+    @Bind(R.id.ll_select_price)
+    LinearLayout ll_select_price;
     private int price=0;
     private int xiaoliang=0;
 
     private String spc_id="2";
+
+    private List<SortedListBean.SortedsBean> sortedsBeanList=new ArrayList<>();
+
+    private GoodsScressPopuwindow popuwindow;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_special_detail;
@@ -83,6 +97,12 @@ public class SpecialDetailActivity extends BaseActivity<SpecialDetailPresenter> 
                 finish_Activity(SpecialDetailActivity.this);
             }
         });
+        newIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(NewActivity.class);
+            }
+        });
     }
 
     @Override
@@ -94,6 +114,8 @@ public class SpecialDetailActivity extends BaseActivity<SpecialDetailPresenter> 
             }
         });
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setNestedScrollingEnabled(false);
         mAdapter = new SDayExplosionAdapter(dataLists);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -104,52 +126,61 @@ public class SpecialDetailActivity extends BaseActivity<SpecialDetailPresenter> 
                 startActivity(ProductDetailActivity.class,bundle);
             }
         });
-//        mAdapter.setNewData(dataLists);
-        addHeadView();
+        initHeadView();
         Bundle bundle=getIntent().getExtras();
         spc_id=bundle.getString("spc_id");
-
+        String cid=bundle.getString("cid");
         Map<String,String> map=new HashMap<>();
         map.put("spc_id",spc_id);
-        mPresenter.getSpecialDetail(map);
+        mPresenter.getSpecialDetail(map,true);
+        mPresenter.getSortedList();
     }
-    private void addHeadView() {
-        View view=getLayoutInflater().inflate(R.layout.headview_special_detail, (ViewGroup) mRecyclerView.getParent(), false);
-        banner= (Banner) view.findViewById(R.id.banner);
-        img_select_price=(ImageView)view.findViewById(R.id.img_select_price);
-        tv_select_select=(TextView)view.findViewById(R.id.tv_select_select);
-        tv_select_price=(TextView)view.findViewById(R.id.tv_select_price);
-        tv_select_xiaoliang=(TextView)view.findViewById(R.id.tv_select_xiaoliang);
-        ll_select_price= (LinearLayout) view.findViewById(R.id.ll_select_price);
+    private void initHeadView() {
         tv_select_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GoodsScressPopuwindow popuwindow=new GoodsScressPopuwindow(mContext);
-                List<Object> objects=new ArrayList<>();
-                GoodsScreesBean goodsScreesBean=new GoodsScreesBean();
-                goodsScreesBean.setItem("裙子");
-                objects.add(goodsScreesBean);
-                for(int i=0;i<3;i++){
-                    GoodsScreesContentBean goodsScreesContentBean=new GoodsScreesContentBean();
-                    goodsScreesContentBean.setTitle("item1");
-                    goodsScreesContentBean.setTitle("item2");
-                    goodsScreesContentBean.setTitle("item3");
-                    objects.add(goodsScreesContentBean);
+                if(popuwindow==null){
+                    popuwindow=new GoodsScressPopuwindow(mContext);
+                    popuwindow.serData1(sortedsBeanList);
+                    popuwindow.setOnSearchOnClick(new GoodsScressPopuwindow.OnSearchOnClick() {
+                        @Override
+                        public void onSearchLisenter() {
+                            List<Integer> data=popuwindow.getSelectData();
+                            String valuePrice=popuwindow.getPrice();
+                            StringBuffer buffer=new StringBuffer();
+                            for(Integer str:data){
+                                buffer.append(str).append(",");
+                            }
+                            String search="";
+                            if(buffer.length()>0) {
+                             search = buffer.substring(0, buffer.length() - 1).toString();
+                            }
+                            Map<String,String> map=new HashMap<>();
+                            map.put("spc_id",spc_id);
+                            if(price==0){
+                                if(xiaoliang!=0) {
+                                    map.put("order", xiaoliang + "");
+                                }
+                            }else{
+                                if(price!=0) {
+                                    map.put("order", price + "");
+                                }
+                            }
+                            if(!search.equals("")) {
+                                map.put("cid", search);
+                            }
+                            if(!valuePrice.equals("")){
+                                map.put("price", valuePrice);
+                            }
+                            mPresenter.getSpecialDetail(map,false);
+                            popuwindow.dismiss();
+                        }
+                    });
+                    popuwindow.showAtLocation(view, Gravity.RIGHT, 0, 0);
+                }else{
+                    popuwindow.showAtLocation(view, Gravity.RIGHT, 0, 0);
                 }
 
-                GoodsScreesBean goodsScreesBean1=new GoodsScreesBean();
-                goodsScreesBean1.setItem("库子");
-                objects.add(goodsScreesBean1);
-                for(int i=0;i<3;i++){
-                    GoodsScreesContentBean goodsScreesContentBean=new GoodsScreesContentBean();
-                    goodsScreesContentBean.setTitle("item1");
-                    goodsScreesContentBean.setTitle("item2");
-                    goodsScreesContentBean.setTitle("item3");
-                    objects.add(goodsScreesContentBean);
-                }
-
-                popuwindow.serData(objects);
-                popuwindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
             }
         });
@@ -172,7 +203,7 @@ public class SpecialDetailActivity extends BaseActivity<SpecialDetailPresenter> 
                     tv_select_xiaoliang.setTextColor(RescourseUtil.getColor(R.color.black));
                 }
                 map.put("spc_id",spc_id);
-                mPresenter.getSpecialDetail(map);
+                mPresenter.getSpecialDetail(map,false);
             }
         });
         ll_select_price.setOnClickListener(new View.OnClickListener() {
@@ -193,22 +224,18 @@ public class SpecialDetailActivity extends BaseActivity<SpecialDetailPresenter> 
                     tv_select_price.setTextColor(RescourseUtil.getColor(R.color.red1));
                     price=3;
                     map.put("order","3");
-                }else {
-                    img_select_price.setImageResource(R.drawable.price_select_not);
-                    price=0;
-                    tv_select_price.setTextColor(RescourseUtil.getColor(R.color.black));
+                }else if(price==3){
+                    img_select_price.setImageResource(R.drawable.price_select_up);
+                    tv_select_price.setTextColor(RescourseUtil.getColor(R.color.red1));
+                    price=4;
+                    map.put("order","3");
                 }
                 map.put("spc_id",spc_id);
-                mPresenter.getSpecialDetail(map);
+                mPresenter.getSpecialDetail(map,false);
 
 
             }
         });
-
-
-
-
-        mAdapter.addHeaderView(view);
     }
     @Override
     public void getSpecialDetailSuccess(SpecialDetailBean model) {
@@ -234,8 +261,46 @@ public class SpecialDetailActivity extends BaseActivity<SpecialDetailPresenter> 
     }
 
     @Override
-    public void loadFail(String msg) {
+    public void getSortedListSuccess(List<SortedListBean.SortedsBean> model) {
+        sortedsBeanList=model;
+    }
 
+
+
+    @Override
+    public void showLoading() {
+        mLoadingView.load();
+    }
+
+    @Override
+    public void hideLoading() {
+        mLoadingView.loadSuccess();
+    }
+
+    @Override
+    public void showEmpty() {
+        dataLists.clear();
+        mAdapter.setNewData(dataLists);
+        mLoadingView.loadSuccess(true);
+    }
+
+    @Override
+    public void loadFail(int code,String msg) {
+        if(code==0){
+            ToastUtil.showShortToast(msg);
+            return;
+        }
+        mLoadingView.setLoadingHandler(new CommonLoadingView.LoadingHandler() {
+            @Override
+            public void doRequestData() {
+                Map<String,String> map=new HashMap<>();
+                map.put("spc_id",spc_id);
+                mPresenter.getSpecialDetail(map,true);
+            }
+        });
+        dataLists.clear();
+        mAdapter.setNewData(dataLists);
+        mLoadingView.loadError(msg);
     }
     class GlideImageLoader extends ImageLoader {
         @Override

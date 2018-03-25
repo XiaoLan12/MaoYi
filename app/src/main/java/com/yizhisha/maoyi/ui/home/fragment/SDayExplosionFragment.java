@@ -28,12 +28,12 @@ import com.yizhisha.maoyi.ui.home.presenter.SDayExplosionPresenter;
 import com.yizhisha.maoyi.utils.GlideUtil;
 import com.yizhisha.maoyi.utils.RescourseUtil;
 import com.yizhisha.maoyi.utils.ToastUtil;
+import com.yizhisha.maoyi.widget.CommonLoadingView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import butterknife.Bind;
 
@@ -44,20 +44,27 @@ import butterknife.Bind;
 public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> implements SDayExplosionContract.View {
     @Bind(R.id.recyclerview)
     RecyclerView mRecyclerView;
-
-    private ImageView img_banner;
-    private ImageView img_select_price;
-    private TextView tv_select_select;
-    private TextView tv_select_price;
-    private TextView tv_select_xiaoliang;
-    private LinearLayout ll_select_price;
+    @Bind(R.id.img_banner)
+    ImageView img_banner;
+    @Bind(R.id.img_select_price)
+    ImageView img_select_price;
+    @Bind(R.id.tv_select_select)
+    TextView tv_select_select;
+    @Bind(R.id.tv_select_price)
+    TextView tv_select_price;
+    @Bind(R.id.tv_select_xiaoliang)
+    TextView tv_select_xiaoliang;
+    @Bind(R.id.ll_select_price)
+    LinearLayout ll_select_price;
+    @Bind(R.id.loadingView)
+    CommonLoadingView mLoadingView;
     private int price=0;
     private int xiaoliang=0;
-            private List<SortedListBean.SortedsBean> sortedsBeanList=new ArrayList<>();
+    private List<SortedListBean.SortedsBean> sortedsBeanList=new ArrayList<>();
 
     private SDayExplosionAdapter mAdapter;
     private List<WeekListBean.WeekBean> dataLists = new ArrayList<>();
-    private     GoodsScressPopuwindow popuwindow;
+    private GoodsScressPopuwindow popuwindow;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_sday_explosion;
@@ -68,6 +75,8 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
 
         mAdapter = new SDayExplosionAdapter(dataLists);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setNestedScrollingEnabled(false);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -77,69 +86,61 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
                 startActivity(ProductDetailActivity.class,bundle);
             }
         });
-//        mAdapter.setNewData(dataLists);
-        addHeadView();
+        initHeadView();
         Map<String,String> map=new HashMap<>();
         mPresenter.getWeekList(map);
         mPresenter.getWeekTop();
         mPresenter.getSortedList();
     }
-    private void addHeadView() {
-        View view=getActivity().getLayoutInflater().inflate(R.layout.headview_sday_explosion, (ViewGroup) mRecyclerView.getParent(), false);
-        img_banner=(ImageView)view.findViewById(R.id.img_banner);
-        img_select_price=(ImageView)view.findViewById(R.id.img_select_price);
-          tv_select_select=(TextView)view.findViewById(R.id.tv_select_select);
-          tv_select_price=(TextView)view.findViewById(R.id.tv_select_price);
-          tv_select_xiaoliang=(TextView)view.findViewById(R.id.tv_select_xiaoliang);
-        ll_select_price=(LinearLayout)view.findViewById(R.id.ll_select_price);
+    private void initHeadView() {
         tv_select_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            if(popuwindow!=null){
-                popuwindow.showAtLocation(view, Gravity.RIGHT, 0, 0);
-                return;
-            }else {
-                popuwindow = new GoodsScressPopuwindow(mContext);
-                if (sortedsBeanList.size() == 0) {
-                    ToastUtil.showbottomShortToast("加载失败");
-                    mPresenter.getSortedList();
-                    return;
-                }
-             final   String[] mVals1 = new String[sortedsBeanList.get(0).getCat().size()];
-             final   String[] mVals2 = new String[sortedsBeanList.get(1).getCat().size()];
-              final  String[] mVals3 = new String[sortedsBeanList.get(2).getCat().size()];
-                for (int i = 0; i < sortedsBeanList.get(0).getCat().size(); i++) {
-                    mVals1[i] = sortedsBeanList.get(0).getCat().get(i).getCat_name();
-                }
-                for (int i = 0; i < sortedsBeanList.get(1).getCat().size(); i++) {
-                    mVals2[i] = sortedsBeanList.get(1).getCat().get(i).getCat_name();
-                }
-                for (int i = 0; i < sortedsBeanList.get(2).getCat().size(); i++) {
-                    mVals3[i] = sortedsBeanList.get(2).getCat().get(i).getCat_name();
+
+
+                if(popuwindow==null){
+                    popuwindow=new GoodsScressPopuwindow(mContext);
+                    popuwindow.serData1(sortedsBeanList);
+                    popuwindow.setOnSearchOnClick(new GoodsScressPopuwindow.OnSearchOnClick() {
+                        @Override
+                        public void onSearchLisenter() {
+                            List<Integer> data=popuwindow.getSelectData();
+                            String valuePrice=popuwindow.getPrice();
+                            StringBuffer buffer=new StringBuffer();
+                            for(Integer str:data){
+                                buffer.append(str).append(",");
+                            }
+                            String search="";
+                            if(buffer.length()>0) {
+                                search = buffer.substring(0, buffer.length() - 1).toString();
+                            }
+                            Map<String,String> map=new HashMap<>();
+                            if(price==0){
+                                if(xiaoliang!=0) {
+                                    map.put("order", xiaoliang + "");
+                                }
+                            }else{
+                                if(price!=0) {
+                                    map.put("order", price + "");
+                                }
+                            }
+                            if(!search.equals("")) {
+                                map.put("cid", search);
+                            }
+                            if(!valuePrice.equals("")){
+                                map.put("price", valuePrice);
+                            }
+                            mPresenter.getWeekList(map);
+                            popuwindow.dismiss();
+                        }
+                    });
+                    popuwindow.showAtLocation(view, Gravity.RIGHT, 0, 0);
+                }else{
+                    popuwindow.showAtLocation(view, Gravity.RIGHT, 0, 0);
                 }
 
-                popuwindow.serData1(mVals1, mVals2, mVals3);
-                popuwindow.setSearchClickListener(new GoodsScressPopuwindow.SearchClickListener() {
-                    @Override
-                    public void searchClickLIstener(Set<Integer> selectPosSet1, Set<Integer> selectPosSet2, Set<Integer> selectPosSet3,List<Integer> liIn) {
-                        List<String> list=new ArrayList<>();
-                        for(Integer i:selectPosSet1){
-                            list.add(mVals1[i]);
-                        }
-                        for(Integer i:selectPosSet2){
-                            list.add(mVals2[i]);
-                        }
-                        for(Integer i:selectPosSet3){
-                            list.add(mVals3[i]);
-                        }
-                        ToastUtil.showbottomShortToast(list.toString()+liIn.toString());
-                    }
-                });
-                popuwindow.showAtLocation(view, Gravity.RIGHT, 0, 0);
-            }
             }
         });
-
         tv_select_xiaoliang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -188,7 +189,6 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
 
             }
         });
-        mAdapter.addHeaderView(view);
     }
 //         所有帅选按钮变灰色
     private void changeColor(){
@@ -199,7 +199,6 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
 
     @Override
     public void getWeekToprSuccess(List<WeekTopListBean.WeekTopBean> model) {
-        Log.e("TTT",model.get(0).getSpc_litpic()+"-----");
         if(model!=null)
         GlideUtil.getInstance().LoadSupportv4FragmentBitmap(SDayExplosionFragment.this,AppConstant.BANNER_IMG_URL+model.get(0).getSpc_litpic(),img_banner,0,0,null);
 
@@ -214,11 +213,10 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
     @Override
     public void getSortedListSuccess(List<SortedListBean.SortedsBean> model) {
         sortedsBeanList=model;
-        Log.e("UUU",model.toString());
     }
 
     @Override
     public void loadFail(String msg) {
-
+        ToastUtil.showShortToast(msg);
     }
 }

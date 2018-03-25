@@ -26,6 +26,8 @@ import com.yizhisha.maoyi.bean.json.GoodsScreesContentBean;
 import com.yizhisha.maoyi.bean.json.MyOrderListBean;
 import com.yizhisha.maoyi.bean.json.OrderFootBean;
 import com.yizhisha.maoyi.bean.json.OrderHeadBean;
+import com.yizhisha.maoyi.bean.json.SortedBean;
+import com.yizhisha.maoyi.bean.json.SortedListBean;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -34,6 +36,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import retrofit2.http.PUT;
+
 /**
  * Created by 小熊 on 2018/2/9.
  */
@@ -41,17 +45,16 @@ import java.util.Set;
 public class GoodsScressPopuwindow extends PopupWindow{
     private View mContentView;
     private Context mActivity;
-    private RecyclerView recyclerView;
-    private List<Object> goodsScreesBeanList;
-    private GoodsScressAdapter mAdapter;
     private TagFlowLayout flowlayout1,flowlayout2,flowlayout3;
-    private TextView tv_search;
+    private EditText lowestPriceEt,highestPriceEt;
+    private TextView searchTv;
     private  LayoutInflater mInflater;
-    private SearchClickListener searchClickListener;
-    private EditText et_price1,et_price2;
-
-    private List<String > list=new ArrayList<>();
-
+    private List<SortedBean> mTabVal1;
+    private List<SortedBean> mTabVal2;
+    private List<SortedBean> mTabVal3;
+    public interface OnSearchOnClick{
+        void onSearchLisenter();
+    }
     public GoodsScressPopuwindow(Context activity){
         mActivity=activity;
         // 获得屏幕的宽度和高度
@@ -61,7 +64,6 @@ public class GoodsScressPopuwindow extends PopupWindow{
         setWidth((int) (mScreenWidth*0.6));
         setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
         setAnimationStyle(R.style.showPopupAnimation);
-        goodsScreesBeanList=new ArrayList<>();
         mContentView = LayoutInflater.from(activity).inflate(R.layout.popu_goods_scress, null);
         setContentView(mContentView);
         setFocusable(true);
@@ -70,148 +72,109 @@ public class GoodsScressPopuwindow extends PopupWindow{
         setTouchable(true);
 
           mInflater = LayoutInflater.from(activity);
-       flowlayout1= (TagFlowLayout ) mContentView.findViewById(R.id.id_flowlayout1);
+        flowlayout1= (TagFlowLayout ) mContentView.findViewById(R.id.id_flowlayout1);
         flowlayout2= (TagFlowLayout ) mContentView.findViewById(R.id.id_flowlayout2);
         flowlayout3= (TagFlowLayout ) mContentView.findViewById(R.id.id_flowlayout3);
-        recyclerView= (RecyclerView) mContentView.findViewById(R.id.recyclerview);
-        et_price1=(EditText) mContentView.findViewById(R.id.et_price1);
-        et_price2=(EditText) mContentView.findViewById(R.id.et_price2);
-        tv_search=(TextView)mContentView.findViewById(R.id.tv_search);
-        mAdapter=new GoodsScressAdapter();
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setNestedScrollingEnabled(false);
-        recyclerView.setAdapter(mAdapter);
-       /* flowlayout1.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
+        lowestPriceEt=mContentView.findViewById(R.id.lowest_price_et);
+        highestPriceEt=mContentView.findViewById(R.id.highest_price_et);
+        searchTv=mContentView.findViewById(R.id.tv_search);
+        searchTv.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSelected(Set<Integer> selectPosSet) {
-
-                Log.e("UUU",selectPosSet.toString());
-                for(Integer c : selectPosSet) {
-                    Log.e("UUU",c+"");
-                }
-            }
-        });*/
-
-        tv_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(searchClickListener!=null){
-                    List<Integer > list=new ArrayList<>();
-                   String price1= et_price1.getText().toString().trim();
-                    String price2= et_price2.getText().toString().trim();
-                    if(!price1.equals("")){
-                        try {
-                            list.add(Integer.parseInt(price1));
-                        }catch (Exception e){
-
-                        }
-                    }
-                    if(!price2.equals("")){
-                        try {
-                            list.add(Integer.parseInt(price2));
-                        }catch (Exception e){
-
-                        }
-                    }
-                    if(list.size()==2){
-                        if(list.get(0)>list.get(1)){
-                            et_price1.setText(list.get(1)+"");
-                            et_price2.setText(list.get(0)+"");
-                        }
-                    }
-                    searchClickListener.searchClickLIstener(  flowlayout1.getSelectedList(),flowlayout2.getSelectedList(),flowlayout3.getSelectedList(),list);
-                }
-
-                dismiss();
+            public void onClick(View view) {
+                onSearchOnClick.onSearchLisenter();
             }
         });
 
 
     }
-    public void serData1(String[] mVals1,String[] mVals2,String[] mVals3) {
-        flowlayout1.setAdapter(new TagAdapter<String>(mVals1)
+    public void serData1(List<SortedListBean.SortedsBean> sortedsBeanList) {
+        mTabVal1=new ArrayList<>();
+        mTabVal2=new ArrayList<>();
+        mTabVal3=new ArrayList<>();
+        List<SortedListBean.SortedsBean> list=new ArrayList<>();
+        list.addAll(sortedsBeanList);
+        int lenght=list.size();
+        for(int i=0;i<lenght;i++){
+            if(list.get(i).getName().equals("上装")){
+                mTabVal1.addAll(list.get(i).getCat());
+            }else if(list.get(i).getName().equals("裙装")){
+                mTabVal2.addAll(list.get(i).getCat());
+            }else if(list.get(i).getName().equals("裤装")){
+                mTabVal3.addAll(list.get(i).getCat());
+            }
+
+        }
+        flowlayout1.setAdapter(new TagAdapter<SortedBean>(mTabVal1)
         {
             @Override
-            public View getView(FlowLayout parent, int position, String s)
+            public View getView(FlowLayout parent, int position, SortedBean s)
             {
                 TextView tv = (TextView) mInflater.inflate(R.layout.tv,
                         flowlayout1, false);
-                tv.setText(s);
+                tv.setText(s.getCat_name());
                 return tv;
             }
         });
-
-        flowlayout2.setAdapter(new TagAdapter<String>(mVals2)
+        flowlayout2.setAdapter(new TagAdapter<SortedBean>(mTabVal2)
         {
             @Override
-            public View getView(FlowLayout parent, int position, String s)
+            public View getView(FlowLayout parent, int position, SortedBean s)
             {
                 TextView tv = (TextView) mInflater.inflate(R.layout.tv,
                         flowlayout2, false);
-                tv.setText(s);
+                tv.setText(s.getCat_name());
                 return tv;
             }
         });
-        flowlayout3.setAdapter(new TagAdapter<String>(mVals3)
+        flowlayout3.setAdapter(new TagAdapter<SortedBean>(mTabVal3)
         {
             @Override
-            public View getView(FlowLayout parent, int position, String s)
+            public View getView(FlowLayout parent, int position, SortedBean s)
             {
                 TextView tv = (TextView) mInflater.inflate(R.layout.tv,
                         flowlayout3, false);
-                tv.setText(s);
+                tv.setText(s.getCat_name());
                 return tv;
             }
         });
     }
 
-    public void serData(List<Object> data){
-        goodsScreesBeanList.clear();
-
-        goodsScreesBeanList.addAll(data);
-        mAdapter.setNewData(goodsScreesBeanList);
-    }
-
-    private class GoodsScressAdapter extends BaseQuickAdapter<Object,BaseViewHolder> {
-        public static final int TEXT_TYPE1 = 1;
-        public static final int TEXT_TYPE2= 2;
-        public GoodsScressAdapter() {
-            super(null);
-            setMultiTypeDelegate(new MultiTypeDelegate<Object>() {
-                @Override
-                protected int getItemType(Object object) {
-                    if(object instanceof GoodsScreesBean) {
-                        return TEXT_TYPE1;
-                    }else if(object instanceof GoodsScreesContentBean){
-                        return TEXT_TYPE2;
-                    }
-                    return TEXT_TYPE2;
-                }
-            });
-            getMultiTypeDelegate().registerItemType(TEXT_TYPE1, R.layout.item_goods_screes_head).
-                    registerItemType(TEXT_TYPE2, R.layout.item_goods_screes_content);
+    public List<Integer> getSelectData(){
+        List<Integer> data=new ArrayList<>();
+        Set<Integer> list1=flowlayout1.getSelectedList();
+        for(int i:list1){
+            data.add(mTabVal1.get(i).getCat_id());
         }
-
-        @Override
-        protected void convert(BaseViewHolder helper, Object item) {
-            switch (helper.getItemViewType()){
-                case TEXT_TYPE1:
-                    GoodsScreesBean goodsScreesBean= (GoodsScreesBean) item;
-                    helper.setText(R.id.head_tv,goodsScreesBean.getItem());
-                    break;
-                case TEXT_TYPE2:
-                    GoodsScreesContentBean goodsScreesContentBean= (GoodsScreesContentBean) item;
-                    helper.setText(R.id.content_tv,goodsScreesContentBean.getTitle());
-                    break;
+        Set<Integer> list2=flowlayout2.getSelectedList();
+        for(int i:list2){
+            data.add(mTabVal2.get(i).getCat_id());
+        }
+        Set<Integer> list3=flowlayout3.getSelectedList();
+        for(int i:list3){
+            data.add(mTabVal3.get(i).getCat_id());
+        }
+        return data;
+    }
+    public String getPrice(){
+        String value="";
+        String price1=lowestPriceEt.getText().toString().trim();
+        String price2=highestPriceEt.getText().toString().trim();
+        if(!price1.equals("")||!price2.equals("")){
+            if(price1.equals("")){
+                price1="0";
             }
+            if(price2.equals("")){
+                price2="0";
+            }
+            StringBuffer str=new StringBuffer();
+            str.append(price1).append(",").append(price2);
+            value=str.toString();
         }
+        return value;
     }
-    public interface SearchClickListener{
-        public void searchClickLIstener(Set<Integer> selectPosSet1,Set<Integer> selectPosSet2,Set<Integer> selectPosSet3,List<Integer> list);
-    }
-    public void setSearchClickListener(SearchClickListener searchClickListener){
-        this.searchClickListener=searchClickListener;
+    OnSearchOnClick onSearchOnClick;
+    public void setOnSearchOnClick(OnSearchOnClick onSearchOnClick){
+        this.onSearchOnClick=onSearchOnClick;
     }
 
 

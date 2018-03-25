@@ -35,9 +35,76 @@
         android:layout_gravity="center_vertical"
         android:src="@drawable/icon_new"/>
 </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+    <com.youth.banner.Banner
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        ></com.youth.banner.Banner>
+        </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_10"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_select_xiaoliang"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="销量优先"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:layout_weight="1"/>
+        <LinearLayout
+            android:id="@+id/ll_select_price"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/tv_select_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="价格"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:layout_marginRight="6dp"/>
+            <ImageView
+                android:id="@+id/img_select_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/price_select_not"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_select_select"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="筛选"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview"
@@ -46,8 +113,12 @@
             android:background="@color/white"
             >
         </android.support.v7.widget.RecyclerView>
+        <com.yizhisha.maoyi.widget.CommonLoadingView
+            android:id="@+id/loadingView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
     </LinearLayout>
-
-
-
+</ScrollView>
 </LinearLayout>

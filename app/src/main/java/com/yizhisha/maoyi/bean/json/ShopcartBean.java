@@ -96,5 +96,26 @@ public class ShopcartBean {
             return price;
         }
 
+        @Override
+        public String toString() {
+            return "Goods{" +
+                    "sid=" + sid +
+                    ", detail='" + detail + '\'' +
+                    ", amount=" + amount +
+                    ", gid=" + gid +
+                    ", title='" + title + '\'' +
+                    ", litpic='" + litpic + '\'' +
+                    ", price=" + price +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "ShopcartBean{" +
+                "mzw_uid=" + mzw_uid +
+                ", company='" + company + '\'' +
+                ", goods=" + goods +
+                '}';
     }
 }

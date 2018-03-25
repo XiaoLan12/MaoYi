@@ -11,7 +11,7 @@ public class RequestStatusBean {
 
     private int uid;
 
-    private String orderno;
+    private String payorderno;
 
     private String mobile;
 
@@ -24,7 +24,7 @@ public class RequestStatusBean {
     }
 
     public String getOrderno() {
-        return orderno;
+        return payorderno;
     }
 
     public void setStatus(String status){

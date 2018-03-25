@@ -16,6 +16,7 @@ import com.yizhisha.maoyi.bean.json.RefundBean;
 import com.yizhisha.maoyi.bean.json.RefundDetailBean;
 import com.yizhisha.maoyi.bean.json.RefundExpressBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
+import com.yizhisha.maoyi.bean.json.ShopCartOrderSureBean;
 import com.yizhisha.maoyi.bean.json.ShopcartListBean;
 import com.yizhisha.maoyi.bean.json.SimilarRecommenListBean;
 import com.yizhisha.maoyi.bean.json.SingleShoppCartBean;
@@ -120,7 +121,7 @@ public interface ApiService {
     //购物车下单确认
     @FormUrlEncoded
     @POST("app/order/confirm_shopcart/")
-    Observable<OrderSureBean> shopCartOrderSure(@FieldMap Map<String, String> param);
+    Observable<ShopCartOrderSureBean> shopCartOrderSure(@FieldMap Map<String, String> param);
 
     //获得订单列表
     @GET("app/order/orderList")
@@ -315,4 +316,18 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("app/order/confirm")
     Observable<OrderSureBean> orderSure(@FieldMap Map<String, String> param);
+
+    //创建订单
+    @FormUrlEncoded
+    @POST("app/order/create")
+    Observable<RequestStatusBean> createOrder(@FieldMap Map<String, String> param);
+
+    //创建购物车订单
+    @FormUrlEncoded
+    @POST("app/order/create_shopcart")
+    Observable<RequestStatusBean> createShopCartOrder(@FieldMap Map<String, String> param);
+
+    //查询商品列表
+    @GET("app/goods/goodsSorted")
+    Observable<SpecialDetailBean>  goodsSorted(@QueryMap Map<String, String> param);
 }

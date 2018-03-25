@@ -1,0 +1,80 @@
+{
+  "type":[
+    {
+      "jacket":[{
+        "title":"针织衫",
+        "img":"R.drawable.zhenzhishan2"
+      },
+        {
+          "title":"针织开衫",
+          "img":"R.drawable.zhenzhikaishan"
+        },
+        {
+          "title":"衬衫",
+          "img":"R.drawable.chenshan"
+        },
+        {
+          "title":"T恤",
+          "img":"R.drawable.Txue"
+        },
+        {
+          "title":"背心/吊带",
+          "img":"R.drawable.beixin"
+        },
+        {
+          "title":"毛呢外套",
+          "img":"R.drawable.maoniwaitao"
+        },
+        {
+          "title":"棉衣",
+          "img":"R.drawable.mianyi"
+        },
+        {
+          "title":"羽绒",
+          "img":"R.drawable.yurongfu"
+        }
+      ],
+      "title":"上装",
+      "type":0
+
+    },
+
+    {
+      "dress":[{
+        "title":"连衣裙",
+        "img":"R.drawable.lianyiqun"
+        },
+        {
+          "title":"半身裙",
+          "img":"R.drawable.banshenqun"
+        },
+        {
+          "title":"背心裙",
+          "img":"R.drawable.beixinqun"
+        }
+      ],
+      "title":"裙装",
+      "type":1
+
+    },
+
+    {
+      "trousers":[{
+        "title":"打底裤",
+        "img":"R.drawable.dadiku"
+      },
+        {
+          "title":"牛仔裤",
+          "img":"R.drawable.niuzaiku"
+        },
+        {
+          "title":"休闲裤",
+          "img":"R.drawable.xiuxianku"
+        }
+      ],
+      "title":"裤装",
+      "type":2
+
+    }
+  ]
+}
