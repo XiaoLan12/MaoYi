@@ -9,6 +9,7 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.base.BaseFragment;
 import com.yizhisha.maoyi.base.BaseToolbar;
+import com.yizhisha.maoyi.ui.home.activity.SearchActivity;
 import com.yizhisha.maoyi.ui.me.activity.NewActivity;
 
 import java.util.ArrayList;
@@ -36,6 +37,12 @@ public class HomeFragment extends BaseFragment {
     }
     @Override
     protected void initView() {
+        toolbar.setLeftButtonOnClickLinster(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(SearchActivity.class);
+            }
+        });
         toolbar.setRightButtonOnClickLinster(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

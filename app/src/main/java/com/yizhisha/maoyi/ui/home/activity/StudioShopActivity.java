@@ -176,7 +176,7 @@ public class StudioShopActivity extends BaseActivity<StudioShopPresenter> implem
             @Override
             public void onClick(View view) {
                 if(popuwindow==null){
-                    popuwindow=new GoodsScressPopuwindow(mContext);
+                    popuwindow=new GoodsScressPopuwindow(mContext,false);
                     popuwindow.serData1(sortedsBeanList);
                     popuwindow.setOnSearchOnClick(new GoodsScressPopuwindow.OnSearchOnClick() {
                         @Override

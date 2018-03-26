@@ -92,6 +92,8 @@
             android:screenOrientation="portrait" />
         <!-- 专题详情 -->
         <activity android:name=".ui.home.activity.SpecialDetailActivity" />
+        <!--搜索-->
+        <activity android:name=".ui.home.activity.SearchActivity" />
         <activity android:name=".ui.me.activity.AddCommentActivity" />
         <activity android:name=".ui.shoppcart.activity.EditShoppCartActivity" />
 
