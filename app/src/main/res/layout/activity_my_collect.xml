@@ -4,19 +4,90 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-    <com.yizhisha.maoyi.base.BaseToolbar
-        android:id="@+id/toolbar"
-        style="@style/basetoolbarStyle"
-        android:background="@color/common_color"
-        app:leftButtonIcon="@drawable/ic_back"
-        app:rightButtonIcon="@drawable/ic_launcher"
-        app:title="我的收藏"
-        android:layout_alignParentTop="true"/>
+    <LinearLayout
+        android:id="@+id/toolbar_ll"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="@color/common_color">
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:padding="10dp"
+            android:src="@drawable/ic_back"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/title_tv"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_marginLeft="6dp"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:text="我的收藏"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:orientation="horizontal"
+                android:background="@drawable/home_search_linearlayout"
+                android:gravity="center_vertical"
+                android:layout_weight="1"
+                android:visibility="gone"
+                android:id="@+id/ll_search">
+                <ImageView
+                    android:layout_width="@dimen/dp_16"
+                    android:layout_height="@dimen/dp_16"
+                    android:layout_marginLeft="6dp"
+                    android:src="@drawable/icon_search"/>
+                <com.yizhisha.maoyi.widget.ClearEditText
+                    android:id="@+id/search_selectyarn_et"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textSize="14sp"
+                    android:background="@null"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true"
+                    android:hint="请输入关键字"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/search_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/selector_tv"
+            android:textSize="@dimen/font_small"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginRight="@dimen/dp_5"
+            android:visibility="gone"
+            android:text="取消"
+            />
+
+        <ImageView
+            android:id="@+id/search_iv"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/dp_5"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:src="@drawable/icon_search"/>
+
+    </LinearLayout>
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swiperefreshlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/toolbar_ll"
         >
 
         <android.support.v7.widget.RecyclerView

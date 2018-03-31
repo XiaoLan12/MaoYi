@@ -12,7 +12,7 @@
         app:leftButtonIcon="@drawable/ic_back"
         app:rightButtonIcon="@drawable/ic_launcher"
         app:title="修改昵称"
-        app:titleColors="@color/common_h"/>
+        app:titleColors="@color/white"/>
     <com.yizhisha.maoyi.widget.ClearEditText
         android:id="@+id/nickname_et"
         android:layout_width="match_parent"

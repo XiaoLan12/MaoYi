@@ -18,13 +18,16 @@ public interface SDayExplosionContract {
         void getWeekToprSuccess(List<WeekTopListBean.WeekTopBean> model);
         void getWeekListtSuccess(List<WeekListBean.WeekBean> model);
         void getSortedListSuccess(List<SortedListBean.SortedsBean> model);
-        void loadFail(String msg);
+        void showLoading();
+        void hideLoading();
+        void showEmpty();
+        void loadFail(int code,String msg);
     }
 
     abstract class Presenter extends BasePresenter<SDayExplosionContract.View> {
         public abstract void getSortedList();
         public abstract void getWeekTop();
-        public abstract void getWeekList(Map<String,String> map);
+        public abstract void getWeekList(Map<String,String> map,boolean isShowLoad);
 
     }
 }

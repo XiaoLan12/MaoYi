@@ -25,7 +25,8 @@ public class MyFootprintAdapter extends BaseQuickAdapter<FootpringBean.History,B
     protected void convert(BaseViewHolder helper, FootpringBean.History item) {
         helper.setText(R.id.titel_tv,item.getTitle());
         helper.setText(R.id.price_tv,item.getPrice()+"");
-        GlideUtil.getInstance().LoadContextBitmap(mContext, AppConstant.PRUDUCT_IMG_URL+item.getPrice(),
+        helper.addOnClickListener(R.id.delete_tv);
+        GlideUtil.getInstance().LoadContextBitmap(mContext, AppConstant.PRUDUCT_IMG_URL+item.getLitpic(),
                 (ImageView) helper.getView(R.id.photo_iv),GlideUtil.LOAD_BITMAP);
     }
 }

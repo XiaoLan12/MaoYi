@@ -32,7 +32,7 @@
                 android:layout_height="@dimen/dp_60"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:src="@drawable/ic_launcher"/>
+                android:src="@drawable/icon_head_normal"/>
                 <TextView
                     android:id="@+id/userName_tv"
                     android:layout_width="wrap_content"

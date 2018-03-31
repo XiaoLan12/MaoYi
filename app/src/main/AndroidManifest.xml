@@ -24,10 +24,12 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.MainActivity"
+        <activity
+            android:name=".ui.MainActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -126,7 +128,8 @@
         <activity android:name=".ui.me.activity.AnswerActivity" />
         <activity android:name=".ui.home.activity.CommentYarnActivity" />
         <activity android:name=".ui.home.activity.ShopCartActivity" />
-        <activity android:name=".ui.type.avtivity.TypeShopListActivity"></activity>
+        <activity android:name=".ui.type.avtivity.TypeShopListActivity" />
+        <activity android:name=".ui.home.activity.SearchActivity"></activity>
     </application>
 
 </manifest>

@@ -86,7 +86,7 @@
                     android:id="@+id/dialog_img"
                     android:layout_width="88dp"
                     android:layout_height="88dp"
-                    android:background="@drawable/ic_launcher"/>
+                    />
             </RelativeLayout>
         </RelativeLayout>
 

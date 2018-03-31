@@ -11,7 +11,7 @@
         style="@style/basetoolbarStyle"
         android:background="@color/common_color"
         app:leftButtonIcon="@drawable/ic_back"
-        app:rightButtonIcon="@drawable/ic_launcher"
+        app:rightButtonIcon="@drawable/icon_new"
         app:title="我的评价" />
     <com.flyco.tablayout.SlidingTabLayout
         android:id="@+id/slidingtablayout"

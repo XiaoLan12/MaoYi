@@ -3,6 +3,7 @@ package com.yizhisha.maoyi.ui.me.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,8 +16,12 @@ import com.yizhisha.maoyi.base.rx.RxBus;
 import com.yizhisha.maoyi.bean.json.MeInfoBean;
 import com.yizhisha.maoyi.common.dialog.DialogInterface;
 import com.yizhisha.maoyi.common.dialog.NormalAlertDialog;
+import com.yizhisha.maoyi.common.dialog.NormalSelectionDialog;
+import com.yizhisha.maoyi.event.LoginEvent;
 import com.yizhisha.maoyi.event.UserHeadEvent;
+import com.yizhisha.maoyi.ui.MainActivity;
 import com.yizhisha.maoyi.ui.login.activity.LoginFragmentActivity;
+import com.yizhisha.maoyi.ui.login.activity.RegisterActivity;
 import com.yizhisha.maoyi.ui.me.activity.AboutUsActivity;
 import com.yizhisha.maoyi.ui.me.activity.CouponsActivity;
 import com.yizhisha.maoyi.ui.me.activity.MyCollectActivity;
@@ -30,6 +35,9 @@ import com.yizhisha.maoyi.ui.me.contract.MeContract;
 import com.yizhisha.maoyi.ui.me.presenter.MePresenter;
 import com.yizhisha.maoyi.utils.GlideUtil;
 import com.yizhisha.maoyi.utils.ToastUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -68,17 +76,7 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
     protected int getLayoutId() {
         return R.layout.fragment_me;
     }
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            if(AppConstant.isLogin==true){
-                mPresenter.loadHeadInfo(AppConstant.UID);
-            }else{
-                userNameTv.setText("毛衣商城感谢您的支持,请登录");
-            }
-        }
-    }
+
     @Override
     protected void initView() {
         toolbar.setRightButtonOnClickLinster(new View.OnClickListener() {
@@ -97,7 +95,7 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
     }
     @OnClick({R.id.myorder_rl, R.id.unpayment_ll, R.id.unshipping_ll, R.id.unreceive_goods_ll,
             R.id.finish_ll, R.id.refund_ll, R.id.setting_rl, R.id.coupon_rl, R.id.collect_rl,
-            R.id.footprint_rl, R.id.myEvaluation_rl, R.id.aboutUs_rl, R.id.serviceHotline_rl,R.id.userPhoto_iv})
+            R.id.footprint_rl, R.id.myEvaluation_rl, R.id.aboutUs_rl, R.id.serviceHotline_rl})
     /**
      *
      */
@@ -106,54 +104,122 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
         super.onClick(v);
         switch (v.getId()) {
             case R.id.myorder_rl:
+                if(AppConstant.isLogin==false){
+                    if(dialog==null){
+                        showLoginDialog();
+                    }
+                    dialog.show();
+                    return;
+                }
                 Bundle bundle = new Bundle();
                 bundle.putInt("INDEX", 0);
                 startActivity(MyOrderActivity.class, bundle);
                 break;
             case R.id.unpayment_ll:
+                if(AppConstant.isLogin==false){
+                    if(dialog==null){
+                        showLoginDialog();
+                    }
+                    dialog.show();
+                    return;
+                }
                 Bundle bundle1 = new Bundle();
                 bundle1.putInt("INDEX", 1);
                 startActivity(MyOrderActivity.class, bundle1);
                 break;
             case R.id.unshipping_ll:
+                if(AppConstant.isLogin==false){
+                    if(dialog==null){
+                        showLoginDialog();
+                    }
+                    dialog.show();
+                    return;
+                }
                 Bundle bundle2 = new Bundle();
                 bundle2.putInt("INDEX", 2);
                 startActivity(MyOrderActivity.class, bundle2);
                 break;
             case R.id.unreceive_goods_ll:
+                if(AppConstant.isLogin==false){
+                    if(dialog==null){
+                        showLoginDialog();
+                    }
+                    dialog.show();
+                    return;
+                }
                 Bundle bundle3 = new Bundle();
                 bundle3.putInt("INDEX", 3);
                 startActivity(MyOrderActivity.class, bundle3);
                 break;
             case R.id.finish_ll:
+                if(AppConstant.isLogin==false){
+                    if(dialog==null){
+                        showLoginDialog();
+                    }
+                    dialog.show();
+                    return;
+                }
                 Bundle bundle4 = new Bundle();
                 bundle4.putInt("INDEX", 4);
                 startActivity(MyOrderActivity.class, bundle4);
                 break;
             case R.id.refund_ll:
+                if(AppConstant.isLogin==false){
+                    if(dialog==null){
+                        showLoginDialog();
+                    }
+                    dialog.show();
+                    return;
+                }
                 startActivity(ReFundOrderActivity.class);
                 break;
             case R.id.setting_rl:
+               /* if(AppConstant.isLogin==false){
+                    if(dialog==null){
+                        showLoginDialog();
+                    }
+                    dialog.show();
+                    return;
+                }*/
                 startActivity(SettingActivity.class);
                 break;
             case R.id.coupon_rl:
                 startActivity(CouponsActivity.class);
                 break;
             case R.id.collect_rl:
+                if(AppConstant.isLogin==false){
+                    if(dialog==null){
+                        showLoginDialog();
+                    }
+                    dialog.show();
+                    return;
+                }
                 startActivity(MyCollectActivity.class);
                 break;
             case R.id.footprint_rl:
+                if(AppConstant.isLogin==false){
+                    if(dialog==null){
+                        showLoginDialog();
+                    }
+                    dialog.show();
+                    return;
+                }
                 startActivity(MyFootprintActivity.class);
                 break;
             case R.id.myEvaluation_rl:
+                if(AppConstant.isLogin==false){
+                    if(dialog==null){
+                        showLoginDialog();
+                    }
+                    dialog.show();
+                    return;
+                }
                 startActivity(MyRatingActivity.class);
                 break;
             case R.id.aboutUs_rl:
                 startActivity(AboutUsActivity.class);
                 break;
-            case R.id.userPhoto_iv:
-                startActivity(LoginFragmentActivity.class);
-                break;
+
             case R.id.serviceHotline_rl:
                 new NormalAlertDialog.Builder(activity)
                         .setBoolTitle(false)
@@ -180,7 +246,38 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
 
         }
     }
-
+    //判断是否登陆
+    private NormalSelectionDialog dialog;
+    private void showLoginDialog(){
+        final List<String> mDatas1=new ArrayList<>();
+        mDatas1.add("登录");
+        mDatas1.add("注册");
+        dialog=new NormalSelectionDialog.Builder(activity)
+                .setBoolTitle(true)
+                .setTitleText("温馨提示\n尊敬的用户,您尚未登录,请选择登录或注册")
+                .setTitleHeight(55)
+                .setItemHeight(45)
+                .setItemTextColor(R.color.blue)
+                .setItemTextSize(14)
+                .setItemWidth(0.95f)
+                .setCancleButtonText("取消")
+                .setOnItemListener(new DialogInterface.OnItemClickListener<NormalSelectionDialog>() {
+                    @Override
+                    public void onItemClick(NormalSelectionDialog dialog, View button, int position) {
+                        switch (position){
+                            case 0:
+                                startActivity(LoginFragmentActivity.class);
+                                break;
+                            case 1:
+                                startActivity(RegisterActivity.class);
+                                break;
+                        }
+                        dialog.dismiss();
+                    }
+                }).setTouchOutside(true)
+                .build();
+        dialog.setData(mDatas1);
+    }
     @Override
     public void loadHeadSuccess(MeInfoBean info) {
         AppConstant.meInfoBean=info;
@@ -239,11 +336,13 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
                     @Override
                     public void call(Object event) {
                         if (event instanceof UserHeadEvent) {
+                            UserHeadEvent headEvent = (UserHeadEvent) event;
+                            GlideUtil.getInstance().LoadContextCircleBitmap(activity, AppConstant.HEAD_IMG_URL+headEvent.getAvatar(), userPhotoIv,
+                                    R.drawable.icon_head_normal, R.drawable.icon_head_normal);
+                        }
+                        else if(event instanceof LoginEvent){
                             mPresenter.loadHeadInfo(AppConstant.UID);
                         }
-//                        else if(event instanceof LoginEvent){
-//                            load();
-//                        }
                     }
                 });
     }
@@ -251,7 +350,6 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         switch (requestCode) {
-
             case 103:
                 if(AppConstant.meInfoBean==null){
                     userPhotoIv.setImageResource(R.drawable.icon_head_normal);

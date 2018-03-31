@@ -41,6 +41,12 @@ public class MyRatingActivity extends BaseActivity {
                 ActivityManager.getActivityMar().finishActivity(MyRatingActivity.this);
             }
         });
+        toolbar.setRightButtonOnClickLinster(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(NewActivity.class);
+            }
+        });
     }
     @Override
     protected void initView() {

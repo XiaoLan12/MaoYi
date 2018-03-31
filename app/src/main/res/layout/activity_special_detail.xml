@@ -4,29 +4,82 @@
     android:layout_height="match_parent">
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="44dp"
+    android:layout_height="@dimen/dp_40"
     android:background="@color/common_color">
     <ImageView
         android:id="@+id/img_back"
-        android:layout_width="44dp"
-        android:layout_height="44dp"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
         android:padding="10dp"
         android:src="@drawable/ic_back"/>
-    <TextView
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:layout_marginLeft="6dp"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:text="测试"/>
+        android:gravity="center_vertical"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_marginLeft="6dp"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:text="商品列表"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:orientation="horizontal"
+            android:background="@drawable/home_search_linearlayout"
+            android:gravity="center_vertical"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:id="@+id/ll_search">
+            <ImageView
+                android:layout_width="@dimen/dp_16"
+                android:layout_height="@dimen/dp_16"
+                android:layout_marginLeft="6dp"
+                android:src="@drawable/icon_search"/>
+            <com.yizhisha.maoyi.widget.ClearEditText
+                android:id="@+id/search_selectyarn_et"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:background="@null"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"
+                android:hint="请输入关键字"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/search_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/selector_tv"
+        android:textSize="@dimen/font_small"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_marginRight="@dimen/dp_5"
+        android:visibility="gone"
+        android:text="取消"
+        />
+
     <ImageView
+        android:id="@+id/search_iv"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_gravity="center_vertical"
         android:layout_marginRight="@dimen/dp_5"
-        android:src="@drawable/ic_launcher"/>
+        android:layout_marginLeft="@dimen/dp_5"
+        android:src="@drawable/icon_search"/>
+
+
     <ImageView
         android:id="@+id/new_iv"
         android:layout_width="25dp"
@@ -38,6 +91,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         android:scrollbars="none">
     <LinearLayout
         android:layout_width="match_parent"

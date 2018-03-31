@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -22,6 +23,7 @@ import com.yizhisha.maoyi.bean.json.MeInfoBean;
 import com.yizhisha.maoyi.bean.json.UserHeadBean;
 import com.yizhisha.maoyi.common.dialog.DialogInterface;
 import com.yizhisha.maoyi.common.dialog.NormalSelectionDialog;
+import com.yizhisha.maoyi.event.LoginEvent;
 import com.yizhisha.maoyi.event.UserHeadEvent;
 import com.yizhisha.maoyi.ui.ClipHeaderActivity;
 import com.yizhisha.maoyi.ui.me.contract.PersonalInfoContract;
@@ -125,9 +127,6 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter> im
 
         }
     }
-//    private void load(Map<String,String> map){
-//        mPresenter.changePersonalInfo(map);
-//    }
     private void changeInfo(Map<String,String> map){
         mPresenter.changePersonalInfo(map);
     }
@@ -275,6 +274,10 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter> im
     }
     @Override
     public void changeSuccess(String result) {
+        if(AppConstant.meInfoBean!=null) {
+            AppConstant.meInfoBean.setNickname(nicknameTv.getText().toString().trim());
+        }
+        RxBus.$().postEvent(new LoginEvent());
         ToastUtil.showShortToast(result);
     }
 
@@ -285,7 +288,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter> im
         }
         GlideUtil.getInstance().LoadContextCircleBitmap(this,AppConstant.HEAD_IMG_URL+msg.getAvatar(),headIv,
                 R.drawable.icon_head_normal,R.drawable.icon_head_normal);
-        RxBus.$().postEvent(new UserHeadEvent());
+        RxBus.$().postEvent(new UserHeadEvent(msg.getAvatar()));
         ToastUtil.showbottomShortToast(msg.getInfo());
     }
 
@@ -294,7 +297,6 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter> im
         AppConstant.meInfoBean=info;
         sexTv.setText(info.getSex());
         nicknameTv.setText(info.getNickname());
-        RxBus.$().postEvent(new UserHeadEvent());
     }
 
     @Override
@@ -307,9 +309,11 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter> im
         switch (requestCode){
             case NICKNAME_REQUEST:
                 if(resultCode==NICKNAME_RESULT){
+                    String name=data.getExtras().getString("NICKNAME","");
+                    nicknameTv.setText(name);
                     Map<String,String> map=new HashMap<>();
                     map.put("uid", String.valueOf(AppConstant.UID));
-                    map.put("nickname", data.getExtras().getString("NICKNAME",""));
+                    map.put("nickname", name);
                     changeInfo(map);
                 }
                 break;

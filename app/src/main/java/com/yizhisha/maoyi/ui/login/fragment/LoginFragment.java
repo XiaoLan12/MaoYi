@@ -271,14 +271,14 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements Login
                 isHidden = !isHidden;
                 break;
             case R.id.weixin_login_tv:
-                if (!api.isWXAppInstalled()) {
+               /* if (!api.isWXAppInstalled()) {
                     ToastUtil.showbottomShortToast("您还未安装微信客户端");
                     return;
                 }
                 final SendAuth.Req req = new SendAuth.Req();
                 req.scope = "snsapi_userinfo";
                 req.state = "taosha_wx_login";
-                api.sendReq(req);
+                api.sendReq(req);*/
                 break;
         }
     }

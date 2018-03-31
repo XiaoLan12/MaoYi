@@ -81,7 +81,6 @@ public class TypeContentAdapter extends BaseAdapter{
                 }else {
                     Intent intent = new Intent(mContext, TypeShopListActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString("spc_id", dataLists.get(position).getId());
                     bundle.putString("cid", list.get(i).getCid() + "");
                     intent.putExtras(bundle);
                     mContext.startActivity(intent);

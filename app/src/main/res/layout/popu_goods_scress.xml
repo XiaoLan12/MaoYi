@@ -5,21 +5,27 @@
     xmlns:zhy="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+    <LinearLayout
+        android:id="@+id/ll1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_45"
+        android:orientation="vertical"
         android:alpha="0">
     </LinearLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:background="@color/white"
-        android:layout_height="0dp">
     <LinearLayout
-        android:id="@+id/ll"
+        android:id="@+id/ll2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:background="@color/white"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
@@ -97,22 +103,22 @@
         </LinearLayout>
 
     </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:layout_weight="1"/>
+
         <TextView
             android:id="@+id/tv_search"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dp_40"
             android:background="@color/common_color"
-            android:padding="8dp"
             android:textSize="12sp"
             android:gravity="center"
             android:textColor="@color/white"
-            android:layout_alignParentBottom="true"
             android:text="开始搜索"/>
-    </RelativeLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:alpha="0">
-    </LinearLayout>
 
+    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

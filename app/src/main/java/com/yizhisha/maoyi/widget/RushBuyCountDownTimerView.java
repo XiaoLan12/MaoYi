@@ -91,6 +91,7 @@ public class RushBuyCountDownTimerView extends LinearLayout{
         public void handleMessage(Message msg){
 
             switch (msg.what){
+
                 case 1:
                     Date curDate = new Date();// 获取当前时间
                     long cur = curDate.getTime();// 获取当前时间

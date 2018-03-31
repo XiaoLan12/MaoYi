@@ -42,6 +42,7 @@ import com.yizhisha.maoyi.common.dialog.NormalAlertDialog;
 import com.yizhisha.maoyi.ui.home.activity.SureOrderActivity;
 import com.yizhisha.maoyi.ui.shoppcart.contract.ShoppCartContract;
 import com.yizhisha.maoyi.ui.shoppcart.presenter.ShoppCartPresenter;
+import com.yizhisha.maoyi.utils.GlideUtil;
 import com.yizhisha.maoyi.utils.RescourseUtil;
 import com.yizhisha.maoyi.utils.ToastUtil;
 import com.yizhisha.maoyi.widget.CommonLoadingView;
@@ -546,6 +547,15 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
         }
 
         dialog_goods_price.setText("￥:"+goodBean.getPrice());
+        String url=goodBean.getLitpic();
+        String newUrl;
+        if(url.length()>0&&url.startsWith("http://")){
+            newUrl=url;
+        }else{
+            newUrl=AppConstant.PRUDUCT_IMG_URL+url;
+        }
+        GlideUtil.getInstance().LoadContextBitmap(mContext, newUrl,
+                dialog_img,GlideUtil.LOAD_BITMAP);
         dialog_listView.setLayoutManager(new LinearLayoutManager(mContext));
         mAdapter = new EditShoppcartAdapter(dataBean.getAttributes(), dataBean.getStockGoods());
         dialog_listView.setAdapter(mAdapter);

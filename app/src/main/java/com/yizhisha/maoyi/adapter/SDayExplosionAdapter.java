@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.bean.json.WeekListBean;
+import com.yizhisha.maoyi.utils.GlideUtil;
 
 import java.util.List;
 
@@ -27,8 +28,15 @@ public class SDayExplosionAdapter extends BaseQuickAdapter<WeekListBean.WeekBean
         helper.setText(R.id.tv_title,item.getTitle());
         helper.setText(R.id.tv_price,"￥"+item.getPrice());
         helper.setText(R.id.tv_sales,item.getSales()+"人付款");
-        ImageView imageView=helper.getView(R.id.img);
-        Glide.with(mContext).load(AppConstant.PRUDUCT_IMG_URL+item.getLitpic()).into(imageView);
+        String url=item.getLitpic();
+        String newUrl;
+        if(url.length()>0&&url.startsWith("http://")){
+            newUrl=url;
+        }else{
+            newUrl=AppConstant.PRUDUCT_IMG_URL+url;
+        }
+        GlideUtil.getInstance().LoadContextBitmap(mContext, newUrl,
+                (ImageView) helper.getView(R.id.img),GlideUtil.LOAD_BITMAP);
 
     }
 }

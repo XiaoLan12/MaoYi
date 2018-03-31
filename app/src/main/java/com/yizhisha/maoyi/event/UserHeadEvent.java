@@ -5,6 +5,17 @@ package com.yizhisha.maoyi.event;
  */
 
 public class UserHeadEvent {
-    public UserHeadEvent() {
+    private String avatar;
+
+    public UserHeadEvent(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

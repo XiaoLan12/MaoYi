@@ -2,6 +2,7 @@ package com.yizhisha.maoyi.ui.me.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -42,15 +43,17 @@ public class ChangeNickNameActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        final String nickName=nicknameEt.getText().toString().trim();
+
 
         sureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(nickName==null||nickName.equals(" ")){
+                String nickName=nicknameEt.getText().toString().trim();
+                if(nickName==null||nickName.equals("")){
                     ToastUtil.showShortToast("请输入新的昵称");
                     return;
                 }
+
                 Intent intent=new Intent();
                 Bundle bundle=new Bundle();
                 bundle.putString("NICKNAME",nickName);

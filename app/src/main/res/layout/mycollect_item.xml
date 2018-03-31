@@ -14,7 +14,7 @@
         android:id="@+id/photo_iv"
         android:layout_width="@dimen/dp_80"
         android:layout_height="@dimen/dp_80"
-        android:src="@drawable/ic_launcher"/>
+        />
     <TextView
         android:id="@+id/titel_tv"
         android:layout_width="wrap_content"
@@ -54,6 +54,15 @@
         android:layout_alignBottom="@+id/photo_iv"
         android:layout_marginRight="@dimen/dp_5"
         android:text="找相似"/>
+        <TextView
+            android:id="@+id/delete_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/common_color"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tradehead_iv"
+            android:layout_marginRight="@dimen/dp_10"
+            android:text="删除"/>
     </RelativeLayout>
     <View
         android:layout_width="match_parent"

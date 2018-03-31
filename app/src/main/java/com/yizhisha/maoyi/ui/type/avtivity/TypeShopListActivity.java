@@ -4,8 +4,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +29,7 @@ import com.yizhisha.maoyi.ui.type.contract.TypeShopListContract;
 import com.yizhisha.maoyi.ui.type.presenter.TypeShopListPresenter;
 import com.yizhisha.maoyi.utils.RescourseUtil;
 import com.yizhisha.maoyi.utils.ToastUtil;
+import com.yizhisha.maoyi.widget.ClearEditText;
 import com.yizhisha.maoyi.widget.CommonLoadingView;
 import com.youth.banner.Banner;
 
@@ -44,6 +49,16 @@ public class TypeShopListActivity extends BaseActivity<TypeShopListPresenter> im
     ImageView imgBack;
     @Bind(R.id.loadingView)
     CommonLoadingView mLoadingView;
+    @Bind(R.id.title_tv)
+    TextView titleTv;
+    @Bind(R.id.ll_search)
+    LinearLayout searchLl;
+    @Bind(R.id.search_selectyarn_et)
+    ClearEditText searchEt;
+    @Bind(R.id.search_iv)
+    ImageView searchIv;
+    @Bind(R.id.search_tv)
+    TextView searchTv;
     private SDayExplosionAdapter mAdapter;
     private List<WeekListBean.WeekBean> dataLists = new ArrayList<>();
 
@@ -58,13 +73,14 @@ public class TypeShopListActivity extends BaseActivity<TypeShopListPresenter> im
     TextView tv_select_xiaoliang;
     @Bind(R.id.ll_select_price)
     LinearLayout ll_select_price;
-    private int price=0;
-    private int xiaoliang=0;
 
-    private String spc_id="2";
-    private String cid;
+    //查询条件
+    private int sort=0;//排序
+    private String search="";//商品类型
+    private String cid="";
+    private String price="";//价格
+    private String mKey="";//搜索词
 
-    private int mWid;//工作室ID；
 
     private List<SortedListBean.SortedsBean> sortedsBeanList=new ArrayList<>();
 
@@ -86,6 +102,50 @@ public class TypeShopListActivity extends BaseActivity<TypeShopListPresenter> im
             @Override
             public void onClick(View view) {
                 startActivity(NewActivity.class);
+            }
+        });
+        searchIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                titleTv.setVisibility(View.GONE);
+                searchLl.setVisibility(View.VISIBLE);
+                searchIv.setVisibility(View.GONE);
+                searchTv.setVisibility(View.VISIBLE);
+            }
+        });
+        searchEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.length()>0){
+                    searchTv.setText("搜索");
+                }else{
+                    searchTv.setText("取消");
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        searchTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String text=searchTv.getText().toString().trim();;
+                if(text.equals("搜索")){
+                    String key=searchEt.getText().toString().trim();
+                    mKey=key.replaceAll(" +"," ");
+                    load(false);
+                }else{
+                    searchLl.setVisibility(View.GONE);
+                    titleTv.setVisibility(View.VISIBLE);
+                    searchIv.setVisibility(View.VISIBLE);
+                    searchTv.setVisibility(View.GONE);
+                }
             }
         });
     }
@@ -113,13 +173,31 @@ public class TypeShopListActivity extends BaseActivity<TypeShopListPresenter> im
         });
         initHeadView();
         Bundle bundle=getIntent().getExtras();
-        spc_id=bundle.getString("spc_id");
-        cid=bundle.getString("cid");
-        Map<String,String> map=new HashMap<>();
-        map.put("cid",cid);
-        map.put("spc_id",spc_id);
-        mPresenter.getGoodsSorted(map,true);
+        if(bundle.getString("cid")!=null){
+            cid=bundle.getString("cid");
+        }else if(bundle.getString("KEY")!=null){
+            mKey=bundle.getString("KEY");
+        }
+        load(true);
         mPresenter.getSortedList();
+    }
+    private void load(boolean isShowLoad){
+
+        Map<String,String> map=new HashMap<>();
+        map.put("cid", cid);
+        if(!price.equals("")){
+            map.put("price", price);
+        }
+        if(sort!=0){
+            map.put("order", sort+"");
+        }
+        if(!search.equals("")){
+            map.put("search", search);
+        }
+        if(!mKey.equals("")){
+            map.put("key", mKey);
+        }
+        mPresenter.getGoodsSorted(map,isShowLoad);
     }
 
     private void initHeadView() {
@@ -138,31 +216,14 @@ public class TypeShopListActivity extends BaseActivity<TypeShopListPresenter> im
                             for(Integer str:data){
                                 buffer.append(str).append(",");
                             }
-                            String search="";
+                            String searchs="";
                             if(buffer.length()>0) {
                                 search = buffer.substring(0, buffer.length() - 1).toString();
-                            }else{
-                                search=cid;
                             }
-                            Map<String,String> map=new HashMap<>();
-                            map.put("spc_id",spc_id);
-                            if(price==0){
-                                if(xiaoliang!=0) {
-                                    map.put("order", xiaoliang + "");
-                                }
-                            }else{
-                                if(price!=0) {
-                                    map.put("order", price + "");
-                                }
-                            }
-                            if(!search.equals("")) {
-                                map.put("cid", search);
-                            }
-                            if(!valuePrice.equals("")){
-                                map.put("price", valuePrice);
-                            }
+                            search=searchs;
+                            price=valuePrice;
 
-                            mPresenter.getGoodsSorted(map,false);
+                            load(false);
                             popuwindow.dismiss();
                         }
                     });
@@ -177,53 +238,37 @@ public class TypeShopListActivity extends BaseActivity<TypeShopListPresenter> im
         tv_select_xiaoliang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(price!=0){
-                    price=0;
-                    img_select_price.setImageResource(R.drawable.price_select_not);
-                    tv_select_price.setTextColor(RescourseUtil.getColor(R.color.black));
+                img_select_price.setImageResource(R.drawable.price_select_not);
+                tv_select_price.setTextColor(RescourseUtil.getColor(R.color.black));
+                if(sort==1){
+                    sort=0;
+                    tv_select_xiaoliang.setTextColor(RescourseUtil.getColor(R.color.black));
+                }else{
+                    sort=1;
+                    tv_select_xiaoliang.setTextColor(RescourseUtil.getColor(R.color.red1));
                 }
 
-                Map<String,String> map=new HashMap<>();
-                if(xiaoliang==0){
-                    xiaoliang=1;
-                    map.put("order","1");
-                    tv_select_xiaoliang.setTextColor(RescourseUtil.getColor(R.color.red1));
-                }else{
-                    xiaoliang=0;
-                    tv_select_xiaoliang.setTextColor(RescourseUtil.getColor(R.color.black));
-                }
-                map.put("spc_id",spc_id);
-                map.put("cid",cid);
-                mPresenter.getGoodsSorted(map,false);
+                load(false);
             }
         });
         ll_select_price.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(xiaoliang!=0) {
-                    xiaoliang = 0;
-                    tv_select_xiaoliang.setTextColor(RescourseUtil.getColor(R.color.black));
-                }
-                Map<String,String> map=new HashMap<>();
-                if(price==0){
+                tv_select_xiaoliang.setTextColor(RescourseUtil.getColor(R.color.black));
+                if(sort==0||sort==1){
                     img_select_price.setImageResource(R.drawable.price_select_up);
                     tv_select_price.setTextColor(RescourseUtil.getColor(R.color.red1));
-                    price=4;
-                    map.put("order","4");
-                }else if(price==4){
+                    sort=4;
+                }else if(sort==4){
                     img_select_price.setImageResource(R.drawable.price_select_down);
                     tv_select_price.setTextColor(RescourseUtil.getColor(R.color.red1));
-                    price=3;
-                    map.put("order","3");
-                }else if(price==3){
+                    sort=3;
+                }else if(sort==3){
                     img_select_price.setImageResource(R.drawable.price_select_up);
                     tv_select_price.setTextColor(RescourseUtil.getColor(R.color.red1));
-                    price=4;
-                    map.put("order","3");
+                    sort=4;
                 }
-                map.put("spc_id",spc_id);
-                map.put("cid",cid);
-                mPresenter.getGoodsSorted(map,false);
+                load(false);
 
 
             }
@@ -272,9 +317,7 @@ public class TypeShopListActivity extends BaseActivity<TypeShopListPresenter> im
             @Override
             public void doRequestData() {
                 Map<String,String> map=new HashMap<>();
-                map.put("spc_id",spc_id);
-                map.put("cid",spc_id);
-                mPresenter.getGoodsSorted(map,true);
+               load(true);
             }
         });
         dataLists.clear();

@@ -126,7 +126,7 @@ public class MyAddressActivity extends BaseActivity<MyAddressPresenter> implemen
 
                                     @Override
                                     public void clickRightButton(NormalAlertDialog dialog, View view) {
-                                      /*  mPresenter.deleteAddress(dataList.get(position).getId());
+                                       /* mPresenter.deleteAddress(dataList.get(position).getId());
                                         dataList.remove(position);*/
                                         dialog.dismiss();
 

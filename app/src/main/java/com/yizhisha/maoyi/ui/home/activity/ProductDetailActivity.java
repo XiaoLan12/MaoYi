@@ -187,7 +187,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
         rlTuijian.setAdapter(mAdapter1);
         Map<String, String> map = new HashMap<>();
         map.put("gid", String.valueOf(mGid));
-        map.put("uid", String.valueOf(3));
+        map.put("uid", String.valueOf(AppConstant.UID));
         mPresenter.getGoodsDetail(map);
 
         // 为ImageSlideshow设置数据
@@ -205,8 +205,11 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
 
         List<BannerResult> bannerResultsList=new ArrayList<>();
         BannerResult bannerResult=new BannerResult();
-        bannerResult.setUrl(goodsProductBean.getLitpic());
-        imageSlideshow.setImageTitleBeanList(bannerResultsList);
+        String url=goodsProductBean.getLitpic();
+        bannerResult.setUrl(url);
+
+
+        //imageSlideshow.setImageTitleBeanList(bannerResultsList);
         mPresenter.getSimilarRecommen(goodsProductBean.getTid());
         String devi_lenth = goodsProductBean.getDevi_length();
         if (devi_lenth.equals("1")) {
@@ -466,6 +469,15 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
             tv_item_minus_comm_detail.setOnClickListener(new ProductDetailActivity.DialogClick());
             tv_item_add_comm_detail.setOnClickListener(new ProductDetailActivity.DialogClick());
             dialog_goods_price.setText("￥:" + goodBean.getPrice());
+            String url=goodBean.getLitpic();
+            String newUrl;
+            if(url.length()>0&&url.startsWith("http://")){
+                newUrl=url;
+            }else{
+                newUrl=AppConstant.PRUDUCT_IMG_URL+url;
+            }
+            GlideUtil.getInstance().LoadContextBitmap(mContext, newUrl,
+                    dialog_img,GlideUtil.LOAD_BITMAP);
             dialog_listView.setLayoutManager(new LinearLayoutManager(mContext));
             mAdapter = new EditShoppcartAdapter(dataBean.getAttributes(), dataBean.getStockGoods());
             dialog_listView.setAdapter(mAdapter);

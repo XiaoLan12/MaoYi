@@ -58,8 +58,10 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
     LinearLayout ll_select_price;
     @Bind(R.id.loadingView)
     CommonLoadingView mLoadingView;
-    private int price=0;
-    private int xiaoliang=0;
+    //查询条件
+    private int sort=0;//排序
+    private String cid="";//商品类型
+    private String price="";//价格
     private List<SortedListBean.SortedsBean> sortedsBeanList=new ArrayList<>();
 
     private SDayExplosionAdapter mAdapter;
@@ -87,10 +89,23 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
             }
         });
         initHeadView();
-        Map<String,String> map=new HashMap<>();
-        mPresenter.getWeekList(map);
+        load(true);
         mPresenter.getWeekTop();
         mPresenter.getSortedList();
+    }
+    private void load(boolean isShowLoad){
+
+        Map<String,String> map=new HashMap<>();
+        if(!cid.equals("")){
+            map.put("cid", cid);
+        }
+        if(!price.equals("")){
+            map.put("price", price);
+        }
+        if(sort!=0){
+            map.put("order", sort+"");
+        }
+        mPresenter.getWeekList(map,isShowLoad);
     }
     private void initHeadView() {
         tv_select_select.setOnClickListener(new View.OnClickListener() {
@@ -114,23 +129,10 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
                             if(buffer.length()>0) {
                                 search = buffer.substring(0, buffer.length() - 1).toString();
                             }
-                            Map<String,String> map=new HashMap<>();
-                            if(price==0){
-                                if(xiaoliang!=0) {
-                                    map.put("order", xiaoliang + "");
-                                }
-                            }else{
-                                if(price!=0) {
-                                    map.put("order", price + "");
-                                }
-                            }
-                            if(!search.equals("")) {
-                                map.put("cid", search);
-                            }
-                            if(!valuePrice.equals("")){
-                                map.put("price", valuePrice);
-                            }
-                            mPresenter.getWeekList(map);
+                            cid=search;
+                            price=valuePrice;
+
+                            load(false);
                             popuwindow.dismiss();
                         }
                     });
@@ -144,48 +146,37 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
         tv_select_xiaoliang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(price!=0){
-                    price=0;
-                    img_select_price.setImageResource(R.drawable.price_select_not);
-                    tv_select_price.setTextColor(RescourseUtil.getColor(R.color.black));
+                img_select_price.setImageResource(R.drawable.price_select_not);
+                tv_select_price.setTextColor(RescourseUtil.getColor(R.color.black));
+                if(sort==1){
+                    sort=0;
+                    tv_select_xiaoliang.setTextColor(RescourseUtil.getColor(R.color.black));
+                }else{
+                    sort=1;
+                    tv_select_xiaoliang.setTextColor(RescourseUtil.getColor(R.color.red1));
                 }
 
-                Map<String,String> map=new HashMap<>();
-                if(xiaoliang==0){
-                    xiaoliang=1;
-                    map.put("order","1");
-                    tv_select_xiaoliang.setTextColor(RescourseUtil.getColor(R.color.red1));
-                }else{
-                    xiaoliang=0;
-                    tv_select_xiaoliang.setTextColor(RescourseUtil.getColor(R.color.black));
-                }
-                mPresenter.getWeekList(map);
+                load(false);
             }
         });
         ll_select_price.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(xiaoliang!=0) {
-                    xiaoliang = 0;
-                    tv_select_xiaoliang.setTextColor(RescourseUtil.getColor(R.color.black));
-                }
-                Map<String,String> map=new HashMap<>();
-                if(price==0){
+                tv_select_xiaoliang.setTextColor(RescourseUtil.getColor(R.color.black));
+                if(sort==0||sort==1){
                     img_select_price.setImageResource(R.drawable.price_select_up);
                     tv_select_price.setTextColor(RescourseUtil.getColor(R.color.red1));
-                    price=4;
-                    map.put("order","4");
-                }else if(price==4){
+                    sort=4;
+                }else if(sort==4){
                     img_select_price.setImageResource(R.drawable.price_select_down);
                     tv_select_price.setTextColor(RescourseUtil.getColor(R.color.red1));
-                    price=3;
-                    map.put("order","3");
-                }else {
-                    img_select_price.setImageResource(R.drawable.price_select_not);
-                    price=0;
-                    tv_select_price.setTextColor(RescourseUtil.getColor(R.color.black));
+                    sort=3;
+                }else if(sort==3){
+                    img_select_price.setImageResource(R.drawable.price_select_up);
+                    tv_select_price.setTextColor(RescourseUtil.getColor(R.color.red1));
+                    sort=4;
                 }
-                mPresenter.getWeekList(map);
+                load(false);
 
             }
         });
@@ -216,7 +207,36 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
     }
 
     @Override
-    public void loadFail(String msg) {
-        ToastUtil.showShortToast(msg);
+    public void showLoading() {
+        mLoadingView.load();
+    }
+
+    @Override
+    public void hideLoading() {
+        mLoadingView.loadSuccess();
+    }
+
+    @Override
+    public void showEmpty() {
+        dataLists.clear();
+        mAdapter.setNewData(dataLists);
+        mLoadingView.loadSuccess(true);
+    }
+
+    @Override
+    public void loadFail(int code, String msg) {
+        if(code==0){
+            ToastUtil.showShortToast(msg);
+            return;
+        }
+        mLoadingView.setLoadingHandler(new CommonLoadingView.LoadingHandler() {
+            @Override
+            public void doRequestData() {
+                load(true);
+            }
+        });
+        dataLists.clear();
+        mAdapter.setNewData(dataLists);
+        mLoadingView.loadError(msg);
     }
 }
