@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -52,10 +53,11 @@ public class GoodsScressPopuwindow extends PopupWindow{
     private List<SortedBean> mTabVal1;
     private List<SortedBean> mTabVal2;
     private List<SortedBean> mTabVal3;
+    private LinearLayout ll_bottom;
     public interface OnSearchOnClick{
         void onSearchLisenter();
     }
-    public GoodsScressPopuwindow(Context activity){
+    public GoodsScressPopuwindow(Context activity,boolean bottom){
         mActivity=activity;
         // 获得屏幕的宽度和高度
         WindowManager wm = (WindowManager) activity
@@ -72,6 +74,11 @@ public class GoodsScressPopuwindow extends PopupWindow{
         setTouchable(true);
 
           mInflater = LayoutInflater.from(activity);
+        ll_bottom=(LinearLayout)mContentView.findViewById(R.id.ll_bottom);
+        if(bottom==false){
+            ll_bottom.setVisibility(View.GONE);
+        }
+
         flowlayout1= (TagFlowLayout ) mContentView.findViewById(R.id.id_flowlayout1);
         flowlayout2= (TagFlowLayout ) mContentView.findViewById(R.id.id_flowlayout2);
         flowlayout3= (TagFlowLayout ) mContentView.findViewById(R.id.id_flowlayout3);

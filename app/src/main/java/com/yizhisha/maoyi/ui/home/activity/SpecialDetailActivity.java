@@ -219,7 +219,7 @@ public class SpecialDetailActivity extends BaseActivity<SpecialDetailPresenter> 
             @Override
             public void onClick(View view) {
                 if(popuwindow==null){
-                    popuwindow=new GoodsScressPopuwindow(mContext);
+                    popuwindow=new GoodsScressPopuwindow(mContext,false);
                     popuwindow.serData1(sortedsBeanList);
                     popuwindow.setOnSearchOnClick(new GoodsScressPopuwindow.OnSearchOnClick() {
                         @Override

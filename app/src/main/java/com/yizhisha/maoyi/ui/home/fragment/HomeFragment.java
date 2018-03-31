@@ -37,6 +37,12 @@ public class HomeFragment extends BaseFragment {
     }
     @Override
     protected void initView() {
+        toolbar.setLeftButtonOnClickLinster(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(SearchActivity.class);
+            }
+        });
         toolbar.setRightButtonOnClickLinster(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

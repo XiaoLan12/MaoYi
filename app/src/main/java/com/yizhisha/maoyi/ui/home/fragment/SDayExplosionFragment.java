@@ -114,7 +114,7 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
 
 
                 if(popuwindow==null){
-                    popuwindow=new GoodsScressPopuwindow(mContext);
+                    popuwindow=new GoodsScressPopuwindow(mContext,true);
                     popuwindow.serData1(sortedsBeanList);
                     popuwindow.setOnSearchOnClick(new GoodsScressPopuwindow.OnSearchOnClick() {
                         @Override
