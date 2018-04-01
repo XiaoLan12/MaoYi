@@ -25,22 +25,41 @@
             android:background="@color/white"
             android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/ll_img"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <com.yizhisha.maoyi.widget.ImageSlideshow
-                    android:id="@+id/is_gallery"
-                    android:layout_width="match_parent"
-                    android:visibility="gone"
-                    android:layout_height="212dp"/>
                 <android.support.v4.view.ViewPager
                     android:id="@+id/viewpager"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"></android.support.v4.view.ViewPager>
-
+                    android:layout_height="300dp"
+               ></android.support.v4.view.ViewPager>
+            <LinearLayout
+                android:id="@+id/ll_dot"
+                android:layout_width="match_parent"
+                android:layout_height="14dp"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:visibility="gone"
+                android:gravity="center">
+                <LinearLayout
+                    android:id="@+id/ll_dot1"
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dot_unselected"
+                    android:layout_marginRight="4dp"
+                    android:orientation="horizontal"></LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_dot2"
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dot_unselected"
+                    android:orientation="horizontal"></LinearLayout>
             </LinearLayout>
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -168,8 +187,8 @@
                     android:id="@+id/ll_select_color_size"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                   android:paddingBottom="16dp"
-                   android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:paddingTop="16dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingLeft="14dp"

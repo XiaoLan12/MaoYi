@@ -24,6 +24,7 @@ public class AppConstant {
     public static final String BANNER_IMG_URL="http://dyc.maozhiwang.com/data/attached/special/";
     //商品图片
     public static final String PRUDUCT_IMG_URL="http://dyc.maozhiwang.com/data/attached/goods/";
+    public static final String PRODUCT_VIDEO="http://dyc.maozhiwang.com/data/attached/video/";
     public static List<SortedListBean.SortedsBean> sortedBeanList=new ArrayList<>();
 
 

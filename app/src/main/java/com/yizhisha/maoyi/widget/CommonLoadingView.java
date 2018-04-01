@@ -96,7 +96,7 @@ public class CommonLoadingView extends FrameLayout {
         mLoadingEmpyIv= (ImageView) rootView.findViewById(R.id.iv_empty);
         mLoadingEmpyTv= (TextView) rootView.findViewById(R.id.tv_empty);
         mLoadErrorLl = (LinearLayout) rootView.findViewById(R.id.load_error_ll);
-        errorTipTv=rootView.findViewById(R.id.text_erro);
+        errorTipTv=(TextView)rootView.findViewById(R.id.text_erro);
         mLoadErrorLl.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

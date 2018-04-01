@@ -1,5 +1,6 @@
 package com.yizhisha.maoyi.bean.json;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -24,6 +25,7 @@ public class GoodsProductBean {
     private String sales;
     private String decription;
     private String[] content;
+    private String video;
     private String material;
 
     private List<GoodsStyleBean> style;
@@ -165,6 +167,14 @@ public class GoodsProductBean {
         this.content = content;
     }
 
+    public String getVideo() {
+        return video;
+    }
+
+    public void setVideo(String video) {
+        this.video = video;
+    }
+
     public String getMaterial() {
         return material;
     }
@@ -172,8 +182,6 @@ public class GoodsProductBean {
     public void setMaterial(String material) {
         this.material = material;
     }
-
-
 
     public List<GoodsStyleBean> getStyle() {
         return style;
@@ -194,10 +202,10 @@ public class GoodsProductBean {
     @Override
     public String toString() {
         return "GoodsProductBean{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", title='" + title + '\'' +
                 ", pid='" + pid + '\'' +
-                ", tid='" + tid + '\'' +
+                ", tid=" + tid +
                 ", pname='" + pname + '\'' +
                 ", tname='" + tname + '\'' +
                 ", litpic='" + litpic + '\'' +
@@ -210,7 +218,8 @@ public class GoodsProductBean {
                 ", favs='" + favs + '\'' +
                 ", sales='" + sales + '\'' +
                 ", decription='" + decription + '\'' +
-                ", content='" + content + '\'' +
+                ", content=" + Arrays.toString(content) +
+                ", video='" + video + '\'' +
                 ", material='" + material + '\'' +
                 ", style=" + style +
                 ", style2=" + style2 +

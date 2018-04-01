@@ -33,6 +33,8 @@ import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -74,17 +76,17 @@ public class GoodsScressPopuwindow extends PopupWindow{
         setTouchable(true);
 
           mInflater = LayoutInflater.from(activity);
-        ll_bottom=(LinearLayout)mContentView.findViewById(R.id.ll_bottom);
+     /* ll_bottom=(LinearLayout)mContentView.findViewById(R.id.ll_bottom);
         if(bottom==false){
             ll_bottom.setVisibility(View.GONE);
-        }
+        }*/
 
         flowlayout1= (TagFlowLayout ) mContentView.findViewById(R.id.id_flowlayout1);
         flowlayout2= (TagFlowLayout ) mContentView.findViewById(R.id.id_flowlayout2);
         flowlayout3= (TagFlowLayout ) mContentView.findViewById(R.id.id_flowlayout3);
-        lowestPriceEt=mContentView.findViewById(R.id.lowest_price_et);
-        highestPriceEt=mContentView.findViewById(R.id.highest_price_et);
-        searchTv=mContentView.findViewById(R.id.tv_search);
+        lowestPriceEt=(EditText)mContentView.findViewById(R.id.lowest_price_et);
+        highestPriceEt=(EditText)mContentView.findViewById(R.id.highest_price_et);
+        searchTv=(TextView)mContentView.findViewById(R.id.tv_search);
         searchTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
