@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/aaa" />
+           />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -39,9 +39,10 @@
 
             android:orientation="horizontal">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_launcher_round"/>
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="4dp"
+                android:src="@drawable/icon_over"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

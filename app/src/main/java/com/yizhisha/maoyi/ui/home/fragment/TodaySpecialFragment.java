@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -22,6 +23,7 @@ import com.yizhisha.maoyi.ui.home.activity.SpecialDetailActivity;
 import com.yizhisha.maoyi.ui.home.contract.TodaySpecialContract;
 import com.yizhisha.maoyi.ui.home.presenter.TodaySpecialPresenter;
 import com.yizhisha.maoyi.ui.me.activity.NewActivity;
+import com.yizhisha.maoyi.widget.CommonLoadingView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
@@ -37,15 +39,18 @@ import butterknife.Bind;
 
 public class TodaySpecialFragment extends BaseFragment<TodaySpecialPresenter>  implements TodaySpecialContract.View {
 
-
+    @Bind(R.id.loadingView)
+    CommonLoadingView mLoadingView;
     @Bind(R.id.recyclerview)
     RecyclerView mRecyclerView;
+
 
     private  Banner banner;
     private List<String> imageUrl;
 
     private TodaySpecilAdapter mAdapter;
     private List<DailyBean> dataLists = new ArrayList<>();
+    private  View view;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_today_special;
@@ -74,10 +79,10 @@ public class TodaySpecialFragment extends BaseFragment<TodaySpecialPresenter>  i
     }
 
     private void addHeadView() {
-        View view=getActivity().getLayoutInflater().inflate(R.layout.headview_today_specil, (ViewGroup) mRecyclerView.getParent(), false);
+         view=getActivity().getLayoutInflater().inflate(R.layout.headview_today_specil, (ViewGroup) mRecyclerView.getParent(), false);
         banner=(Banner)view.findViewById(R.id.banner);
         mPresenter.getDailyTopSlider();
-        mPresenter.getDailyList();
+        mPresenter.getDailyList(false);
         mAdapter.addHeaderView(view);
     }
 
@@ -107,7 +112,26 @@ public class TodaySpecialFragment extends BaseFragment<TodaySpecialPresenter>  i
 
     @Override
     public void loadFail(String msg) {
+        dataLists.clear();
+        mAdapter.setNewData(dataLists);
+        mLoadingView.loadError();
+        mLoadingView.setLoadingHandler(new CommonLoadingView.LoadingHandler() {
+            @Override
+            public void doRequestData() {
+                mPresenter.getDailyList(true);
+                mPresenter.getDailyTopSlider();
+            }
+        });
+    }
 
+    @Override
+    public void showLoading() {
+        mLoadingView.load();
+    }
+
+    @Override
+    public void hideLoading() {
+        mLoadingView.loadSuccess();
     }
 
     class GlideImageLoader extends ImageLoader {

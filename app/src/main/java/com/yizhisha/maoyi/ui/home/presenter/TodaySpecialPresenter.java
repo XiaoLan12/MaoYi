@@ -31,16 +31,21 @@ public class TodaySpecialPresenter extends TodaySpecialContract.Presenter{
     }
 
     @Override
-    public void getDailyList() {
+    public void getDailyList(boolean isShowLoad) {
+        if(isShowLoad) {
+            mView.showLoading();
+        }
         addSubscrebe(Api.getInstance().getDailyList(),new RxSubscriber<ListBean<DailyBean>>(mContext,true){
 
             @Override
             protected void onSuccess(ListBean<DailyBean> model) {
+                mView.hideLoading();
                 mView.getDailyListSuccess(model);
 
             }
             @Override
             protected void onFailure(String message) {
+                mView.hideLoading();
                 mView.loadFail(message);
             }
         });

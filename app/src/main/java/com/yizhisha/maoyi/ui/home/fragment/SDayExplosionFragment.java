@@ -58,6 +58,9 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
     LinearLayout ll_select_price;
     @Bind(R.id.loadingView)
     CommonLoadingView mLoadingView;
+    @Bind(R.id.ll_head)
+     LinearLayout ll_head;
+
     //查询条件
     private int sort=0;//排序
     private String cid="";//商品类型
@@ -89,6 +92,7 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
             }
         });
         initHeadView();
+
         load(true);
         mPresenter.getWeekTop();
         mPresenter.getSortedList();
@@ -199,6 +203,7 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
     public void getWeekListtSuccess(List<WeekListBean.WeekBean> model) {
         dataLists=model;
         mAdapter.setNewData(dataLists);
+        ll_head.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -233,6 +238,7 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
             @Override
             public void doRequestData() {
                 load(true);
+
             }
         });
         dataLists.clear();

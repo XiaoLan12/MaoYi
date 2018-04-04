@@ -114,7 +114,7 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            StatusBarCompat.setStatusBarColor(activity, Color.WHITE,125);
+//            StatusBarCompat.setStatusBarColor(activity, Color.WHITE,125);
         }
     }
     @Override
