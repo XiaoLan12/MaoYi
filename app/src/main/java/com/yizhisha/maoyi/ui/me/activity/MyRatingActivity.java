@@ -52,7 +52,7 @@ public class MyRatingActivity extends BaseActivity {
     protected void initView() {
 
             mFragments.add(ToEvaluationFragment.getInstance(3));
-        mFragments.add(ToEvaluationFragment.getInstance(4));
+             mFragments.add(ToEvaluationFragment.getInstance(4));
             mFragments.add(HaveEvaluationFragment.getInstance());
         slidingTabLayout.setViewPager(viewPager, mTitles, this, mFragments);
     }

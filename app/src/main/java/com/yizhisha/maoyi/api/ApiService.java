@@ -24,6 +24,8 @@ import com.yizhisha.maoyi.bean.json.SortedListBean;
 import com.yizhisha.maoyi.bean.json.SpecialDetailBean;
 import com.yizhisha.maoyi.bean.json.StudioBean;
 import com.yizhisha.maoyi.bean.json.StudioShopBean;
+import com.yizhisha.maoyi.bean.json.TuiguangItem1Bean;
+import com.yizhisha.maoyi.bean.json.TuiguangItem2Bean;
 import com.yizhisha.maoyi.bean.json.UserHeadBean;
 import com.yizhisha.maoyi.bean.json.WechatBean;
 import com.yizhisha.maoyi.bean.json.WechatInfoBean;
@@ -124,8 +126,9 @@ public interface ApiService {
     Observable<ShopCartOrderSureBean> shopCartOrderSure(@FieldMap Map<String, String> param);
 
     //获得订单列表
-    @GET("app/order/orderList")
-    Observable<MyOrderBean> getOrderList(@QueryMap  Map<String, String> param);
+    @FormUrlEncoded
+    @POST("app/order/orderList")
+    Observable<MyOrderBean> getOrderList(@FieldMap  Map<String, String> param);
 
     //查询订单
     @FormUrlEncoded
@@ -330,4 +333,13 @@ public interface ApiService {
     //查询商品列表
     @GET("app/goods/goodsSorted")
     Observable<SpecialDetailBean>  goodsSorted(@QueryMap Map<String, String> param);
+
+    //收入明细
+    @FormUrlEncoded
+    @POST("app/user/getFinance")
+    Observable<TuiguangItem1Bean> tuiguangItem1(@FieldMap Map<String, String> param);
+    //人脉资源
+    @FormUrlEncoded
+    @POST("app/user/getUserSub")
+    Observable<TuiguangItem2Bean> tuiguangItem2(@FieldMap Map<String, String> param);
 }

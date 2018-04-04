@@ -89,12 +89,13 @@
         <!-- 请标明，谁知道你写的什么鬼 -->
         <activity android:name=".ui.me.activity.ProblemDetailsActivity" />
         <!-- 产品详情 -->
-        <activity android:name=".ui.home.activity.ProductDetailActivity"
+        <activity
+            android:name=".ui.home.activity.ProductDetailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <!-- 专题详情 -->
         <activity android:name=".ui.home.activity.SpecialDetailActivity" />
-        <!--搜索-->
+        <!-- 搜索 -->
         <activity android:name=".ui.home.activity.SearchActivity" />
         <activity android:name=".ui.me.activity.AddCommentActivity" />
         <activity android:name=".ui.shoppcart.activity.EditShoppCartActivity" />
@@ -133,7 +134,8 @@
         <activity android:name=".ui.home.activity.CommentYarnActivity" />
         <activity android:name=".ui.home.activity.ShopCartActivity" />
         <activity android:name=".ui.type.avtivity.TypeShopListActivity" />
-        <activity android:name=".ui.home.activity.SearchActivity"></activity>
+        <activity android:name=".ui.home.activity.SearchActivity" />
+        <activity android:name=".ui.me.activity.MyTuiGuangActivity"></activity>
     </application>
 
 </manifest>

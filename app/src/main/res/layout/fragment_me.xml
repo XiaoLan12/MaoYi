@@ -296,6 +296,36 @@
                 style="@style/MY.Theme.Widget.Divider.Line.Vertical"/>
 
             <RelativeLayout
+                android:id="@+id/tuiguang_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_14">
+                <ImageView
+                    android:id="@+id/tuiguang_iv"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/user_card_bag"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我的推广"
+                    android:layout_toRightOf="@+id/tuiguang_iv"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/dp_14"
+                    android:textColor="@color/common_h1"/>
+                <ImageView
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/icon_right"/>
+            </RelativeLayout>
+            <View
+                style="@style/MY.Theme.Widget.Divider.Line.Vertical"/>
+
+            <RelativeLayout
                 android:id="@+id/collect_rl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

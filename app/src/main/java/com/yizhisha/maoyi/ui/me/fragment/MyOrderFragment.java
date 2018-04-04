@@ -263,7 +263,7 @@ public class MyOrderFragment extends BaseFragment<MyOrderPresenter> implements M
     @Override
     public void loadFail(int code, String msg) {
         if(code==0){
-
+            ToastUtil.showShortToast(msg);
         }else{
             dataList.clear();
             mSwipeRefreshLayout.setRefreshing(false);

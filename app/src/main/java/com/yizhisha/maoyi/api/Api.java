@@ -24,6 +24,8 @@ import com.yizhisha.maoyi.bean.json.SortedListBean;
 import com.yizhisha.maoyi.bean.json.SpecialDetailBean;
 import com.yizhisha.maoyi.bean.json.StudioBean;
 import com.yizhisha.maoyi.bean.json.StudioShopBean;
+import com.yizhisha.maoyi.bean.json.TuiguangItem1Bean;
+import com.yizhisha.maoyi.bean.json.TuiguangItem2Bean;
 import com.yizhisha.maoyi.bean.json.UserHeadBean;
 import com.yizhisha.maoyi.bean.json.WechatBean;
 import com.yizhisha.maoyi.bean.json.WechatInfoBean;
@@ -348,4 +350,13 @@ public class Api {
     public Observable<SpecialDetailBean> goodsSorted(Map<String,String> map){
         return service.goodsSorted(map);
     }
+    //查询商品列表
+    public Observable<TuiguangItem1Bean> tuiguangItem1(Map<String,String> map){
+        return service.tuiguangItem1(map);
+    }
+    //查询商品列表
+    public Observable<TuiguangItem2Bean> tuiguangItem2(Map<String,String> map){
+        return service.tuiguangItem2(map);
+    }
+
 }

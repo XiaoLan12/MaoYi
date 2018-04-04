@@ -28,6 +28,7 @@ import com.yizhisha.maoyi.ui.me.activity.MyCollectActivity;
 import com.yizhisha.maoyi.ui.me.activity.MyFootprintActivity;
 import com.yizhisha.maoyi.ui.me.activity.MyOrderActivity;
 import com.yizhisha.maoyi.ui.me.activity.MyRatingActivity;
+import com.yizhisha.maoyi.ui.me.activity.MyTuiGuangActivity;
 import com.yizhisha.maoyi.ui.me.activity.NewActivity;
 import com.yizhisha.maoyi.ui.me.activity.ReFundOrderActivity;
 import com.yizhisha.maoyi.ui.me.activity.SettingActivity;
@@ -95,7 +96,7 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
     }
     @OnClick({R.id.myorder_rl, R.id.unpayment_ll, R.id.unshipping_ll, R.id.unreceive_goods_ll,
             R.id.finish_ll, R.id.refund_ll, R.id.setting_rl, R.id.coupon_rl, R.id.collect_rl,
-            R.id.footprint_rl, R.id.myEvaluation_rl, R.id.aboutUs_rl, R.id.serviceHotline_rl})
+            R.id.footprint_rl, R.id.myEvaluation_rl, R.id.aboutUs_rl, R.id.serviceHotline_rl,R.id.tuiguang_rl})
     /**
      *
      */
@@ -241,6 +242,9 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
                                 dialog.dismiss();
                             }
                         }).build().show();
+                break;
+            case R.id.tuiguang_rl:
+                startActivity(MyTuiGuangActivity.class);
                 break;
 
 

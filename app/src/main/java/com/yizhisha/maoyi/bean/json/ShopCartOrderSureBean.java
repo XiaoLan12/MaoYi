@@ -12,6 +12,7 @@ public class ShopCartOrderSureBean {
     private String info;
     private List<Shopcart> shopcart;
     private List<Address> address;
+    private String realprice;
 
     public String getStatus() {
         return status;
@@ -32,6 +33,10 @@ public class ShopCartOrderSureBean {
 
     public List<Address> getAddress() {
         return address;
+    }
+
+    public String getRealprice() {
+        return realprice;
     }
 
     public class Shopcart {

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -108,7 +109,7 @@ public class SureOrderActivity extends BaseActivity<SureOrderPresenter> implemen
     }
     private void loadOrder(Bundle bundle){
         Map<String,String> map=new HashMap();
-        map.put("uid",String.valueOf(3));
+        map.put("uid",String.valueOf(AppConstant.UID));
         map.put("gid",String.valueOf(bundle.getInt("gid",0)));
         map.put("detail",bundle.getString("detail"));
         map.put("amount",String.valueOf(bundle.getInt("amount")));
@@ -116,7 +117,7 @@ public class SureOrderActivity extends BaseActivity<SureOrderPresenter> implemen
     }
     private void loadShoppOrder(Bundle bundle){
         Map<String,String> map=new HashMap();
-        map.put("uid",String.valueOf(3));
+        map.put("uid",String.valueOf(AppConstant.UID));
         map.put("sid",bundle.getString("sid",""));
         mPresenter.loadShopCartOrderSure(map);
     }
@@ -142,6 +143,7 @@ public class SureOrderActivity extends BaseActivity<SureOrderPresenter> implemen
         body.put("uid",String.valueOf(AppConstant.UID));
         body.put("gid",gid);
         body.put("totalprice",String.valueOf(goods.getTotalprice()));
+        body.put("realprice",String.valueOf(goods.getRealprice()));
         body.put("addressid",String.valueOf(goods.getAddressId()));
         body.put("payment",String.valueOf(2));
         body.put("detail",detail);
@@ -151,18 +153,19 @@ public class SureOrderActivity extends BaseActivity<SureOrderPresenter> implemen
     //创建购物车订单
     private void createShopCartOrder(){
         StringBuilder gidStr=new StringBuilder();
-        String gid="";
+        String sid="";
         for(int i=0;i<dataList.size();i++){
-            gidStr.append(dataList.get(i).getGid()).append(",");
+            gidStr.append(dataList.get(i).getSid()).append(",");
 
         }
         if(gidStr.length()>0){
-            gid=gidStr.substring(0,gidStr.length()-1);
+            sid=gidStr.substring(0,gidStr.length()-1);
         }
         Map<String,String> body=new HashMap<String, String>();
         body.put("uid",String.valueOf(AppConstant.UID));
-        body.put("gid",gid);
+        body.put("sid",sid);
         body.put("addressid",String.valueOf(goods.getAddressId()));
+        body.put("realprice",String.valueOf(goods.getRealprice()));
         body.put("payment",String.valueOf(2));
         mPresenter.createShopCartOrder(body);
     }
@@ -203,6 +206,8 @@ public class SureOrderActivity extends BaseActivity<SureOrderPresenter> implemen
             goods.setLitpic(list.get(i).getLitpic());
             goods.setPrice(list.get(i).getPrice());
             goods.setTitle(list.get(i).getTitle());
+            goods.setRealprice(data.getRealprice());
+            goods.setSid(list.get(i).getId());
             dataList.add(goods);
         }
         mAdapter.setNewData(dataList);
@@ -233,7 +238,7 @@ public class SureOrderActivity extends BaseActivity<SureOrderPresenter> implemen
 
     @Override
     public void createShopCartOrderSuccess(RequestStatusBean bean) {
-        WeChatPayService weChatPay = new WeChatPayService(this, 0, "1", dataList.get(0).getTitle(), goods.getTotalprice()+"");
+        WeChatPayService weChatPay = new WeChatPayService(this, 0, "1", dataList.get(0).getTitle(), goods.getPrice()+"");
         weChatPay.pay();
     }
 

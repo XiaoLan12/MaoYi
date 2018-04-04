@@ -8,6 +8,9 @@ public class MeInfoBean {
     private String avatar;
     private String nickname;
     private int sex;
+    private long regtime;
+    private String invitecode;
+    private String parentcode;
     private String status;
     private String info;
     private int[] orderCount;
@@ -56,14 +59,31 @@ public class MeInfoBean {
         return orderCount;
     }
 
-    @Override
-    public String toString() {
-        return "MeInfoBean{" +
-                "avatar='" + avatar + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", sex='" + sex + '\'' +
-                ", status='" + status + '\'' +
-                ", info='" + info + '\'' +
-                '}';
+    public long getRegtime() {
+        return regtime;
+    }
+
+    public void setRegtime(long regtime) {
+        this.regtime = regtime;
+    }
+
+    public String getInvitecode() {
+        return invitecode;
+    }
+
+    public void setInvitecode(String invitecode) {
+        this.invitecode = invitecode;
+    }
+
+    public String getParentcode() {
+        return parentcode;
+    }
+
+    public void setParentcode(String parentcode) {
+        this.parentcode = parentcode;
+    }
+
+    public void setOrderCount(int[] orderCount) {
+        this.orderCount = orderCount;
     }
 }

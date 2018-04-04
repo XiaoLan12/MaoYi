@@ -21,9 +21,6 @@ public class SureOrderPresenter extends SureOrderContract.Presenter{
             protected void onSuccess(OrderSureBean bean) {
                 if(bean.getStatus().equals("y")){
                     mView.loadOrderSuccess(bean);
-                }else if(bean.getStatus().equals("n")&&bean.getInfo().equals("请先添加收货地址")||bean.getInfo().equals("请先添加收货地址。")){
-                    mView.loadOrderSuccess(bean);
-
                 }else{
                     mView.loadFail(bean.getInfo());
                 }
@@ -42,9 +39,6 @@ public class SureOrderPresenter extends SureOrderContract.Presenter{
             protected void onSuccess(ShopCartOrderSureBean bean) {
                 if(bean.getStatus().equals("y")){
                     mView.loadShopCartOrderSuccess(bean);
-                }else if(bean.getStatus().equals("n")&&bean.getInfo().equals("请先添加收货地址")||bean.getInfo().equals("请先添加收货地址。")){
-                    mView.loadShopCartOrderSuccess(bean);
-
                 }else{
                     mView.loadFail(bean.getInfo());
                 }
@@ -62,7 +56,7 @@ public class SureOrderPresenter extends SureOrderContract.Presenter{
         addSubscrebe(Api.getInstance().createOrder(param), new RxSubscriber<RequestStatusBean>(mContext, false) {
             @Override
             protected void onSuccess(RequestStatusBean bean) {
-
+                mView.hideLoading();
                 if(bean.getStatus().equals("y")){
                     mView.createOrderSuccess(bean);
                 }else{
@@ -84,7 +78,7 @@ public class SureOrderPresenter extends SureOrderContract.Presenter{
         addSubscrebe(Api.getInstance().createShopCartOrder(param), new RxSubscriber<RequestStatusBean>(mContext, false) {
             @Override
             protected void onSuccess(RequestStatusBean bean) {
-
+                mView.hideLoading();
                 if(bean.getStatus().equals("y")){
                     mView.createShopCartOrderSuccess(bean);
                 }else{

@@ -32,12 +32,14 @@ public class OrderSureBean {
     public class Goods {
 
         private String gid;
+        private String sid;
         private String title;
         private String litpic;
         private String detail;
         private String price;
         private String amount;
         private int totalprice;
+        private String realprice;
         private int addressId;
 
         public int getAddressId() {
@@ -97,6 +99,37 @@ public class OrderSureBean {
             return totalprice;
         }
 
+        public String getRealprice() {
+            return realprice;
+        }
+
+        public void setRealprice(String realprice) {
+            this.realprice = realprice;
+        }
+
+        public String getSid() {
+            return sid;
+        }
+
+        public void setSid(String sid) {
+            this.sid = sid;
+        }
+
+        @Override
+        public String toString() {
+            return "Goods{" +
+                    "gid='" + gid + '\'' +
+                    ", sid='" + sid + '\'' +
+                    ", title='" + title + '\'' +
+                    ", litpic='" + litpic + '\'' +
+                    ", detail='" + detail + '\'' +
+                    ", price='" + price + '\'' +
+                    ", amount='" + amount + '\'' +
+                    ", totalprice=" + totalprice +
+                    ", realprice='" + realprice + '\'' +
+                    ", addressId=" + addressId +
+                    '}';
+        }
     }
 
     public class Address {

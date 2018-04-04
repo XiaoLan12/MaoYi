@@ -49,16 +49,16 @@ public class MyOrderAdapter extends BaseQuickAdapter<Object,BaseViewHolder> {
             case ITEM_HEADER:
                 final OrderHeadBean order= (OrderHeadBean) item;
                 helper.setText(R.id.orderNumber_tv,order.getOrderno());
-                if(order.getStatus()==0){
+                if(order.getStatus()==1){
                         helper.setText(R.id.paystate_tv, "等待付款");
-                }else if(order.getStatus()==1){
-                    helper.setText(R.id.paystate_tv,"买家已经付款");
                 }else if(order.getStatus()==2){
-                    helper.setText(R.id.paystate_tv,"等待收货");
+                    helper.setText(R.id.paystate_tv,"买家已经付款");
                 }else if(order.getStatus()==3){
+                    helper.setText(R.id.paystate_tv,"等待收货");
+                }else if(order.getStatus()==4){
                     helper.setText(R.id.paystate_tv,"交易成功");
                 }
-                else if(order.getStatus()==4){
+                else if(order.getStatus()==5){
                     helper.setText(R.id.paystate_tv,"交易关闭");
                 }
                 break;
@@ -98,7 +98,7 @@ public class MyOrderAdapter extends BaseQuickAdapter<Object,BaseViewHolder> {
     }
     private void switchState(int paystate, BaseViewHolder helper){
         switch (paystate){
-            case 0:
+            case 1:
                 helper.setVisible(R.id.refunds_tv,false);
                 helper.setVisible(R.id.cancel_the_order_tv,true);
                 helper.setVisible(R.id.confirm_goods_tv,false);
@@ -107,7 +107,7 @@ public class MyOrderAdapter extends BaseQuickAdapter<Object,BaseViewHolder> {
                 helper.setVisible(R.id.delete_order_tv,false);
                 helper.setVisible(R.id.immediate_payment_tv,true);
                 break;
-            case 1:
+            case 2:
                 helper.setVisible(R.id.refunds_tv,true);
                 helper.setVisible(R.id.cancel_the_order_tv,false);
                 helper.setVisible(R.id.immediate_payment_tv,false);
@@ -116,7 +116,7 @@ public class MyOrderAdapter extends BaseQuickAdapter<Object,BaseViewHolder> {
                 helper.setVisible(R.id.delete_order_tv,false);
                 helper.setVisible(R.id.againbuy_tv,false);
                 break;
-            case 2:
+            case 3:
                 helper.setVisible(R.id.refunds_tv,true);
                 helper.setVisible(R.id.cancel_the_order_tv,false);
                 helper.setVisible(R.id.immediate_payment_tv,false);
@@ -125,7 +125,7 @@ public class MyOrderAdapter extends BaseQuickAdapter<Object,BaseViewHolder> {
                 helper.setVisible(R.id.delete_order_tv,false);
                 helper.setVisible(R.id.againbuy_tv,false);
                 break;
-            case 3:
+            case 4:
                 helper.setVisible(R.id.refunds_tv,true);
                 helper.setVisible(R.id.cancel_the_order_tv,false);
                 helper.setVisible(R.id.immediate_payment_tv,false);
@@ -134,7 +134,7 @@ public class MyOrderAdapter extends BaseQuickAdapter<Object,BaseViewHolder> {
                 helper.setVisible(R.id.delete_order_tv,false);
                 helper.setVisible(R.id.againbuy_tv,true);
                 break;
-            case 4:
+            case 5:
                 helper.setVisible(R.id.refunds_tv,false);
                 helper.setVisible(R.id.cancel_the_order_tv,false);
                 helper.setVisible(R.id.immediate_payment_tv,false);
