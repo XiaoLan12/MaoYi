@@ -14,9 +14,10 @@ import java.util.Map;
 public interface OrderTrackContract {
     interface View extends BaseView {
         //void loadExpressSuccess(RefundDetailBean data);
-        void loadRefundExpressSuccess(RefundExpressBean data);
+        void loadRefundExpressSuccess(String data);
         void showLoading();
         void hideLoading();
+        void showEmpty(String msg);
         void loadFail(String msg);
 
     }

@@ -38,6 +38,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -196,12 +197,12 @@ public class Api {
         return service.refundDel(map);
     }
     //退款物流
-    public Observable<RefundExpressBean> loadRefundExpress(String  refundno){
+    public Observable<ResponseBody> loadRefundExpress(String  refundno){
         return service.loadRefundExpress(refundno);
     }
 
     //物流
-    public Observable<RefundExpressBean> loadExpress(String  refundno){
+    public Observable<ResponseBody> loadExpress(String  refundno){
         return service.loadExpress(refundno);
     }
 

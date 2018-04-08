@@ -40,6 +40,7 @@ import com.yizhisha.maoyi.common.dialog.DialogInterface;
 import com.yizhisha.maoyi.common.dialog.LoadingDialog;
 import com.yizhisha.maoyi.common.dialog.NormalAlertDialog;
 import com.yizhisha.maoyi.ui.home.activity.SureOrderActivity;
+import com.yizhisha.maoyi.ui.me.activity.NewActivity;
 import com.yizhisha.maoyi.ui.shoppcart.contract.ShoppCartContract;
 import com.yizhisha.maoyi.ui.shoppcart.presenter.ShoppCartPresenter;
 import com.yizhisha.maoyi.utils.GlideUtil;
@@ -120,6 +121,12 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
     @Override
     protected void initView() {
         mToobar.setRightButton1TextColor(R.color.white);
+        mToobar.setRightButtonOnClickLinster(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(NewActivity.class);
+            }
+        });
         mToobar.setRightButton1OnClickLinster(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -221,7 +228,7 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
                 }else{
                     mToobar.hideRightButton();
                     changeFootShowDeleteView(true);
-                    mLoadingView.loadSuccess(true, R.drawable.ic_launcher,"您的购物车中还没有商品，请您先逛逛!");
+                    mLoadingView.loadSuccess(true, R.drawable.icon_error,"您的购物车中还没有商品，请您先逛逛!");
                     mRlBottomBar.setVisibility(View.GONE);
                 }
                 //setupViewsShow(isHasGoods);
@@ -267,7 +274,7 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
             mLlDeleteAllBottom.setVisibility(View.VISIBLE);
         } else {
             mToobar.setRightButton1Text("");
-            mToobar.setRightButton1Icon(RescourseUtil.getDrawable(R.drawable.icon_ratingbar));
+            mToobar.setRightButton1Icon(RescourseUtil.getDrawable(R.drawable.icon_edit));
             mLlNormalBottom.setVisibility(View.VISIBLE);
             mLlDeleteAllBottom.setVisibility(View.GONE);
         }

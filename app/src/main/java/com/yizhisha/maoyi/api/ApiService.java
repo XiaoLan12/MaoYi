@@ -36,6 +36,7 @@ import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -79,10 +80,12 @@ public interface ApiService {
     Observable<RequestStatusBean> setDefaulsAddress(@QueryMap Map<String, String> param);
 
     //获得收藏列表
-    @GET("app/ucenter/favoriteList/")
-    Observable<CollectListBean> getCollectList(@QueryMap Map<String, String> param);
+    @FormUrlEncoded
+    @POST("app/ucenter/favoriteList/")
+    Observable<CollectListBean> getCollectList(@FieldMap Map<String, String> param);
 
     //添加收藏
+
     @GET("app/ucenter/favoriteAdd")
     Observable<RequestStatusBean> addCollect(@QueryMap Map<String, String> param);
 
@@ -95,8 +98,9 @@ public interface ApiService {
     Observable<RequestStatusBean> cacheCollect(@QueryMap Map<String, String> param);
 
     //我的足迹
-    @GET("app/ucenter/historyList")
-    Observable<FootpringBean> loadFootprint(@QueryMap Map<String,String> map);
+    @FormUrlEncoded
+    @POST("app/ucenter/historyList")
+    Observable<FootpringBean> loadFootprint(@FieldMap Map<String,String> map);
 
     //删除足迹
     @FormUrlEncoded
@@ -108,8 +112,9 @@ public interface ApiService {
     Observable<ShopcartListBean> getShoppCartList(@Query("uid") int id);
 
     //加载单个购物车
-    @GET("app/ucenter/shopcartShow")
-    Observable<SingleShoppCartBean> loadSingleShpCart(@QueryMap Map<String, String> param);
+    @FormUrlEncoded
+    @POST("app/ucenter/shopcartShow")
+    Observable<SingleShoppCartBean> loadSingleShpCart(@FieldMap Map<String, String> param);
 
     //修改购物车
     @FormUrlEncoded
@@ -136,8 +141,9 @@ public interface ApiService {
     Observable<MyOrderBean> queryOrderList(@FieldMap Map<String,String> map);
 
     //获得订单详情
-    @GET("app/order/orderDetail")
-    Observable<MyOrderBean> getOrderDetails(@QueryMap Map<String,String> map);
+    @FormUrlEncoded
+    @POST("app/order/orderDetail")
+    Observable<MyOrderBean> getOrderDetails(@FieldMap Map<String,String> map);
 
     //取消订单
     @FormUrlEncoded
@@ -248,11 +254,11 @@ public interface ApiService {
 
     //退款物流信息
     @GET("app/order/expressviewrefund/")
-    Observable<RefundExpressBean> loadRefundExpress(@Query("refundno") String refundno);
+    Observable<ResponseBody> loadRefundExpress(@Query("refundno") String refundno);
 
     //物流信息
     @GET("app/order/expressView/")
-    Observable<RefundExpressBean> loadExpress(@Query("orderno") String orderno);
+    Observable<ResponseBody> loadExpress(@Query("orderno") String orderno);
 
 
     //退款申请

@@ -3,6 +3,7 @@ package com.yizhisha.maoyi.ui.me.activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,7 +15,13 @@ import com.yizhisha.maoyi.bean.json.OrderInfoBean;
 import com.yizhisha.maoyi.bean.json.RefundExpressBean;
 import com.yizhisha.maoyi.ui.me.contract.OrderTrackContract;
 import com.yizhisha.maoyi.ui.me.presenter.OrderTrackPresenter;
+import com.yizhisha.maoyi.utils.RescourseUtil;
 import com.yizhisha.maoyi.utils.ToastUtil;
+import com.yizhisha.maoyi.widget.CommonLoadingView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +32,8 @@ import butterknife.ButterKnife;
 public class OrderTrackingActivity extends BaseActivity<OrderTrackPresenter> implements OrderTrackContract.View {
     @Bind(R.id.recyclerview)
     RecyclerView mRecyclerView;
+    @Bind(R.id.loadingView)
+    CommonLoadingView mLoadingView;
     @Bind(R.id.toolbar)
     BaseToolbar toolbar;
     @Bind(R.id.courier_company_tv)
@@ -78,40 +87,70 @@ public class OrderTrackingActivity extends BaseActivity<OrderTrackPresenter> imp
     }
 
     @Override
-    public void loadRefundExpressSuccess(RefundExpressBean data) {
-        courierCompanyTv.setText(data.getExpress().getExpName());
-        expressNumberTv.setText(data.getExpress_no());
-        dataList.clear();
-        List<RefundExpressBean.Result> result = data.getResult();
-        if (result.size() == 0) {
-            return;
+    public void loadRefundExpressSuccess(String data) {
+        try {
+            JSONObject jsonObject=new JSONObject(data);
+            String info=jsonObject.getString("info");
+            String status=jsonObject.getString("status");
+            if(status.equals("y")){
+                JSONObject expressObject=jsonObject.getJSONObject("express");
+                courierCompanyTv.setText(expressObject.getString("exp_name"));
+                expressNumberTv.setText(jsonObject.getString("express_no"));
+                Object resultObject=jsonObject.get("result");
+                if(resultObject.equals("")){
+                    showEmpty(info);
+                }else{
+                    dataList.clear();
+                    JSONArray  resultArray=jsonObject.getJSONArray("result");
+                    for(int i=0;i<resultArray.length();i++){
+                        JSONObject object=resultArray.getJSONObject(i);
+                        OrderInfoBean orderInfoBean = new OrderInfoBean(object.getString("status"), object.getString("time"));
+                        dataList.add(orderInfoBean);
+                    }
+                    mAdapter.setNewData(dataList);
+                }
+            }else{
+                loadFail(info);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        for (RefundExpressBean.Result result1 : result) {
-            OrderInfoBean orderInfoBean = new OrderInfoBean(result1.getStatus(), result1.getTime());
-            dataList.add(orderInfoBean);
-        }
-        mAdapter.setNewData(dataList);
     }
 
     @Override
     public void showLoading() {
-
+        mLoadingView.load();
     }
 
     @Override
     public void hideLoading() {
+        mLoadingView.loadSuccess();
+    }
 
+    @Override
+    public void showEmpty(String msg) {
+        dataList.clear();
+        mAdapter.setNewData(dataList);
+        mLoadingView.loadSuccess(true, R.drawable.icon_error,msg);
     }
 
     @Override
     public void loadFail(String msg) {
-        ToastUtil.showShortToast(msg);
+        dataList.clear();
+        mAdapter.setNewData(dataList);
+        mLoadingView.loadError(msg);
+        mLoadingView.setLoadingHandler(new CommonLoadingView.LoadingHandler() {
+            @Override
+            public void doRequestData() {
+                if (mType == 1) {
+                    mPresenter.loadExpressDetail(refundNo);
+
+                } else {
+                    mPresenter.loadRefundExpressDetail(refundNo);
+                }
+            }
+        });
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 }

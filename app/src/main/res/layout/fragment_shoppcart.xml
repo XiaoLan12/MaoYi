@@ -8,8 +8,8 @@
     <com.yizhisha.maoyi.base.BaseToolbar
         android:id="@+id/toolbar"
         style="@style/basetoolbarStyle"
-        app:rightButtonIcon="@drawable/ic_launcher"
-        app:rightButtonIcon1="@drawable/ic_launcher"
+        app:rightButtonIcon="@drawable/icon_new"
+        app:rightButtonIcon1="@drawable/icon_edit"
         android:background="@color/common_color"
         app:title="@string/shppcart"/>
     <com.yizhisha.maoyi.widget.CommonLoadingView

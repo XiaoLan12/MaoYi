@@ -11,7 +11,7 @@ public class RefundExpressBean {
     private String info;
     private String express_no;
     private Express express;
-    private List<Result> result;
+    private Object result;
 
     public String getStatus() {
         return status;
@@ -29,10 +29,9 @@ public class RefundExpressBean {
         return express;
     }
 
-    public List<Result> getResult() {
+    public Object getResult() {
         return result;
     }
-
     public class Express {
 
         private String exp_name;
