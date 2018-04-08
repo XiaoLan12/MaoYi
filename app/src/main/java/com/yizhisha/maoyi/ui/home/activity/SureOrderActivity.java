@@ -17,6 +17,7 @@ import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.adapter.OrderSureAdapter;
 import com.yizhisha.maoyi.base.BaseActivity;
 import com.yizhisha.maoyi.base.BaseToolbar;
+import com.yizhisha.maoyi.base.rx.RxBus;
 import com.yizhisha.maoyi.bean.RadioBean;
 import com.yizhisha.maoyi.bean.json.GoodsListBean;
 import com.yizhisha.maoyi.bean.json.OrderSureBean;
@@ -24,6 +25,7 @@ import com.yizhisha.maoyi.bean.json.RequestStatusBean;
 import com.yizhisha.maoyi.bean.json.ShopCartOrderSureBean;
 import com.yizhisha.maoyi.common.dialog.LoadingDialog;
 import com.yizhisha.maoyi.common.dialog.RadioSelectionDialog;
+import com.yizhisha.maoyi.event.UpdateShopCartEvent;
 import com.yizhisha.maoyi.ui.home.contract.SureOrderContract;
 import com.yizhisha.maoyi.ui.home.presenter.SureOrderPresenter;
 import com.yizhisha.maoyi.ui.me.activity.MyAddressActivity;
@@ -238,6 +240,7 @@ public class SureOrderActivity extends BaseActivity<SureOrderPresenter> implemen
 
     @Override
     public void createShopCartOrderSuccess(RequestStatusBean bean) {
+        RxBus.$().postEvent(new UpdateShopCartEvent());
         WeChatPayService weChatPay = new WeChatPayService(this, 0, "1", dataList.get(0).getTitle(), goods.getPrice()+"");
         weChatPay.pay();
     }

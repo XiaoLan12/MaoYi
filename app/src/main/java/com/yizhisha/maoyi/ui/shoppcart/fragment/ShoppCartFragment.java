@@ -30,6 +30,7 @@ import com.yizhisha.maoyi.adapter.EditShoppcartAdapter;
 import com.yizhisha.maoyi.adapter.ShoppCartAdapter;
 import com.yizhisha.maoyi.base.BaseFragment;
 import com.yizhisha.maoyi.base.BaseToolbar;
+import com.yizhisha.maoyi.base.rx.RxBus;
 import com.yizhisha.maoyi.bean.GoodsAttrsBean;
 import com.yizhisha.maoyi.bean.json.GoodsBean;
 import com.yizhisha.maoyi.bean.json.ShopcartBean;
@@ -39,6 +40,7 @@ import com.yizhisha.maoyi.common.dialog.CustomDialog;
 import com.yizhisha.maoyi.common.dialog.DialogInterface;
 import com.yizhisha.maoyi.common.dialog.LoadingDialog;
 import com.yizhisha.maoyi.common.dialog.NormalAlertDialog;
+import com.yizhisha.maoyi.event.UpdateShopCartEvent;
 import com.yizhisha.maoyi.ui.home.activity.SureOrderActivity;
 import com.yizhisha.maoyi.ui.me.activity.NewActivity;
 import com.yizhisha.maoyi.ui.shoppcart.contract.ShoppCartContract;
@@ -60,6 +62,9 @@ import java.util.Set;
 import butterknife.Bind;
 import butterknife.OnClick;
 import qiu.niorgai.StatusBarCompat;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * Created by lan on 2017/9/22.
@@ -107,6 +112,7 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
     //编辑的商品
     private int editGid;
     private int editSid;
+    private Subscription subscription;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_shoppcart;
@@ -140,6 +146,7 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
         mLoadingView.loadSuccess();
         initAdapter();
         mPresenter.loadShoppCart(AppConstant.UID,true);
+        event();
     }
     private void loadSingleShoopCart(Map<String,String> map){
         mPresenter.loadSingleShoppCart(map);
@@ -282,6 +289,18 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
     @Override
     public void onRefresh() {
         mPresenter.loadShoppCart(AppConstant.UID,false);
+    }
+
+    //回调事件，成功调起微信支付后响应该事件
+    private void event(){
+        subscription= RxBus.$().toObservable(UpdateShopCartEvent.class)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<UpdateShopCartEvent>() {
+                    @Override
+                    public void call(UpdateShopCartEvent event) {
+                        onRefresh();
+                    }
+                });
     }
     @Override
     public void loadSuccess(List<ShopcartBean> data) {
@@ -435,10 +454,10 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
         mSwipeRefreshLayout.setRefreshing(false);
         parentMapList.clear();
         childMapList_list.clear();
-        mToobar.hideRightButton();
+        mToobar.hideRightButton1();
         mRlBottomBar.setVisibility(View.GONE);
         adapter.notifyDataSetChanged();
-        mLoadingView.loadSuccess(true, R.drawable.ic_launcher,"您的购物车中还没有商品，请您先逛逛!");
+        mLoadingView.loadSuccess(true, R.drawable.icon_error,"您的购物车中还没有商品，请您先逛逛!");
     }
 
     @Override
@@ -657,6 +676,14 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
                     tv_item_number_comm_detail.setText(String.valueOf(goods_nmb));
                     break;
             }
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (subscription != null&&!subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
         }
     }
 }

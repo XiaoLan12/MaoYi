@@ -26,6 +26,7 @@ import com.yizhisha.maoyi.adapter.EditShoppcartAdapter;
 import com.yizhisha.maoyi.adapter.ShoppCartAdapter;
 import com.yizhisha.maoyi.base.BaseActivity;
 import com.yizhisha.maoyi.base.BaseToolbar;
+import com.yizhisha.maoyi.base.rx.RxBus;
 import com.yizhisha.maoyi.bean.GoodsAttrsBean;
 import com.yizhisha.maoyi.bean.json.GoodsBean;
 import com.yizhisha.maoyi.bean.json.ShopcartBean;
@@ -35,6 +36,8 @@ import com.yizhisha.maoyi.common.dialog.CustomDialog;
 import com.yizhisha.maoyi.common.dialog.DialogInterface;
 import com.yizhisha.maoyi.common.dialog.LoadingDialog;
 import com.yizhisha.maoyi.common.dialog.NormalAlertDialog;
+import com.yizhisha.maoyi.event.UpdateShopCartEvent;
+import com.yizhisha.maoyi.ui.me.activity.NewActivity;
 import com.yizhisha.maoyi.ui.shoppcart.contract.ShoppCartContract;
 import com.yizhisha.maoyi.ui.shoppcart.fragment.ShoppCartFragment;
 import com.yizhisha.maoyi.ui.shoppcart.presenter.ShoppCartPresenter;
@@ -109,6 +112,18 @@ public class ShopCartActivity extends BaseActivity<ShoppCartPresenter> implement
     @Override
     protected void initView() {
         mToobar.setRightButton1TextColor(R.color.white);
+        mToobar.setLeftButtonOnClickLinster(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish_Activity(ShopCartActivity.this);
+            }
+        });
+        mToobar.setRightButtonOnClickLinster(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(NewActivity.class);
+            }
+        });
         mToobar.setRightButton1OnClickLinster(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -211,7 +226,7 @@ public class ShopCartActivity extends BaseActivity<ShoppCartPresenter> implement
                 }else{
                     mToobar.hideRightButton();
                     changeFootShowDeleteView(true);
-                    mLoadingView.loadSuccess(true, R.drawable.ic_launcher,"您的购物车中还没有商品，请您先逛逛!");
+                    mLoadingView.loadSuccess(true, R.drawable.icon_error,"您的购物车中还没有商品，请您先逛逛!");
                     mRlBottomBar.setVisibility(View.GONE);
                 }
                 //setupViewsShow(isHasGoods);
@@ -403,6 +418,7 @@ public class ShopCartActivity extends BaseActivity<ShoppCartPresenter> implement
     @Override
     public void deleteShoppCart(String msg) {
         adapter.removeGoods();
+        RxBus.$().postEvent(new UpdateShopCartEvent());
         ToastUtil.showShortToast(msg);
     }
     @Override
@@ -421,7 +437,7 @@ public class ShopCartActivity extends BaseActivity<ShoppCartPresenter> implement
         mToobar.hideRightButton();
         mRlBottomBar.setVisibility(View.GONE);
         adapter.notifyDataSetChanged();
-        mLoadingView.loadSuccess(true, R.drawable.ic_launcher,"您的购物车中还没有商品，请您先逛逛!");
+        mLoadingView.loadSuccess(true, R.drawable.icon_error,"您的购物车中还没有商品，请您先逛逛!");
     }
 
     @Override

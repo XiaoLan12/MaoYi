@@ -39,6 +39,7 @@ import com.yizhisha.maoyi.adapter.ProductDetailImgAdapter;
 import com.yizhisha.maoyi.adapter.SDayExplosionAdapter;
 import com.yizhisha.maoyi.base.BaseActivity;
 import com.yizhisha.maoyi.base.BaseToolbar;
+import com.yizhisha.maoyi.base.rx.RxBus;
 import com.yizhisha.maoyi.bean.GoodsAttrsBean;
 import com.yizhisha.maoyi.bean.json.BannerResult;
 import com.yizhisha.maoyi.bean.json.GoodsDetailBean;
@@ -51,6 +52,7 @@ import com.yizhisha.maoyi.common.dialog.DialogInterface;
 import com.yizhisha.maoyi.common.dialog.LoadingDialog;
 import com.yizhisha.maoyi.common.dialog.NormalSelectionDialog;
 import com.yizhisha.maoyi.common.dialog.PicShowDialog;
+import com.yizhisha.maoyi.event.UpdateShopCartEvent;
 import com.yizhisha.maoyi.ui.home.contract.ProductDetailContract;
 import com.yizhisha.maoyi.ui.home.jc.DemoFragment;
 import com.yizhisha.maoyi.ui.home.jc.DemoFragment1;
@@ -407,7 +409,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
         super.onPause();
         JCVideoPlayer.releaseAllVideos();
     }
-    @OnClick({R.id.ll_select_color_size,R.id.tv_shopping_cart,R.id.tv_shopping,R.id.ll_collection})
+    @OnClick({R.id.ll_select_color_size,R.id.tv_shopping_cart,R.id.tv_shopping,R.id.ll_collection,R.id.ll_shopping_cart})
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -466,6 +468,9 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
                 map.put("uid", String.valueOf(AppConstant.UID));
                 mPresenter.collectProduct(map);
                 break;
+            case R.id.ll_shopping_cart:
+                startActivity(ShopCartActivity.class);
+                break;
         }
 
     }
@@ -511,7 +516,17 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
             custom_dialog_close.setOnClickListener(new ProductDetailActivity.DialogClick());
             tv_item_minus_comm_detail.setOnClickListener(new ProductDetailActivity.DialogClick());
             tv_item_add_comm_detail.setOnClickListener(new ProductDetailActivity.DialogClick());
+
             dialog_goods_price.setText("￥:" + goodBean.getPrice());
+            String url=goodBean.getLitpic();
+            String newUrl;
+            if(url.length()>0&&url.startsWith("http://")){
+                newUrl=url;
+            }else{
+                newUrl=AppConstant.PRUDUCT_IMG_URL+url;
+            }
+            GlideUtil.getInstance().LoadContextBitmap(mContext, newUrl,
+                    dialog_img,GlideUtil.LOAD_BITMAP);
             dialog_listView.setLayoutManager(new LinearLayoutManager(mContext));
             mAdapter = new EditShoppcartAdapter(dataBean.getAttributes(), dataBean.getStockGoods());
             dialog_listView.setAdapter(mAdapter);
@@ -741,6 +756,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
         if(mLoadingDialog!=null){
             mLoadingDialog.cancelDialog();
         }
+        RxBus.$().postEvent(new UpdateShopCartEvent());
         ToastUtil.showShortToast(result);
     }
 
@@ -752,7 +768,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
 
     @Override
     public void loadFail(String msg) {
-
+        ToastUtil.showShortToast(msg);
     }
 
 

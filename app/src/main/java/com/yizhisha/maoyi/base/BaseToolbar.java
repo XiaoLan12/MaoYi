@@ -74,7 +74,7 @@ public class BaseToolbar extends Toolbar {
             }
             final Drawable rightIcon1 = a.getDrawable(R.styleable.LetToolBar_rightButtonIcon1);
             if (rightIcon1 != null) {
-                setRightButton1Icon(rightIcon);
+                setRightButton1Icon(rightIcon1);
             }
             final String rightText1 = a.getString(R.styleable.LetToolBar_rightButtonText1);
             if (rightText1 != null) {
