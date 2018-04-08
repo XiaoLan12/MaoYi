@@ -75,7 +75,7 @@
                     android:layout_marginTop="10dp"
                     android:paddingLeft="14dp"
                     android:paddingRight="14dp"
-                    android:text="【Esprit】甜美简约时尚夏季欧美风吊带长裙"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -86,7 +86,7 @@
                     android:layout_marginTop="8dp"
                     android:paddingLeft="14dp"
                     android:paddingRight="14dp"
-                    android:text="￥169.80"
+                    android:text=""
                     android:textColor="@color/common_color"
                     android:textSize="20sp" />
 
@@ -112,7 +112,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:layout_weight="1"
-                        android:text="月销量：568笔" />
+                        android:text="月销量：" />
 
                     <TextView
                         android:id="@+id/tv_district"

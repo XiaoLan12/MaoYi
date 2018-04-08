@@ -26,8 +26,8 @@ public class HomeFragment extends BaseFragment {
     @Bind(R.id.slidingtablayout)
     SlidingTabLayout slidingTabLayout;
     @Bind(R.id.viewpager)
-
     ViewPager viewPager;
+
     private String[] mTitles = {"今日专场", "七日爆款","往期专场","工作室"};
     private int[] mType = {1, 2,3};
     private ArrayList<Fragment> mFragments = new ArrayList<>();

@@ -91,6 +91,8 @@ public class SpecialDetailActivity extends BaseActivity<SpecialDetailPresenter> 
     TextView tv_select_xiaoliang;
     @Bind(R.id.ll_select_price)
     LinearLayout ll_select_price;
+    @Bind(R.id.ll_head)
+    LinearLayout ll_head;
     //查询条件
     private int sort=0;//排序
     private String cid="";//商品类型
@@ -291,6 +293,7 @@ public class SpecialDetailActivity extends BaseActivity<SpecialDetailPresenter> 
     }
     @Override
     public void getSpecialDetailSuccess(SpecialDetailBean model) {
+        ll_head.setVisibility(View.VISIBLE);
         dataLists=model.getGoods();
         mAdapter.setNewData(dataLists);
         imageUrl = new ArrayList<>();

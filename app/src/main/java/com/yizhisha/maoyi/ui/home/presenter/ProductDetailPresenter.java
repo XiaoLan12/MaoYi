@@ -16,7 +16,7 @@ import java.util.Map;
 public class ProductDetailPresenter extends ProductDetailContract.Presenter {
     @Override
     public void getGoodsDetail(Map<String,String> map) {
-        addSubscrebe(Api.getInstance().getGoodsDetail(map),new RxSubscriber<GoodsDetailBean>(mContext,false){
+        addSubscrebe(Api.getInstance().getGoodsDetail(map),new RxSubscriber<GoodsDetailBean>(mContext,true){
 
             @Override
             protected void onSuccess(GoodsDetailBean model) {

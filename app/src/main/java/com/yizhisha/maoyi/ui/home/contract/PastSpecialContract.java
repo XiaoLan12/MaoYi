@@ -14,11 +14,14 @@ public interface PastSpecialContract {
 
         void getPastListSuccess(ListBean<DailyBean> model);
         void loadFail(String msg);
+        void showLoading();
+        void hideLoading();
+
     }
 
     abstract class Presenter extends BasePresenter<PastSpecialContract.View> {
 
-        public abstract void getPastList();
+        public abstract void getPastList(boolean isShowLoad);
 
     }
 }

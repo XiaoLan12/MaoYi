@@ -12,16 +12,21 @@ import com.yizhisha.maoyi.ui.home.contract.PastSpecialContract;
 
 public class PastSpecialPresenter extends PastSpecialContract.Presenter {
     @Override
-    public void getPastList() {
+    public void getPastList(boolean isShowLoad) {
+        if(isShowLoad) {
+            mView.showLoading();
+        }
         addSubscrebe(Api.getInstance().getPastList(),new RxSubscriber<ListBean<DailyBean>>(mContext,false){
 
             @Override
             protected void onSuccess(ListBean<DailyBean> model) {
+                mView.hideLoading();
                 mView.getPastListSuccess(model);
 
             }
             @Override
             protected void onFailure(String message) {
+                mView.hideLoading();
                 mView.loadFail(message);
             }
         });

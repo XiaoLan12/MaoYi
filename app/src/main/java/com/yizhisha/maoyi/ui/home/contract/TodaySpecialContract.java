@@ -17,12 +17,14 @@ public interface TodaySpecialContract {
         void getDailyTopSliderSuccess(List<WeekTopListBean.WeekTopBean> model);
         void getDailyListSuccess(ListBean<DailyBean> model);
         void loadFail(String msg);
+        void showLoading();
+        void hideLoading();
     }
 
     abstract class Presenter extends BasePresenter<TodaySpecialContract.View> {
 
         public abstract void getDailyTopSlider();
-        public abstract void getDailyList();
+        public abstract void getDailyList(boolean isShowLoad);
 
     }
 }
