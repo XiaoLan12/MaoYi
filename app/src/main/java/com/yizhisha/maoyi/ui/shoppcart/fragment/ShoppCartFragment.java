@@ -136,11 +136,48 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
         mToobar.setRightButton1OnClickLinster(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mToobar.getRightButton1Text().equals("完成")){
-                    changeFootShowDeleteView(false);
-                }else{
-                    changeFootShowDeleteView(true);
+                StringBuilder str=new StringBuilder();
+                for (int i = 0; i < parentMapList.size(); i++) {
+                    List<Map<String, Object>> childMapList = childMapList_list.get(i);
+                    for (int j = 0; j < childMapList.size(); j++) {
+                        GoodsBean goodsBean = (GoodsBean) childMapList.get(j).get("childName");
+                        if(goodsBean.isChecked()){
+                            str.append(goodsBean.getSid());
+                            str.append(",");
+                        }
+                    }
                 }
+                if(str.length()==0){
+                    ToastUtil.showShortToast("请选择要删除的商品");
+                    return;
+                }
+                final String sid = str.substring(0, str.length() - 1);
+                new NormalAlertDialog.Builder(activity)
+                        .setBoolTitle(false)
+                        .setContentText("确定删除选中的商品吗?")
+                        .setContentTextColor(R.color.blue)
+                        .setLeftText("取消")
+                        .setLeftTextColor(R.color.blue)
+                        .setRightText("确认")
+                        .setRightTextColor(R.color.blue)
+                        .setWidth(0.75f)
+                        .setHeight(0.33f)
+                        .setOnclickListener(new DialogInterface.OnLeftAndRightClickListener<NormalAlertDialog>() {
+                            @Override
+                            public void clickLeftButton(NormalAlertDialog dialog, View view) {
+                                dialog.dismiss();
+                            }
+                            @Override
+                            public void clickRightButton(NormalAlertDialog dialog, View view) {
+
+                                Map<String,String> map=new HashMap<>();
+                                map.put("uid",String.valueOf(AppConstant.UID));
+                                map.put("sid", sid);
+                                mPresenter.deleteShoppCart(map);
+                                dialog.dismiss();
+
+                            }
+                        }).build().show();
             }
         });
         mLoadingView.loadSuccess();
@@ -230,11 +267,9 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
                 if(isHasGoods){
                     mLoadingView.loadSuccess();
                     mToobar.showRightButton();
-                    changeFootShowDeleteView(false);
                     mRlBottomBar.setVisibility(View.VISIBLE);
                 }else{
                     mToobar.hideRightButton();
-                    changeFootShowDeleteView(true);
                     mLoadingView.loadSuccess(true, R.drawable.icon_error,"您的购物车中还没有商品，请您先逛逛!");
                     mRlBottomBar.setVisibility(View.GONE);
                 }
@@ -272,20 +307,7 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
             }
         });
     }
-    public void changeFootShowDeleteView(boolean showDeleteView) {
 
-        if (showDeleteView) {
-            mToobar.setRightButton1Text("完成");
-            mToobar.setRightButton1Icon(null);
-            mLlNormalBottom.setVisibility(View.GONE);
-            mLlDeleteAllBottom.setVisibility(View.VISIBLE);
-        } else {
-            mToobar.setRightButton1Text("");
-            mToobar.setRightButton1Icon(RescourseUtil.getDrawable(R.drawable.icon_edit));
-            mLlNormalBottom.setVisibility(View.VISIBLE);
-            mLlDeleteAllBottom.setVisibility(View.GONE);
-        }
-    }
     @Override
     public void onRefresh() {
         mPresenter.loadShoppCart(AppConstant.UID,false);
@@ -454,7 +476,6 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
         mSwipeRefreshLayout.setRefreshing(false);
         parentMapList.clear();
         childMapList_list.clear();
-        mToobar.hideRightButton1();
         mRlBottomBar.setVisibility(View.GONE);
         adapter.notifyDataSetChanged();
         mLoadingView.loadSuccess(true, R.drawable.icon_error,"您的购物车中还没有商品，请您先逛逛!");
@@ -572,15 +593,17 @@ public class ShoppCartFragment extends BaseFragment<ShoppCartPresenter> implemen
         }
 
         dialog_goods_price.setText("￥:"+goodBean.getPrice());
-        String url=goodBean.getLitpic();
-        String newUrl;
-        if(url.length()>0&&url.startsWith("http://")){
-            newUrl=url;
-        }else{
-            newUrl=AppConstant.PRUDUCT_IMG_URL+url;
+        if(goodBean.getLitpic()!=null) {
+            String url = goodBean.getLitpic();
+            String newUrl;
+            if (url.length() > 0 && url.startsWith("http://")) {
+                newUrl = url;
+            } else {
+                newUrl = AppConstant.PRUDUCT_IMG_URL + url;
+            }
+            GlideUtil.getInstance().LoadContextBitmap(mContext, newUrl,
+                    dialog_img, GlideUtil.LOAD_BITMAP);
         }
-        GlideUtil.getInstance().LoadContextBitmap(mContext, newUrl,
-                dialog_img,GlideUtil.LOAD_BITMAP);
         dialog_listView.setLayoutManager(new LinearLayoutManager(mContext));
         mAdapter = new EditShoppcartAdapter(dataBean.getAttributes(), dataBean.getStockGoods());
         dialog_listView.setAdapter(mAdapter);

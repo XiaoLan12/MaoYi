@@ -189,6 +189,16 @@ public class MyOrderListBean implements Serializable{
         private String detail;
         private String remark;
         private String orderno;
+        private int statue;
+
+        public int getStatue() {
+            return statue;
+        }
+
+        public void setStatue(int statue) {
+            this.statue = statue;
+        }
+
         public void setGid(String gid) {
             this.gid = gid;
         }

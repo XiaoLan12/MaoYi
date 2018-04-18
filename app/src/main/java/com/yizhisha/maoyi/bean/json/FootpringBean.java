@@ -61,7 +61,7 @@ public class FootpringBean {
 
         private String description;
 
-        private String content;
+        private List<String> content;
 
         private String material;
 
@@ -203,11 +203,11 @@ public class FootpringBean {
             this.description = description;
         }
 
-        public String getContent() {
+        public List<String> getContent() {
             return content;
         }
 
-        public void setContent(String content) {
+        public void setContent(List<String> content) {
             this.content = content;
         }
 

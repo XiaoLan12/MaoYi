@@ -23,12 +23,17 @@ import com.yizhisha.maoyi.bean.json.GoodsListBean;
 import com.yizhisha.maoyi.bean.json.OrderSureBean;
 import com.yizhisha.maoyi.bean.json.RequestStatusBean;
 import com.yizhisha.maoyi.bean.json.ShopCartOrderSureBean;
+import com.yizhisha.maoyi.common.dialog.DialogInterface;
 import com.yizhisha.maoyi.common.dialog.LoadingDialog;
+import com.yizhisha.maoyi.common.dialog.NormalAlertDialog;
 import com.yizhisha.maoyi.common.dialog.RadioSelectionDialog;
+import com.yizhisha.maoyi.event.FinishEvent;
 import com.yizhisha.maoyi.event.UpdateShopCartEvent;
+import com.yizhisha.maoyi.event.WeChatPayEvent;
 import com.yizhisha.maoyi.ui.home.contract.SureOrderContract;
 import com.yizhisha.maoyi.ui.home.presenter.SureOrderPresenter;
 import com.yizhisha.maoyi.ui.me.activity.MyAddressActivity;
+import com.yizhisha.maoyi.ui.me.activity.MyOrderActivity;
 import com.yizhisha.maoyi.utils.ToastUtil;
 import com.yizhisha.maoyi.widget.RecyclerViewDriverLine;
 import com.yizhisha.maoyi.wxapi.WeChatPayService;
@@ -40,6 +45,9 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 public class SureOrderActivity extends BaseActivity<SureOrderPresenter> implements SureOrderContract.View{
     @Bind(R.id.toolbar)
@@ -69,6 +77,7 @@ public class SureOrderActivity extends BaseActivity<SureOrderPresenter> implemen
     private RadioSelectionDialog radioSelectionDialog;
     private int mType=0;//当前订单类型,0:普通订单  1:购物车订单
     private LoadingDialog mLoadingDialog;
+    private Subscription subscription;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_sure_order;
@@ -94,6 +103,7 @@ public class SureOrderActivity extends BaseActivity<SureOrderPresenter> implemen
                 loadShoppOrder(bundle);
             }
         }
+        event();
     }
     //初始化一般商品适配器
     private void initAdapter() {
@@ -232,6 +242,31 @@ public class SureOrderActivity extends BaseActivity<SureOrderPresenter> implemen
         costTv.setText("合计:￥"+goods.getTotalprice());
     }
 
+    //回调事件，成功调起微信支付后响应该事件
+    private void event(){
+        subscription= RxBus.$().toObservable(WeChatPayEvent.class)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<WeChatPayEvent>() {
+                    @Override
+                    public void call(WeChatPayEvent event) {
+                        new NormalAlertDialog.Builder(SureOrderActivity.this)
+                                .setTitleText("支付结果")
+                                .setContentText("支付成功")
+                                .setSingleModel(true)
+                                .setSingleText("确认")
+                                .setWidth(0.75f)
+                                .setHeight(0.33f)
+                                .setSingleListener(new DialogInterface.OnSingleClickListener<NormalAlertDialog>() {
+                                    @Override
+                                    public void clickSingleButton(NormalAlertDialog dialog, View view) {
+                                        startActivity(MyOrderActivity.class);
+                                        RxBus.$().postEvent(new FinishEvent());
+                                        finish_Activity(SureOrderActivity.this);
+                                    }
+                                }).build().show();
+                    }
+                });
+    }
     @Override
     public void createOrderSuccess(RequestStatusBean bean) {
         WeChatPayService weChatPay = new WeChatPayService(this, 0, bean.getOrderno(), dataList.get(0).getTitle(), goods.getTotalprice()+"");
@@ -319,6 +354,15 @@ public class SureOrderActivity extends BaseActivity<SureOrderPresenter> implemen
                 break;
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (subscription != null&&!subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

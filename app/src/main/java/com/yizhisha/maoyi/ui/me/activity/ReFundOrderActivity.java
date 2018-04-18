@@ -11,6 +11,7 @@ import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.adapter.MyRefundOrderAdapter;
 import com.yizhisha.maoyi.base.BaseActivity;
+import com.yizhisha.maoyi.base.BaseToolbar;
 import com.yizhisha.maoyi.bean.DataHelper;
 import com.yizhisha.maoyi.bean.json.MyOrderListBean;
 import com.yizhisha.maoyi.bean.json.OrderFootBean;
@@ -29,6 +30,8 @@ import butterknife.Bind;
 
 public class ReFundOrderActivity extends BaseActivity<ReFundOrderPresenter> implements SwipeRefreshLayout.OnRefreshListener,
         ReFundOrderContract.View{
+    @Bind(R.id.toolbar)
+    BaseToolbar toolbar;
     @Bind(R.id.loadingView)
     CommonLoadingView mLoadingView;
     @Bind(R.id.recyclerview)
@@ -44,7 +47,18 @@ public class ReFundOrderActivity extends BaseActivity<ReFundOrderPresenter> impl
     }
     @Override
     protected void initToolBar() {
-
+        toolbar.setLeftButtonOnClickLinster(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish_Activity(ReFundOrderActivity.this);
+            }
+        });
+        toolbar.setRightButtonOnClickLinster(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(NewActivity.class);
+            }
+        });
     }
     @Override
     protected void initView() {

@@ -96,7 +96,7 @@
             android:layout_marginRight="@dimen/dp_8"
             android:visibility="gone"
             android:textColor="@color/common_color"
-            android:text="再次购买"/>
+            android:text="立即评分"/>
 
         <TextView
             android:id="@+id/immediate_payment_tv"

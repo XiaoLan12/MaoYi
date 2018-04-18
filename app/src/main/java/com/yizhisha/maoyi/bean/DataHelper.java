@@ -43,11 +43,13 @@ public class DataHelper {
             //遍历每个大订单里面的小订单
             for (MyOrderListBean.Goods orderGoodsItem : goodses) {
                 orderGoodsItem.setOrderno(order.getOrderno());
+                orderGoodsItem.setStatue(order.getStatus());
                 dataList.add(orderGoodsItem);
             }
             MyOrderListBean.Refund refund=order.getRefund();
 
             OrderFootBean orderFootBean=new OrderFootBean();
+            orderFootBean.setId(order.getId());
             orderFootBean.setTotalprice(order.getTotalprice());
             orderFootBean.setStatus(order.getStatus());
             orderFootBean.setAmount(goodses.size());

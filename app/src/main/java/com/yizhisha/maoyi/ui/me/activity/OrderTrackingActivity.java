@@ -98,7 +98,7 @@ public class OrderTrackingActivity extends BaseActivity<OrderTrackPresenter> imp
                 expressNumberTv.setText(jsonObject.getString("express_no"));
                 Object resultObject=jsonObject.get("result");
                 if(resultObject.equals("")){
-                    showEmpty(info);
+                    showEmpty("未查询到物流信息");
                 }else{
                     dataList.clear();
                     JSONArray  resultArray=jsonObject.getJSONArray("result");

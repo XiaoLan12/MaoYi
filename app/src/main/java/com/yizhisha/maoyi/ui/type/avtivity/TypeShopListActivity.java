@@ -73,6 +73,8 @@ public class TypeShopListActivity extends BaseActivity<TypeShopListPresenter> im
     TextView tv_select_xiaoliang;
     @Bind(R.id.ll_select_price)
     LinearLayout ll_select_price;
+    @Bind(R.id.ll_head)
+    LinearLayout ll_head;
 
     //查询条件
     private int sort=0;//排序
@@ -278,6 +280,9 @@ public class TypeShopListActivity extends BaseActivity<TypeShopListPresenter> im
     public void getGoodsSortedSuccess(SpecialDetailBean model) {
         dataLists.clear();
         dataLists=model.getGoods();
+        if(dataLists.size()!=0){
+            ll_head.setVisibility(View.VISIBLE);
+        }
         mAdapter.setNewData(dataLists);
     }
     @Override

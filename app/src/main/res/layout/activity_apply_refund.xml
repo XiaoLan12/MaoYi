@@ -11,7 +11,7 @@
         style="@style/basetoolbarStyle"
         android:background="@color/common_color"
         app:leftButtonIcon="@drawable/ic_back"
-        app:rightButtonIcon="@drawable/ic_launcher"
+        app:rightButtonIcon="@drawable/icon_new"
         android:layout_alignParentTop="true"
         app:title="申请退款"
         />
@@ -84,7 +84,7 @@
                     android:id="@+id/refundCause_iv"
                     android:layout_width="@dimen/dp_16"
                     android:layout_height="@dimen/dp_16"
-                    android:src="@drawable/ic_launcher"
+                    android:src="@drawable/icon_right"
                     android:layout_alignParentRight="true"/>
             </RelativeLayout>
         </LinearLayout>

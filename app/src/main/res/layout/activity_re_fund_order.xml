@@ -9,7 +9,7 @@
         style="@style/basetoolbarStyle"
         android:background="@color/common_color"
         app:leftButtonIcon="@drawable/ic_back"
-        app:rightButtonIcon="@drawable/ic_launcher"
+        app:rightButtonIcon="@drawable/icon_new"
         android:layout_alignParentTop="true"
         app:title="退款/售后"
         />

@@ -9,7 +9,9 @@
         android:id="@+id/toolbar"
         style="@style/basetoolbarStyle"
         app:leftButtonIcon="@drawable/ic_back"
-        app:title="添加收货地址"/>
+        app:title="添加收货地址"
+        android:background="@color/common_color"
+        />
     <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"/>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -90,7 +92,7 @@
                 android:id="@+id/area_address_iv"
                 android:layout_width="@dimen/dp_25"
                 android:layout_height="@dimen/dp_25"
-                android:src="@drawable/ic_launcher"
+                android:src="@drawable/icon_right"
                 android:layout_alignParentRight="true"
                 android:background="@null"/>
         </RelativeLayout>

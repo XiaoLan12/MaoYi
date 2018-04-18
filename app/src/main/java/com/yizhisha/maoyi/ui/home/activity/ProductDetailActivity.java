@@ -2,6 +2,7 @@ package com.yizhisha.maoyi.ui.home.activity;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,6 +33,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXTextObject;
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.yizhisha.maoyi.AppConstant;
 import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.adapter.EditShoppcartAdapter;
@@ -52,6 +59,8 @@ import com.yizhisha.maoyi.common.dialog.DialogInterface;
 import com.yizhisha.maoyi.common.dialog.LoadingDialog;
 import com.yizhisha.maoyi.common.dialog.NormalSelectionDialog;
 import com.yizhisha.maoyi.common.dialog.PicShowDialog;
+import com.yizhisha.maoyi.common.popupwindow.SelectPopupWindow;
+import com.yizhisha.maoyi.event.FinishEvent;
 import com.yizhisha.maoyi.event.UpdateShopCartEvent;
 import com.yizhisha.maoyi.ui.home.contract.ProductDetailContract;
 import com.yizhisha.maoyi.ui.home.jc.DemoFragment;
@@ -78,6 +87,11 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+
+import static com.tencent.mm.opensdk.modelmsg.SendMessageToWX.Req.WXSceneSession;
 
 /**
  * Created by Administrator on 2017/11/16.
@@ -159,6 +173,8 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
     LinearLayout ll_dot1;
     @Bind(R.id.ll_dot2)
     LinearLayout ll_dot2;
+    @Bind(R.id.linearlayout)
+    LinearLayout parentLl;
 
 
     private SDayExplosionAdapter mAdapter1;
@@ -174,6 +190,12 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
 
 
     List<DemoFragment1> fragmentList = new ArrayList<>();
+
+    private Subscription subscription;
+
+    private IWXAPI api;
+    // 自定义PopupWindow
+    private SelectPopupWindow feedSelectPopupWindow;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_product_detail;
@@ -197,6 +219,10 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
 
     @Override
     protected void initView() {
+        //AppConst.WEIXIN.APP_ID是指你应用在微信开放平台上的AppID，记得替换。
+        api = WXAPIFactory.createWXAPI(this, AppConstant.WEIXIN_APP_ID, false);
+        // 将该app注册到微信
+        api.registerApp(AppConstant.WEIXIN_APP_ID);
         Bundle bundle=getIntent().getExtras();
         if(bundle!=null){
             mGid=bundle.getInt("gid");
@@ -208,6 +234,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
         map.put("gid", String.valueOf(mGid));
         map.put("uid", String.valueOf(3));
         mPresenter.getGoodsDetail(map);
+        event();
 
         // 为ImageSlideshow设置数据
 //        imageSlideshow.setDotSpace(12);
@@ -217,82 +244,97 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
 
     }
 
+    private void event(){
+        subscription= RxBus.$().toObservable(FinishEvent.class)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<FinishEvent>() {
+                    @Override
+                    public void call(FinishEvent event) {
+                        finish_Activity(ProductDetailActivity.this);
+                    }
+                });
+    }
     @Override
     public void getGoodsDetailSuccess(GoodsDetailBean model) {
-        goodsDetailBean=model;
-        goodsProductBean = model.getGoods();
+        if(model.getStatus().equals("y")){
+            goodsDetailBean=model;
+            goodsProductBean = model.getGoods();
 
-        List<BannerResult> bannerResultsList=new ArrayList<>();
-        BannerResult bannerResult=new BannerResult();
-        bannerResult.setUrl(AppConstant.PRUDUCT_IMG_URL+goodsProductBean.getLitpic());
-        bannerResultsList.add(bannerResult);
+            List<BannerResult> bannerResultsList=new ArrayList<>();
+            BannerResult bannerResult=new BannerResult();
+            bannerResult.setUrl(AppConstant.PRUDUCT_IMG_URL+goodsProductBean.getLitpic());
+            bannerResultsList.add(bannerResult);
 
-        if(!goodsProductBean.getVideo().equals("")){
-            String path=goodsProductBean.getVideo();
-            if(!path.contains("http:")){
-                path=AppConstant.PRODUCT_VIDEO+path;
+            if(!goodsProductBean.getVideo().equals("")){
+                String path=goodsProductBean.getVideo();
+                if(!path.contains("http:")){
+                    path=AppConstant.PRODUCT_VIDEO+path;
+                }
+                BannerResult bannerResult1=new BannerResult();
+                bannerResult1.setUrl(path);
+                bannerResultsList.add(bannerResult1);
+                fragmentList.add(new DemoFragment1().setIndex(path,0));
+
+                ll_dot.setVisibility(View.VISIBLE);
+                ll_dot1.setBackgroundResource(R.drawable.dot_selected);
             }
-            BannerResult bannerResult1=new BannerResult();
-            bannerResult1.setUrl(path);
-            bannerResultsList.add(bannerResult1);
-            fragmentList.add(new DemoFragment1().setIndex(path,0));
-
-            ll_dot.setVisibility(View.VISIBLE);
-            ll_dot1.setBackgroundResource(R.drawable.dot_selected);
-        }
 
 
 //        viewPager.setAdapter(new Myvpadapter( ProductDetailActivity.this,bannerResultsList));
 
-        fragmentList.add(new DemoFragment1().setIndex(AppConstant.PRUDUCT_IMG_URL+goodsProductBean.getLitpic(),1));
+            fragmentList.add(new DemoFragment1().setIndex(AppConstant.PRUDUCT_IMG_URL+goodsProductBean.getLitpic(),1));
 
-        MyAdapter myAdapter = new MyAdapter(getSupportFragmentManager());
+            MyAdapter myAdapter = new MyAdapter(getSupportFragmentManager());
 //        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        viewPager.setAdapter(myAdapter);
-        viewPager.setOnPageChangeListener(this);
+            viewPager.setAdapter(myAdapter);
+            viewPager.setOnPageChangeListener(this);
 
 
 //        imageSlideshow.setImageTitleBeanList(bannerResultsList);
-        mPresenter.getSimilarRecommen(goodsProductBean.getTid());
-        String devi_lenth = goodsProductBean.getDevi_length();
-        if (devi_lenth.equals("1")) {
-            tvDeviLength1.setBackgroundResource(R.color.common_color);
-        } else if (devi_lenth.equals("2")) {
-            tvDeviLength2.setBackgroundResource(R.color.common_color);
-        } else if (devi_lenth.equals("3")) {
-            tvDeviLength3.setBackgroundResource(R.color.common_color);
-        }
-        String devi_size = goodsProductBean.getDevi_size();
-        if (devi_size.equals("1")) {
-            tvDeviSize1.setBackgroundResource(R.color.common_color);
-        } else if (devi_size.equals("2")) {
-            tvDeviSize2.setBackgroundResource(R.color.common_color);
-        } else if (devi_size.equals("3")) {
-            tvDeviSize3.setBackgroundResource(R.color.common_color);
-        }
-        String devi_elastic = goodsProductBean.getDevi_elastic();
-        if (devi_elastic.equals("1")) {
-            tvDeviElastic1.setBackgroundResource(R.color.common_color);
-        } else if (devi_elastic.equals("2")) {
-            tvDeviElastic2.setBackgroundResource(R.color.common_color);
-        } else if (devi_elastic.equals("3")) {
-            tvDeviElastic3.setBackgroundResource(R.color.common_color);
-        }
+            mPresenter.getSimilarRecommen(goodsProductBean.getTid());
+            String devi_lenth = goodsProductBean.getDevi_length();
+            if (devi_lenth.equals("1")) {
+                tvDeviLength1.setBackgroundResource(R.color.common_color);
+            } else if (devi_lenth.equals("2")) {
+                tvDeviLength2.setBackgroundResource(R.color.common_color);
+            } else if (devi_lenth.equals("3")) {
+                tvDeviLength3.setBackgroundResource(R.color.common_color);
+            }
+            String devi_size = goodsProductBean.getDevi_size();
+            if (devi_size.equals("1")) {
+                tvDeviSize1.setBackgroundResource(R.color.common_color);
+            } else if (devi_size.equals("2")) {
+                tvDeviSize2.setBackgroundResource(R.color.common_color);
+            } else if (devi_size.equals("3")) {
+                tvDeviSize3.setBackgroundResource(R.color.common_color);
+            }
+            String devi_elastic = goodsProductBean.getDevi_elastic();
+            if (devi_elastic.equals("1")) {
+                tvDeviElastic1.setBackgroundResource(R.color.common_color);
+            } else if (devi_elastic.equals("2")) {
+                tvDeviElastic2.setBackgroundResource(R.color.common_color);
+            } else if (devi_elastic.equals("3")) {
+                tvDeviElastic3.setBackgroundResource(R.color.common_color);
+            }
 
-        tvTitle.setText(goodsProductBean.getTitle());
-        tvPname.setText("商品品类：" + goodsProductBean.getPname());
-        tvSales.setText("月销量：" + goodsProductBean.getSales() + "笔");
-        tvMoney.setText("￥" + goodsProductBean.getPrice());
-        Log.d("TTT","aa"+goodsProductBean.toString());
-        if(model.getFavorite().equals("y")){
-            collectIv.setImageResource(R.drawable.icon_favorit);
+            tvTitle.setText(goodsProductBean.getTitle());
+            tvPname.setText("商品品类：" + goodsProductBean.getPname());
+            tvSales.setText("月销量：" + goodsProductBean.getSales() + "笔");
+            tvMoney.setText("￥" + goodsProductBean.getPrice());
+            Log.d("TTT","aa"+goodsProductBean.toString());
+            if(model.getFavorite().equals("y")){
+                collectIv.setImageResource(R.drawable.icon_favorit);
+            }else{
+                collectIv.setImageResource(R.drawable.icon_favorit_normale);
+            }
+
+            shopAttri();
+            initDetails(goodsProductBean.getContent());
+            initComment(model);
         }else{
-            collectIv.setImageResource(R.drawable.icon_favorit_normale);
+            ToastUtil.showShortToast(model.getInfo());
         }
 
-        shopAttri();
-        initDetails(goodsProductBean.getContent());
-        initComment(model);
     }
     //加载评论
     private void initComment(final GoodsDetailBean goodsDetailBean) {
@@ -409,7 +451,8 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
         super.onPause();
         JCVideoPlayer.releaseAllVideos();
     }
-    @OnClick({R.id.ll_select_color_size,R.id.tv_shopping_cart,R.id.tv_shopping,R.id.ll_collection,R.id.ll_shopping_cart})
+    @OnClick({R.id.ll_select_color_size,R.id.tv_shopping_cart,R.id.tv_shopping,R.id.ll_collection,R.id.ll_shopping_cart,
+    R.id.share_iv})
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -471,9 +514,26 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
             case R.id.ll_shopping_cart:
                 startActivity(ShopCartActivity.class);
                 break;
+            case R.id.share_iv:
+                feedSelectPopupWindow = new SelectPopupWindow(this, selectItemsOnClick);
+                // 设置popupWindow显示的位置
+                // 此时设在界面底部并且水平居中
+                feedSelectPopupWindow.showAtLocation(parentLl,
+                        Gravity.BOTTOM| Gravity.CENTER_HORIZONTAL, 0, 0);
+                // 当popupWindow 出现的时候 屏幕的透明度  ，设为0.5 即半透明 灰色效果
+                backgroundAlpha(0.5f);
+                // 设置popupWindow取消的点击事件，即popupWindow消失后，屏幕的透明度，全透明，就回复原状态
+                feedSelectPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        backgroundAlpha(1f);
+                    }
+                });
+                break;
         }
 
     }
+
     //编辑购物车
     private GoodsAttrsBean dataBean;
     private EditShoppcartAdapter mAdapter;
@@ -771,112 +831,84 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
         ToastUtil.showShortToast(msg);
     }
 
-
-
-
-
-
-
-
-
-/*
-    public class Myvpadapter extends PagerAdapter {
-        int[] imageicon;
-        Context context;
-
-        List<BannerResult> imagelist=new ArrayList<>();
-        public Myvpadapter( Context context,
-                            List<BannerResult> imagelist) {
-            super();
-            this.imageicon = imageicon;
-            this.context = context;
-            this.imagelist = imagelist;
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (subscription != null&&!subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
         }
-
-        @Override
-        public int getCount() {
-            // TODO Auto-generated method stub
-            return imagelist.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View arg0, Object arg1) {
-            // TODO Auto-generated method stub
-            return arg0 == arg1;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            // TODO Auto-generated method stub
-            // super.destroyItem(container, position, object);
-//            container.removeView((View) object);
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-
-//            View view = LayoutInflater.from(context).inflate( R.layout.item_banner,container, true);
-            View view=View.inflate(context,R.layout.item_banner,null);
-            ImageView image=(ImageView)view.findViewById(R.id.img);
-            JCVideoPlayerStandard jcVideoPlayerStandard=(  JCVideoPlayerStandard)view.findViewById(R.id.videoplayer);
-            Log.e("HHH",imagelist.get(position).getUrl());
-            if(imagelist.get(position).getUrl().endsWith("mp4")){
-                try {
-                    jcVideoPlayerStandard.setUp(
-                         imagelist.get(position).getUrl(), JCVideoPlayer.SCREEN_LAYOUT_LIST,
-                            "");
-                    image.setVisibility(View.GONE);
-                    Bitmap bitmap=retriveVideoFrameFromVideo(imagelist.get(position).getUrl());
-                    jcVideoPlayerStandard.thumbImageView.setImageBitmap(bitmap);
-//                    image.setImageBitmap(bitmap);
-                    container.addView(view);
-                    return view;
-                } catch (Throwable throwable) {
-                    throwable.printStackTrace();
-                }
-            }else{
-                jcVideoPlayerStandard.setVisibility(View.GONE);
-                Glide.with(context).load(imagelist.get(position).getUrl()).into(image);
-            }
-
-
-//            GlideUtil.getInstance().LoadContextBitmap(context,imagelist.get(position).getUrl(),image,"");
-//            ImageView image = imagelist.get(position % imagelist.size());
-            container.addView(view);
-            return view;
-        }
-
     }
-    public static Bitmap retriveVideoFrameFromVideo(String videoPath)
-            throws Throwable
+    /**
+     * 设置添加屏幕的背景透明度
+     * @param bgAlpha
+     */
+    public void backgroundAlpha(float bgAlpha)
     {
-        Bitmap bitmap = null;
-        MediaMetadataRetriever mediaMetadataRetriever = null;
-        try
-        {
-            mediaMetadataRetriever = new MediaMetadataRetriever();
-            if (Build.VERSION.SDK_INT >= 14)
-                mediaMetadataRetriever.setDataSource(videoPath, new HashMap<String, String>());
-            else
-                mediaMetadataRetriever.setDataSource(videoPath);
-            //   mediaMetadataRetriever.setDataSource(videoPath);
-            bitmap = mediaMetadataRetriever.getFrameAtTime();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            throw new Throwable(
-                    "Exception in retriveVideoFrameFromVideo(String videoPath)"
-                            + e.getMessage());
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        getWindow().setAttributes(lp);
+    }
+    // popupWindow 点击事件监听
+    private View.OnClickListener selectItemsOnClick = new View.OnClickListener() {
+        public void onClick(View v) {
+            switch (v.getId()) {
+                //根据popupWindow 布局文件中的id 来执行相应的点击事件
+                case R.id.fp_linear_sharetoWeixin:
 
-        }
-        finally
-        {
-            if (mediaMetadataRetriever != null)
-            {
-                mediaMetadataRetriever.release();
+
+                   shareUrl(0,ProductDetailActivity.this,"com.yizhisha.maoyi",goodsProductBean.getTitle(),"");
+                    break;
+                case R.id.fp_linear_sharetoquan:
+                    shareUrl(1,ProductDetailActivity.this,"https://open.weixin.qq.com",goodsProductBean.getTitle(),"");
+                    break;
+
             }
+            //每次点击popupWindow中的任意按钮，记得关闭此popupWindow，
+            feedSelectPopupWindow.dismiss();
         }
-        return bitmap;
+    };
+
+   /* private boolean share(String title, int scene) {
+
+        // 初始化一个WXTextObject对象
+        WXTextObject textObj = new WXTextObject();
+        textObj.text = title;
+        // 用WXTextObject对象初始化一个WXMediaMessage对象
+        WXMediaMessage msg = new WXMediaMessage();
+        msg.mediaObject = textObj;   // 发送文本类型的消息时，title字段不起作用
+        // msg.title = "Will be ignored";
+        msg.description = title;   // 构造一个Req
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = String.valueOf(System.currentTimeMillis()); // transaction字段用于唯一标识一个请求
+        req.message = msg;   // 分享或收藏的目标场景，通过修改scene场景值实现。
+        // 发送到聊天界面 —— WXSceneSession
+        // 发送到朋友圈 —— WXSceneTimeline
+        // 添加到微信收藏 —— WXSceneFavorite
+        req.scene = scene==0?SendMessageToWX.Req.WXSceneSession:SendMessageToWX.Req.WXSceneTimeline;
+        // 调用api接口发送数据到微信
+        return api.sendReq(req);
     }*/
+
+    //flag用来判断是分享到微信好友还是分享到微信朋友圈，
+    //0代表分享到微信好友，1代表分享到朋友圈
+    private boolean shareUrl(int flag,Context context,String url,String title,String descroption){
+        //初始化一个WXWebpageObject填写url
+        WXWebpageObject webpageObject = new WXWebpageObject();
+        webpageObject.webpageUrl = url;
+        //用WXWebpageObject对象初始化一个WXMediaMessage，天下标题，描述
+        WXMediaMessage msg = new WXMediaMessage(webpageObject);
+        msg.title = title;
+        msg.description = descroption;
+        //这块需要注意，图片的像素千万不要太大，不然的话会调不起来微信分享，
+        //我在做的时候和我们这的UIMM说随便给我一张图，她给了我一张1024*1024的图片
+        //当时也不知道什么原因，后来在我的机智之下换了一张像素小一点的图片好了！
+        Bitmap thumb = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
+        msg.setThumbImage(thumb);
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = String.valueOf(System.currentTimeMillis());
+        req.message = msg;
+        req.scene = flag==0?SendMessageToWX.Req.WXSceneSession:SendMessageToWX.Req.WXSceneTimeline;
+        return api.sendReq(req);
+    }
+
 }

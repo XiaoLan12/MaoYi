@@ -108,6 +108,12 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter> im
 
     @Override
     protected void initToolBar() {
+        toolbar.setRightButtonOnClickLinster(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(NewActivity.class);
+            }
+        });
         toolbar.setLeftButtonOnClickLinster(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

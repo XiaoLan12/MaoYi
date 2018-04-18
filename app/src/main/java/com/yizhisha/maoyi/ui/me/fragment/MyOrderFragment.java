@@ -18,7 +18,10 @@ import com.yizhisha.maoyi.bean.json.MyOrderListBean;
 import com.yizhisha.maoyi.bean.json.OrderFootBean;
 import com.yizhisha.maoyi.common.dialog.DialogInterface;
 import com.yizhisha.maoyi.common.dialog.NormalAlertDialog;
+import com.yizhisha.maoyi.ui.home.activity.SureOrderActivity;
+import com.yizhisha.maoyi.ui.me.activity.AddCommentActivity;
 import com.yizhisha.maoyi.ui.me.activity.ApplyRefundActivity;
+import com.yizhisha.maoyi.ui.me.activity.GoodsPaymentActivity;
 import com.yizhisha.maoyi.ui.me.activity.MyOrderDetailsActivity;
 import com.yizhisha.maoyi.ui.me.activity.OrderTrackingActivity;
 import com.yizhisha.maoyi.ui.me.contract.MyOrderContract;
@@ -26,6 +29,7 @@ import com.yizhisha.maoyi.ui.me.presenter.MyOrderPresenter;
 import com.yizhisha.maoyi.utils.RescourseUtil;
 import com.yizhisha.maoyi.utils.ToastUtil;
 import com.yizhisha.maoyi.widget.CommonLoadingView;
+import com.yizhisha.maoyi.wxapi.WeChatPayService;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -112,9 +116,17 @@ public class MyOrderFragment extends BaseFragment<MyOrderPresenter> implements M
                     if(dataList.get(position) instanceof MyOrderListBean.Goods) {
                         MyOrderListBean.Goods goods= (MyOrderListBean.Goods) dataList.get(position);
                         orderno=goods.getOrderno();
-                        Bundle bundle=new Bundle();
-                        bundle.putString("ORDERNO",orderno);
-                        startActivityForResult(MyOrderDetailsActivity.class,bundle,RESULT_CODE);
+                        if(goods.getStatue()==0){
+                            Bundle bundle=new Bundle();
+                            bundle.putString("ORDERNO",orderno);
+                            startActivityForResult(GoodsPaymentActivity.class,bundle,RESULT_CODE);
+                        }else{
+                            Bundle bundle=new Bundle();
+                            bundle.putString("ORDERNO",orderno);
+                            startActivityForResult(MyOrderDetailsActivity.class,bundle,RESULT_CODE);
+                        }
+
+
                     }
                 }
             }
@@ -182,14 +194,23 @@ public class MyOrderFragment extends BaseFragment<MyOrderPresenter> implements M
                         }
                         break;
                     case R.id.againbuy_tv:
+                        if(dataList.get(position) instanceof OrderFootBean) {
+                            OrderFootBean orderFootBean= (OrderFootBean) dataList.get(position);
+                            Bundle commentbundle = new Bundle();
+                            commentbundle.putInt("TYPE",1);
+                            commentbundle.putInt("ORDERID",orderFootBean.getId());
+                            startActivity(AddCommentActivity.class,commentbundle);
+                        }
+
                         break;
                     case R.id.immediate_payment_tv:
                         if(dataList.get(position) instanceof OrderFootBean) {
                             final OrderFootBean orderFootBean= (OrderFootBean) dataList.get(position);
-                            Bundle bundle=new Bundle();
-                            bundle.putString("ORDERNO",orderFootBean.getOrderno());
-                            startActivityForResult(MyOrderDetailsActivity.class,bundle,RESULT_CODE);
+
+                            WeChatPayService weChatPay = new WeChatPayService(mContext, 0, orderFootBean.getOrderno(), "订单号:"+orderFootBean.getOrderno(), orderFootBean.getTotalprice()+"");
+                            weChatPay.pay();
                         }
+                        break;
                     case R.id.delete_order_tv:
                         if(dataList.get(position) instanceof OrderFootBean) {
                             final OrderFootBean orderFootBean= (OrderFootBean) dataList.get(position);

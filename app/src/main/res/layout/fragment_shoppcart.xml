@@ -9,7 +9,7 @@
         android:id="@+id/toolbar"
         style="@style/basetoolbarStyle"
         app:rightButtonIcon="@drawable/icon_new"
-        app:rightButtonIcon1="@drawable/icon_edit"
+        app:rightButtonIcon1="@drawable/icon_trash"
         android:background="@color/common_color"
         app:title="@string/shppcart"/>
     <com.yizhisha.maoyi.widget.CommonLoadingView

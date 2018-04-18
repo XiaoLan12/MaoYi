@@ -11,7 +11,7 @@
         android:background="@color/common_color"
         app:leftButtonIcon="@drawable/ic_back"
         android:layout_alignParentTop="true"
-        app:rightButtonIcon="@drawable/ic_launcher"
+        app:rightButtonIcon="@drawable/icon_new"
         app:title="设置"
         />
     <LinearLayout

@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <com.yizhisha.maoyi.base.BaseToolbar
+        android:id="@+id/toolbar"
+        style="@style/basetoolbarStyle"
+        android:background="@color/common_color"
+        app:leftButtonIcon="@drawable/ic_back"
+        app:title="订单详情"/>
+    <com.yizhisha.maoyi.widget.CommonLoadingView
+        android:id="@+id/loadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_16">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <ImageView
+                            android:id="@+id/consigneehead_iv"
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"
+                            android:src="@drawable/icon_user" />
+
+                        <TextView
+                            android:id="@+id/consignee_tv"
+                            style="@style/MY.Theme.Widget.Text"
+                            android:textColor="@color/common_h"
+                            android:text="收货人:" />
+
+                        <TextView
+                            android:id="@+id/consigneeName_tv"
+                            style="@style/MY.Theme.Widget.Text"
+                            android:textColor="@color/common_h"
+                            tools:text="林先生" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+                        <ImageView
+                            android:id="@+id/consigneePhone_iv"
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"
+                            android:src="@drawable/icon_phone" />
+                        <TextView
+                            android:id="@+id/consigneePhone_tv"
+                            style="@style/MY.Theme.Widget.Text"
+                            android:textColor="@color/common_h"
+                            android:layout_marginRight="@dimen/dp_10"
+                            tools:text="1412523452345" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/dp_16"
+                    android:paddingLeft="@dimen/dp_10">
+
+                    <ImageView
+                        android:id="@+id/shippingaddress_head_tv"
+                        android:layout_width="@dimen/dp_20"
+                        android:layout_height="@dimen/dp_20"
+                        android:src="@drawable/icon_user" />
+
+                    <TextView
+                        android:id="@+id/shippingaddressTv"
+                        style="@style/MY.Theme.Widget.Text"
+                        android:textColor="@color/common_h"
+                        android:layout_toRightOf="@+id/shippingaddress_head_tv"
+                        android:text="收货地址:" />
+
+                    <TextView
+                        android:id="@+id/shippingaddress_tv"
+                        style="@style/MY.Theme.Widget.Text"
+                        android:layout_marginRight="@dimen/dp_10"
+                        android:textColor="@color/common_h"
+                        android:layout_toRightOf="@+id/shippingaddressTv"
+                        tools:text="收货地址" />
+                </RelativeLayout>
+
+                <View
+                    style="@style/MY.Theme.Widget.Divider.Line.Vertical"
+                    android:layout_height="@dimen/dp_10" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/dp_14"
+                    android:paddingBottom="@dimen/dp_14"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:textColor="@color/common_h"
+                        android:text="订单信息" />
+                    <TextView
+                        android:id="@+id/orderInfo_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dp_10"
+                        android:layout_alignParentRight="true"
+                        android:textColor="@color/blue"
+                        tools:text="等待发货" />
+                </RelativeLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    />
+                <RelativeLayout
+                    android:id="@+id/distribution_way_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@color/white"
+                    android:padding="@dimen/dp_10">
+                    <TextView
+                        style="@style/MY.Theme.Widget.Text"
+                        android:layout_centerVertical="true"
+                        android:text="配送方式"/>
+                    <TextView
+                        android:id="@+id/distribution_way_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/distribution_way_iv"
+                        android:text="快递发货"/>
+                    <ImageView
+                        android:id="@+id/distribution_way_iv"
+                        android:layout_width="@dimen/dp_25"
+                        android:layout_height="@dimen/dp_25"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/icon_right"/>
+                </RelativeLayout>
+                <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"/>
+                <RelativeLayout
+                    android:id="@+id/pay_way_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="@dimen/dp_10">
+                    <TextView
+                        style="@style/MY.Theme.Widget.Text"
+                        android:layout_centerVertical="true"
+                        android:text="优惠卷"/>
+                    <TextView
+                        android:id="@+id/pay_way_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/pay_way_iv"
+                        android:text="没有优惠卷可用"/>
+                    <ImageView
+                        android:id="@+id/pay_way_iv"
+                        android:layout_width="@dimen/dp_25"
+                        android:layout_height="@dimen/dp_25"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/icon_right"/>
+                </RelativeLayout>
+                <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"
+                    android:layout_height="@dimen/dp_10"/>
+                <RelativeLayout
+                    android:id="@+id/zhifubao_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:visibility="gone"
+                    android:padding="@dimen/dp_10"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="支付宝支付"/>
+                    <CheckBox
+                        android:id="@+id/zhifubao_cb"
+                        android:layout_width="@dimen/dp_25"
+                        android:layout_height="@dimen/dp_25"
+                        android:background="@drawable/checkbox_style"
+                        android:layout_alignParentRight="true"
+                        android:button="@null"
+                        />
+                </RelativeLayout>
+                <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"
+                    />
+                <RelativeLayout
+                    android:id="@+id/weixin_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="@dimen/dp_10">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="微信支付"/>
+                    <CheckBox
+                        android:id="@+id/weixin_cb"
+                        android:layout_width="@dimen/dp_25"
+                        android:layout_height="@dimen/dp_25"
+                        android:background="@drawable/checkbox_style"
+                        android:layout_alignParentRight="true"
+                        android:button="@null"
+                        />
+                </RelativeLayout>
+                <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"
+                    android:layout_height="@dimen/dp_10"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_10"
+                    android:background="@color/white">
+                    <TextView
+                        style="@style/MY.Theme.Widget.Text"
+                        android:gravity="top"
+                        android:text="买家留言:"/>
+                    <EditText
+                        android:id="@+id/remark_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/dp_60"
+                        android:hint="请输入您对本次交易的要求(选填)"
+                        android:textColorHint="@color/common_h3"
+                        android:textSize="@dimen/font_normal"
+                        android:background="@null"/>
+                </LinearLayout>
+                <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"
+                    />
+            </LinearLayout>
+
+        </ScrollView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_60"
+            android:background="@color/white"
+            android:layout_alignParentBottom="true"
+            >
+            <TextView
+                android:id="@+id/cost_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red1"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_16"
+                android:text="合计:￥"/>
+            <TextView
+                android:id="@+id/sureorder_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:paddingLeft="@dimen/dp_45"
+                android:paddingRight="@dimen/dp_45"
+                android:gravity="center"
+                android:background="@color/common_color"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:textColor="@color/white"
+                android:text="提交订单"/>
+        </RelativeLayout>
+        </RelativeLayout>
+    </com.yizhisha.maoyi.widget.CommonLoadingView>
+</LinearLayout>

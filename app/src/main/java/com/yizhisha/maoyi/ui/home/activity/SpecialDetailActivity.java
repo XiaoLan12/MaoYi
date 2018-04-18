@@ -293,8 +293,11 @@ public class SpecialDetailActivity extends BaseActivity<SpecialDetailPresenter> 
     }
     @Override
     public void getSpecialDetailSuccess(SpecialDetailBean model) {
-        ll_head.setVisibility(View.VISIBLE);
+
         dataLists=model.getGoods();
+        if(dataLists.size()!=0){
+            ll_head.setVisibility(View.VISIBLE);
+        }
         mAdapter.setNewData(dataLists);
         imageUrl = new ArrayList<>();
         for(int i=0;i<model.getSpecial().size();i++){
@@ -317,6 +320,7 @@ public class SpecialDetailActivity extends BaseActivity<SpecialDetailPresenter> 
 
     @Override
     public void getSortedListSuccess(List<SortedListBean.SortedsBean> model) {
+
         sortedsBeanList=model;
     }
 

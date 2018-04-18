@@ -76,7 +76,6 @@ public class WeChatPayService {
 		// 检测是否安装了微信
 		boolean isWeChat = api.getWXAppSupportAPI() >= Build.PAY_SUPPORTED_SDK_INT;
 		if (isWeChat) {
-			Log.d("TTT","进来哎");
 			new GetPrepayIdTask().execute();
 		}
 	}
@@ -104,7 +103,6 @@ public class WeChatPayService {
 			if (buf != null && buf.length > 0) {
 				try {
 					Map map = XmlUtil.doXMLParse(new String(buf));
-					Log.d("TTT","进来哎"+map);
 					return (String) map.get("prepay_id");
 				} catch (Exception e) {
 					e.printStackTrace();

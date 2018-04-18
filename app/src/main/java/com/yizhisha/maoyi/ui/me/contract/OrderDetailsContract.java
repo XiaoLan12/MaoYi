@@ -15,12 +15,8 @@ import java.util.Map;
 public interface OrderDetailsContract {
     interface View extends BaseView {
         void loadoSuccess(List<MyOrderListBean> data);
-        void changePayWaySuccess(String info);
         void sureGoodsSuuccess(String msg);
-        void cancleOrder(String msg);
 
-        void weChatPay(PayReqBean bean);
-        void loadWeChatPayState(WeChatPayStateBean bean);
 
         void showLoading();
 
@@ -29,17 +25,12 @@ public interface OrderDetailsContract {
         void showEmpty();
 
         void loadFail(int code,String msg);
-        void loadWeChatPayStateFail(String msg);
     }
 
     abstract class Presenter extends BasePresenter<View> {
 
         public abstract void loadOrderDetails(Map<String, String> param, boolean isShowLoad);
-        public abstract void changePayWay(Map<String, String> param);
         public abstract void sureGoods(Map<String, String> param);
-        public abstract void cancleOrder(Map<String, String> param);
-        public abstract void weChatPay(Map<String, String> param);
-        public abstract void loadWeChatPayState(Map<String, String> param);
 
     }
 }

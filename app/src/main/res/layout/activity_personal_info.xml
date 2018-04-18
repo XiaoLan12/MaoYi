@@ -10,7 +10,7 @@
         style="@style/basetoolbarStyle"
         android:background="@color/common_color"
         app:leftButtonIcon="@drawable/ic_back"
-        app:rightButtonIcon="@drawable/ic_launcher"
+        app:rightButtonIcon="@drawable/icon_new"
         app:title="个人资料"
         />
     <RelativeLayout
@@ -31,7 +31,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/headIv"
             android:layout_marginRight="@dimen/dp_5"
-            android:src="@drawable/ic_launcher"/>
+            />
         <ImageView
             android:id="@+id/headIv"
             android:layout_width="@dimen/dp_20"

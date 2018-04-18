@@ -24,7 +24,9 @@ public class WXEntryActivity extends Activity  implements IWXAPIEventHandler {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_wxentry);
+        Log.d("TTT","fafa");
         api = WXAPIFactory.createWXAPI(this, AppConstant.WEIXIN_APP_ID, false);
         try {
             api.handleIntent(getIntent(), this);
@@ -35,6 +37,7 @@ public class WXEntryActivity extends Activity  implements IWXAPIEventHandler {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        Log.d("TTT","会进来");
         setIntent(intent);
         api.handleIntent(intent, this);
     }
@@ -45,7 +48,7 @@ public class WXEntryActivity extends Activity  implements IWXAPIEventHandler {
 
     @Override
     public void onResp(BaseResp baseResp) {
-
+        Log.d("TTT","会进来ff"+baseResp.errCode);
         switch (baseResp.errCode) {
             case BaseResp.ErrCode.ERR_AUTH_DENIED:
                 break;

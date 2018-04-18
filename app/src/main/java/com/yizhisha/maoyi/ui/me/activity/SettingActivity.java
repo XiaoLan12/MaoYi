@@ -38,6 +38,12 @@ public class SettingActivity extends BaseActivity {
                 finish_Activity(SettingActivity.this);
             }
         });
+        toolbar.setRightButtonOnClickLinster(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(NewActivity.class);
+            }
+        });
     }
     @Override
     protected void initView(){

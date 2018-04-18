@@ -175,14 +175,14 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
                 startActivity(ReFundOrderActivity.class);
                 break;
             case R.id.setting_rl:
-               /* if(AppConstant.isLogin==false){
+                if(AppConstant.isLogin==false){
                     if(dialog==null){
                         showLoginDialog();
                     }
                     dialog.show();
                     return;
-                }*/
-                startActivity(SettingActivity.class);
+                }
+                startActivityForResult(SettingActivity.class,103);
                 break;
             case R.id.coupon_rl:
                 startActivity(CouponsActivity.class);
@@ -288,35 +288,35 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
         userNameTv.setText(info.getNickname());
         int[] count=info.getOrderCount();
         for(int i=0;i<count.length;i++){
-            if(i==0){
+            if(i==1){
                 if(count[i]==0){
                     unpaymentNumTv.setVisibility(View.GONE);
                 }else{
                     unpaymentNumTv.setVisibility(View.VISIBLE);
                     unpaymentNumTv.setText(count[i]+"");
                 }
-            }else if(i==1){
+            }else if(i==2){
                 if(count[i]==0){
                     unshippingNumTv.setVisibility(View.GONE);
                 }else{
                     unshippingNumTv.setVisibility(View.VISIBLE);
                     unshippingNumTv.setText(count[i]+"");
                 }
-            }else if(i==2){
+            }else if(i==3){
                 if(count[i]==0){
                     unreceiveGoodsNumTv.setVisibility(View.GONE);
                 }else{
                     unreceiveGoodsNumTv.setVisibility(View.VISIBLE);
                     unreceiveGoodsNumTv.setText(count[i]+"");
                 }
-            }else if(i==3){
+            }else if(i==4){
                 if(count[i]==0){
                     finishNumTv.setVisibility(View.GONE);
                 }else{
                     finishNumTv.setVisibility(View.VISIBLE);
                     finishNumTv.setText(count[i]+"");
                 }
-            }else if(i==4){
+            }else if(i==5){
                 if(count[i]==0){
                     refundNumTv.setVisibility(View.GONE);
                 }else{

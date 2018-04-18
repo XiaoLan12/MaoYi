@@ -30,7 +30,7 @@
                 android:layout_marginLeft="6dp"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:text="我的收藏"/>
+                android:text="我的足跡"/>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="35dp"

@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,15 +16,21 @@ import com.yizhisha.maoyi.R;
 import com.yizhisha.maoyi.adapter.MyOrderDetailsAdapter;
 import com.yizhisha.maoyi.base.BaseActivity;
 import com.yizhisha.maoyi.base.BaseToolbar;
+import com.yizhisha.maoyi.base.rx.RxBus;
 import com.yizhisha.maoyi.bean.json.MyOrderListBean;
 import com.yizhisha.maoyi.bean.json.PayReqBean;
 import com.yizhisha.maoyi.bean.json.WeChatPayStateBean;
 import com.yizhisha.maoyi.common.dialog.DialogInterface;
 import com.yizhisha.maoyi.common.dialog.NormalAlertDialog;
+import com.yizhisha.maoyi.event.WeChatPayEvent;
+import com.yizhisha.maoyi.ui.home.activity.ProductDetailActivity;
+import com.yizhisha.maoyi.ui.home.activity.SureOrderActivity;
 import com.yizhisha.maoyi.ui.me.contract.OrderDetailsContract;
 import com.yizhisha.maoyi.ui.me.presenter.OrderDetailsPresenter;
 import com.yizhisha.maoyi.utils.DateUtil;
+import com.yizhisha.maoyi.utils.ToastUtil;
 import com.yizhisha.maoyi.widget.CommonLoadingView;
+import com.yizhisha.maoyi.wxapi.WeChatPayService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +40,9 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> implements OrderDetailsContract.View {
     @Bind(R.id.toolbar)
@@ -54,6 +64,8 @@ public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> 
     @Bind(R.id.paytime_tv)
     TextView mTvPayTime;
 
+    @Bind(R.id.goodsnum_tv)
+    TextView goodsNumTv;
     @Bind(R.id.tradeltotal_tv)
     TextView mTvTradelTotal;
     @Bind(R.id.tradelpaymentpay_tv)
@@ -65,10 +77,8 @@ public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> 
     RecyclerView mRecyclerView;
     @Bind(R.id.loadingView)
     CommonLoadingView mLoadingView;
-    @Bind(R.id.distributionway_orderdetail_tv)
-    TextView distributionwayOrderdetailTv;
-    @Bind(R.id.distributiontime_orderdetail)
-    TextView distributiontimeOrderdetail;
+    @Bind(R.id.stream_query_tv)
+    TextView streamQueryTv;
 
     @Bind(R.id.refunds_ll)
     LinearLayout refundsTv;
@@ -83,6 +93,8 @@ public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> 
     private String orderNo = "";
     private MyOrderListBean orderList;
     private List<MyOrderListBean.Goods> dataList = new ArrayList<>();
+
+    private Subscription subscription;
 
     @Override
     protected int getLayoutId() {
@@ -107,6 +119,7 @@ public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> 
         }
         initAdapter();
         load(orderNo, true);
+        event();
     }
 
     private void load(String orderNo, boolean isShowLoad) {
@@ -130,6 +143,20 @@ public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> 
             return;
         }
         String state[] = new String[]{"等待付款", "等待发货", "等待收货", "交易成功", "交易关闭"};
+        if(orderList.getStatus()==3){
+            streamQueryTv.setVisibility(View.VISIBLE);
+            streamQueryTv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("ORDERNO", orderList.getOrderno());
+                    bundle.putInt("TYPE",1);
+                    startActivity(OrderTrackingActivity.class,bundle);
+                }
+            });
+        }else{
+            streamQueryTv.setVisibility(View.GONE);
+        }
         mTvOrderInfo.setText(state[orderList.getStatus()]);
 
         mTvOrderNo.setText(orderList.getOrderno());
@@ -137,41 +164,45 @@ public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> 
         mTvConsignee.setText(orderList.getLinkman());
         mTvConsigneePhone.setText(orderList.getMobile());
         mTvShipAddress.setText(orderList.getAddress());
-        mTvOrderTime.setText(DateUtil.getDateToString1(orderList.getAddtime() * 1000));
-        mTvPayTime.setText(DateUtil.getDateToString1(orderList.getPaytime() * 1000));
-        distributiontimeOrderdetail.setText(DateUtil.getDateToString1(orderList.getShiptime() * 1000));
-       /* int payment=orderList.getPayment();
-        if(payment==2){
-            mTvPayWay.setText("支付宝");
-        }else if(payment==3){
-            mTvPayWay.setText("到付");
-        }else if(payment==5){
-            mTvPayWay.setText("微信支付");
-        }*/
-        String express[]=new String[]{"顺丰快递","圆通快递","中通快递","申通快递","韵达快递","京东快递","全峰快递","邮政EMS","安能快递",
-                "百世快递","速尔快递","天天快递","邮政包裹"};
-        int express_type = orderList.getExpress_id();
-        if(express_type>0&&express_type<=express.length) {
-            distributionwayOrderdetailTv.setText(express[express_type - 1]);
+        if(orderList.getAddtime()!=0){
+            mTvOrderTime.setText(DateUtil.getDateToString1(orderList.getAddtime() * 1000));
         }
-        mTvTradelTotal.setText(orderList.getTotalprice() + "");
-       /* if(payment==3){
-            mTvPayTime.setText("货到付款");
-        } else if(order.getPaytime()==0){
-            mTvPayTime.setText("未支付");
-        }else {
-            mTvPayTime.setText(DateUtil.getDateToString1(order.getPaytime()*1000));
-        }
-        if(order.getShiptime()==0){
-            mTvDistributionTime.setText("未支付");
-        }else {
-            mTvDistributionTime.setText(DateUtil.getDateToString1(order.getShiptime()*1000));
+        if(orderList.getPaytime()!=0){
+            mTvPayTime.setText(DateUtil.getDateToString1(orderList.getPaytime() * 1000));
         }
 
-        switchState(order.getStatus(),order.getPayment());*/
+       /* String express[]=new String[]{"顺丰快递","圆通快递","中通快递","申通快递","韵达快递","京东快递","全峰快递","邮政EMS","安能快递",
+                "百世快递","速尔快递","天天快递","邮政包裹"};*/
+        goodsNumTv.setText("共计"+orderList.getAmount()+"件商品");
+        mTvTradelTotal.setText(orderList.getTotalprice() + "");
        switchState(orderList.getStatus());
     }
 
+    //回调事件，成功调起微信支付后响应该事件
+    private void event(){
+        subscription= RxBus.$().toObservable(WeChatPayEvent.class)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<WeChatPayEvent>() {
+                    @Override
+                    public void call(WeChatPayEvent event) {
+                        new NormalAlertDialog.Builder(MyOrderDetailsActivity.this)
+                                .setTitleText("支付结果")
+                                .setContentText("支付成功")
+                                .setSingleModel(true)
+                                .setSingleText("确认")
+                                .setWidth(0.75f)
+                                .setHeight(0.33f)
+                                .setSingleListener(new DialogInterface.OnSingleClickListener<NormalAlertDialog>() {
+                                    @Override
+                                    public void clickSingleButton(NormalAlertDialog dialog, View view) {
+                                        setResult(2);
+                                        finish_Activity(MyOrderDetailsActivity.this);
+                                        dialog.dismiss();
+                                    }
+                                }).build().show();
+                    }
+                });
+    }
     @Override
     public void loadoSuccess(List<MyOrderListBean> data) {
         dataList.clear();
@@ -181,30 +212,16 @@ public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> 
         mAdapter.setNewData(dataList);
     }
 
-    @Override
-    public void changePayWaySuccess(String info) {
-
-    }
 
     @Override
     public void sureGoodsSuuccess(String msg) {
-
+        ToastUtil.showShortToast(msg);
+        setResult(2);
+        finish_Activity(this);
     }
 
-    @Override
-    public void cancleOrder(String msg) {
 
-    }
 
-    @Override
-    public void weChatPay(PayReqBean bean) {
-
-    }
-
-    @Override
-    public void loadWeChatPayState(WeChatPayStateBean bean) {
-
-    }
 
     @Override
     public void showLoading() {
@@ -218,16 +235,33 @@ public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> 
 
     @Override
     public void showEmpty() {
-
+        dataList.clear();
+        mAdapter.setNewData(dataList);
+        mLoadingView.loadSuccess(true);
     }
-
     @Override
     public void loadFail(int code, String msg) {
-
+        if(code==0){
+            ToastUtil.showShortToast(msg);
+            return;
+        }
+        dataList.clear();
+        mAdapter.setNewData(dataList);
+        mLoadingView.loadError(msg);
+        mLoadingView.setLoadingHandler(new CommonLoadingView.LoadingHandler() {
+            @Override
+            public void doRequestData() {
+                load(orderNo, true);
+            }
+        });
     }
-    @Override
-    public void loadWeChatPayStateFail(String msg) {
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (subscription != null&&!subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
+        }
     }
     @OnClick({R.id.contact_the_merchant_ll,R.id.refunds_ll,R.id.confirm_goods_ll,R.id.againbuy_ll,R.id.immediate_payment_ll})
     @Override
@@ -262,10 +296,20 @@ public class MyOrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> 
                 startActivity(ApplyRefundActivity.class,bundle);
                 break;
             case R.id.confirm_goods_ll:
+                Map<String,String> body=new HashMap<String, String>();
+                body.put("orderno",orderList.getOrderno());
+                body.put("uid",String.valueOf(AppConstant.UID));
+                mPresenter.sureGoods(body);
                 break;
             case R.id.againbuy_ll:
+                Bundle commentbundle = new Bundle();
+                commentbundle.putInt("TYPE",1);
+                commentbundle.putInt("ORDERID",orderList.getId());
+                startActivity(AddCommentActivity.class,commentbundle);
                 break;
             case R.id.immediate_payment_ll:
+                WeChatPayService weChatPay = new WeChatPayService(this, 0, orderList.getOrderno(), dataList.get(0).getTitle(), orderList.getTotalprice()+"");
+                weChatPay.pay();
                 break;
         }
     }

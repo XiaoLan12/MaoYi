@@ -96,15 +96,23 @@
         android:fillViewport="true"
         android:scrollbars="none">
     <LinearLayout
-        android:id="@+id/ll_head"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:visibility="gone"
+
         android:orientation="vertical">
         <LinearLayout
+            android:id="@+id/ll_head"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:orientation="vertical">
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
             android:orientation="horizontal">
 
     <com.youth.banner.Banner
@@ -159,6 +167,7 @@
             android:layout_weight="1"/>
 
     </LinearLayout>
+        </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

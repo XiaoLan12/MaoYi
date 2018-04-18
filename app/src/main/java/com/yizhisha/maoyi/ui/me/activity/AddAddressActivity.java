@@ -81,12 +81,13 @@ public class AddAddressActivity extends BaseActivity<AddAddressPresenter> implem
 
     @Override
     public void addAddressSuccess(RequestStatusBean data) {
-
+        setResult(2);
+        ActivityManager.getActivityMar().finishActivity(this);
     }
 
     @Override
     public void loadFail(String msg) {
-
+        ToastUtil.showbottomShortToast(msg);
     }
     /**
      * 检查输入

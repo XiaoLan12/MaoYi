@@ -87,6 +87,12 @@ public class ApplyRefundActivity extends BaseActivity<ApplyRefundPresenter> impl
                 finish_Activity(ApplyRefundActivity.this);
             }
         });
+        toolbar.setRightButtonOnClickLinster(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(NewActivity.class);
+            }
+        });
     }
 
     @Override

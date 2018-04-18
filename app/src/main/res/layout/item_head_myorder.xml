@@ -18,17 +18,8 @@
             android:gravity="center_vertical"
             android:textColor="@color/common_h"
             android:layout_marginLeft="@dimen/dp_10"
-            android:text="订单号:" />
-        <TextView
-            android:id="@+id/orderNumber_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="@dimen/dp_5"
-            android:layout_toRightOf="@+id/orderNumberTv"
-            android:textColor="@color/common_h"
-            tools:text="234513512545253" />
+            android:drawableRight="@drawable/icon_right"
+            android:text="洲宏服饰" />
 
         <TextView
             android:id="@+id/paystate_tv"

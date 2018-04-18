@@ -48,7 +48,6 @@ public class MyOrderAdapter extends BaseQuickAdapter<Object,BaseViewHolder> {
         switch (helper.getItemViewType()){
             case ITEM_HEADER:
                 final OrderHeadBean order= (OrderHeadBean) item;
-                helper.setText(R.id.orderNumber_tv,order.getOrderno());
                 if(order.getStatus()==0){
                         helper.setText(R.id.paystate_tv, "等待付款");
                 }else if(order.getStatus()==1){

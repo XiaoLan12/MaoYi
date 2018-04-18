@@ -7,6 +7,7 @@ import java.io.Serializable;
  */
 
 public class OrderFootBean implements Serializable{
+    private int id;
     private double totalprice;
     private String orderno;
     private int status;
@@ -14,6 +15,14 @@ public class OrderFootBean implements Serializable{
     private int type;
     private String clinkman;
     private int commentstatus;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getType() {
         return type;

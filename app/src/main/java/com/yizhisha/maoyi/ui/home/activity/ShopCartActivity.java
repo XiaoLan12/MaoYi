@@ -193,7 +193,6 @@ public class ShopCartActivity extends BaseActivity<ShoppCartPresenter> implement
                     ToastUtil.showShortToast("请选择要购买的商品");
                     return;
                 }
-                Log.d("TTT","他妈妈"+sid);
                 Bundle bundle = new Bundle();
                 bundle.putString("sid", sid);
                 bundle.putInt("ORDERTYPE",1);

@@ -87,6 +87,7 @@ public class StudioShopActivity extends BaseActivity<StudioShopPresenter> implem
     private List<SortedListBean.SortedsBean> sortedsBeanList=new ArrayList<>();
 
     private GoodsScressPopuwindow popuwindow;
+    View view;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_studio_shop;
@@ -155,17 +156,19 @@ public class StudioShopActivity extends BaseActivity<StudioShopPresenter> implem
             nameTv.setText(workshop.getLinkman());
         }
         if(model.getGoods().size()>0){
+            view.setVisibility(View.VISIBLE);
             dataLists.clear();
             dataLists.addAll(model.getGoods());
             mAdapter.setNewData(dataLists);
         }else{
+            view.setVisibility(View.GONE);
             showEmpty();
         }
 
 
     }
     private void addHeadView() {
-        View view=this.getLayoutInflater().inflate(R.layout.headview_studio, (ViewGroup) recyclerview.getParent(), false);
+         view=this.getLayoutInflater().inflate(R.layout.headview_studio, (ViewGroup) recyclerview.getParent(), false);
         img_banner= (ImageView) view.findViewById(R.id.img_banner);
         img_select_price=(ImageView)view.findViewById(R.id.img_select_price);
         tv_select_select=(TextView)view.findViewById(R.id.tv_select_select);

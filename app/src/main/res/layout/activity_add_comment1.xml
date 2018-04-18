@@ -10,7 +10,8 @@
         android:id="@+id/toolbar"
         style="@style/basetoolbarStyle"
         app:leftButtonIcon="@drawable/ic_back"
-        app:titleColors="@color/common_h1"
+        app:titleColors="@color/white"
+        android:background="@color/common_color"
         app:title="发表评论"/>
     <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"/>
 
