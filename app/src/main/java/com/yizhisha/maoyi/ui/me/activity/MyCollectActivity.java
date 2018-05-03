@@ -96,6 +96,8 @@ public class MyCollectActivity extends BaseActivity<MyCollectPresenter> implemen
                 if(charSequence.length()>0){
                     searchTv.setText("搜索");
                 }else{
+                    mKey="";
+                    load(false);
                     searchTv.setText("取消");
                 }
             }

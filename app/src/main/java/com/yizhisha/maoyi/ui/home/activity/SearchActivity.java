@@ -14,6 +14,7 @@ import com.yizhisha.maoyi.base.BaseActivity;
 import com.yizhisha.maoyi.bean.json.SortedBean;
 import com.yizhisha.maoyi.ui.type.avtivity.TypeShopListActivity;
 import com.yizhisha.maoyi.utils.ListDataSave;
+import com.yizhisha.maoyi.utils.ToastUtil;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -90,6 +91,10 @@ public class SearchActivity extends BaseActivity {
             case R.id.tv_search:
 
                 String key=searchEt.getText().toString().trim();
+                if(key.length()==0){
+                    ToastUtil.showShortToast("请输入关键字");
+                    return;
+                }
                 String value=key.replaceAll(" +"," ");
                 String[] newKey=key.split("\\s+");
                 int length=dataList.size();

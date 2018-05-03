@@ -6,7 +6,7 @@
     android:id="@+id/tab_menu_tv"
     android:padding="@dimen/dp_12"
     android:gravity="center"
-    android:background="@color/common_color"
+    android:background="@color/common_color1"
     android:textColor="@color/white">
 
 </TextView>

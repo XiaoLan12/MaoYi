@@ -14,8 +14,7 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application
         android:name=".App"
@@ -128,7 +127,10 @@
             android:name=".ui.me.activity.RefundGoodActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".ui.home.activity.StudioShopActivity" />
+        <activity
+            android:name=".ui.home.activity.StudioShopActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ui.home.activity.SureOrderActivity" />
         <activity android:name=".ui.me.activity.ChangePhoneActivity" />
         <activity android:name=".ui.me.activity.AnswerActivity" />
@@ -136,7 +138,8 @@
         <activity android:name=".ui.home.activity.ShopCartActivity" />
         <activity android:name=".ui.type.avtivity.TypeShopListActivity" />
         <activity android:name=".ui.me.activity.MyTuiGuangActivity" />
-        <activity android:name=".ui.me.activity.GoodsPaymentActivity"></activity>
+        <activity android:name=".ui.me.activity.GoodsPaymentActivity" />
+        <activity android:name=".ui.type.avtivity.TypeStudioListActivity"></activity>
     </application>
 
 </manifest>

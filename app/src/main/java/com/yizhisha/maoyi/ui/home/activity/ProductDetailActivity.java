@@ -57,6 +57,7 @@ import com.yizhisha.maoyi.bean.json.WeekListBean;
 import com.yizhisha.maoyi.common.dialog.CustomDialog;
 import com.yizhisha.maoyi.common.dialog.DialogInterface;
 import com.yizhisha.maoyi.common.dialog.LoadingDialog;
+
 import com.yizhisha.maoyi.common.dialog.NormalSelectionDialog;
 import com.yizhisha.maoyi.common.dialog.PicShowDialog;
 import com.yizhisha.maoyi.common.popupwindow.SelectPopupWindow;
@@ -180,13 +181,11 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
     private SDayExplosionAdapter mAdapter1;
     private List<WeekListBean.WeekBean> dataLists = new ArrayList<>();
 
-    private PopupWindow popupWindow;
     GoodsProductBean goodsProductBean;
     GoodsDetailBean goodsDetailBean;
     private int mGid;
     //详情
     private List<String> contentList = new ArrayList<>();
-
 
 
     List<DemoFragment1> fragmentList = new ArrayList<>();
@@ -196,6 +195,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
     private IWXAPI api;
     // 自定义PopupWindow
     private SelectPopupWindow feedSelectPopupWindow;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_product_detail;
@@ -223,13 +223,22 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
         api = WXAPIFactory.createWXAPI(this, AppConstant.WEIXIN_APP_ID, false);
         // 将该app注册到微信
         api.registerApp(AppConstant.WEIXIN_APP_ID);
-        Bundle bundle=getIntent().getExtras();
-        if(bundle!=null){
-            mGid=bundle.getInt("gid");
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            mGid = bundle.getInt("gid");
         }
         rlTuijian.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mAdapter1 = new SDayExplosionAdapter(dataLists);
         rlTuijian.setAdapter(mAdapter1);
+
+        mAdapter1.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("gid", dataLists.get(position).getId());
+                startActivity(ProductDetailActivity.class,bundle);
+            }
+        });
         Map<String, String> map = new HashMap<>();
         map.put("gid", String.valueOf(mGid));
         map.put("uid", String.valueOf(3));
@@ -244,8 +253,8 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
 
     }
 
-    private void event(){
-        subscription= RxBus.$().toObservable(FinishEvent.class)
+    private void event() {
+        subscription = RxBus.$().toObservable(FinishEvent.class)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<FinishEvent>() {
                     @Override
@@ -254,26 +263,27 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
                     }
                 });
     }
+
     @Override
     public void getGoodsDetailSuccess(GoodsDetailBean model) {
-        if(model.getStatus().equals("y")){
-            goodsDetailBean=model;
+        if (model.getStatus().equals("y")) {
+            goodsDetailBean = model;
             goodsProductBean = model.getGoods();
 
-            List<BannerResult> bannerResultsList=new ArrayList<>();
-            BannerResult bannerResult=new BannerResult();
-            bannerResult.setUrl(AppConstant.PRUDUCT_IMG_URL+goodsProductBean.getLitpic());
+            List<BannerResult> bannerResultsList = new ArrayList<>();
+            BannerResult bannerResult = new BannerResult();
+            bannerResult.setUrl(AppConstant.PRUDUCT_IMG_URL + goodsProductBean.getLitpic());
             bannerResultsList.add(bannerResult);
 
-            if(!goodsProductBean.getVideo().equals("")){
-                String path=goodsProductBean.getVideo();
-                if(!path.contains("http:")){
-                    path=AppConstant.PRODUCT_VIDEO+path;
+            if (!goodsProductBean.getVideo().equals("")) {
+                String path = goodsProductBean.getVideo();
+                if (!path.contains("http:")) {
+                    path = AppConstant.PRODUCT_VIDEO + path;
                 }
-                BannerResult bannerResult1=new BannerResult();
+                BannerResult bannerResult1 = new BannerResult();
                 bannerResult1.setUrl(path);
                 bannerResultsList.add(bannerResult1);
-                fragmentList.add(new DemoFragment1().setIndex(path,0));
+                fragmentList.add(new DemoFragment1().setIndex(path, 0));
 
                 ll_dot.setVisibility(View.VISIBLE);
                 ll_dot1.setBackgroundResource(R.drawable.dot_selected);
@@ -282,7 +292,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
 
 //        viewPager.setAdapter(new Myvpadapter( ProductDetailActivity.this,bannerResultsList));
 
-            fragmentList.add(new DemoFragment1().setIndex(AppConstant.PRUDUCT_IMG_URL+goodsProductBean.getLitpic(),1));
+            fragmentList.add(new DemoFragment1().setIndex(AppConstant.PRUDUCT_IMG_URL + goodsProductBean.getLitpic(), 1));
 
             MyAdapter myAdapter = new MyAdapter(getSupportFragmentManager());
 //        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -308,7 +318,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
             } else if (devi_size.equals("3")) {
                 tvDeviSize3.setBackgroundResource(R.color.common_color);
             }
-            String devi_elastic = goodsProductBean.getDevi_elastic();
+            String devi_elastic = goodsProductBean.getDevi_thickness();
             if (devi_elastic.equals("1")) {
                 tvDeviElastic1.setBackgroundResource(R.color.common_color);
             } else if (devi_elastic.equals("2")) {
@@ -321,21 +331,22 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
             tvPname.setText("商品品类：" + goodsProductBean.getPname());
             tvSales.setText("月销量：" + goodsProductBean.getSales() + "笔");
             tvMoney.setText("￥" + goodsProductBean.getPrice());
-            Log.d("TTT","aa"+goodsProductBean.toString());
-            if(model.getFavorite().equals("y")){
+            Log.d("TTT", "aa" + goodsProductBean.toString());
+            if (model.getFavorite().equals("y")) {
                 collectIv.setImageResource(R.drawable.icon_favorit);
-            }else{
+            } else {
                 collectIv.setImageResource(R.drawable.icon_favorit_normale);
             }
 
             shopAttri();
             initDetails(goodsProductBean.getContent());
             initComment(model);
-        }else{
+        } else {
             ToastUtil.showShortToast(model.getInfo());
         }
 
     }
+
     //加载评论
     private void initComment(final GoodsDetailBean goodsDetailBean) {
         GoodsDetailBean.Comment comment = goodsDetailBean.getComment();
@@ -364,29 +375,30 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
             lookAllcommentTv.setVisibility(View.GONE);
         }
     }
+
     //加载商品属性
-    private void shopAttri(){
-        dataBean=new GoodsAttrsBean();
-        List<GoodsAttrsBean.AttributesBean> attributesBeanList=new ArrayList<>();
-        List<GoodsAttrsBean.StockGoodsBean> stockGoodsBeanList=new ArrayList<>();
-        if(goodsProductBean.getStyle()!=null&&goodsProductBean.getStyle().size()>0){
-            List<GoodsStyleBean> styles=goodsProductBean.getStyle();
-            GoodsAttrsBean.AttributesBean attributesBean=new GoodsAttrsBean().new AttributesBean();
+    private void shopAttri() {
+        dataBean = new GoodsAttrsBean();
+        List<GoodsAttrsBean.AttributesBean> attributesBeanList = new ArrayList<>();
+        List<GoodsAttrsBean.StockGoodsBean> stockGoodsBeanList = new ArrayList<>();
+        if (goodsProductBean.getStyle() != null && goodsProductBean.getStyle().size() > 0) {
+            List<GoodsStyleBean> styles = goodsProductBean.getStyle();
+            GoodsAttrsBean.AttributesBean attributesBean = new GoodsAttrsBean().new AttributesBean();
             attributesBean.setTabID(0);
             attributesBean.setTabName("颜色分类:");
-            List<String> colors=new ArrayList<>();
-            List<String> sizes=new ArrayList<>();
-            List<String> newSizes=new ArrayList<>();
-            for(int i=0;i<styles.size();i++){
+            List<String> colors = new ArrayList<>();
+            List<String> sizes = new ArrayList<>();
+            List<String> newSizes = new ArrayList<>();
+            for (int i = 0; i < styles.size(); i++) {
                 colors.add(styles.get(i).getColor());
                 String[] strArray = null;
                 strArray = styles.get(i).getSize().split(",");
-                for(String size:strArray){
+                for (String size : strArray) {
                     sizes.add(size);
                 }
             }
             attributesBean.setAttributesItem(colors);
-            GoodsAttrsBean.AttributesBean attributesBean1=new GoodsAttrsBean().new AttributesBean();
+            GoodsAttrsBean.AttributesBean attributesBean1 = new GoodsAttrsBean().new AttributesBean();
             attributesBean1.setTabID(1);
             attributesBean1.setTabName("尺码:");
             newSizes.addAll(removeDuplicateWithOrder(sizes));
@@ -395,18 +407,18 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
             attributesBeanList.add(attributesBean1);
 
 
-            for(int i=0;i<styles.size();i++){
+            for (int i = 0; i < styles.size(); i++) {
 
-                GoodsAttrsBean.StockGoodsBean.GoodsInfoBean goodsInfoBean=new GoodsAttrsBean().new StockGoodsBean().new GoodsInfoBean();
+                GoodsAttrsBean.StockGoodsBean.GoodsInfoBean goodsInfoBean = new GoodsAttrsBean().new StockGoodsBean().new GoodsInfoBean();
                 goodsInfoBean.setTabID(0);
                 goodsInfoBean.setTabName("颜色分类:");
                 goodsInfoBean.setTabValue(styles.get(i).getColor());
                 String[] strArray = null;
                 strArray = styles.get(i).getSize().split(",");
-                for(String size:strArray){
-                    List<GoodsAttrsBean.StockGoodsBean.GoodsInfoBean> goodsInfoBeans=new ArrayList<>();
-                    GoodsAttrsBean.StockGoodsBean stockGoodsBean=new GoodsAttrsBean().new StockGoodsBean();
-                    GoodsAttrsBean.StockGoodsBean.GoodsInfoBean goodsInfoBean1=new GoodsAttrsBean().new StockGoodsBean().new GoodsInfoBean();
+                for (String size : strArray) {
+                    List<GoodsAttrsBean.StockGoodsBean.GoodsInfoBean> goodsInfoBeans = new ArrayList<>();
+                    GoodsAttrsBean.StockGoodsBean stockGoodsBean = new GoodsAttrsBean().new StockGoodsBean();
+                    GoodsAttrsBean.StockGoodsBean.GoodsInfoBean goodsInfoBean1 = new GoodsAttrsBean().new StockGoodsBean().new GoodsInfoBean();
                     goodsInfoBean1.setTabID(1);
                     goodsInfoBean1.setTabName("尺码:");
                     goodsInfoBean1.setTabValue(size);
@@ -425,15 +437,15 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
         dataBean.setStockGoods(stockGoodsBeanList);
     }
 
-    private void initDetails(String[] arr){
-        if(arr==null){
+    private void initDetails(String[] arr) {
+        if (arr == null) {
             return;
         }
-        for (int i = 0; i <arr.length; i++) {
+        for (int i = 0; i < arr.length; i++) {
             contentList.add(arr[i]);
         }
         rlProductDetail.setLayoutManager(new LinearLayoutManager(mContext));
-        rlProductDetail.addItemDecoration(new RecyclerViewDriverLine(this,RecyclerViewDriverLine.VERTICAL_LIST));
+        rlProductDetail.addItemDecoration(new RecyclerViewDriverLine(this, RecyclerViewDriverLine.VERTICAL_LIST));
         rlProductDetail.setHasFixedSize(true);
         rlProductDetail.setNestedScrollingEnabled(false);
         ProductDetailImgAdapter adapter = new ProductDetailImgAdapter(contentList);
@@ -446,6 +458,49 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
             }
         });
     }
+
+    /*  if(AppConstant.isLogin==false){
+         if(dialog==null){
+             showLoginDialog();
+         }
+         dialog.show();
+         return;
+     }*/
+    //判断是否登陆
+    private NormalSelectionDialog dialog1;
+
+    private void showLoginDialog() {
+        final List<String> mDatas1 = new ArrayList<>();
+        mDatas1.add("登录");
+        mDatas1.add("注册");
+        dialog1 = new NormalSelectionDialog.Builder(ProductDetailActivity.this)
+                .setBoolTitle(true)
+                .setTitleText("温馨提示\n尊敬的用户,您尚未登录,请选择登录或注册")
+                .setTitleHeight(55)
+                .setItemHeight(45)
+                .setItemTextColor(R.color.blue)
+                .setItemTextSize(14)
+                .setItemWidth(0.95f)
+                .setCancleButtonText("取消")
+                .setOnItemListener(new DialogInterface.OnItemClickListener<NormalSelectionDialog>() {
+                    @Override
+                    public void onItemClick(NormalSelectionDialog dialog, View button, int position) {
+                        switch (position) {
+                            case 0:
+                                startActivity(LoginFragmentActivity.class);
+                                break;
+                            case 1:
+                                startActivity(RegisterActivity.class);
+                                break;
+                        }
+                        dialog.dismiss();
+                    }
+                }).setTouchOutside(true)
+                .build();
+        dialog1.setData(mDatas1);
+    }
+
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -463,11 +518,28 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
                 dialog_confirm2_ll.setVisibility(View.VISIBLE);
                 break;
             case R.id.tv_shopping:
+                if(AppConstant.isLogin==false) {
+                    if (dialog1 == null) {
+                        showLoginDialog();
+                    }
+                    dialog1.show();
+                    return;
+                }
+
                 Dialog(goodsProductBean,1);
                 dialog_confirm_ll.setVisibility(View.VISIBLE);
                 dialog_confirm2_ll.setVisibility(View.GONE);
                 break;
             case R.id.tv_shopping_cart:
+
+                if(AppConstant.isLogin==false) {
+                    if (dialog1 == null) {
+                        showLoginDialog();
+                    }
+                    dialog1.show();
+                    return;
+                }
+
                 Dialog(goodsProductBean,2);
                 dialog_confirm_ll.setVisibility(View.VISIBLE);
                 dialog_confirm2_ll.setVisibility(View.GONE);
@@ -512,10 +584,27 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
                 mPresenter.collectProduct(map);
                 break;
             case R.id.ll_shopping_cart:
+                if(AppConstant.isLogin==false) {
+                    if (dialog1 == null) {
+                        showLoginDialog();
+                    }
+                    dialog1.show();
+                    return;
+                }
+
                 startActivity(ShopCartActivity.class);
                 break;
             case R.id.share_iv:
-                feedSelectPopupWindow = new SelectPopupWindow(this, selectItemsOnClick);
+                if(feedSelectPopupWindow==null){
+                    feedSelectPopupWindow = new SelectPopupWindow(this, selectItemsOnClick);
+                    feedSelectPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                        @Override
+                        public void onDismiss() {
+                            backgroundAlpha(1f);
+                        }
+                    });
+                }
+               ;
                 // 设置popupWindow显示的位置
                 // 此时设在界面底部并且水平居中
                 feedSelectPopupWindow.showAtLocation(parentLl,
@@ -523,12 +612,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter> 
                 // 当popupWindow 出现的时候 屏幕的透明度  ，设为0.5 即半透明 灰色效果
                 backgroundAlpha(0.5f);
                 // 设置popupWindow取消的点击事件，即popupWindow消失后，屏幕的透明度，全透明，就回复原状态
-                feedSelectPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                    @Override
-                    public void onDismiss() {
-                        backgroundAlpha(1f);
-                    }
-                });
+
                 break;
         }
 

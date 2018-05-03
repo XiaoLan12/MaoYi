@@ -152,8 +152,8 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
             public void onClick(View view) {
                 img_select_price.setImageResource(R.drawable.price_select_not);
                 tv_select_price.setTextColor(RescourseUtil.getColor(R.color.black));
-                if(sort==1){
-                    sort=0;
+                if(sort==1||sort==0){
+                    sort=4;
                     tv_select_xiaoliang.setTextColor(RescourseUtil.getColor(R.color.black));
                 }else{
                     sort=1;
@@ -167,18 +167,18 @@ public class SDayExplosionFragment extends BaseFragment<SDayExplosionPresenter> 
             @Override
             public void onClick(View view) {
                 tv_select_xiaoliang.setTextColor(RescourseUtil.getColor(R.color.black));
-                if(sort==0||sort==1){
+                if(sort==0||sort==1||sort==4){
                     img_select_price.setImageResource(R.drawable.price_select_up);
                     tv_select_price.setTextColor(RescourseUtil.getColor(R.color.red1));
-                    sort=4;
-                }else if(sort==4){
+                    sort=5;
+                }else if(sort==5){
                     img_select_price.setImageResource(R.drawable.price_select_down);
                     tv_select_price.setTextColor(RescourseUtil.getColor(R.color.red1));
-                    sort=3;
-                }else if(sort==3){
+                    sort=2;
+                }else if(sort==2){
                     img_select_price.setImageResource(R.drawable.price_select_up);
                     tv_select_price.setTextColor(RescourseUtil.getColor(R.color.red1));
-                    sort=4;
+                    sort=5;
                 }
                 load(false);
 

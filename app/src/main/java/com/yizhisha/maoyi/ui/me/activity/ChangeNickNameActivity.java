@@ -39,6 +39,12 @@ public class ChangeNickNameActivity extends BaseActivity {
                 finish_Activity(ChangeNickNameActivity.this);
             }
         });
+        toolbar.setRightButtonOnClickLinster(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(NewActivity.class);
+            }
+        });
     }
 
     @Override

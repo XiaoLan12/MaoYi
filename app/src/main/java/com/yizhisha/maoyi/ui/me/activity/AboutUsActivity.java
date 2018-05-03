@@ -26,6 +26,12 @@ public class AboutUsActivity extends BaseActivity {
                 finish_Activity(AboutUsActivity.this);
             }
         });
+        toolbar.setRightButtonOnClickLinster(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(NewActivity.class);
+            }
+        });
     }
 
     @Override

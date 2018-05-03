@@ -43,6 +43,12 @@ public class ChangePwdActivity extends BaseActivity<ChangePwdPresenter> implemen
                 ActivityManager.getActivityMar().finishActivity(ChangePwdActivity.this);
             }
         });
+        toolbar.setRightButtonOnClickLinster(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(NewActivity.class);
+            }
+        });
     }
     @Override
     protected void initView() {

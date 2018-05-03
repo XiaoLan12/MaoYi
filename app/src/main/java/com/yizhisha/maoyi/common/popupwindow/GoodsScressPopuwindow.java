@@ -55,7 +55,7 @@ public class GoodsScressPopuwindow extends PopupWindow{
     private List<SortedBean> mTabVal1;
     private List<SortedBean> mTabVal2;
     private List<SortedBean> mTabVal3;
-    private LinearLayout ll_bottom;
+    private LinearLayout ll_bottom,ll_invisiable;
     public interface OnSearchOnClick{
         void onSearchLisenter();
     }
@@ -65,9 +65,9 @@ public class GoodsScressPopuwindow extends PopupWindow{
         WindowManager wm = (WindowManager) activity
                 .getSystemService(Context.WINDOW_SERVICE);
         int mScreenWidth = wm.getDefaultDisplay().getWidth();
-        setWidth((int) (mScreenWidth*0.6));
+        setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
-        setAnimationStyle(R.style.showPopupAnimation);
+//        setAnimationStyle(R.style.showPopupAnimation);
         mContentView = LayoutInflater.from(activity).inflate(R.layout.popu_goods_scress, null);
         setContentView(mContentView);
         setFocusable(true);
@@ -76,6 +76,13 @@ public class GoodsScressPopuwindow extends PopupWindow{
         setTouchable(true);
 
           mInflater = LayoutInflater.from(activity);
+        ll_invisiable=(LinearLayout)mContentView.findViewById(R.id.ll_invisiable);
+        ll_invisiable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
      /* ll_bottom=(LinearLayout)mContentView.findViewById(R.id.ll_bottom);
         if(bottom==false){
             ll_bottom.setVisibility(View.GONE);

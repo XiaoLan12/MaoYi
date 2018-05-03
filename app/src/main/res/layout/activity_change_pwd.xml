@@ -10,7 +10,7 @@
         style="@style/basetoolbarStyle"
         android:background="@color/common_color"
         app:leftButtonIcon="@drawable/ic_back"
-        app:rightButtonIcon="@drawable/ic_launcher"
+        app:rightButtonIcon="@drawable/icon_new"
         app:title="修改密码"
         />
     <com.yizhisha.maoyi.widget.ClearEditText
@@ -48,11 +48,7 @@
             android:hint="请设置6-12新的登录密码"
             android:textSize="@dimen/font_normal"
             android:background="@null"/>
-        <ImageView
-            android:id="@+id/isShow_pwd_iv"
-            android:layout_width="@dimen/dp_25"
-            android:layout_height="@dimen/dp_25"
-            android:src="@drawable/ic_launcher" />
+
         </LinearLayout>
 
     <View style="@style/MY.Theme.Widget.Divider.Line.Vertical"

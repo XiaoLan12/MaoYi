@@ -20,6 +20,7 @@ import com.yizhisha.maoyi.bean.TypeContentBean;
 import com.yizhisha.maoyi.ui.home.activity.SpecialDetailActivity;
 import com.yizhisha.maoyi.ui.home.activity.StudioShopActivity;
 import com.yizhisha.maoyi.ui.type.avtivity.TypeShopListActivity;
+import com.yizhisha.maoyi.ui.type.avtivity.TypeStudioListActivity;
 import com.yizhisha.maoyi.widget.MyGridView;
 
 import java.util.List;
@@ -73,7 +74,7 @@ public class TypeContentAdapter extends BaseAdapter{
                                     int i, long id) {
                 // TODO Auto-generated method stub
                 if(list.get(i).getType()==3){
-                    Intent intent = new Intent(mContext, StudioShopActivity.class);
+                    Intent intent = new Intent(mContext, TypeStudioListActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putInt("wid", list.get(i).getCid());
                     intent.putExtras(bundle);

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical|center"
-        android:background="@drawable/home_search_linearlayout"
+        android:background="@drawable/selector_tv"
         android:orientation="vertical" >
         <TextView
             android:id="@+id/shareto"
@@ -42,7 +42,7 @@
                 <ImageView
                     android:layout_width="55dp"
                     android:layout_height="55dp"
-                    android:background="@mipmap/ic_launcher"
+                    android:background="@drawable/weixin"
                     android:layout_gravity="bottom|center_horizontal"/>
                 <TextView
                     android:layout_marginTop="4dp"
@@ -63,7 +63,7 @@
                 <ImageView
                     android:layout_width="55dp"
                     android:layout_height="55dp"
-                    android:background="@mipmap/ic_launcher"
+                    android:background="@drawable/circle_friends"
                     android:layout_gravity="bottom|center_horizontal"/>
                 <TextView
                     android:layout_marginTop="4dp"

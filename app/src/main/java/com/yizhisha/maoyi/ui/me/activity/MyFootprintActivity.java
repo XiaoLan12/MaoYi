@@ -95,6 +95,8 @@ public class MyFootprintActivity extends BaseActivity<MyFootprintPresenter> impl
                 if(charSequence.length()>0){
                     searchTv.setText("搜索");
                 }else{
+                    mKey="";
+                    load(false);
                     searchTv.setText("取消");
                 }
             }

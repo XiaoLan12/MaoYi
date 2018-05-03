@@ -86,7 +86,7 @@
                         android:id="@+id/shippingaddress_head_tv"
                         android:layout_width="@dimen/dp_20"
                         android:layout_height="@dimen/dp_20"
-                        android:src="@drawable/icon_user" />
+                        android:src="@drawable/icon_location" />
 
                     <TextView
                         android:id="@+id/shippingaddressTv"

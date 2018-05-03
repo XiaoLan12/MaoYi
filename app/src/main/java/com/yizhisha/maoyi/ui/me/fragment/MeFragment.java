@@ -244,6 +244,13 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
                         }).build().show();
                 break;
             case R.id.tuiguang_rl:
+                if(AppConstant.isLogin==false){
+                    if(dialog==null){
+                        showLoginDialog();
+                    }
+                    dialog.show();
+                    return;
+                }
                 startActivity(MyTuiGuangActivity.class);
                 break;
 

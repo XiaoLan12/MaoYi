@@ -27,7 +27,7 @@ public class StudioShopAdapter extends BaseQuickAdapter<StudioShopBean.Goods,Bas
     protected void convert(BaseViewHolder helper, StudioShopBean.Goods item) {
             helper.setText(R.id.shop_title_tv,item.getTitle());
             helper.setText(R.id.shop_price_tv,item.getPrice());
-            helper.setText(R.id.shop_sales_tv,item.getSales());
+            helper.setText(R.id.shop_sales_tv,item.getSales()+"人付款");
             ImageView imageView=helper.getView(R.id.img_iv);
         GlideUtil.getInstance().LoadContextBitmap(mContext,AppConstant.PRUDUCT_IMG_URL+item.getLitpic(),imageView,GlideUtil.LOAD_BITMAP);
     }
